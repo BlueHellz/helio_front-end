@@ -6,6 +6,7 @@ import 'app_state.dart';
 import '../theme/blacklight_theme.dart';
 import 'router.dart';
 import 'providers/session_providers.dart';
+import '../services/auth_api.dart';
 
 class BlackLightApp extends StatelessWidget {
   const BlackLightApp({super.key});
@@ -44,13 +45,36 @@ class _HydratedSessionHomeState extends ConsumerState<_HydratedSessionHome> {
   Future<void> _restore() async {
     await ref.read(sessionProvider.notifier).restoreFromStorage();
     if (!mounted) return;
-    final s = ref.read(sessionProvider);
+    AuthSession s = ref.read(sessionProvider);
+    if (s.isLoggedIn) {
+      try {
+        final auth = ref.read(authApiProvider);
+        final enriched = await auth.enrichWithMe(AuthResult(
+          accessToken: s.bearerToken!,
+          refreshToken: s.refreshToken ?? '',
+          userId: s.userId,
+          orgId: s.orgId,
+          role: s.userRole,
+          fullName: s.fullName,
+          companyName: s.companyName,
+        ));
+        await ref.read(sessionProvider.notifier).applyAuthResult(enriched);
+        if (!mounted) return;
+        s = ref.read(sessionProvider);
+      } catch (_) {}
+    }
     final app = context.read<BlackLightAppState>();
     if (s.isLoggedIn) {
+      final apiRole = userRoleFromApiString(s.userRole);
+      final name = s.fullName ?? '';
+      final comp = s.companyName?.trim();
+      final displayCompany = (comp != null && comp.isNotEmpty)
+          ? comp
+          : (apiRole == UserRole.organization ? name : '');
       app.signIn(
-        role: userRoleFromApiString(s.userRole),
-        name: s.fullName ?? '',
-        companyName: s.companyName ?? '',
+        role: apiRole,
+        name: name,
+        companyName: displayCompany,
       );
     }
     setState(() => _ready = true);

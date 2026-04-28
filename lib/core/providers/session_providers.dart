@@ -100,7 +100,12 @@ final authApiProvider = Provider<AuthApi>((ref) {
 
 class SessionNotifier extends StateNotifier<AuthSession> {
   SessionNotifier(this._ref)
-      : _storage = const FlutterSecureStorage(),
+      : _storage = const FlutterSecureStorage(
+          webOptions: WebOptions(
+            dbName: 'blacklight_auth',
+            publicKey: 'blacklight_secure_storage_v1',
+          ),
+        ),
         super(const AuthSession());
 
   final Ref _ref;
@@ -162,7 +167,11 @@ class SessionNotifier extends StateNotifier<AuthSession> {
       companyName: r.companyName,
     );
     state = session;
-    await _persist(session);
+    try {
+      await _persist(session);
+    } catch (e, st) {
+      debugPrint('Session persist failed: $e\n$st');
+    }
   }
 
   /// Replaces session (persists when [persist] is true).
@@ -231,6 +240,10 @@ final apiProvider = Provider<BlackLightApi>((ref) {
       final t = s.bearerToken?.trim();
       if (t != null && t.isNotEmpty) {
         h['Authorization'] = 'Bearer $t';
+      }
+      final org = s.orgId?.trim();
+      if (org != null && org.isNotEmpty) {
+        h['X-Org-Id'] = org;
       }
       return h;
     },

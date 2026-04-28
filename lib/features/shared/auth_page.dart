@@ -73,7 +73,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
     setState(() => _submitting = true);
     try {
       final authApi = ref.read(authApiProvider);
-      final AuthResult result;
+      late AuthResult result;
       if (_isSignIn) {
         result = await authApi.login(email: email, password: password);
       } else {
@@ -87,15 +87,23 @@ class _AuthPageState extends ConsumerState<AuthPage> {
           role: apiRoleString(_selectedRole),
         );
       }
+      result = await authApi.enrichWithMe(result);
 
       if (!mounted) return;
       await ref.read(sessionProvider.notifier).applyAuthResult(result);
       final apiRole = userRoleFromApiString(result.role);
       if (!mounted) return;
+      final displayName = (result.fullName?.trim().isNotEmpty ?? false)
+          ? result.fullName!.trim()
+          : (result.email ?? '');
+      final comp = result.companyName?.trim();
+      final displayCompany = (comp != null && comp.isNotEmpty)
+          ? comp
+          : (apiRole == UserRole.organization ? displayName : '');
       context.read<BlackLightAppState>().signIn(
             role: apiRole,
-            name: result.fullName ?? result.email ?? '',
-            companyName: result.companyName ?? '',
+            name: displayName,
+            companyName: displayCompany,
           );
       widget.onAuthenticated?.call(apiRole);
     } on AuthApiException catch (e) {

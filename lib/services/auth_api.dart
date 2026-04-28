@@ -15,21 +15,36 @@ class AuthApiException implements Exception {
 }
 
 String authErrorMessageFromBody(String body) {
+  if (body.trim().isEmpty) {
+    return 'Something went wrong. Please try again.';
+  }
   try {
     final dynamic m = jsonDecode(body);
     if (m is Map<String, dynamic>) {
       final detail = m['detail'];
-      if (detail is String) return detail;
+      if (detail is String && detail.isNotEmpty) return detail;
+      if (detail is Map) {
+        final msg = detail['msg'] ?? detail['message'];
+        if (msg != null) return msg.toString();
+      }
       if (detail is List && detail.isNotEmpty) {
         final first = detail.first;
         if (first is Map && first['msg'] != null) {
           return first['msg'].toString();
         }
-        return detail.first.toString();
+        return first.toString();
       }
-      if (m['message'] != null) return m['message'].toString();
+      for (final key in ['message', 'error', 'title']) {
+        final v = m[key];
+        if (v is String && v.isNotEmpty) return v;
+      }
     }
-  } catch (_) {}
+    if (m is String && m.isNotEmpty) return m;
+  } catch (_) {
+    final t = body.trim();
+    if (t.length <= 280) return t;
+    return '${t.substring(0, 280)}…';
+  }
   return 'Something went wrong. Please try again.';
 }
 
@@ -60,22 +75,31 @@ AuthResult parseAuthJson(Map<String, dynamic> json) {
       (json['access_token'] ?? json['accessToken'] ?? '').toString();
   final refresh =
       (json['refresh_token'] ?? json['refreshToken'] ?? '').toString();
-  final user = json['user'];
+  final user = json['user'] ?? json['data'];
   String? userId;
   String? orgId;
-  String? role;
+  String? role = json['role']?.toString();
   String? fullName;
   String? email;
   String? companyName;
   if (user is Map<String, dynamic>) {
-    userId = (user['id'] ?? user['user_id'])?.toString();
-    orgId = (user['org_id'] ?? user['orgId'])?.toString();
-    role = user['role']?.toString();
+    userId = (user['id'] ?? user['user_id'] ?? user['uuid'])?.toString();
+    orgId = (user['org_id'] ??
+            user['orgId'] ??
+            user['organization_id'] ??
+            user['organizationId'])
+        ?.toString();
+    role = user['role']?.toString() ?? role;
     fullName =
         (user['full_name'] ?? user['fullName'] ?? user['name'])?.toString();
     email = user['email']?.toString();
     companyName =
         (user['company_name'] ?? user['companyName'])?.toString();
+  }
+  final r = role?.toLowerCase().trim();
+  if ((companyName == null || companyName.isEmpty) &&
+      (r == 'installer' || r == 'organization' || r == 'org')) {
+    companyName = fullName;
   }
   return AuthResult(
     accessToken: access,
@@ -104,6 +128,55 @@ class AuthApi {
         'Accept': 'application/json',
       };
 
+  void _ensureTokens(AuthResult r, int statusCode) {
+    if (r.accessToken.trim().isEmpty) {
+      throw AuthApiException(statusCode, 'No access token returned.');
+    }
+  }
+
+  /// Merge profile/org from GET `/api/v1/auth/me` or `/api/v1/me` when available.
+  Future<AuthResult> enrichWithMe(AuthResult current) async {
+    if (current.accessToken.isEmpty) return current;
+    const paths = ['/api/v1/auth/me', '/api/v1/me'];
+    for (final path in paths) {
+      final uri = Uri.parse('$_base$path');
+      try {
+        final r = await _client.get(
+          uri,
+          headers: <String, String>{
+            ..._jsonHeaders,
+            'Authorization': 'Bearer ${current.accessToken}',
+          },
+        );
+        if (r.statusCode >= 200 &&
+            r.statusCode < 300 &&
+            r.body.isNotEmpty) {
+          final map = jsonDecode(r.body) as Map<String, dynamic>;
+          final merged = parseAuthJson(<String, dynamic>{
+            'access_token': current.accessToken,
+            'refresh_token': current.refreshToken,
+            'user': map['user'] ?? map,
+          });
+          return AuthResult(
+            accessToken: merged.accessToken,
+            refreshToken: merged.refreshToken.isNotEmpty
+                ? merged.refreshToken
+                : current.refreshToken,
+            userId: merged.userId ?? current.userId,
+            orgId: merged.orgId ?? current.orgId,
+            role: merged.role ?? current.role,
+            fullName: merged.fullName ?? current.fullName,
+            email: merged.email ?? current.email,
+            companyName: merged.companyName ?? current.companyName,
+          );
+        }
+      } catch (_) {
+        continue;
+      }
+    }
+    return current;
+  }
+
   Future<AuthResult> signup({
     required String email,
     required String password,
@@ -125,7 +198,9 @@ class AuthApi {
         throw AuthApiException(r.statusCode, 'Empty response');
       }
       final map = jsonDecode(r.body) as Map<String, dynamic>;
-      return parseAuthJson(map);
+      final result = parseAuthJson(map);
+      _ensureTokens(result, r.statusCode);
+      return result;
     }
     throw AuthApiException(r.statusCode, authErrorMessageFromBody(r.body));
   }
@@ -147,7 +222,9 @@ class AuthApi {
         throw AuthApiException(r.statusCode, 'Empty response');
       }
       final map = jsonDecode(r.body) as Map<String, dynamic>;
-      return parseAuthJson(map);
+      final result = parseAuthJson(map);
+      _ensureTokens(result, r.statusCode);
+      return result;
     }
     throw AuthApiException(r.statusCode, authErrorMessageFromBody(r.body));
   }
@@ -165,7 +242,9 @@ class AuthApi {
         throw AuthApiException(r.statusCode, 'Empty response');
       }
       final map = jsonDecode(r.body) as Map<String, dynamic>;
-      return parseAuthJson(map);
+      final result = parseAuthJson(map);
+      _ensureTokens(result, r.statusCode);
+      return result;
     }
     throw AuthApiException(r.statusCode, authErrorMessageFromBody(r.body));
   }
