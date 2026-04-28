@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+
 import 'package:blacklight_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -56,6 +58,7 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
       late AuthResult result;
       if (_isSignIn) {
         result = await authApi.login(email: email, password: password);
+        result = await authApi.enrichWithMe(result);
       } else {
         result = await authApi.signup(
           email: email,
@@ -64,7 +67,6 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
           role: apiRoleString(_installerRole),
         );
       }
-      result = await authApi.enrichWithMe(result);
 
       if (!mounted) return;
       await ref.read(sessionProvider.notifier).applyAuthResult(result);
@@ -85,9 +87,19 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
       widget.onAuthenticated?.call(apiRole);
     } on AuthApiException catch (e) {
       if (mounted) AppFeedback.snack(context, e.message);
-    } catch (e) {
+    } catch (e, st) {
+      developer.log(
+        'MobileAuth submit failed',
+        name: 'MobileAuth',
+        error: e,
+        stackTrace: st,
+      );
       if (mounted) {
-        AppFeedback.snack(context, ApiErrorsContent.couldNotSignIn);
+        final raw = e.toString().replaceFirst('Exception: ', '').trim();
+        AppFeedback.snack(
+          context,
+          raw.isNotEmpty ? raw : ApiErrorsContent.couldNotSignIn,
+        );
       }
     } finally {
       if (mounted) setState(() => _submitting = false);

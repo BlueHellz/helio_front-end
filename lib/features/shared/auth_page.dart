@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+
 import 'package:blacklight_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -76,10 +78,12 @@ class _AuthPageState extends ConsumerState<AuthPage> {
       late AuthResult result;
       if (_isSignIn) {
         result = await authApi.login(email: email, password: password);
+        result = await authApi.enrichWithMe(result);
       } else {
         final fullName = _selectedRole == UserRole.homeowner
             ? _nameCtrl.text.trim()
             : _companyCtrl.text.trim();
+        // Signup response already includes tokens + user; no login, optional /me skipped.
         result = await authApi.signup(
           email: email,
           password: password,
@@ -87,7 +91,6 @@ class _AuthPageState extends ConsumerState<AuthPage> {
           role: apiRoleString(_selectedRole),
         );
       }
-      result = await authApi.enrichWithMe(result);
 
       if (!mounted) return;
       await ref.read(sessionProvider.notifier).applyAuthResult(result);
@@ -108,9 +111,19 @@ class _AuthPageState extends ConsumerState<AuthPage> {
       widget.onAuthenticated?.call(apiRole);
     } on AuthApiException catch (e) {
       if (mounted) AppFeedback.snack(context, e.message);
-    } catch (e) {
+    } catch (e, st) {
+      developer.log(
+        'AuthPage submit failed',
+        name: 'AuthPage',
+        error: e,
+        stackTrace: st,
+      );
       if (mounted) {
-        AppFeedback.snack(context, ApiErrorsContent.couldNotSignIn);
+        final raw = e.toString().replaceFirst('Exception: ', '').trim();
+        AppFeedback.snack(
+          context,
+          raw.isNotEmpty ? raw : ApiErrorsContent.couldNotSignIn,
+        );
       }
     } finally {
       if (mounted) setState(() => _submitting = false);

@@ -21,8 +21,9 @@ String authErrorMessageFromBody(String body) {
   }
   try {
     final dynamic m = jsonDecode(body);
-    if (m is Map<String, dynamic>) {
-      final detail = m['detail'];
+    if (m is Map) {
+      final map = Map<String, dynamic>.from(m);
+      final detail = map['detail'];
       if (detail is String && detail.isNotEmpty) return detail;
       if (detail is Map) {
         final msg = detail['msg'] ?? detail['message'];
@@ -36,7 +37,7 @@ String authErrorMessageFromBody(String body) {
         return first.toString();
       }
       for (final key in ['message', 'error', 'title']) {
-        final v = m[key];
+        final v = map[key];
         if (v is String && v.isNotEmpty) return v;
       }
     }
@@ -71,31 +72,78 @@ class AuthResult {
   final String? companyName;
 }
 
+/// Merges nested `data` / `result` / `tokens` shapes so [parseAuthJson] sees tokens + user at one level.
+Map<String, dynamic> normalizeAuthResponseMap(Map<String, dynamic> raw) {
+  final out = Map<String, dynamic>.from(raw);
+
+  void mergeNested(String key) {
+    final v = out[key];
+    if (v is Map) {
+      final inner = Map<String, dynamic>.from(v);
+      for (final e in inner.entries) {
+        final existing = out[e.key];
+        final missing = existing == null ||
+            (existing is String && existing.isEmpty);
+        if (missing) {
+          out[e.key] = e.value;
+        }
+      }
+    }
+  }
+
+  mergeNested('data');
+  mergeNested('result');
+
+  final tokens = out['tokens'];
+  if (tokens is Map) {
+    final t = Map<String, dynamic>.from(tokens);
+    out.putIfAbsent('access_token', () => t['access_token'] ?? t['accessToken']);
+    out.putIfAbsent('refresh_token', () => t['refresh_token'] ?? t['refreshToken']);
+  }
+
+  return out;
+}
+
 AuthResult parseAuthJson(Map<String, dynamic> json) {
-  final access =
-      (json['access_token'] ?? json['accessToken'] ?? '').toString();
+  final access = (json['access_token'] ??
+          json['accessToken'] ??
+          json['token'] ??
+          '')
+      .toString();
   final refresh =
       (json['refresh_token'] ?? json['refreshToken'] ?? '').toString();
-  final user = json['user'] ?? json['data'];
   String? userId;
   String? orgId;
   String? role = json['role']?.toString();
   String? fullName;
   String? email;
   String? companyName;
-  if (user is Map<String, dynamic>) {
-    userId = (user['id'] ?? user['user_id'] ?? user['uuid'])?.toString();
-    orgId = (user['org_id'] ??
-            user['orgId'] ??
-            user['organization_id'] ??
-            user['organizationId'])
+
+  Map<String, dynamic>? userMap;
+  final u = json['user'] ?? json['profile'];
+  if (u is Map) {
+    userMap = Map<String, dynamic>.from(u);
+  } else {
+    final d = json['data'];
+    if (d is Map && d['user'] is Map) {
+      userMap = Map<String, dynamic>.from(d['user'] as Map);
+    }
+  }
+
+  if (userMap != null) {
+    userId = (userMap['id'] ?? userMap['user_id'] ?? userMap['uuid'])?.toString();
+    orgId = (userMap['org_id'] ??
+            userMap['orgId'] ??
+            userMap['organization_id'] ??
+            userMap['organizationId'])
         ?.toString();
-    role = user['role']?.toString() ?? role;
+    role = userMap['role']?.toString() ?? role;
     fullName =
-        (user['full_name'] ?? user['fullName'] ?? user['name'])?.toString();
-    email = user['email']?.toString();
+        (userMap['full_name'] ?? userMap['fullName'] ?? userMap['name'])
+            ?.toString();
+    email = userMap['email']?.toString();
     companyName =
-        (user['company_name'] ?? user['companyName'])?.toString();
+        (userMap['company_name'] ?? userMap['companyName'])?.toString();
   }
   final r = role?.toLowerCase().trim();
   if ((companyName == null || companyName.isEmpty) &&
@@ -131,12 +179,39 @@ class AuthApi {
 
   void _ensureTokens(AuthResult r, int statusCode) {
     if (r.accessToken.trim().isEmpty) {
-      throw AuthApiException(statusCode, 'No access token returned.');
+      throw AuthApiException(
+        statusCode,
+        'No access token in response. Check API JSON keys (access_token / user).',
+      );
     }
   }
 
+  AuthResult _parseAuthSuccessResponse(http.Response r) {
+    if (r.body.isEmpty) {
+      throw AuthApiException(r.statusCode, 'Empty response');
+    }
+    final dynamic decoded;
+    try {
+      decoded = jsonDecode(r.body);
+    } catch (_) {
+      throw AuthApiException(
+        r.statusCode,
+        authErrorMessageFromBody(r.body),
+      );
+    }
+    if (decoded is! Map) {
+      throw AuthApiException(r.statusCode, 'Invalid response format');
+    }
+    final map = normalizeAuthResponseMap(
+      Map<String, dynamic>.from(decoded),
+    );
+    final result = parseAuthJson(map);
+    _ensureTokens(result, r.statusCode);
+    return result;
+  }
+
   /// Merge profile/org from GET `/api/v1/auth/me` when available.
-  /// Any failure or non‑OK response leaves [current] unchanged so signup/login still succeeds.
+  /// Never throws; never replaces [current] with a result that dropped the access token.
   Future<AuthResult> enrichWithMe(AuthResult current) async {
     if (current.accessToken.isEmpty) return current;
     final uri = Uri.parse('$_base/api/v1/auth/me');
@@ -149,12 +224,27 @@ class AuthApi {
         },
       );
       if (r.statusCode >= 200 && r.statusCode < 300 && r.body.isNotEmpty) {
-        final map = jsonDecode(r.body) as Map<String, dynamic>;
+        final dynamic decoded = jsonDecode(r.body);
+        if (decoded is! Map) {
+          developer.log(
+            'enrichWithMe: /api/v1/auth/me JSON was not an object',
+            name: 'AuthApi',
+          );
+          return current;
+        }
+        final map = Map<String, dynamic>.from(decoded);
         final merged = parseAuthJson(<String, dynamic>{
           'access_token': current.accessToken,
           'refresh_token': current.refreshToken,
           'user': map['user'] ?? map,
         });
+        if (merged.accessToken.trim().isEmpty) {
+          developer.log(
+            'enrichWithMe: merge dropped access token; keeping signup/login response',
+            name: 'AuthApi',
+          );
+          return current;
+        }
         return AuthResult(
           accessToken: merged.accessToken,
           refreshToken: merged.refreshToken.isNotEmpty
@@ -199,14 +289,9 @@ class AuthApi {
         'role': role,
       }),
     );
+    // 200 OK or 201 Created — same JSON shape as login; no extra login call.
     if (r.statusCode >= 200 && r.statusCode < 300) {
-      if (r.body.isEmpty) {
-        throw AuthApiException(r.statusCode, 'Empty response');
-      }
-      final map = jsonDecode(r.body) as Map<String, dynamic>;
-      final result = parseAuthJson(map);
-      _ensureTokens(result, r.statusCode);
-      return result;
+      return _parseAuthSuccessResponse(r);
     }
     throw AuthApiException(r.statusCode, authErrorMessageFromBody(r.body));
   }
@@ -224,13 +309,7 @@ class AuthApi {
       }),
     );
     if (r.statusCode >= 200 && r.statusCode < 300) {
-      if (r.body.isEmpty) {
-        throw AuthApiException(r.statusCode, 'Empty response');
-      }
-      final map = jsonDecode(r.body) as Map<String, dynamic>;
-      final result = parseAuthJson(map);
-      _ensureTokens(result, r.statusCode);
-      return result;
+      return _parseAuthSuccessResponse(r);
     }
     throw AuthApiException(r.statusCode, authErrorMessageFromBody(r.body));
   }
@@ -244,13 +323,7 @@ class AuthApi {
       }),
     );
     if (r.statusCode >= 200 && r.statusCode < 300) {
-      if (r.body.isEmpty) {
-        throw AuthApiException(r.statusCode, 'Empty response');
-      }
-      final map = jsonDecode(r.body) as Map<String, dynamic>;
-      final result = parseAuthJson(map);
-      _ensureTokens(result, r.statusCode);
-      return result;
+      return _parseAuthSuccessResponse(r);
     }
     throw AuthApiException(r.statusCode, authErrorMessageFromBody(r.body));
   }
