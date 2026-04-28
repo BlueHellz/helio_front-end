@@ -1,4 +1,4 @@
-package com.example.helios_app
+package com.example.blacklight_app
 
 import io.flutter.embedding.android.FlutterActivity
 

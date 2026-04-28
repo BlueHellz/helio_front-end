@@ -1,5 +1,5 @@
-name: helios_app
-description: Helios - Free AI Solar System Designer
+name: blacklight_app
+description: Black Light — free AI solar system designer
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -10,11 +10,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^1.2.0
+  provider: ^6.1.5+1
+  flutter_riverpod: ^2.6.1
   supabase_flutter: ^2.0.0
-  file_picker: ^8.0.0
-  signature: ^5.4.0
   url_launcher: ^6.2.0
+  http: ^1.2.0
+  file_picker: ^8.1.7
+  intl: ^0.20.2
+  flutter_secure_storage: ^9.2.4
 
 dev_dependencies:
   flutter_test:
@@ -23,3 +26,14 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/
+    # Local developer file (gitignored): copy from assets/env.json.example
+    - assets/env.json
+    - assets/env.json.example
+
+  fonts:
+    - family: JetBrainsMono
+      fonts:
+        - asset: assets/fonts/JetBrainsMono-Variable.ttf

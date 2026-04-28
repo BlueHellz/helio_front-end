@@ -1,11 +1,11 @@
 {
-    "name": "helios_app",
-    "short_name": "helios_app",
+    "name": "Black Light",
+    "short_name": "Black Light",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Black Light — AI solar design for homes and installers.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

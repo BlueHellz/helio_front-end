@@ -1,0 +1,90 @@
+import 'package:flutter/material.dart';
+import '../../theme/blacklight_theme.dart';
+import '../models/project.dart';
+
+class StatusBadge extends StatelessWidget {
+  final ProjectStatus status;
+
+  const StatusBadge({super.key, required this.status});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: status.backgroundColor,
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: status.badgeBorderColor, width: 1),
+      ),
+      child: Text(
+        status.label.toUpperCase(),
+        style: BlackLightTextStyles.captionBold(color: status.textColor),
+      ),
+    );
+  }
+}
+
+class WalletChip extends StatelessWidget {
+  final double balance;
+
+  const WalletChip({super.key, required this.balance});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 28,
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: BlackLightColors.surface,
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: BlackLightColors.border),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.account_balance_wallet_outlined,
+              size: 14, color: BlackLightColors.textCaption),
+          const SizedBox(width: 6),
+          Text(
+            '${balance.toStringAsFixed(2)} HLIO',
+            style: BlackLightTextStyles.dataInline(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BlackLightChip extends StatelessWidget {
+  final String label;
+  final Color? backgroundColor;
+  final Color? textColor;
+
+  const BlackLightChip({
+    super.key,
+    required this.label,
+    this.backgroundColor,
+    this.textColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 28,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      decoration: BoxDecoration(
+        color: backgroundColor ?? BlackLightColors.surface,
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: BlackLightColors.border),
+      ),
+      child: Center(
+        child: Text(
+          label,
+          style: BlackLightTextStyles.caption(
+            color: textColor ?? BlackLightColors.textBody,
+          ),
+        ),
+      ),
+    );
+  }
+}

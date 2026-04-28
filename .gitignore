@@ -43,3 +43,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Local secrets (Mapbox and other env — never commit)
+assets/env.json
+.env
+.env.local

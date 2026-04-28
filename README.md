@@ -1,4 +1,4 @@
-# helios_app
+# blacklight_app
 
 A new Flutter project.
 

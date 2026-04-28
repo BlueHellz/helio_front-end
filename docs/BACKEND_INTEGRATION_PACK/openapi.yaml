@@ -1,0 +1,409 @@
+openapi: 3.0.3
+info:
+  title: Black Light API
+  description: |
+    Minimal contract aligned with Dart models in `lib/core/models/` and session in `lib/core/app_state.dart`.
+    Property names use **camelCase** to match JSON serialization from Flutter.
+  version: 0.1.0
+servers:
+  - url: https://helio-back-end.onrender.com
+    description: Production (matches BlackLightConfig.apiBaseUrl in lib/config.dart)
+  - url: http://localhost:8000
+    description: Local FastAPI
+paths:
+  /health:
+    get:
+      summary: Liveness / readiness
+      operationId: health
+      tags: [System]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status]
+                properties:
+                  status:
+                    type: string
+                    example: ok
+
+  /auth/verify:
+    post:
+      summary: Validate Supabase JWT and return current user (stub until implemented)
+      operationId: authVerify
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [accessToken]
+              properties:
+                accessToken:
+                  type: string
+                  description: Supabase (or other) access JWT
+      responses:
+        "200":
+          description: Token valid; user + role
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Me"
+        "401":
+          description: Invalid or expired token
+        "403":
+          description: User not allowed
+
+  /me:
+    get:
+      summary: Current user profile and session fields (same shape as app state)
+      operationId: getMe
+      tags: [Auth]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Me"
+        "401":
+          description: Unauthorized
+
+  /projects:
+    get:
+      summary: List projects for the authenticated user or org
+      operationId: listProjects
+      tags: [Projects]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Project"
+    post:
+      summary: Create a project
+      operationId: createProject
+      tags: [Projects]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectCreate"
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized
+
+  /projects/{id}/messages:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: List chat messages for a project thread
+      operationId: listProjectMessages
+      tags: [Chat]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ChatMessage"
+        "404":
+          description: Project not found
+    post:
+      summary: Post a new chat message (typically user; server may append AI replies)
+      operationId: postProjectMessage
+      tags: [Chat]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChatMessageCreate"
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatMessage"
+        "400":
+          description: Bad request
+        "404":
+          description: Project not found
+
+  /leads:
+    get:
+      summary: List CRM leads (organization scope)
+      operationId: listLeads
+      tags: [CRM]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Lead"
+    post:
+      summary: Create a lead
+      operationId: createLead
+      tags: [CRM]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LeadCreate"
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Lead"
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    UserRole:
+      type: string
+      enum: [homeowner, organization, droneOperator, none]
+
+    ProjectStatus:
+      type: string
+      enum:
+        - designing
+        - ready
+        - quoted
+        - contracted
+        - permitted
+        - installed
+        - completed
+        - inProgress
+        - pendingInspection
+
+    ProjectType:
+      type: string
+      enum: [residential, commercial, industrial]
+
+    MessageSender:
+      type: string
+      enum: [user, ai, system]
+
+    LeadStage:
+      type: string
+      enum: [newLead, contacted, quoted, negotiation, won, lost]
+
+    ChatAction:
+      type: object
+      required: [label, icon]
+      properties:
+        label:
+          type: string
+        icon:
+          type: string
+        isPrimary:
+          type: boolean
+          default: false
+
+    ChatDataChip:
+      type: object
+      required: [label, value, icon]
+      properties:
+        label:
+          type: string
+        value:
+          type: string
+        icon:
+          type: string
+
+    ChatMessage:
+      type: object
+      required: [id, text, sender, timestamp]
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        sender:
+          $ref: "#/components/schemas/MessageSender"
+        timestamp:
+          type: string
+          format: date-time
+        actions:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChatAction"
+        dataChip:
+          $ref: "#/components/schemas/ChatDataChip"
+
+    ChatMessageCreate:
+      type: object
+      required: [text]
+      properties:
+        text:
+          type: string
+        sender:
+          $ref: "#/components/schemas/MessageSender"
+          default: user
+
+    Project:
+      type: object
+      required: [id, address, clientName, status, type, date]
+      properties:
+        id:
+          type: string
+        address:
+          type: string
+        clientName:
+          type: string
+        clientEmail:
+          type: string
+        clientPhone:
+          type: string
+        status:
+          $ref: "#/components/schemas/ProjectStatus"
+        type:
+          $ref: "#/components/schemas/ProjectType"
+        date:
+          type: string
+          format: date-time
+        systemSizeKw:
+          type: number
+          format: double
+        panelCount:
+          type: integer
+        annualProductionKwh:
+          type: number
+          format: double
+        yearOneSavings:
+          type: number
+          format: double
+        assignee:
+          type: string
+
+    ProjectCreate:
+      type: object
+      required: [address, clientName, type]
+      properties:
+        address:
+          type: string
+        clientName:
+          type: string
+        clientEmail:
+          type: string
+        clientPhone:
+          type: string
+        type:
+          $ref: "#/components/schemas/ProjectType"
+        status:
+          $ref: "#/components/schemas/ProjectStatus"
+
+    Lead:
+      type: object
+      required: [id, name, address, source, addedAt, stage]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
+        systemSizeKw:
+          type: string
+        source:
+          type: string
+        addedAt:
+          type: string
+          format: date-time
+        stage:
+          $ref: "#/components/schemas/LeadStage"
+        intent:
+          type: string
+
+    LeadCreate:
+      type: object
+      required: [name, address, source]
+      properties:
+        name:
+          type: string
+        address:
+          type: string
+        systemSizeKw:
+          type: string
+        source:
+          type: string
+        stage:
+          $ref: "#/components/schemas/LeadStage"
+        intent:
+          type: string
+
+    Me:
+      type: object
+      required: [isAuthenticated, role, userName, companyName, hlioBalance]
+      properties:
+        isAuthenticated:
+          type: boolean
+        role:
+          $ref: "#/components/schemas/UserRole"
+        userName:
+          type: string
+        companyName:
+          type: string
+        hlioBalance:
+          type: number
+          format: double
+        walletAddress:
+          type: string
+          nullable: true
