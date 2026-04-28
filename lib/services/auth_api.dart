@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer' as developer;
 
 import 'package:http/http.dart' as http;
 
@@ -134,45 +135,50 @@ class AuthApi {
     }
   }
 
-  /// Merge profile/org from GET `/api/v1/auth/me` or `/api/v1/me` when available.
+  /// Merge profile/org from GET `/api/v1/auth/me` when available.
+  /// Any failure or non‑OK response leaves [current] unchanged so signup/login still succeeds.
   Future<AuthResult> enrichWithMe(AuthResult current) async {
     if (current.accessToken.isEmpty) return current;
-    const paths = ['/api/v1/auth/me', '/api/v1/me'];
-    for (final path in paths) {
-      final uri = Uri.parse('$_base$path');
-      try {
-        final r = await _client.get(
-          uri,
-          headers: <String, String>{
-            ..._jsonHeaders,
-            'Authorization': 'Bearer ${current.accessToken}',
-          },
+    final uri = Uri.parse('$_base/api/v1/auth/me');
+    try {
+      final r = await _client.get(
+        uri,
+        headers: <String, String>{
+          ..._jsonHeaders,
+          'Authorization': 'Bearer ${current.accessToken}',
+        },
+      );
+      if (r.statusCode >= 200 && r.statusCode < 300 && r.body.isNotEmpty) {
+        final map = jsonDecode(r.body) as Map<String, dynamic>;
+        final merged = parseAuthJson(<String, dynamic>{
+          'access_token': current.accessToken,
+          'refresh_token': current.refreshToken,
+          'user': map['user'] ?? map,
+        });
+        return AuthResult(
+          accessToken: merged.accessToken,
+          refreshToken: merged.refreshToken.isNotEmpty
+              ? merged.refreshToken
+              : current.refreshToken,
+          userId: merged.userId ?? current.userId,
+          orgId: merged.orgId ?? current.orgId,
+          role: merged.role ?? current.role,
+          fullName: merged.fullName ?? current.fullName,
+          email: merged.email ?? current.email,
+          companyName: merged.companyName ?? current.companyName,
         );
-        if (r.statusCode >= 200 &&
-            r.statusCode < 300 &&
-            r.body.isNotEmpty) {
-          final map = jsonDecode(r.body) as Map<String, dynamic>;
-          final merged = parseAuthJson(<String, dynamic>{
-            'access_token': current.accessToken,
-            'refresh_token': current.refreshToken,
-            'user': map['user'] ?? map,
-          });
-          return AuthResult(
-            accessToken: merged.accessToken,
-            refreshToken: merged.refreshToken.isNotEmpty
-                ? merged.refreshToken
-                : current.refreshToken,
-            userId: merged.userId ?? current.userId,
-            orgId: merged.orgId ?? current.orgId,
-            role: merged.role ?? current.role,
-            fullName: merged.fullName ?? current.fullName,
-            email: merged.email ?? current.email,
-            companyName: merged.companyName ?? current.companyName,
-          );
-        }
-      } catch (_) {
-        continue;
       }
+      developer.log(
+        'enrichWithMe: /api/v1/auth/me HTTP ${r.statusCode}, using login/signup response',
+        name: 'AuthApi',
+      );
+    } catch (e, st) {
+      developer.log(
+        'enrichWithMe: /api/v1/auth/me failed, using login/signup response',
+        name: 'AuthApi',
+        error: e,
+        stackTrace: st,
+      );
     }
     return current;
   }
