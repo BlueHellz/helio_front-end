@@ -70,7 +70,8 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
 
       if (!mounted) return;
       await ref.read(sessionProvider.notifier).applyAuthResult(result);
-      final apiRole = userRoleFromApiString(result.role);
+      final session = ref.read(sessionProvider);
+      final apiRole = userRoleFromApiString(session.userRole);
       if (!mounted) return;
       final displayName = (result.fullName?.trim().isNotEmpty ?? false)
           ? result.fullName!.trim()

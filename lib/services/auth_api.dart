@@ -104,6 +104,17 @@ Map<String, dynamic> normalizeAuthResponseMap(Map<String, dynamic> raw) {
   return out;
 }
 
+String? readRoleFromMap(Map<String, dynamic> map) {
+  dynamic r =
+      map['role'] ?? map['user_role'] ?? map['userRole'] ?? map['type'];
+  if (r is Map) {
+    r = r['value'] ?? r['name'] ?? r['role'];
+  }
+  final s = r?.toString().trim();
+  if (s == null || s.isEmpty) return null;
+  return s;
+}
+
 AuthResult parseAuthJson(Map<String, dynamic> json) {
   final access = (json['access_token'] ??
           json['accessToken'] ??
@@ -114,7 +125,7 @@ AuthResult parseAuthJson(Map<String, dynamic> json) {
       (json['refresh_token'] ?? json['refreshToken'] ?? '').toString();
   String? userId;
   String? orgId;
-  String? role = json['role']?.toString();
+  String? role = readRoleFromMap(json);
   String? fullName;
   String? email;
   String? companyName;
@@ -137,7 +148,7 @@ AuthResult parseAuthJson(Map<String, dynamic> json) {
             userMap['organization_id'] ??
             userMap['organizationId'])
         ?.toString();
-    role = userMap['role']?.toString() ?? role;
+    role = readRoleFromMap(userMap) ?? role;
     fullName =
         (userMap['full_name'] ?? userMap['fullName'] ?? userMap['name'])
             ?.toString();

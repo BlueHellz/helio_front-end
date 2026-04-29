@@ -62,7 +62,12 @@ class AuthSession {
 
 /// Maps API role strings to app [UserRole].
 UserRole userRoleFromApiString(String? role) {
-  switch ((role ?? '').toLowerCase().trim()) {
+  final s = (role ?? '').toLowerCase().trim();
+  if (s.isEmpty) {
+    // DEV: auth bypass / partial JWT bodies may omit role; use installer/org shell until roles are always explicit.
+    return UserRole.organization;
+  }
+  switch (s) {
     case 'homeowner':
       return UserRole.homeowner;
     case 'installer':
@@ -76,6 +81,19 @@ UserRole userRoleFromApiString(String? role) {
     default:
       return UserRole.homeowner;
   }
+}
+
+/// Prefer Riverpod [AuthSession] when logged in so routing matches the API role even if [BlackLightAppState] is stale.
+UserRole resolvedNavigationRole({
+  required bool authenticated,
+  required UserRole appRole,
+  required AuthSession session,
+}) {
+  if (!authenticated) return UserRole.none;
+  if (session.isLoggedIn) {
+    return userRoleFromApiString(session.userRole);
+  }
+  return appRole;
 }
 
 /// Maps [UserRole] to API `role` field for signup.

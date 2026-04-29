@@ -54,11 +54,12 @@ class BlackLightRouter extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = context.watch<BlackLightAppState>();
+    final session = ref.watch(sessionProvider);
 
     if (kIsWeb) {
-      return _WebRouter(state: state, ref: ref);
+      return _WebRouter(state: state, session: session, ref: ref);
     } else {
-      return _MobileRouter(state: state, ref: ref);
+      return _MobileRouter(state: state, session: session, ref: ref);
     }
   }
 }
@@ -68,16 +69,26 @@ class BlackLightRouter extends ConsumerWidget {
 // ─────────────────────────────────────────────
 class _WebRouter extends StatelessWidget {
   final BlackLightAppState state;
+  final AuthSession session;
   final WidgetRef ref;
 
-  const _WebRouter({required this.state, required this.ref});
+  const _WebRouter({
+    required this.state,
+    required this.session,
+    required this.ref,
+  });
 
   @override
   Widget build(BuildContext context) {
     if (!state.isAuthenticated) {
       return _WebPreAuthFlow(state: state);
     }
-    if (state.role == UserRole.homeowner) {
+    final role = resolvedNavigationRole(
+      authenticated: state.isAuthenticated,
+      appRole: state.role,
+      session: session,
+    );
+    if (role == UserRole.homeowner) {
       return _HomeownerFlow(state: state, ref: ref);
     }
     return _OrgFlow(state: state, ref: ref);
@@ -345,16 +356,26 @@ class _OrgWebHelpPage extends StatelessWidget {
 // ─────────────────────────────────────────────
 class _MobileRouter extends StatelessWidget {
   final BlackLightAppState state;
+  final AuthSession session;
   final WidgetRef ref;
 
-  const _MobileRouter({required this.state, required this.ref});
+  const _MobileRouter({
+    required this.state,
+    required this.session,
+    required this.ref,
+  });
 
   @override
   Widget build(BuildContext context) {
     if (!state.isAuthenticated) {
       return MobileAuth();
     }
-    if (state.role == UserRole.droneOperator) {
+    final role = resolvedNavigationRole(
+      authenticated: state.isAuthenticated,
+      appRole: state.role,
+      session: session,
+    );
+    if (role == UserRole.droneOperator) {
       return _MobileDroneOperatorFlow(state: state, ref: ref);
     }
     return _MobileAuthenticatedFlow(state: state, ref: ref);
@@ -391,9 +412,15 @@ class _MobileAuthenticatedFlowState extends State<_MobileAuthenticatedFlow> {
   @override
   Widget build(BuildContext context) {
     final state = widget.state;
+    final session = widget.ref.watch(sessionProvider);
+    final role = resolvedNavigationRole(
+      authenticated: state.isAuthenticated,
+      appRole: state.role,
+      session: session,
+    );
     final idx = state.mobileNavIndex;
 
-    if (state.role == UserRole.homeowner) {
+    if (role == UserRole.homeowner) {
       final body = switch (idx) {
         1 => const HomeownerIntakePage(),
         2 => const HomeownerChatPage(),
