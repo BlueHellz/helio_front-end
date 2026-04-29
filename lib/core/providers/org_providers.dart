@@ -47,6 +47,23 @@ final pipelinesProvider =
   return api.getPipelines();
 });
 
+/// Stages for one pipeline (Flow Mesh + CRM sources).
+final pipelineStagesProvider = FutureProvider.autoDispose
+    .family<List<Map<String, dynamic>>, String>((ref, pipelineId) async {
+  final api = ref.watch(apiProvider);
+  return api.getStages(pipelineId);
+});
+
+/// Flow Mesh edges (`GET …/edges` or `custom_data.flow_mesh_edges`).
+final pipelineEdgesProvider = FutureProvider.autoDispose
+    .family<List<Map<String, dynamic>>, String>((ref, pipelineId) async {
+  final api = ref.watch(apiProvider);
+  return api.getPipelineEdges(pipelineId);
+});
+
+/// Selected Flow Mesh stage id (canvas).
+final selectedNodeProvider = StateProvider<String?>((ref) => null);
+
 /// `{ residential: [...ids], commercial: [...], industrial: [...] }` merged from API.
 final intakeLayoutFamily = FutureProvider.autoDispose
     .family<Map<String, dynamic>, String>((ref, projectType) async {

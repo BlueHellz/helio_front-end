@@ -248,7 +248,7 @@ class BlackLightApi {
     String stageId,
     Map<String, dynamic> body,
   ) async {
-    final r = await _patch(
+    final r = await _put(
       _u('/org/pipelines/$pipelineId/stages/$stageId'),
       body: jsonEncode(body),
     );
@@ -261,6 +261,111 @@ class BlackLightApi {
       _u('/org/pipelines/$pipelineId/stages/$stageId'),
     );
     await _decode(r);
+  }
+
+  Future<Map<String, dynamic>> getPipeline(String id) async {
+    try {
+      final r = await _get(_u('/org/pipelines/$id'));
+      final d = await _decode(r);
+      return (d as Map).cast<String, dynamic>();
+    } on ApiException catch (e) {
+      if (e.statusCode == 404) {
+        final all = await getPipelines();
+        for (final p in all) {
+          if (p['id']?.toString() == id) {
+            return Map<String, dynamic>.from(p);
+          }
+        }
+        return <String, dynamic>{};
+      }
+      rethrow;
+    }
+  }
+
+  /// Flow Mesh edges. Tries GET `/edges`; on 404 reads `custom_data.flow_mesh_edges`.
+  Future<List<Map<String, dynamic>>> getPipelineEdges(String pipelineId) async {
+    try {
+      final r = await _get(_u('/org/pipelines/$pipelineId/edges'));
+      final d = await _decode(r);
+      if (d is List) return d.cast<Map<String, dynamic>>();
+      if (d is Map && d['items'] is List) {
+        return (d['items'] as List).cast<Map<String, dynamic>>();
+      }
+      return const [];
+    } on ApiException catch (e) {
+      if (e.statusCode != 404) rethrow;
+      final p = await getPipeline(pipelineId);
+      final cd = p['custom_data'];
+      if (cd is Map && cd['flow_mesh_edges'] is List) {
+        return (cd['flow_mesh_edges'] as List)
+            .map((e) => Map<String, dynamic>.from(e as Map))
+            .toList();
+      }
+      return const [];
+    }
+  }
+
+  Future<void> _saveEdgesFallback(
+    String pipelineId,
+    List<Map<String, dynamic>> edges,
+  ) async {
+    final p = await getPipeline(pipelineId);
+    final raw = p['custom_data'];
+    final cd = Map<String, dynamic>.from(
+      raw is Map ? raw.cast<String, dynamic>() : <String, dynamic>{},
+    );
+    cd['flow_mesh_edges'] = edges;
+    await updatePipeline(pipelineId, {'custom_data': cd});
+  }
+
+  /// POST `/edges` or persist under pipeline `custom_data`.
+  Future<void> addPipelineEdge(
+    String pipelineId,
+    String sourceStageId,
+    String targetStageId,
+  ) async {
+    try {
+      final r = await _post(
+        _u('/org/pipelines/$pipelineId/edges'),
+        body: jsonEncode(<String, dynamic>{
+          'source_stage_id': sourceStageId,
+          'target_stage_id': targetStageId,
+        }),
+      );
+      await _decode(r);
+      return;
+    } on ApiException catch (e) {
+      if (e.statusCode != 404 &&
+          e.statusCode != 405 &&
+          e.statusCode != 400) {
+        rethrow;
+      }
+    }
+    final existing = await getPipelineEdges(pipelineId);
+    final next = [
+      ...existing.map((e) => Map<String, dynamic>.from(e)),
+      <String, dynamic>{
+        'id': 'edge_${DateTime.now().millisecondsSinceEpoch}',
+        'source_stage_id': sourceStageId,
+        'target_stage_id': targetStageId,
+      },
+    ];
+    await _saveEdgesFallback(pipelineId, next);
+  }
+
+  Future<void> removePipelineEdge(String pipelineId, String edgeId) async {
+    try {
+      final r = await _delete(
+        _u('/org/pipelines/$pipelineId/edges/$edgeId'),
+      );
+      await _decode(r);
+      return;
+    } on ApiException catch (e) {
+      if (e.statusCode != 404 && e.statusCode != 405) rethrow;
+    }
+    final list = await getPipelineEdges(pipelineId);
+    list.removeWhere((e) => e['id']?.toString() == edgeId);
+    await _saveEdgesFallback(pipelineId, list);
   }
 
   Future<void> reorderStages(
