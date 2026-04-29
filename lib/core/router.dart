@@ -3,44 +3,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
 
+import 'package:blacklight_app/config.dart';
 import 'package:blacklight_app/core/content/content_registry.dart';
 
 import 'app_state.dart';
 import 'providers/session_providers.dart';
 import 'ui/app_feedback.dart';
-import '../theme/blacklight_theme.dart';
+import 'package:blacklight_app/theme/blacklight_theme.dart';
 
 // Web shells
 import 'shell/web/authenticated_shell.dart';
 
-// Homeowner (web pre-auth + homeowner flows)
-import '../features/homeowner/landing_page.dart';
-import '../features/homeowner/auth_page.dart';
-import '../features/homeowner/dashboard_page.dart';
-import '../features/homeowner/intake_page.dart';
-import '../features/homeowner/chat_page.dart';
+// Features — Light (free tier)
+import 'package:blacklight_app/features/light/landing/landing_page.dart';
+import 'package:blacklight_app/features/light/auth/auth_page.dart';
+import 'package:blacklight_app/features/light/homeowner/dashboard_page.dart';
+import 'package:blacklight_app/features/light/homeowner/intake_page.dart';
+import 'package:blacklight_app/features/light/homeowner/chat_page.dart';
 
-// Public sub-pages
-import '../features/drone_ops/web/drone_ops_info_page.dart';
-import '../features/pool_funding/web/pool_info_page.dart';
-import '../features/ev/ev_info_page.dart';
+import 'package:blacklight_app/features/light/drone_ops/web/drone_ops_info_page.dart';
+import 'package:blacklight_app/features/light/pool_funding/web/pool_info_page.dart';
+import 'package:blacklight_app/features/light/ev/ev_info_page.dart';
 
-// Org (installer)
-import '../features/org/projects_page.dart';
-import '../features/org/new_project_page.dart';
-import '../features/org/crm_board_page.dart';
-import '../features/org/org_settings_hub_page.dart';
+import 'package:blacklight_app/features/light/installer/org/new_project_page.dart';
+import 'package:blacklight_app/features/light/installer/org/crm_board_page.dart';
+import 'package:blacklight_app/features/light/installer/org/org_settings_hub_page.dart';
 
-import '../features/installer/mobile_shell.dart';
-import '../features/installer/mobile_auth.dart';
-import '../features/installer/mobile_settings.dart';
+import 'package:blacklight_app/features/light/installer/mobile_shell.dart';
+import 'package:blacklight_app/features/light/auth/mobile_auth.dart';
+import 'package:blacklight_app/features/light/installer/mobile_settings.dart';
+import 'package:blacklight_app/features/light/installer/dashboard.dart';
+import 'package:blacklight_app/features/black_light/dashboard/premium_org_dashboard.dart';
 
 // Drone operator (mobile)
-import '../features/drone_ops/mobile/drone_operator_shell.dart';
-import '../features/drone_ops/mobile/drone_jobs_screen.dart';
-import '../features/drone_ops/mobile/drone_capture_screen.dart';
-import '../features/drone_ops/mobile/drone_earnings_screen.dart';
-import '../features/drone_ops/mobile/drone_profile_screen.dart';
+import 'package:blacklight_app/features/light/drone_ops/mobile/drone_operator_shell.dart';
+import 'package:blacklight_app/features/light/drone_ops/mobile/drone_jobs_screen.dart';
+import 'package:blacklight_app/features/light/drone_ops/mobile/drone_capture_screen.dart';
+import 'package:blacklight_app/features/light/drone_ops/mobile/drone_earnings_screen.dart';
+import 'package:blacklight_app/features/light/drone_ops/mobile/drone_profile_screen.dart';
 
 // Shared settings
 import 'settings/settings_wallet.dart';
@@ -274,8 +274,8 @@ class _OrgFlowState extends State<_OrgFlow> {
           userName: state.userName,
           companyName: state.companyName,
           hlioBalance: state.hlioBalance,
-          onConnectWallet: () => _openWalletConnect(state),
           onSignOut: _signOut,
+          onConnectWallet: () => _openWalletConnect(state),
           onEditUserName: () async {
             final v = await AppFeedback.showEditStringDialog(
               context,
@@ -301,10 +301,17 @@ class _OrgFlowState extends State<_OrgFlow> {
         ),
       4 => const OrgSettingsHubPage(),
       5 => const _OrgWebHelpPage(),
-      _ => OrgProjectsPage(
-          orgName: state.companyName,
-          walletBalance: state.hlioBalance,
-        ),
+      _ => BlackLightConfig.bypassMode
+          ? PremiumOrgDashboardPage(
+              companyName: state.companyName,
+              onNewProject: () => state.setWebSidebarIndex(1),
+              onImportLeads: () => state.setWebSidebarIndex(2),
+            )
+          : FreeInstallerDashboardPage(
+              companyName: state.companyName,
+              onNewProject: () => state.setWebSidebarIndex(1),
+              onImportLeads: () => state.setWebSidebarIndex(2),
+            ),
     };
 
     return AuthenticatedShell(
@@ -452,10 +459,17 @@ class _MobileAuthenticatedFlowState extends State<_MobileAuthenticatedFlow> {
           onConnectWallet: () => _openWallet(state),
           onSignOut: _signOut,
         ),
-      _ => OrgProjectsPage(
-          orgName: state.companyName,
-          walletBalance: state.hlioBalance,
-        ),
+      _ => BlackLightConfig.bypassMode
+          ? PremiumOrgDashboardPage(
+              companyName: state.companyName,
+              onNewProject: () => state.setMobileNavIndex(1),
+              onImportLeads: () => state.setMobileNavIndex(2),
+            )
+          : FreeInstallerDashboardPage(
+              companyName: state.companyName,
+              onNewProject: () => state.setMobileNavIndex(1),
+              onImportLeads: () => state.setMobileNavIndex(2),
+            ),
     };
 
     return MobileShell(

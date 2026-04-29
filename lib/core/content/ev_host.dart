@@ -31,4 +31,16 @@ class EvHostContent {
   static const readyBody =
       'Tell us about your property and preferred hardware — '
       'we\'ll review and reach out.';
+
+  static const networkSectionTitle = 'How the network fits together';
+  static const networkSectionLead =
+      'Hosts list certified chargers; drivers discover spots through the same '
+      'app they use to plan routes and energy spend. Settlement happens in HLIO, '
+      'with optional conversion paths where regulations allow.';
+  static const networkBullet1 =
+      'Dynamic pricing: off-peak discounts and surge windows you control.';
+  static const networkBullet2 =
+      'Utilization analytics: see sessions, dwell time, and revenue per stall.';
+  static const networkBullet3 =
+      'Hardware flexibility: certified units get a streamlined onboarding checklist.';
 }

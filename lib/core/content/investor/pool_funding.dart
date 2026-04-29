@@ -47,4 +47,17 @@ class PoolFundingContent {
   static const explorerTitle = 'Pool explorer';
   static const investorDashboardTitle = 'Investor dashboard';
   static const comingSoon = 'Coming soon';
+
+  static const samplePoolCard1Title = 'Desert Ridge array';
+  static const samplePoolCard1Meta = 'Utility-scale · 4.2 MWac';
+  static const samplePoolCard1StatLabel = 'Target close';
+  static const samplePoolCard1StatValue = 'Q3';
+
+  static const samplePoolCard2Title = 'Midwest community solar';
+  static const samplePoolCard2Meta = 'Rooftop + carport mix';
+  static const samplePoolCard2StatLabel = 'Pool status';
+  static const samplePoolCard2StatValue = 'Verification';
+
+  static const samplePoolsHint =
+      'Illustrative pool cards — live pledge data connects when offerings launch.';
 }

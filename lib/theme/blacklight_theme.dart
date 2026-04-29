@@ -179,6 +179,183 @@ class BlackLightTextStyles {
       captionBold(color: color);
 }
 
+/// Dark palette (Black Light premium / org). Sizes match light theme.
+class BlackLightDarkColors {
+  BlackLightDarkColors._();
+
+  static const Color background = Color(0xFF0B1E33);
+  static const Color surface = Color(0xFF111F2F);
+  static const Color border = Color(0xFF1A2D44);
+  static const Color textPrimary = Color(0xFFE8EDF2);
+  static const Color textBody = Color(0xFF8A9BB5);
+}
+
+/// Theme-aware tokens for shells and surfaces that must track light/dark org mode.
+class BlackLightAdaptive {
+  BlackLightAdaptive._();
+
+  static bool _dark(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark;
+
+  static Color background(BuildContext context) => _dark(context)
+      ? BlackLightDarkColors.background
+      : BlackLightColors.background;
+
+  static Color surface(BuildContext context) => _dark(context)
+      ? BlackLightDarkColors.surface
+      : BlackLightColors.surface;
+
+  static Color border(BuildContext context) => _dark(context)
+      ? BlackLightDarkColors.border
+      : BlackLightColors.border;
+
+  static Color textPrimary(BuildContext context) => _dark(context)
+      ? BlackLightDarkColors.textPrimary
+      : BlackLightColors.textPrimary;
+
+  static Color textBody(BuildContext context) => _dark(context)
+      ? BlackLightDarkColors.textBody
+      : BlackLightColors.textBody;
+
+  static Color textCaption(BuildContext context) => _dark(context)
+      ? BlackLightDarkColors.textBody
+      : BlackLightColors.textCaption;
+
+  static Color sidebarBg(BuildContext context) => surface(context);
+
+  static Color sidebarBorder(BuildContext context) => border(context);
+
+  static Color sidebarInactiveText(BuildContext context) => textBody(context);
+
+  static Color sidebarHoverBg(BuildContext context) => _dark(context)
+      ? BlackLightDarkColors.background
+      : BlackLightColors.sidebarHoverBg;
+}
+
+class BlackLightTheme {
+  BlackLightTheme._();
+
+  static ThemeData lightTheme() => buildBlackLightTheme();
+
+  static ThemeData darkTheme() {
+    const bg = BlackLightDarkColors.background;
+    const surface = BlackLightDarkColors.surface;
+    const borderC = BlackLightDarkColors.border;
+    const onSurf = BlackLightDarkColors.textPrimary;
+    const bodyC = BlackLightDarkColors.textBody;
+
+    final baseSans = BlackLightTextStyles.body(color: bodyC);
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.dark,
+      scaffoldBackgroundColor: bg,
+      colorScheme: const ColorScheme.dark(
+        primary: BlackLightColors.accent,
+        onPrimary: Colors.white,
+        secondary: BlackLightColors.green,
+        onSecondary: Colors.white,
+        error: BlackLightColors.error,
+        surface: surface,
+        onSurface: onSurf,
+        outline: borderC,
+      ),
+      fontFamily: null,
+      iconTheme: IconThemeData(
+        size: 24,
+        color: bodyC,
+      ),
+      textTheme: TextTheme(
+        displayLarge: BlackLightTextStyles.hero(color: onSurf),
+        headlineLarge: BlackLightTextStyles.sectionHeading(color: onSurf),
+        titleLarge: BlackLightTextStyles.cardHeading(color: onSurf),
+        bodyLarge: baseSans,
+        bodyMedium: baseSans,
+        bodySmall: BlackLightTextStyles.caption(color: bodyC),
+        labelLarge: BlackLightTextStyles.bodyBold(color: onSurf),
+        labelMedium: BlackLightTextStyles.caption(color: bodyC),
+        labelSmall: BlackLightTextStyles.caption(color: bodyC),
+      ),
+      appBarTheme: AppBarTheme(
+        backgroundColor: surface,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        centerTitle: true,
+        titleTextStyle: BlackLightTextStyles.cardHeading(color: onSurf),
+        iconTheme: IconThemeData(color: bodyC),
+        surfaceTintColor: Colors.transparent,
+        shape: const Border(
+          bottom: BorderSide(color: borderC, width: 1),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: surface,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(BlackLightRadius.input),
+          borderSide: const BorderSide(color: borderC),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(BlackLightRadius.input),
+          borderSide: const BorderSide(color: borderC),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(BlackLightRadius.input),
+          borderSide: const BorderSide(color: BlackLightColors.accent, width: 1),
+        ),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        hintStyle: BlackLightTextStyles.caption(color: bodyC),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: BlackLightColors.accent,
+          foregroundColor: Colors.white,
+          elevation: 0,
+          shadowColor: Colors.transparent,
+          minimumSize: const Size(64, BlackLightSpacing.buttonHeight),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          shape: const StadiumBorder(),
+          textStyle: BlackLightTextStyles.bodyBold(color: Colors.white),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: BlackLightColors.accent,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          side: const BorderSide(color: BlackLightColors.accent, width: 1),
+          minimumSize: const Size(64, BlackLightSpacing.buttonHeight),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          shape: const StadiumBorder(),
+          textStyle: BlackLightTextStyles.bodyBold(color: BlackLightColors.accent),
+        ),
+      ),
+      cardTheme: CardThemeData(
+        color: surface,
+        elevation: 0,
+        shadowColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(BlackLightRadius.card),
+          side: const BorderSide(color: borderC, width: 1),
+        ),
+        margin: EdgeInsets.zero,
+      ),
+      dividerTheme: const DividerThemeData(
+        color: borderC,
+        thickness: 1,
+        space: 0,
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: surface,
+        selectedItemColor: BlackLightColors.accent,
+        unselectedItemColor: bodyC,
+        elevation: 0,
+        type: BottomNavigationBarType.fixed,
+      ),
+    );
+  }
+}
+
 ThemeData buildBlackLightTheme() {
   final baseSans = BlackLightTextStyles.body();
   return ThemeData(

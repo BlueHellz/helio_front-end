@@ -495,3 +495,519 @@ class _EmptyHousePainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+
+/// Richer hero art: isometric house + sun rays (landing hero right rail).
+class LandingHeroIsometricIllustration extends StatelessWidget {
+  final double width;
+  final double height;
+
+  const LandingHeroIsometricIllustration({
+    super.key,
+    this.width = 480,
+    this.height = 400,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width,
+      height: height,
+      child: CustomPaint(painter: _LandingHeroSolarPainter()),
+    );
+  }
+}
+
+class _LandingHeroSolarPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    _IsometricHousePainter().paint(canvas, size);
+
+    final rayPaint = Paint()
+      ..color = BlackLightColors.accent.withValues(alpha: 0.35)
+      ..strokeWidth = 1
+      ..style = PaintingStyle.stroke;
+    final sunCenter = Offset(size.width * 0.82, size.height * 0.12);
+    for (int i = 0; i < 9; i++) {
+      final angle = -math.pi * 0.35 + (i / 8) * math.pi * 0.45;
+      final len = size.shortestSide * 0.5;
+      canvas.drawLine(
+        sunCenter,
+        sunCenter + Offset(math.cos(angle) * len, math.sin(angle) * len),
+        rayPaint,
+      );
+    }
+    final sunCore = Paint()
+      ..color = BlackLightColors.amber.withValues(alpha: 0.9)
+      ..style = PaintingStyle.fill;
+    canvas.drawCircle(sunCenter, 10, sunCore);
+    canvas.drawCircle(
+      sunCenter,
+      10,
+      Paint()
+        ..color = BlackLightColors.border
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+/// Small isometric-style icons for landing “How it works” (40×40).
+class LandingHowItWorksIsoIcon extends StatelessWidget {
+  final int stepIndex;
+
+  const LandingHowItWorksIsoIcon({super.key, required this.stepIndex});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 40,
+      height: 40,
+      child: CustomPaint(painter: _HowItWorksIsoPainter(stepIndex)),
+    );
+  }
+}
+
+class _HowItWorksIsoPainter extends CustomPainter {
+  _HowItWorksIsoPainter(this.stepIndex);
+  final int stepIndex;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final border = Paint()
+      ..color = BlackLightColors.border
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1;
+    final fill = Paint()
+      ..color = BlackLightColors.surface
+      ..style = PaintingStyle.fill;
+    final acc = Paint()
+      ..color = BlackLightColors.accent
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1;
+
+    if (stepIndex == 0) {
+      final r = RRect.fromRectAndRadius(
+        Rect.fromLTWH(6, 10, 28, 22),
+        const Radius.circular(2),
+      );
+      canvas.drawRRect(r, fill);
+      canvas.drawRRect(r, border);
+      canvas.drawCircle(const Offset(20, 8), 4, fill);
+      canvas.drawCircle(const Offset(20, 8), 4, acc);
+    } else if (stepIndex == 1) {
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(
+            Rect.fromLTWH(8, 6, 24, 28), const Radius.circular(2)),
+        fill,
+      );
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(
+            Rect.fromLTWH(8, 6, 24, 28), const Radius.circular(2)),
+        border,
+      );
+      for (double y = 14.0; y < 28; y += 5) {
+        canvas.drawLine(Offset(12, y), Offset(28, y), acc);
+      }
+    } else {
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(
+            Rect.fromLTWH(6, 8, 28, 26), const Radius.circular(2)),
+        fill,
+      );
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(
+            Rect.fromLTWH(6, 8, 28, 26), const Radius.circular(2)),
+        border,
+      );
+      canvas.drawLine(const Offset(20, 12), const Offset(26, 22), acc);
+      canvas.drawLine(const Offset(20, 12), const Offset(14, 22), acc);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+/// Browser-frame mockup: chat + roof sketch (homeowner workflow).
+class BrowserMockupHomeownerIllustration extends StatelessWidget {
+  final double width;
+  final double height;
+
+  const BrowserMockupHomeownerIllustration({
+    super.key,
+    this.width = 420,
+    this.height = 260,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width,
+      height: height,
+      child: CustomPaint(painter: _BrowserHomeownerPainter()),
+    );
+  }
+}
+
+class _BrowserHomeownerPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    _paintBrowserChrome(canvas, size);
+
+    final inner = Rect.fromLTWH(14, 48, size.width - 28, size.height - 62);
+    final roofTop = inner.top + 8.0;
+    final path = Path()
+      ..moveTo(inner.left + inner.width * 0.5, roofTop)
+      ..lineTo(inner.right - 16, roofTop + 48)
+      ..lineTo(inner.left + 16, roofTop + 48)
+      ..close();
+    canvas.drawPath(path, Paint()..color = BlackLightColors.surface);
+    canvas.drawPath(path, Paint()
+      ..color = BlackLightColors.border
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1);
+    final panelP = Paint()
+      ..color = BlackLightColors.green.withValues(alpha: 0.35)
+      ..style = PaintingStyle.fill;
+    for (int i = 0; i < 4; i++) {
+      final r = RRect.fromRectAndRadius(
+        Rect.fromLTWH(
+            inner.left + 28.0 + i * 22, roofTop + 14, 18, 14),
+        const Radius.circular(2),
+      );
+      canvas.drawRRect(r, panelP);
+      canvas.drawRRect(
+        r,
+        Paint()
+          ..color = BlackLightColors.accent
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 0.6,
+      );
+    }
+
+    final bubble = RRect.fromRectAndRadius(
+      Rect.fromLTWH(inner.left + 12, inner.bottom - 72, inner.width * 0.65, 48),
+      const Radius.circular(10),
+    );
+    canvas.drawRRect(bubble, Paint()..color = BlackLightColors.background);
+    canvas.drawRRect(
+      bubble,
+      Paint()
+        ..color = BlackLightColors.accent
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1,
+    );
+    for (int i = 0; i < 3; i++) {
+      canvas.drawLine(
+        Offset(bubble.outerRect.left + 14, bubble.outerRect.top + 14.0 + i * 12),
+        Offset(bubble.outerRect.right - 40, bubble.outerRect.top + 14.0 + i * 12),
+        Paint()
+          ..color = BlackLightColors.border
+          ..strokeWidth = 1,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+/// Browser-frame mockup: sidebar + KPI cards (installer).
+class BrowserMockupOrgDashboardIllustration extends StatelessWidget {
+  final double width;
+  final double height;
+
+  const BrowserMockupOrgDashboardIllustration({
+    super.key,
+    this.width = 420,
+    this.height = 260,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width,
+      height: height,
+      child: CustomPaint(painter: _BrowserOrgDashPainter()),
+    );
+  }
+}
+
+class _BrowserOrgDashPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    _paintBrowserChrome(canvas, size);
+    final inner = Rect.fromLTWH(14, 48, size.width - 28, size.height - 62);
+    final sidebar = RRect.fromRectAndRadius(
+      Rect.fromLTWH(inner.left + 4, inner.top + 4, 48, inner.height - 8),
+      const Radius.circular(6),
+    );
+    canvas.drawRRect(sidebar, Paint()..color = BlackLightColors.background);
+    canvas.drawRRect(
+      sidebar,
+      Paint()
+        ..color = BlackLightColors.border
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1,
+    );
+    for (int i = 0; i < 4; i++) {
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(
+          Rect.fromLTWH(
+              sidebar.outerRect.left + 8, sidebar.outerRect.top + 12.0 + i * 20, 32, 8),
+          const Radius.circular(2),
+        ),
+        Paint()..color = BlackLightColors.border.withValues(alpha: 0.4),
+      );
+    }
+
+    final originX = sidebar.outerRect.right + 12.0;
+    final originY = inner.top + 8;
+    final cardW = (inner.right - originX - 8) / 2;
+    for (int c = 0; c < 2; c++) {
+      for (int r = 0; r < 2; r++) {
+        final card = RRect.fromRectAndRadius(
+          Rect.fromLTWH(
+              originX + c * (cardW + 8), originY + r * 56, cardW, 48),
+          const Radius.circular(8),
+        );
+        canvas.drawRRect(card, Paint()..color = BlackLightColors.surface);
+        canvas.drawRRect(
+          card,
+          Paint()
+            ..color = BlackLightColors.border
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 1,
+        );
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(
+            Rect.fromLTWH(
+                card.outerRect.left + 12, card.outerRect.top + 14, cardW * 0.35, 8),
+            const Radius.circular(2),
+          ),
+          Paint()..color = BlackLightColors.accent.withValues(alpha: 0.3),
+        );
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+void _paintBrowserChrome(Canvas canvas, Size size) {
+  final outer = RRect.fromRectAndRadius(
+    Rect.fromLTWH(0, 0, size.width, size.height),
+    Radius.circular(BlackLightRadius.card),
+  );
+  canvas.drawRRect(outer, Paint()..color = BlackLightColors.surface);
+  canvas.drawRRect(
+    outer,
+    Paint()
+      ..color = BlackLightColors.border
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1,
+  );
+  for (int i = 0; i < 3; i++) {
+    canvas.drawCircle(Offset(18.0 + i * 14, 22), 4,
+        Paint()..color = BlackLightColors.border);
+  }
+  final bar = RRect.fromRectAndRadius(
+    Rect.fromLTWH(54, 14, size.width - 68, 18),
+    const Radius.circular(6),
+  );
+  canvas.drawRRect(bar, Paint()..color = BlackLightColors.background);
+  canvas.drawRRect(
+    bar,
+    Paint()
+      ..color = BlackLightColors.border
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1,
+  );
+}
+
+/// EV marketing hero: isometric car + pedestal charger (~200px tall).
+class IsometricEvCarChargerIllustration extends StatelessWidget {
+  final double width;
+  final double height;
+
+  const IsometricEvCarChargerIllustration({
+    super.key,
+    this.width = 360,
+    this.height = 200,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width,
+      height: height,
+      child: CustomPaint(painter: _EvIsoPainter()),
+    );
+  }
+}
+
+class _EvIsoPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final border = Paint()
+      ..color = BlackLightColors.border
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1;
+    final fill = Paint()..color = BlackLightColors.surface;
+    final cx = size.width * 0.5;
+    final cy = size.height * 0.62;
+
+    // Charger base
+    final base = Path()
+      ..moveTo(cx - 18, cy + 28)
+      ..lineTo(cx + 8, cy + 18)
+      ..lineTo(cx + 28, cy + 28)
+      ..lineTo(cx + 2, cy + 38)
+      ..close();
+    canvas.drawPath(base, fill);
+    canvas.drawPath(base, border);
+
+    // Pedestal
+    final ped = Path()
+      ..moveTo(cx + 8, cy + 18)
+      ..lineTo(cx + 8, cy - 8)
+      ..lineTo(cx + 22, cy + 2)
+      ..lineTo(cx + 22, cy + 22);
+    canvas.drawPath(
+      ped,
+      Paint()
+        ..color = BlackLightColors.background
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1,
+    );
+
+    // Cable arc
+    canvas.drawPath(
+      Path()
+        ..moveTo(cx + 18, cy - 4)
+        ..quadraticBezierTo(cx - 10, cy - 40, cx - 52, cy - 12),
+      Paint()
+        ..color = BlackLightColors.accent
+        ..strokeWidth = 1.2
+        ..style = PaintingStyle.stroke,
+    );
+
+    // Car body (isometric box)
+    final car = Path()
+      ..moveTo(cx - 70, cy - 20)
+      ..lineTo(cx - 10, cy - 48)
+      ..lineTo(cx + 38, cy - 22)
+      ..lineTo(cx + 38, cy + 6)
+      ..lineTo(cx - 22, cy + 22)
+      ..lineTo(cx - 70, cy - 4)
+      ..close();
+    canvas.drawPath(car, fill);
+    canvas.drawPath(car, border);
+
+    // Window strip
+    canvas.drawPath(
+      Path()
+        ..moveTo(cx - 48, cy - 14)
+        ..lineTo(cx - 18, cy - 32)
+        ..lineTo(cx + 18, cy - 14)
+        ..lineTo(cx - 12, cy + 0)
+        ..close(),
+      Paint()..color = BlackLightColors.accent.withValues(alpha: 0.12),
+    );
+
+    // Connector head
+    canvas.drawCircle(Offset(cx - 52, cy - 12), 5,
+        Paint()..color = BlackLightColors.accent);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+/// Pool “How it works”: stylised figures around a solar roof island.
+class IsometricPoolCommunityIllustration extends StatelessWidget {
+  final double width;
+  final double height;
+
+  const IsometricPoolCommunityIllustration({
+    super.key,
+    this.width = 320,
+    this.height = 140,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width,
+      height: height,
+      child: CustomPaint(painter: _PoolPeopleRoofPainter()),
+    );
+  }
+}
+
+class _PoolPeopleRoofPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final cx = size.width / 2;
+    final cy = size.height * 0.55;
+    final roof = Path()
+      ..moveTo(cx, cy - 36)
+      ..lineTo(cx + 88, cy + 6)
+      ..lineTo(cx, cy + 38)
+      ..lineTo(cx - 88, cy + 6)
+      ..close();
+    canvas.drawPath(roof, Paint()..color = BlackLightColors.surface);
+    canvas.drawPath(
+      roof,
+      Paint()
+        ..color = BlackLightColors.border
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1,
+    );
+    final panel = Paint()..color = BlackLightColors.green.withValues(alpha: 0.28);
+    for (int i = -2; i <= 2; i++) {
+      final r = RRect.fromRectAndRadius(
+        Rect.fromLTWH(cx + i * 14.0 - 10, cy - 4 + i * 3.0, 22, 12),
+        const Radius.circular(2),
+      );
+      canvas.drawRRect(r, panel);
+      canvas.drawRRect(
+        r,
+        Paint()
+          ..color = BlackLightColors.accent
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 0.6,
+      );
+    }
+
+    void person(Offset o, Color c) {
+      canvas.drawCircle(o, 5, Paint()..color = c);
+      final b = Path()
+        ..moveTo(o.dx - 6, o.dy + 20)
+        ..lineTo(o.dx + 6, o.dy + 20)
+        ..lineTo(o.dx + 4, o.dy + 8)
+        ..lineTo(o.dx - 4, o.dy + 8)
+        ..close();
+      canvas.drawPath(b, Paint()..color = c.withValues(alpha: 0.35));
+      canvas.drawPath(
+        b,
+        Paint()
+          ..color = BlackLightColors.border
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 0.8,
+      );
+    }
+
+    person(Offset(cx - 108, cy + 18), BlackLightColors.accent);
+    person(Offset(cx + 108, cy + 18), BlackLightColors.textBody);
+    person(Offset(cx - 40, cy + 52), BlackLightColors.green);
+    person(Offset(cx + 44, cy + 52), BlackLightColors.textBody);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}

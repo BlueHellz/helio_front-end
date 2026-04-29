@@ -7,6 +7,16 @@ class HomeownerDashboardContent {
   static const dashboardSubtitle =
       'View your designs, savings, and next steps.';
   static const newDesign = 'New Design';
+  static const heroCardTitle = 'Start a New Design';
+  static const heroCardBody =
+      'Get an AI solar layout, savings estimate, and next steps in minutes.';
+  static const designMySystemCta = 'Design My System';
+  static const metricTotalSavings = 'Total Savings';
+  static const metricSystemsInstalled = 'Systems Installed';
+  static const metricEnergyProduced = 'Energy Produced';
+  static const metricPlaceholder = '0';
+  static const emptyStateMessage =
+      'You have no projects yet. Start with a new design above.';
   static const noDesignsTitle = 'No designs yet.';
   static const noDesignsBody =
       'Start your first AI solar design. Takes less than five minutes.';

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart' hide ChangeNotifierProvider;
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    hide Consumer, ChangeNotifierProvider;
 import 'package:provider/provider.dart';
 
 import 'app_state.dart';
+import 'content/content_registry.dart';
+import 'providers/theme_provider.dart';
 import '../theme/blacklight_theme.dart';
 import 'router.dart';
 import 'providers/session_providers.dart';
@@ -15,11 +18,17 @@ class BlackLightApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => BlackLightAppState(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Black Light',
-        theme: buildBlackLightTheme(),
-        home: const _HydratedSessionHome(),
+      child: Consumer<BlackLightAppState>(
+        builder: (context, appState, _) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: CommonContent.appName,
+            themeMode: blackLightThemeMode(appState),
+            theme: BlackLightTheme.lightTheme(),
+            darkTheme: BlackLightTheme.darkTheme(),
+            home: const _HydratedSessionHome(),
+          );
+        },
       ),
     );
   }

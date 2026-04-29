@@ -40,6 +40,7 @@ export 'org/chat_design.dart';
 export 'org/crm/board.dart';
 export 'org/crm/deal_detail.dart';
 export 'org/dashboard.dart';
+export 'org/premium_dashboard.dart';
 export 'org/mobile_installer.dart';
 export 'org/new_project.dart';
 export 'org/project_detail.dart';

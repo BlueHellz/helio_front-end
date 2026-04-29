@@ -58,7 +58,7 @@ class AuthenticatedShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BlackLightColors.background,
+      backgroundColor: BlackLightAdaptive.background(context),
       body: Row(
         children: [
           _Sidebar(
@@ -108,10 +108,11 @@ class _Sidebar extends StatelessWidget {
     return Container(
       width: BlackLightSpacing.sidebarWidth,
       height: double.infinity,
-      decoration: const BoxDecoration(
-        color: BlackLightColors.sidebarBg,
-        border:
-            Border(right: BorderSide(color: BlackLightColors.sidebarBorder)),
+      decoration: BoxDecoration(
+        color: BlackLightAdaptive.sidebarBg(context),
+        border: Border(
+          right: BorderSide(color: BlackLightAdaptive.sidebarBorder(context)),
+        ),
       ),
       child: Column(
         children: [
@@ -156,19 +157,21 @@ class _Sidebar extends StatelessWidget {
                       width: 32,
                       height: 32,
                       decoration: BoxDecoration(
-                        color: BlackLightColors.surface,
+                        color: BlackLightAdaptive.surface(context),
                         borderRadius: BorderRadius.circular(999),
-                        border: Border.all(color: BlackLightColors.border),
+                        border: Border.all(
+                            color: BlackLightAdaptive.border(context)),
                       ),
-                      child: const Icon(Icons.person_outline,
-                          size: 18, color: BlackLightColors.textBody),
+                      child: Icon(Icons.person_outline,
+                          size: 18, color: BlackLightAdaptive.textBody(context)),
                     ),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
                         userName.isEmpty ? NavigationContent.shellUserFallback : userName,
                         style: BlackLightTextStyles.body(
-                                color: BlackLightColors.textPrimary)
+                                color:
+                                    BlackLightAdaptive.textPrimary(context))
                             .copyWith(
                                 fontSize: 13, fontWeight: FontWeight.w500),
                         overflow: TextOverflow.ellipsis,
@@ -181,13 +184,14 @@ class _Sidebar extends StatelessWidget {
                   onTap: onSignOut,
                   child: Row(
                     children: [
-                      const Icon(Icons.logout_outlined,
-                          size: 16, color: BlackLightColors.textCaption),
+                      Icon(Icons.logout_outlined,
+                          size: 16,
+                          color: BlackLightAdaptive.textCaption(context)),
                       const SizedBox(width: 8),
                       Text(
                         NavigationContent.shellSignOut,
                         style: BlackLightTextStyles.caption(
-                            color: BlackLightColors.textCaption),
+                            color: BlackLightAdaptive.textCaption(context)),
                       ),
                     ],
                   ),
@@ -219,8 +223,10 @@ class _SidebarNavItem extends StatelessWidget {
       child: Container(
         height: 48,
         decoration: BoxDecoration(
-          color:
-              isActive ? BlackLightColors.sidebarActiveBg : Colors.transparent,
+            color:
+                isActive
+                    ? BlackLightColors.sidebarActiveBg
+                    : Colors.transparent,
           border: isActive
               ? const Border(
                   left: BorderSide(
@@ -237,7 +243,7 @@ class _SidebarNavItem extends StatelessWidget {
               size: 20,
               color: isActive
                   ? BlackLightColors.sidebarActiveText
-                  : BlackLightColors.sidebarInactiveText,
+                  : BlackLightAdaptive.textBody(context),
             ),
             const SizedBox(width: 12),
             Text(
@@ -245,7 +251,7 @@ class _SidebarNavItem extends StatelessWidget {
               style: BlackLightTextStyles.body(
                 color: isActive
                     ? BlackLightColors.sidebarActiveText
-                    : BlackLightColors.sidebarInactiveText,
+                    : BlackLightAdaptive.textBody(context),
               ).copyWith(
                 fontSize: 14,
                 fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,

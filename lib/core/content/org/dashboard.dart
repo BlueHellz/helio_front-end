@@ -7,6 +7,24 @@ class OrgDashboardContent {
   static const crmPipeline = 'CRM Pipeline';
   static const newProject = 'New Project';
 
+  static const welcomeLine =
+      'Welcome back — here is a snapshot of your pipeline.';
+  static const quickActionNewProject = 'New Project';
+  static const quickActionImportLeads = 'Import Leads';
+
+  static const freeMetricActiveProjects = 'Active Projects';
+  static const freeMetricPipelineValue = 'Pipeline Value';
+  static const freeMetricClosedMonth = 'Closed This Month';
+  static const freeMetricAvgCloseTime = 'Avg. Close Time';
+  static const freeMetricPlaceholderMoney = r'$0';
+  static const freeMetricPlaceholderZero = '0';
+  static const freeMetricPlaceholderDash = '—';
+
+  static const recentProjectsHeading = 'Recent Projects';
+  static const emptyInstallerTitle = 'No projects yet';
+  static const emptyInstallerBody =
+      'Create a project or import leads from CRM to see them here.';
+
   static const kpiTotalProjects = 'Total Projects';
   static const kpiActive = 'Active';
   static const kpiCompleted = 'Completed';

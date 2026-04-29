@@ -65,4 +65,12 @@ class LandingContent {
   static const forBusinessDialogTitle = 'Black Light for businesses';
   static const forBusinessDialogMessage =
       'The installer and enterprise portal includes CRM, project tracking, and AI design tools. Sign in to explore — full onboarding connects when the backend is live.';
+
+  // In-product mockups
+  static const seeLightInActionTitle = 'See Light in Action';
+  static const seeLightInActionSubtitle =
+      'Geometric previews of real workflows — chat-first design for homeowners '
+      'and operations control for your team.';
+  static const mockupHomeownerCaption = 'Homeowner · AI design chat';
+  static const mockupOrgCaption = 'Installer · team dashboard';
 }
