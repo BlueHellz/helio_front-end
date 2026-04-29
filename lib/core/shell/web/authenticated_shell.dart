@@ -22,11 +22,12 @@ const _homeownerSidebarItems = [
   _SidebarItem(NavigationContent.sidebarHelp, Icons.help_outline),
 ];
 
-/// Business / installer: includes CRM (not available to homeowners).
+/// Business / installer — order MUST match `_OrgFlow` indices in `router.dart`:
+/// 0 Projects, 1 New Design, 2 CRM, 3 Wallet, 4 Settings (hub), 5 Help.
 const _orgSidebarItems = [
   _SidebarItem(NavigationContent.sidebarProjects, Icons.folder_outlined),
   _SidebarItem(NavigationContent.sidebarNewDesign, Icons.add_circle_outline),
-  _SidebarItem(NavigationContent.sidebarCrm, Icons.group_outlined),
+  _SidebarItem(NavigationContent.sidebarCrm, Icons.view_kanban_outlined),
   _SidebarItem(NavigationContent.sidebarWallet, Icons.account_balance_wallet_outlined),
   _SidebarItem(NavigationContent.sidebarSettings, Icons.settings_outlined),
   _SidebarItem(NavigationContent.sidebarHelp, Icons.help_outline),

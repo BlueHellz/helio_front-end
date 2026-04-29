@@ -8,6 +8,7 @@ import 'package:blacklight_app/core/content/content_registry.dart';
 import 'app_state.dart';
 import 'providers/session_providers.dart';
 import 'ui/app_feedback.dart';
+import '../theme/blacklight_theme.dart';
 
 // Web shells
 import 'shell/web/authenticated_shell.dart';
@@ -288,34 +289,7 @@ class _OrgFlowState extends State<_OrgFlow> {
           },
         ),
       4 => const OrgSettingsHubPage(),
-      5 => SettingsWallet(
-          userName: state.userName,
-          companyName: state.companyName,
-          onSignOut: _signOut,
-          onConnectWallet: () => _openWalletConnect(state),
-          onEditUserName: () async {
-            final v = await AppFeedback.showEditStringDialog(
-              context,
-              title: RouterStrings.editFullNameTitle,
-              initial: state.userName,
-            );
-            if (v != null && v.isNotEmpty) {
-              state.updateLocalProfile(userName: v);
-            }
-          },
-          onEditEmail: () => AppFeedback.comingSoon(
-                context,
-                feature: FeedbackStrings.featureEmailChanges,
-              ),
-          onEditCompany: () async {
-            final v = await AppFeedback.showEditStringDialog(
-              context,
-              title: RouterStrings.editCompanyNameTitle,
-              initial: state.companyName,
-            );
-            if (v != null) state.updateLocalProfile(companyName: v);
-          },
-        ),
+      5 => const _OrgWebHelpPage(),
       _ => OrgProjectsPage(
           orgName: state.companyName,
           walletBalance: state.hlioBalance,
@@ -330,6 +304,38 @@ class _OrgFlowState extends State<_OrgFlow> {
       onNavTap: state.setWebSidebarIndex,
       onSignOut: _signOut,
       child: contentBody,
+    );
+  }
+}
+
+/// Installer web sidebar — Help (index 5).
+class _OrgWebHelpPage extends StatelessWidget {
+  const _OrgWebHelpPage();
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BlackLightSpacing.gutter),
+      child: Align(
+        alignment: Alignment.topLeft,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 560),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                NavigationContent.sidebarHelp,
+                style: BlackLightTextStyles.sectionHeading(),
+              ),
+              const SizedBox(height: BlackLightSpacing.md),
+              Text(
+                RouterStrings.orgWebHelpBody,
+                style: BlackLightTextStyles.body(),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
