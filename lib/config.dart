@@ -1,5 +1,6 @@
 class BlackLightConfig {
-  /// Temporary: align with backend `BYPASS_AUTH` — installer/org shell only while bypass is on.
+  /// When true, matches backend `BYPASS_AUTH`: missing API role defaults to installer/org routing.
+  /// Set to `false` in production together with backend bypass off.
   static const bool bypassMode = true;
 
   /// Production API (host is composed at runtime to keep literals out of the tree).
