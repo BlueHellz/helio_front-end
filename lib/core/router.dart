@@ -26,7 +26,8 @@ import 'package:blacklight_app/features/light/pool_funding/web/pool_info_page.da
 import 'package:blacklight_app/features/light/ev/ev_info_page.dart';
 
 import 'package:blacklight_app/features/light/installer/org/new_project_page.dart';
-import 'package:blacklight_app/features/light/installer/org/crm_board_page.dart';
+import 'package:blacklight_app/core/providers/theme_provider.dart';
+import 'package:blacklight_app/features/black_light/crm_board_page.dart';
 import 'package:blacklight_app/features/light/installer/org/org_settings_hub_page.dart';
 
 import 'package:blacklight_app/features/light/installer/mobile_shell.dart';
@@ -314,14 +315,17 @@ class _OrgFlowState extends State<_OrgFlow> {
             ),
     };
 
-    return AuthenticatedShell(
-      activeIndex: idx,
-      isOrganization: true,
-      userName: state.userName,
-      hlioBalance: state.hlioBalance,
-      onNavTap: state.setWebSidebarIndex,
-      onSignOut: _signOut,
-      child: contentBody,
+    return wrapPremiumBlackLightShell(
+      state,
+      AuthenticatedShell(
+        activeIndex: idx,
+        isOrganization: true,
+        userName: state.userName,
+        hlioBalance: state.hlioBalance,
+        onNavTap: state.setWebSidebarIndex,
+        onSignOut: _signOut,
+        child: contentBody,
+      ),
     );
   }
 }
@@ -343,12 +347,12 @@ class _OrgWebHelpPage extends StatelessWidget {
             children: [
               Text(
                 NavigationContent.sidebarHelp,
-                style: BlackLightTextStyles.sectionHeading(),
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
               const SizedBox(height: BlackLightSpacing.md),
               Text(
                 RouterStrings.orgWebHelpBody,
-                style: BlackLightTextStyles.body(),
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
           ),
@@ -472,10 +476,13 @@ class _MobileAuthenticatedFlowState extends State<_MobileAuthenticatedFlow> {
             ),
     };
 
-    return MobileShell(
-      activeIndex: idx,
-      onNavTap: state.setMobileNavIndex,
-      child: body,
+    return wrapPremiumBlackLightShell(
+      state,
+      MobileShell(
+        activeIndex: idx,
+        onNavTap: state.setMobileNavIndex,
+        child: body,
+      ),
     );
   }
 }

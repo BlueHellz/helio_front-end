@@ -22,7 +22,7 @@ class PreAuthShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BlackLightColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -63,9 +63,11 @@ class _PreAuthNavbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: BlackLightSpacing.navbarHeight,
-      decoration: const BoxDecoration(
-        color: BlackLightColors.surface,
-        border: Border(bottom: BorderSide(color: BlackLightColors.border)),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        border: Border(
+          bottom: BorderSide(color: Theme.of(context).colorScheme.outline),
+        ),
       ),
       child: Center(
         child: ConstrainedBox(
@@ -170,9 +172,11 @@ class _BlackLightFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: BlackLightSpacing.footerHeight,
-      decoration: const BoxDecoration(
-        color: BlackLightColors.background,
-        border: Border(top: BorderSide(color: BlackLightColors.border)),
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        border: Border(
+          top: BorderSide(color: Theme.of(context).colorScheme.outline),
+        ),
       ),
       child: Center(
         child: Wrap(
@@ -180,8 +184,9 @@ class _BlackLightFooter extends StatelessWidget {
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             Text(FooterContent.copyrightLine,
-                style: BlackLightTextStyles.caption(
-                    color: BlackLightColors.footerText)),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    )),
             _FooterLink(
               label: FooterContent.privacyLink,
               onTap: () {
@@ -236,8 +241,9 @@ class _FooterLink extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
           child: Text(
             label,
-            style:
-                BlackLightTextStyles.caption(color: BlackLightColors.footerText),
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
           ),
         ),
       ),

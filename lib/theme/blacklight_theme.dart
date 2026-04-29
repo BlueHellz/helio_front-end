@@ -232,6 +232,32 @@ class BlackLightAdaptive {
       : BlackLightColors.sidebarHoverBg;
 }
 
+/// Theme tokens via `context.colors` — prefer over hardcoded hex in widgets.
+class BlackLightPalette {
+  BlackLightPalette(this._context);
+  final BuildContext _context;
+
+  ThemeData get _t => Theme.of(_context);
+  Brightness get brightness => _t.brightness;
+
+  Color get scaffold => _t.scaffoldBackgroundColor;
+  Color get surface => _t.colorScheme.surface;
+  Color get onSurface => _t.colorScheme.onSurface;
+  Color get outline => _t.colorScheme.outline;
+  Color get primary => _t.colorScheme.primary;
+  Color get onPrimary => _t.colorScheme.onPrimary;
+  Color get error => _t.colorScheme.error;
+
+  /// Secondary fill for nested cards / column bodies.
+  Color get surfaceMuted => brightness == Brightness.dark
+      ? BlackLightDarkColors.background
+      : BlackLightColors.background;
+}
+
+extension BlackLightContextPalette on BuildContext {
+  BlackLightPalette get colors => BlackLightPalette(this);
+}
+
 class BlackLightTheme {
   BlackLightTheme._();
 
@@ -249,6 +275,8 @@ class BlackLightTheme {
       useMaterial3: true,
       brightness: Brightness.dark,
       scaffoldBackgroundColor: bg,
+      canvasColor: bg,
+      cardColor: surface,
       colorScheme: const ColorScheme.dark(
         primary: BlackLightColors.accent,
         onPrimary: Colors.white,
@@ -258,6 +286,7 @@ class BlackLightTheme {
         surface: surface,
         onSurface: onSurf,
         outline: borderC,
+        onSurfaceVariant: bodyC,
       ),
       fontFamily: null,
       iconTheme: IconThemeData(
@@ -266,8 +295,14 @@ class BlackLightTheme {
       ),
       textTheme: TextTheme(
         displayLarge: BlackLightTextStyles.hero(color: onSurf),
+        displayMedium: BlackLightTextStyles.sectionHeading(color: onSurf),
+        displaySmall: BlackLightTextStyles.cardHeading(color: onSurf),
         headlineLarge: BlackLightTextStyles.sectionHeading(color: onSurf),
+        headlineMedium: BlackLightTextStyles.sectionHeading(color: onSurf),
+        headlineSmall: BlackLightTextStyles.cardHeading(color: onSurf),
         titleLarge: BlackLightTextStyles.cardHeading(color: onSurf),
+        titleMedium: BlackLightTextStyles.bodyBold(color: onSurf),
+        titleSmall: BlackLightTextStyles.bodyBold(color: onSurf),
         bodyLarge: baseSans,
         bodyMedium: baseSans,
         bodySmall: BlackLightTextStyles.caption(color: bodyC),
@@ -275,8 +310,13 @@ class BlackLightTheme {
         labelMedium: BlackLightTextStyles.caption(color: bodyC),
         labelSmall: BlackLightTextStyles.caption(color: bodyC),
       ),
+      primaryTextTheme: TextTheme(
+        bodyLarge: BlackLightTextStyles.bodyBold(color: Colors.white),
+        bodyMedium: BlackLightTextStyles.bodyBold(color: Colors.white),
+      ),
       appBarTheme: AppBarTheme(
         backgroundColor: surface,
+        foregroundColor: onSurf,
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
@@ -352,6 +392,39 @@ class BlackLightTheme {
         elevation: 0,
         type: BottomNavigationBarType.fixed,
       ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: surface,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(BlackLightRadius.card),
+          side: const BorderSide(color: borderC, width: 1),
+        ),
+        titleTextStyle: BlackLightTextStyles.cardHeading(color: onSurf),
+        contentTextStyle: baseSans,
+      ),
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: surface,
+        contentTextStyle: baseSans,
+        actionTextColor: BlackLightColors.accent,
+        behavior: SnackBarBehavior.floating,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(BlackLightRadius.md),
+          side: const BorderSide(color: borderC, width: 1),
+        ),
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: BlackLightColors.accent,
+        foregroundColor: Colors.white,
+        elevation: 0,
+      ),
+      dropdownMenuTheme: DropdownMenuThemeData(
+        menuStyle: MenuStyle(
+          backgroundColor: WidgetStatePropertyAll(surface),
+          side: const WidgetStatePropertyAll(BorderSide(color: borderC)),
+        ),
+        textStyle: baseSans,
+      ),
     );
   }
 }
@@ -370,6 +443,8 @@ ThemeData buildBlackLightTheme() {
       error: BlackLightColors.error,
       surface: BlackLightColors.surface,
       onSurface: BlackLightColors.textPrimary,
+      outline: BlackLightColors.border,
+      onSurfaceVariant: BlackLightColors.textCaption,
     ),
     fontFamily: null,
     iconTheme: const IconThemeData(

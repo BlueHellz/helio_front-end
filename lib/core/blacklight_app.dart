@@ -25,6 +25,8 @@ class BlackLightApp extends StatelessWidget {
             title: CommonContent.appName,
             themeMode: blackLightThemeMode(appState),
             theme: BlackLightTheme.lightTheme(),
+            // Kept for API completeness; root never uses ThemeMode.dark — premium
+            // org chrome is wrapped with [wrapPremiumBlackLightShell] in the router.
             darkTheme: BlackLightTheme.darkTheme(),
             home: const _HydratedSessionHome(),
           );

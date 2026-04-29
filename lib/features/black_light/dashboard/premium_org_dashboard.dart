@@ -107,8 +107,9 @@ class _PremiumOrgDashboardPageState
                         icon: const Icon(Icons.add, size: 18),
                         label: Text(
                           OrgDashboardContent.quickActionNewProject,
-                          style:
-                              BlackLightTextStyles.bodyBold(color: Colors.white),
+                          style: BlackLightTextStyles.bodyBold(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
                         ),
                       ),
                     ),
