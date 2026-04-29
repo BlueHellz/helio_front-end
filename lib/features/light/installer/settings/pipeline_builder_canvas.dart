@@ -405,6 +405,13 @@ class _PipelineBuilderCanvasState extends ConsumerState<PipelineBuilderCanvas> {
                                         _wirePreviewEndCanvas = null;
                                       });
                                     },
+                                    onPointerCancel: (_) {
+                                      if (_wireFromId == null) return;
+                                      setState(() {
+                                        _wireFromId = null;
+                                        _wirePreviewEndCanvas = null;
+                                      });
+                                    },
                                     child: SizedBox(
                                       key: _canvasKey,
                                       width: _kCanvas,
