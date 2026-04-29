@@ -119,20 +119,25 @@ class OrgSettingsHubPage extends ConsumerWidget {
                     Text(
                       OrgOrgSettingsHubContent.pageTitle,
                       style:
-                          BlackLightTextStyles.sectionHeading(),
+                          BlackLightTextStyles.sectionHeading(
+                              color: context.colors.onSurface),
                     ),
                     const SizedBox(height: BlackLightSpacing.md),
                     SwitchListTile.adaptive(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
                         OrgOrgSettingsHubContent.designModeTitle,
-                        style: BlackLightTextStyles.bodyBold(),
+                        style: BlackLightTextStyles.bodyBold(
+                            color: context.colors.onSurface),
                       ),
                       subtitle: Text(
                         enabled
                             ? OrgOrgSettingsHubContent.designModeOnSubtitle
                             : OrgOrgSettingsHubContent.designModeOffSubtitle,
-                        style: BlackLightTextStyles.caption(),
+                        style: BlackLightTextStyles.caption(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurfaceVariant),
                       ),
                       value: enabled,
                       onChanged: (v) => toggleDesign(v),
@@ -164,7 +169,7 @@ class OrgSettingsHubPage extends ConsumerWidget {
   }
 }
 
-/// White card, 1px #E8EAED border, 16px radius, no elevation.
+/// Theme-aware card for settings hub tiles.
 class _SettingsHubCard extends StatelessWidget {
   const _SettingsHubCard({
     required this.title,
@@ -178,13 +183,15 @@ class _SettingsHubCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Material(
-      color: BlackLightColors.surface,
+      color: c.surface,
       elevation: 0,
       shadowColor: Colors.transparent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(BlackLightRadius.card),
-        side: const BorderSide(color: BlackLightColors.border, width: 1),
+        side: BorderSide(color: c.outline, width: 1),
       ),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
@@ -201,14 +208,14 @@ class _SettingsHubCard extends StatelessWidget {
                     Text(
                       title,
                       style: BlackLightTextStyles.bodyBold(
-                        color: BlackLightColors.textPrimary,
+                        color: c.onSurface,
                       ),
                     ),
                     const SizedBox(height: 6),
                     Text(
                       subtitle,
                       style: BlackLightTextStyles.body(
-                        color: BlackLightColors.textBody,
+                        color: variant,
                       ),
                     ),
                   ],
@@ -219,7 +226,7 @@ class _SettingsHubCard extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 2),
                 child: Icon(
                   Icons.chevron_right,
-                  color: BlackLightColors.textCaption,
+                  color: variant,
                   size: 22,
                 ),
               ),

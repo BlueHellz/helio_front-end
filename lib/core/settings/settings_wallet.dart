@@ -39,6 +39,8 @@ class _SettingsWalletState extends State<SettingsWallet> {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return SingleChildScrollView(
       padding: const EdgeInsets.all(BlackLightSpacing.gutter),
       child: ConstrainedBox(
@@ -47,10 +49,11 @@ class _SettingsWalletState extends State<SettingsWallet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(OrgSettingsAccountContent.pageTitle,
-                style: BlackLightTextStyles.sectionHeading()),
+                style: BlackLightTextStyles.sectionHeading(
+                    color: c.onSurface)),
             const SizedBox(height: 4),
             Text(OrgSettingsAccountContent.pageSubtitle,
-                style: BlackLightTextStyles.body()),
+                style: BlackLightTextStyles.body(color: variant)),
             const SizedBox(height: BlackLightSpacing.lg),
 
             // Profile card
@@ -98,12 +101,12 @@ class _SettingsWalletState extends State<SettingsWallet> {
                         width: 44,
                         height: 44,
                         decoration: BoxDecoration(
-                          color: BlackLightColors.surface,
+                          color: c.surface,
                           shape: BoxShape.circle,
-                          border: Border.all(color: BlackLightColors.border),
+                          border: Border.all(color: c.outline),
                         ),
-                        child: const Icon(Icons.account_balance_wallet_outlined,
-                            size: 22, color: BlackLightColors.textBody),
+                        child: Icon(Icons.account_balance_wallet_outlined,
+                            size: 22, color: variant),
                       ),
                       const SizedBox(width: BlackLightSpacing.md),
                       Column(
@@ -111,15 +114,16 @@ class _SettingsWalletState extends State<SettingsWallet> {
                         children: [
                           Text(WalletContent.hlioBalanceLabel,
                               style: BlackLightTextStyles.caption(
-                                  color: BlackLightColors.textCaption)),
+                                  color: variant)),
                           Row(
                             children: [
                               Text(widget.hlioBalance.toStringAsFixed(2),
-                                  style: BlackLightTextStyles.dataLarge()),
+                                  style: BlackLightTextStyles.dataLarge(
+                                      color: c.onSurface)),
                               const SizedBox(width: 6),
                               Text(WalletContent.hlioTicker,
                                   style: BlackLightTextStyles.body(
-                                      color: BlackLightColors.textBody)),
+                                      color: variant)),
                             ],
                           ),
                         ],
@@ -132,12 +136,13 @@ class _SettingsWalletState extends State<SettingsWallet> {
                             onPressed: widget.onConnectWallet,
                             icon: const Icon(Icons.link, size: 16),
                             label: Text(WalletContent.connectWallet,
-                                style: BlackLightTextStyles.caption(
-                                        color: Colors.white)
-                                    .copyWith(fontWeight: FontWeight.w600)),
+                                style: BlackLightTextStyles.caption()
+                                    .copyWith(
+                                        color: c.onPrimary,
+                                        fontWeight: FontWeight.w600)),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: BlackLightColors.accent,
-                              foregroundColor: Colors.white,
+                              backgroundColor: c.primary,
+                              foregroundColor: c.onPrimary,
                               elevation: 0,
                               shape: const StadiumBorder(),
                               padding:
@@ -187,21 +192,22 @@ class _SettingsWalletState extends State<SettingsWallet> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(OrgSettingsAccountContent.signOutDescription,
-                      style: BlackLightTextStyles.body()),
+                  Expanded(
+                    child: Text(OrgSettingsAccountContent.signOutDescription,
+                        style: BlackLightTextStyles.body(color: variant)),
+                  ),
                   SizedBox(
                     height: 44,
                     child: OutlinedButton(
                       onPressed: widget.onSignOut,
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: BlackLightColors.error,
-                        side: const BorderSide(color: BlackLightColors.error),
+                        foregroundColor: c.error,
+                        side: BorderSide(color: c.error),
                         shape: const StadiumBorder(),
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                       ),
                       child: Text(OrgSettingsAccountContent.signOutButton,
-                          style: BlackLightTextStyles.body(
-                                  color: BlackLightColors.error)
+                          style: BlackLightTextStyles.body(color: c.error)
                               .copyWith(fontWeight: FontWeight.w500)),
                     ),
                   ),
@@ -223,18 +229,20 @@ class _SettingsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(BlackLightSpacing.md),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
+        color: c.surface,
         borderRadius: BorderRadius.circular(BlackLightRadius.card),
-        border: Border.all(color: BlackLightColors.border),
+        border: Border.all(color: c.outline),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: BlackLightTextStyles.cardHeading()),
+          Text(title,
+              style: BlackLightTextStyles.cardHeading(color: c.onSurface)),
           const SizedBox(height: BlackLightSpacing.sm),
           const Divider(),
           const SizedBox(height: BlackLightSpacing.sm),
@@ -258,6 +266,8 @@ class _SettingsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Row(
       children: [
         Expanded(
@@ -265,12 +275,11 @@ class _SettingsRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(label.toUpperCase(),
-                  style: BlackLightTextStyles.captionBold()
+                  style: BlackLightTextStyles.captionBold(color: variant)
                       .copyWith(fontSize: 10)),
               const SizedBox(height: 2),
               Text(value,
-                  style: BlackLightTextStyles.body(
-                          color: BlackLightColors.textPrimary)
+                  style: BlackLightTextStyles.body(color: c.onSurface)
                       .copyWith(fontSize: 14)),
             ],
           ),
@@ -280,7 +289,7 @@ class _SettingsRow extends StatelessWidget {
             onTap: onEdit,
             child: Text(OrgSettingsAccountContent.editLink,
                 style:
-                    BlackLightTextStyles.caption(color: BlackLightColors.accent)
+                    BlackLightTextStyles.caption(color: c.primary)
                         .copyWith(fontWeight: FontWeight.w500)),
           ),
       ],
@@ -303,6 +312,8 @@ class _SwitchRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Row(
       children: [
         Expanded(
@@ -310,18 +321,18 @@ class _SwitchRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(label,
-                  style: BlackLightTextStyles.body(
-                          color: BlackLightColors.textPrimary)
+                  style: BlackLightTextStyles.body(color: c.onSurface)
                       .copyWith(fontSize: 14)),
-              Text(description, style: BlackLightTextStyles.caption()),
+              Text(description,
+                  style: BlackLightTextStyles.caption(color: variant)),
             ],
           ),
         ),
         Switch(
           value: value,
           onChanged: onChanged,
-          activeThumbColor: BlackLightColors.accent,
-          activeTrackColor: BlackLightColors.accent,
+          activeThumbColor: c.primary,
+          activeTrackColor: c.primary,
         ),
       ],
     );
@@ -335,15 +346,16 @@ class _AddressChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
     final short = address.length > 12
         ? '${address.substring(0, 6)}...${address.substring(address.length - 4)}'
         : address;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
+        color: c.surface,
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: BlackLightColors.green),
+        border: Border.all(color: c.secondary),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -351,12 +363,12 @@ class _AddressChip extends StatelessWidget {
           Container(
             width: 8,
             height: 8,
-            decoration: const BoxDecoration(
-                color: BlackLightColors.green, shape: BoxShape.circle),
+            decoration: BoxDecoration(
+                color: c.secondary, shape: BoxShape.circle),
           ),
           const SizedBox(width: 6),
           Text(short,
-              style: BlackLightTextStyles.data(color: BlackLightColors.green)),
+              style: BlackLightTextStyles.data(color: c.secondary)),
         ],
       ),
     );
@@ -366,23 +378,26 @@ class _AddressChip extends StatelessWidget {
 class _TxPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(OrgSettingsAccountContent.transactionsHeading,
-            style: BlackLightTextStyles.captionBold().copyWith(fontSize: 10)),
+            style: BlackLightTextStyles.captionBold(color: variant)
+                .copyWith(fontSize: 10)),
         const SizedBox(height: BlackLightSpacing.sm),
         Container(
           padding: const EdgeInsets.all(BlackLightSpacing.md),
           decoration: BoxDecoration(
-            color: BlackLightColors.background,
+            color: c.surfaceMuted,
             borderRadius: BorderRadius.circular(BlackLightRadius.md),
-            border: Border.all(color: BlackLightColors.border),
+            border: Border.all(color: c.outline),
           ),
           child: Center(
             child: Text(
               OrgSettingsAccountContent.transactionsPlaceholder,
-              style: BlackLightTextStyles.caption(),
+              style: BlackLightTextStyles.caption(color: variant),
               textAlign: TextAlign.center,
             ),
           ),

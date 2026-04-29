@@ -83,7 +83,7 @@ class _OrgProjectDetailPageState extends ConsumerState<OrgProjectDetailPage> {
     final customMap = custom?.cast<String, dynamic>();
 
     return Scaffold(
-      backgroundColor: BlackLightColors.background,
+      backgroundColor: context.colors.scaffold,
       appBar: AppBar(
         title: Text(p.address),
         actions: [
@@ -108,20 +108,29 @@ class _OrgProjectDetailPageState extends ConsumerState<OrgProjectDetailPage> {
                   children: [
                     ProjectStatusBadge(status: p.status),
                     const SizedBox(width: 12),
-                    Text(p.type.label, style: BlackLightTextStyles.caption()),
+                    Text(p.type.label,
+                        style: BlackLightTextStyles.caption(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurfaceVariant)),
                   ],
                 ),
                 const SizedBox(height: BlackLightSpacing.md),
-                Text(OrgProjectDetailContent.systemSpecs, style: BlackLightTextStyles.cardHeading()),
+                Text(OrgProjectDetailContent.systemSpecs,
+                    style: BlackLightTextStyles.cardHeading(
+                        color: context.colors.onSurface)),
                 const SizedBox(height: 8),
                 Text(
                   p.systemSizeKw != null
                       ? '${p.systemSizeKw}${OrgCrmBoardContent.kwSuffix}${OrgProjectDetailContent.specSeparator}${p.panelCount ?? CommonContent.emDash}${OrgProjectDetailContent.panelsSuffix}'
                       : OrgProjectDetailContent.specsNotGenerated,
-                  style: BlackLightTextStyles.data(),
+                  style: BlackLightTextStyles.data(
+                      color: context.colors.onSurface),
                 ),
                 const SizedBox(height: BlackLightSpacing.lg),
-                Text(OrgProjectDetailContent.projectData, style: BlackLightTextStyles.cardHeading()),
+                Text(OrgProjectDetailContent.projectData,
+                    style: BlackLightTextStyles.cardHeading(
+                        color: context.colors.onSurface)),
                 const SizedBox(height: 12),
                 DynamicForm(
                   fields: _defs(customMap),

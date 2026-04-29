@@ -73,6 +73,8 @@ class _OrgProjectsPageState extends ConsumerState<OrgProjectsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Stack(
       children: [
         SingleChildScrollView(
@@ -94,11 +96,13 @@ class _OrgProjectsPageState extends ConsumerState<OrgProjectsPage> {
                               widget.orgName.isEmpty
                                   ? OrgProjectsListContent.organizationFallback
                                   : widget.orgName,
-                              style: BlackLightTextStyles.sectionHeading(),
+                              style: BlackLightTextStyles.sectionHeading(
+                                  color: c.onSurface),
                             ),
                             Text(
                               OrgProjectsListContent.projectsCaption,
-                              style: BlackLightTextStyles.caption(),
+                              style: BlackLightTextStyles.caption(
+                                  color: variant),
                             ),
                           ],
                         ),
@@ -121,12 +125,13 @@ class _OrgProjectsPageState extends ConsumerState<OrgProjectsPage> {
                   if (_loading)
                     const Center(child: CircularProgressIndicator())
                   else if (_error != null)
-                    Text(_error!, style: BlackLightTextStyles.body())
+                    Text(_error!,
+                        style: BlackLightTextStyles.body(color: variant))
                   else if (_items.isEmpty)
                     Text(EmptyStatesContent.noProjectsWeb,
-                        style: BlackLightTextStyles.body())
+                        style: BlackLightTextStyles.body(color: variant))
                   else
-                    ..._items.map(_card),
+                    ..._items.map((m) => _card(context, m)),
                 ],
               ),
             ),
@@ -167,7 +172,9 @@ class _OrgProjectsPageState extends ConsumerState<OrgProjectsPage> {
     );
   }
 
-  Widget _card(Map<String, dynamic> m) {
+  Widget _card(BuildContext context, Map<String, dynamic> m) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     final id = m['id']?.toString() ?? '';
     final address = (m['address'] ?? '').toString();
     final dateRaw = m['date'] ?? m['created_at'];
@@ -178,10 +185,10 @@ class _OrgProjectsPageState extends ConsumerState<OrgProjectsPage> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Material(
-        color: BlackLightColors.surface,
+        color: c.surface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(BlackLightRadius.card),
-          side: const BorderSide(color: BlackLightColors.border),
+          side: BorderSide(color: c.outline),
         ),
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -191,11 +198,13 @@ class _OrgProjectsPageState extends ConsumerState<OrgProjectsPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(address, style: BlackLightTextStyles.cardHeading()),
+                    Text(address,
+                        style: BlackLightTextStyles.cardHeading(
+                            color: c.onSurface)),
                     const SizedBox(height: 6),
                     Text(
                       (m['project_type'] ?? m['type'] ?? '').toString(),
-                      style: BlackLightTextStyles.caption(),
+                      style: BlackLightTextStyles.caption(color: variant),
                     ),
                   ],
                 ),
@@ -205,7 +214,7 @@ class _OrgProjectsPageState extends ConsumerState<OrgProjectsPage> {
               Text(
                 MaterialLocalizations.of(context).formatShortDate(date),
                 style: BlackLightTextStyles.data(
-                  color: BlackLightColors.textCaption,
+                  color: variant,
                 ),
               ),
               const SizedBox(width: 12),

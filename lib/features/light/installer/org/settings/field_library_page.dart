@@ -20,7 +20,7 @@ class _FieldLibraryPageState extends ConsumerState<FieldLibraryPage> {
     final async = ref.watch(customFieldsProvider);
 
     return Scaffold(
-      backgroundColor: BlackLightColors.background,
+      backgroundColor: context.colors.scaffold,
       appBar: AppBar(title: Text(OrgSettingsFieldLibraryContent.appBarTitle)),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _openEditor(context, ref, null),
@@ -57,20 +57,24 @@ class _FieldLibraryPageState extends ConsumerState<FieldLibraryPage> {
                 }
               },
               child: Material(
-                color: BlackLightColors.surface,
+                color: context.colors.surface,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(BlackLightRadius.card),
-                  side: const BorderSide(color: BlackLightColors.border),
+                  side: BorderSide(color: context.colors.outline),
                 ),
                 child: ListTile(
                   title: Text(
                     (m['name'] ?? m['label'] ?? CommonContent.fallbackField).toString(),
-                    style: BlackLightTextStyles.bodyBold(),
+                    style: BlackLightTextStyles.bodyBold(
+                        color: context.colors.onSurface),
                   ),
                   subtitle: Text(
                     '${m['type'] ?? 'text'} • sections: '
                     '${(m['target_sections'] ?? m['sections'] ?? const [])}',
-                    style: BlackLightTextStyles.caption(),
+                    style: BlackLightTextStyles.caption(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurfaceVariant),
                   ),
                   trailing: IconButton(
                     icon: const Icon(Icons.edit_outlined),
@@ -118,11 +122,13 @@ class _FieldLibraryPageState extends ConsumerState<FieldLibraryPage> {
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: BlackLightColors.surface,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (ctx) {
+        final onSurf = ctx.colors.onSurface;
+        final variant = Theme.of(ctx).colorScheme.onSurfaceVariant;
         return Padding(
           padding: EdgeInsets.only(
             left: 20,
@@ -136,7 +142,9 @@ class _FieldLibraryPageState extends ConsumerState<FieldLibraryPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(OrgSettingsFieldLibraryContent.editorHeading, style: BlackLightTextStyles.cardHeading()),
+                    Text(OrgSettingsFieldLibraryContent.editorHeading,
+                        style: BlackLightTextStyles.cardHeading(
+                            color: onSurf)),
                     const SizedBox(height: 12),
                     TextField(
                       controller: nameCtrl,
@@ -181,7 +189,7 @@ class _FieldLibraryPageState extends ConsumerState<FieldLibraryPage> {
                     const SizedBox(height: 12),
                     Text(
                       OrgSettingsFieldLibraryContent.targetSectionsCaption,
-                      style: BlackLightTextStyles.caption(),
+                      style: BlackLightTextStyles.caption(color: variant),
                     ),
                     Wrap(
                       spacing: 8,

@@ -25,6 +25,8 @@ class _MobileCrmState extends State<MobileCrm> {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     final filtered = widget.leads.where((l) {
       final matchesSearch = _search.isEmpty ||
           l.name.toLowerCase().contains(_search.toLowerCase());
@@ -36,16 +38,15 @@ class _MobileCrmState extends State<MobileCrm> {
       slivers: [
         SliverAppBar(
           title: Text(OrgCrmBoardContent.pageTitle,
-              style: BlackLightTextStyles.mobileH2()),
-          backgroundColor: BlackLightColors.surface,
+              style: BlackLightTextStyles.mobileH2(color: c.onSurface)),
+          backgroundColor: c.surface,
           elevation: 0,
           scrolledUnderElevation: 0,
           pinned: true,
           floating: true,
           actions: [
             IconButton(
-              icon: const Icon(Icons.person_add_outlined,
-                  color: BlackLightColors.accent),
+              icon: Icon(Icons.person_add_outlined, color: c.primary),
               onPressed: widget.onAddLead,
             ),
           ],
@@ -60,38 +61,32 @@ class _MobileCrmState extends State<MobileCrm> {
                     height: 44,
                     child: TextField(
                       onChanged: (v) => setState(() => _search = v),
-                      style: BlackLightTextStyles.mobileBody(
-                          color: BlackLightColors.textPrimary),
+                      style: BlackLightTextStyles.mobileBody(color: c.onSurface),
                       decoration: InputDecoration(
                         hintText: OrgCrmBoardContent.searchLeadsHint,
-                        hintStyle: BlackLightTextStyles.mobileBody(
-                            color: BlackLightColors.textCaption),
-                        prefixIcon: const Icon(Icons.search,
-                            size: 18, color: BlackLightColors.textCaption),
+                        hintStyle: BlackLightTextStyles.mobileBody(color: variant),
+                        prefixIcon: Icon(Icons.search, size: 18, color: variant),
                         filled: true,
-                        fillColor: BlackLightColors.background,
+                        fillColor: c.surfaceMuted,
                         contentPadding: const EdgeInsets.symmetric(
                             horizontal: 16, vertical: 10),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(999),
-                          borderSide:
-                              const BorderSide(color: BlackLightColors.border),
+                          borderSide: BorderSide(color: c.outline),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(999),
-                          borderSide:
-                              const BorderSide(color: BlackLightColors.border),
+                          borderSide: BorderSide(color: c.outline),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(999),
-                          borderSide: const BorderSide(
-                              color: BlackLightColors.accent, width: 1),
+                          borderSide: BorderSide(
+                              color: c.primary, width: 1),
                         ),
                       ),
                     ),
                   ),
                 ),
-                // Stage filter chips
                 SizedBox(
                   height: 48,
                   child: ListView(
@@ -102,7 +97,7 @@ class _MobileCrmState extends State<MobileCrm> {
                       _StageChip(
                         label: OrgMobileInstallerContent.filterAll,
                         isActive: _activeStage == null,
-                        color: BlackLightColors.textBody,
+                        color: variant,
                         onTap: () => setState(() => _activeStage = null),
                       ),
                       ...LeadStage.values.map((s) => Padding(
@@ -110,7 +105,7 @@ class _MobileCrmState extends State<MobileCrm> {
                             child: _StageChip(
                               label: s.label,
                               isActive: _activeStage == s,
-                              color: s.stageColor,
+                              color: s.stageColorIn(context),
                               onTap: () => setState(() =>
                                   _activeStage = _activeStage == s ? null : s),
                             ),
@@ -128,13 +123,12 @@ class _MobileCrmState extends State<MobileCrm> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.group_outlined,
-                      size: 40, color: BlackLightColors.border),
+                  Icon(Icons.group_outlined, size: 40, color: c.outline),
                   const SizedBox(height: BlackLightSpacing.sm),
                   Text(EmptyStatesContent.noLeadsTitle,
-                      style: BlackLightTextStyles.mobileH3()),
+                      style: BlackLightTextStyles.mobileH3(color: c.onSurface)),
                   Text(EmptyStatesContent.noLeadsSubtitle,
-                      style: BlackLightTextStyles.mobileBody()),
+                      style: BlackLightTextStyles.mobileBody(color: variant)),
                 ],
               ),
             ),
@@ -175,6 +169,8 @@ class _StageChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
@@ -182,10 +178,10 @@ class _StageChip extends StatelessWidget {
         height: 30,
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
-          color: BlackLightColors.surface,
+          color: c.surface,
           borderRadius: BorderRadius.circular(999),
           border: Border.all(
-            color: isActive ? color : BlackLightColors.border,
+            color: isActive ? color : c.outline,
             width: isActive ? 1.5 : 1,
           ),
         ),
@@ -193,7 +189,7 @@ class _StageChip extends StatelessWidget {
           child: Text(
             label,
             style: BlackLightTextStyles.captionBold(
-              color: isActive ? color : BlackLightColors.textBody,
+              color: isActive ? color : variant,
             ),
           ),
         ),
@@ -210,14 +206,17 @@ class _MobileLeadCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
+    final stageC = lead.stage.stageColorIn(context);
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(BlackLightSpacing.sm),
         decoration: BoxDecoration(
-          color: BlackLightColors.surface,
+          color: c.surface,
           borderRadius: BorderRadius.circular(BlackLightRadius.card),
-          border: Border.all(color: BlackLightColors.border),
+          border: Border.all(color: c.outline),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -226,32 +225,30 @@ class _MobileLeadCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(lead.name,
-                      style: BlackLightTextStyles.mobileH3(),
+                      style: BlackLightTextStyles.mobileH3(color: c.onSurface),
                       overflow: TextOverflow.ellipsis),
                 ),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                   decoration: BoxDecoration(
-                    color: BlackLightColors.surface,
+                    color: c.surfaceMuted,
                     borderRadius: BorderRadius.circular(999),
-                    border: Border.all(color: lead.stage.stageColor, width: 1),
+                    border: Border.all(color: stageC, width: 1),
                   ),
                   child: Text(lead.stage.label,
-                      style: BlackLightTextStyles.captionBold(
-                              color: lead.stage.stageColor)),
+                      style: BlackLightTextStyles.captionBold(color: stageC)),
                 ),
               ],
             ),
             const SizedBox(height: 4),
             Row(
               children: [
-                const Icon(Icons.location_on_outlined,
-                    size: 14, color: BlackLightColors.textCaption),
+                Icon(Icons.location_on_outlined, size: 14, color: variant),
                 const SizedBox(width: 4),
                 Expanded(
                   child: Text(lead.address,
-                      style: BlackLightTextStyles.mobileBody(),
+                      style: BlackLightTextStyles.mobileBody(color: variant),
                       overflow: TextOverflow.ellipsis),
                 ),
               ],
@@ -269,8 +266,7 @@ class _MobileLeadCard extends StatelessWidget {
                 _MiniInfo(icon: Icons.person_outlined, label: lead.source),
                 const Spacer(),
                 Text(_fmtDate(lead.addedAt),
-                    style: BlackLightTextStyles.mobileBody(
-                            color: BlackLightColors.textCaption)
+                    style: BlackLightTextStyles.mobileBody(color: variant)
                         .copyWith(fontSize: 11)),
               ],
             ),
@@ -307,14 +303,14 @@ class _MiniInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 13, color: BlackLightColors.textCaption),
+        Icon(icon, size: 13, color: variant),
         const SizedBox(width: 4),
         Text(label,
-            style: BlackLightTextStyles.mobileBody(
-                    color: BlackLightColors.textBody)
+            style: BlackLightTextStyles.mobileBody(color: variant)
                 .copyWith(fontSize: 12)),
       ],
     );

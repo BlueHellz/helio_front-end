@@ -88,7 +88,7 @@ class _IntakeBuilderPageState extends ConsumerState<IntakeBuilderPage>
     final fieldsAsync = ref.watch(customFieldsProvider);
 
     return Scaffold(
-      backgroundColor: BlackLightColors.background,
+      backgroundColor: context.colors.scaffold,
       appBar: AppBar(
         title: Text(OrgSettingsIntakeBuilderContent.appBarTitle),
         actions: [
@@ -116,9 +116,9 @@ class _IntakeBuilderPageState extends ConsumerState<IntakeBuilderPage>
           return TabBarView(
             controller: _tabs,
             children: [
-              _twoColumns('residential', byId),
-              _twoColumns('commercial', byId),
-              _twoColumns('industrial', byId),
+              _twoColumns(context, 'residential', byId),
+              _twoColumns(context, 'commercial', byId),
+              _twoColumns(context, 'industrial', byId),
             ],
           );
         },
@@ -126,7 +126,9 @@ class _IntakeBuilderPageState extends ConsumerState<IntakeBuilderPage>
     );
   }
 
-  Widget _twoColumns(String type, Map<String, Map<String, dynamic>> byId) {
+  Widget _twoColumns(
+      BuildContext context, String type, Map<String, Map<String, dynamic>> byId) {
+    final colors = context.colors;
     final av = _available[type] ?? const <String>[];
     final as = _assigned[type] ?? const <String>[];
 
@@ -144,10 +146,10 @@ class _IntakeBuilderPageState extends ConsumerState<IntakeBuilderPage>
             return AnimatedContainer(
               duration: const Duration(milliseconds: 120),
               decoration: BoxDecoration(
-                color: BlackLightColors.surface,
+                color: colors.surface,
                 borderRadius: BorderRadius.circular(BlackLightRadius.card),
                 border: Border.all(
-                  color: highlight ? BlackLightColors.accent : BlackLightColors.border,
+                  color: highlight ? colors.primary : colors.outline,
                   width: 1,
                 ),
               ),
@@ -156,7 +158,9 @@ class _IntakeBuilderPageState extends ConsumerState<IntakeBuilderPage>
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(12),
-                    child: Text(title, style: BlackLightTextStyles.bodyBold()),
+                    child: Text(title,
+                        style: BlackLightTextStyles.bodyBold(
+                            color: colors.onSurface)),
                   ),
                   const Divider(height: 1),
                   Expanded(
@@ -169,7 +173,7 @@ class _IntakeBuilderPageState extends ConsumerState<IntakeBuilderPage>
                         return Draggable<String>(
                           data: id,
                           feedback: Material(
-                            color: BlackLightColors.surface,
+                            color: colors.surface,
                             elevation: 0,
                             shadowColor: Colors.transparent,
                             borderRadius: BorderRadius.circular(8),

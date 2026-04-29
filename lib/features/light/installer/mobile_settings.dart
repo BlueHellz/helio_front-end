@@ -36,23 +36,24 @@ class _MobileSettingsState extends State<MobileSettings> {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return CustomScrollView(
       slivers: [
         SliverAppBar(
           title: Text(OrgSettingsAccountContent.pageTitle,
-              style: BlackLightTextStyles.mobileH2()),
-          backgroundColor: BlackLightColors.surface,
+              style: BlackLightTextStyles.mobileH2(color: c.onSurface)),
+          backgroundColor: c.surface,
           elevation: 0,
           scrolledUnderElevation: 0,
           pinned: true,
-          shape: const Border(
-              bottom: BorderSide(color: BlackLightColors.border, width: 1)),
+          shape: Border(
+              bottom: BorderSide(color: c.outline, width: 1)),
         ),
         SliverPadding(
           padding: const EdgeInsets.all(BlackLightSpacing.sm),
           sliver: SliverList(
             delegate: SliverChildListDelegate([
-              // Profile
               _SettingsGroup(
                 title: OrgSettingsAccountContent.sectionProfile,
                 children: [
@@ -106,8 +107,6 @@ class _MobileSettingsState extends State<MobileSettings> {
                 ],
               ),
               const SizedBox(height: BlackLightSpacing.sm),
-
-              // Wallet
               _SettingsGroup(
                 title: OrgSettingsAccountContent.sectionWallet,
                 children: [
@@ -119,14 +118,14 @@ class _MobileSettingsState extends State<MobileSettings> {
                           width: 40,
                           height: 40,
                           decoration: BoxDecoration(
-                            color: BlackLightColors.surface,
+                            color: c.surfaceMuted,
                             shape: BoxShape.circle,
-                            border: Border.all(color: BlackLightColors.border),
+                            border: Border.all(color: c.outline),
                           ),
-                          child: const Icon(
+                          child: Icon(
                               Icons.account_balance_wallet_outlined,
                               size: 20,
-                              color: BlackLightColors.textBody),
+                              color: variant),
                         ),
                         const SizedBox(width: 12),
                         Column(
@@ -134,19 +133,19 @@ class _MobileSettingsState extends State<MobileSettings> {
                           children: [
                             Text(WalletContent.hlioBalanceLabel,
                                 style: BlackLightTextStyles.mobileBody(
-                                        color: BlackLightColors.textCaption)
+                                        color: variant)
                                     .copyWith(fontSize: 12)),
                             Row(
                               children: [
                                 Text(
                                   widget.hlioBalance.toStringAsFixed(2),
                                   style: BlackLightTextStyles.data(
-                                      color: BlackLightColors.textPrimary),
+                                      color: c.onSurface),
                                 ),
                                 const SizedBox(width: 4),
                                 Text(WalletContent.hlioTicker,
                                     style: BlackLightTextStyles.mobileBody(
-                                        color: BlackLightColors.textBody)),
+                                        color: variant)),
                               ],
                             ),
                           ],
@@ -158,8 +157,8 @@ class _MobileSettingsState extends State<MobileSettings> {
                             child: ElevatedButton(
                               onPressed: widget.onConnectWallet,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: BlackLightColors.accent,
-                                foregroundColor: Colors.white,
+                                backgroundColor: c.primary,
+                                foregroundColor: c.onPrimary,
                                 elevation: 0,
                                 shape: const StadiumBorder(),
                                 padding:
@@ -167,7 +166,7 @@ class _MobileSettingsState extends State<MobileSettings> {
                               ),
                               child: Text(WalletContent.connectShort,
                                   style: BlackLightTextStyles.mobileLabelBold(
-                                          color: Colors.white)
+                                          color: c.onPrimary)
                                       .copyWith(fontSize: 12)),
                             ),
                           )
@@ -179,8 +178,6 @@ class _MobileSettingsState extends State<MobileSettings> {
                 ],
               ),
               const SizedBox(height: BlackLightSpacing.sm),
-
-              // Notifications
               _SettingsGroup(
                 title: OrgSettingsAccountContent.sectionNotifications,
                 children: [
@@ -199,8 +196,6 @@ class _MobileSettingsState extends State<MobileSettings> {
                 ],
               ),
               const SizedBox(height: BlackLightSpacing.sm),
-
-              // Account
               _SettingsGroup(
                 title: OrgSettingsAccountContent.sectionAccount,
                 children: [
@@ -209,19 +204,17 @@ class _MobileSettingsState extends State<MobileSettings> {
                     title: OrgSettingsAccountContent.signOutButton,
                     subtitle: OrgSettingsAccountContent.signOutTileSubtitle,
                     onTap: widget.onSignOut,
-                    titleColor: BlackLightColors.error,
-                    iconColor: BlackLightColors.error,
+                    titleColor: c.error,
+                    iconColor: c.error,
                     showChevron: false,
                   ),
                 ],
               ),
               const SizedBox(height: BlackLightSpacing.xl),
-
               Center(
                 child: Text(
                   OrgSettingsAccountContent.mobileLegalFooter,
-                  style: BlackLightTextStyles.mobileBody(
-                          color: BlackLightColors.textCaption)
+                  style: BlackLightTextStyles.mobileBody(color: variant)
                       .copyWith(fontSize: 11),
                   textAlign: TextAlign.center,
                 ),
@@ -243,6 +236,8 @@ class _SettingsGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -250,14 +245,14 @@ class _SettingsGroup extends StatelessWidget {
           padding: const EdgeInsets.only(
               left: BlackLightSpacing.xs, bottom: BlackLightSpacing.xs),
           child: Text(title.toUpperCase(),
-              style: BlackLightTextStyles.mobileLabelBold()
+              style: BlackLightTextStyles.mobileLabelBold(color: variant)
                   .copyWith(fontSize: 11)),
         ),
         Container(
           decoration: BoxDecoration(
-            color: BlackLightColors.surface,
+            color: c.surface,
             borderRadius: BorderRadius.circular(BlackLightRadius.card),
-            border: Border.all(color: BlackLightColors.border),
+            border: Border.all(color: c.outline),
           ),
           child: Column(
             children: children
@@ -292,6 +287,8 @@ class _SettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(BlackLightRadius.card),
@@ -300,7 +297,7 @@ class _SettingsTile extends StatelessWidget {
             horizontal: BlackLightSpacing.sm, vertical: 14),
         child: Row(
           children: [
-            Icon(icon, size: 20, color: iconColor ?? BlackLightColors.textBody),
+            Icon(icon, size: 20, color: iconColor ?? variant),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -308,18 +305,17 @@ class _SettingsTile extends StatelessWidget {
                 children: [
                   Text(title,
                       style: BlackLightTextStyles.mobileBody(
-                          color: titleColor ?? BlackLightColors.textPrimary)),
+                          color: titleColor ?? c.onSurface)),
                   if (subtitle != null)
                     Text(subtitle!,
-                        style: BlackLightTextStyles.mobileBody(
-                                color: BlackLightColors.textCaption)
+                        style: BlackLightTextStyles.mobileBody(color: variant)
                             .copyWith(fontSize: 12)),
                 ],
               ),
             ),
             if (showChevron)
-              const Icon(Icons.arrow_forward_ios_rounded,
-                  size: 14, color: BlackLightColors.textCaption),
+              Icon(Icons.arrow_forward_ios_rounded,
+                  size: 14, color: variant),
           ],
         ),
       ),
@@ -342,23 +338,24 @@ class _SwitchTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Padding(
       padding: const EdgeInsets.symmetric(
           horizontal: BlackLightSpacing.sm, vertical: 4),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: BlackLightColors.textBody),
+          Icon(icon, size: 20, color: variant),
           const SizedBox(width: 12),
           Expanded(
             child: Text(title,
-                style: BlackLightTextStyles.mobileBody(
-                    color: BlackLightColors.textPrimary)),
+                style: BlackLightTextStyles.mobileBody(color: c.onSurface)),
           ),
           Switch(
             value: value,
             onChanged: onChanged,
-            activeThumbColor: BlackLightColors.accent,
-            activeTrackColor: BlackLightColors.accent,
+            activeThumbColor: c.primary,
+            activeTrackColor: c.primary,
           ),
         ],
       ),
@@ -369,12 +366,13 @@ class _SwitchTile extends StatelessWidget {
 class _ConnectedChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
+        color: c.surfaceMuted,
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: BlackLightColors.green),
+        border: Border.all(color: c.secondary),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -382,13 +380,12 @@ class _ConnectedChip extends StatelessWidget {
           Container(
             width: 6,
             height: 6,
-            decoration: const BoxDecoration(
-                color: BlackLightColors.green, shape: BoxShape.circle),
+            decoration: BoxDecoration(
+                color: c.secondary, shape: BoxShape.circle),
           ),
           const SizedBox(width: 5),
           Text(OrgMobileInstallerContent.hlioConnectedLine,
-              style: BlackLightTextStyles.mobileLabelBold(
-                      color: BlackLightColors.green)
+              style: BlackLightTextStyles.mobileLabelBold(color: c.secondary)
                   .copyWith(fontSize: 11)),
         ],
       ),

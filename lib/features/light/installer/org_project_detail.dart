@@ -72,13 +72,15 @@ class _DetailHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Row(
       children: [
         if (onBack != null)
           GestureDetector(
             onTap: onBack,
-            child: const Icon(Icons.arrow_back_ios_new_rounded,
-                size: 20, color: BlackLightColors.textBody),
+            child: Icon(Icons.arrow_back_ios_new_rounded,
+                size: 20, color: variant),
           ),
         const SizedBox(width: 12),
         Expanded(
@@ -86,10 +88,12 @@ class _DetailHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(project.address,
-                  style: BlackLightTextStyles.sectionHeading()),
+                  style: BlackLightTextStyles.sectionHeading(
+                      color: c.onSurface)),
               Row(
                 children: [
-                  Text(project.clientName, style: BlackLightTextStyles.body()),
+                  Text(project.clientName,
+                      style: BlackLightTextStyles.body(color: variant)),
                   const SizedBox(width: 12),
                   StatusBadge(status: project.status),
                 ],
@@ -103,10 +107,10 @@ class _DetailHeader extends StatelessWidget {
             onPressed: onOpenChat,
             icon: const Icon(Icons.chat_bubble_outline, size: 16),
             label: Text(OrgProjectDetailContent.openInChat,
-                style: BlackLightTextStyles.bodyBold(color: Colors.white)),
+                style: BlackLightTextStyles.bodyBold(color: c.onPrimary)),
             style: ElevatedButton.styleFrom(
-              backgroundColor: BlackLightColors.accent,
-              foregroundColor: Colors.white,
+              backgroundColor: c.primary,
+              foregroundColor: c.onPrimary,
               elevation: 0,
               shape: const StadiumBorder(),
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -121,13 +125,14 @@ class _DetailHeader extends StatelessWidget {
 class _RoofCanvas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
     return Container(
       width: double.infinity,
       height: 280,
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
+        color: c.surface,
         borderRadius: BorderRadius.circular(BlackLightRadius.card),
-        border: Border.all(color: BlackLightColors.border),
+        border: Border.all(color: c.outline),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(BlackLightRadius.card),
@@ -144,6 +149,8 @@ class _SystemSpecsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     final specs = [
       (
         OrgProjectDetailContent.specLabelSystemSize,
@@ -171,15 +178,15 @@ class _SystemSpecsCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(BlackLightSpacing.md),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
+        color: c.surface,
         borderRadius: BorderRadius.circular(BlackLightRadius.card),
-        border: Border.all(color: BlackLightColors.border),
+        border: Border.all(color: c.outline),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(OrgProjectDetailContent.systemSpecificationsHeading,
-              style: BlackLightTextStyles.cardHeading()),
+              style: BlackLightTextStyles.cardHeading(color: c.onSurface)),
           const SizedBox(height: BlackLightSpacing.sm),
           const Divider(),
           const SizedBox(height: BlackLightSpacing.sm),
@@ -187,8 +194,11 @@ class _SystemSpecsCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(s.$1, style: BlackLightTextStyles.body()),
-                    Text(s.$2, style: BlackLightTextStyles.data()),
+                    Text(s.$1,
+                        style: BlackLightTextStyles.body(color: variant)),
+                    Text(s.$2,
+                        style:
+                            BlackLightTextStyles.data(color: c.onSurface)),
                   ],
                 ),
                 if (s != specs.last)
@@ -207,18 +217,19 @@ class _ClientCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
     return Container(
       padding: const EdgeInsets.all(BlackLightSpacing.md),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
+        color: c.surface,
         borderRadius: BorderRadius.circular(BlackLightRadius.card),
-        border: Border.all(color: BlackLightColors.border),
+        border: Border.all(color: c.outline),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(OrgProjectDetailContent.clientHeading,
-              style: BlackLightTextStyles.cardHeading()),
+              style: BlackLightTextStyles.cardHeading(color: c.onSurface)),
           const SizedBox(height: BlackLightSpacing.sm),
           const Divider(),
           const SizedBox(height: BlackLightSpacing.sm),
@@ -247,14 +258,16 @@ class _ClientRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Row(
       children: [
-        Icon(icon, size: 16, color: BlackLightColors.textCaption),
+        Icon(icon, size: 16, color: variant),
         const SizedBox(width: 8),
         Expanded(
           child: Text(value,
               style:
-                  BlackLightTextStyles.body(color: BlackLightColors.textPrimary)
+                  BlackLightTextStyles.body(color: c.onSurface)
                       .copyWith(fontSize: 14),
               overflow: TextOverflow.ellipsis),
         ),
@@ -270,6 +283,8 @@ class _TimelineCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     final allStatuses = [
       ProjectStatus.designing,
       ProjectStatus.quoted,
@@ -283,15 +298,15 @@ class _TimelineCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(BlackLightSpacing.md),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
+        color: c.surface,
         borderRadius: BorderRadius.circular(BlackLightRadius.card),
-        border: Border.all(color: BlackLightColors.border),
+        border: Border.all(color: c.outline),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(OrgProjectDetailContent.progressHeading,
-              style: BlackLightTextStyles.cardHeading()),
+              style: BlackLightTextStyles.cardHeading(color: c.onSurface)),
           const SizedBox(height: BlackLightSpacing.sm),
           const Divider(),
           const SizedBox(height: BlackLightSpacing.sm),
@@ -311,28 +326,22 @@ class _TimelineCard extends StatelessWidget {
                         width: 20,
                         height: 20,
                         decoration: BoxDecoration(
-                          color: isDone
-                              ? BlackLightColors.accent
-                              : BlackLightColors.surface,
+                          color: isDone ? c.primary : c.surface,
                           shape: BoxShape.circle,
                           border: Border.all(
-                            color: isDone
-                                ? BlackLightColors.accent
-                                : BlackLightColors.border,
+                            color: isDone ? c.primary : c.outline,
                           ),
                         ),
                         child: isDone
-                            ? const Icon(Icons.check,
-                                size: 12, color: Colors.white)
+                            ? Icon(Icons.check,
+                                size: 12, color: c.onPrimary)
                             : null,
                       ),
                       if (i < allStatuses.length - 1)
                         Container(
                           width: 1,
                           height: 12,
-                          color: isDone
-                              ? BlackLightColors.accent
-                              : BlackLightColors.border,
+                          color: isDone ? c.primary : c.outline,
                         ),
                     ],
                   ),
@@ -341,10 +350,10 @@ class _TimelineCard extends StatelessWidget {
                     s.label,
                     style: BlackLightTextStyles.body(
                       color: isActive
-                          ? BlackLightColors.textPrimary
+                          ? c.onSurface
                           : isDone
-                              ? BlackLightColors.textBody
-                              : BlackLightColors.textCaption,
+                              ? variant
+                              : variant.withOpacity(0.7),
                     ).copyWith(
                       fontSize: 14,
                       fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,

@@ -246,7 +246,14 @@ class BlackLightPalette {
   Color get outline => _t.colorScheme.outline;
   Color get primary => _t.colorScheme.primary;
   Color get onPrimary => _t.colorScheme.onPrimary;
+  Color get secondary => _t.colorScheme.secondary;
   Color get error => _t.colorScheme.error;
+
+  /// Semantic accents not mapped to [ColorScheme] (CRM status, chips).
+  Color get warning => BlackLightColors.amber;
+
+  /// Muted / secondary text (matches caption tone in light and dark themes).
+  Color get onSurfaceMuted => _t.colorScheme.onSurfaceVariant;
 
   /// Secondary fill for nested cards / column bodies.
   Color get surfaceMuted => brightness == Brightness.dark

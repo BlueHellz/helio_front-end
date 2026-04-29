@@ -42,6 +42,8 @@ class _OrgNewProjectState extends State<OrgNewProject> {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return SingleChildScrollView(
       padding: const EdgeInsets.all(BlackLightSpacing.gutter),
       child: Center(
@@ -53,14 +55,14 @@ class _OrgNewProjectState extends State<OrgNewProject> {
               Row(
                 children: [
                   Text(OrgInstallerNewProjectWizardContent.pageTitle,
-                      style: BlackLightTextStyles.sectionHeading()),
+                      style: BlackLightTextStyles.sectionHeading(
+                          color: c.onSurface)),
                   const Spacer(),
                   if (widget.onCancel != null)
                     GestureDetector(
                       onTap: widget.onCancel,
                       child: Text(OrgInstallerNewProjectWizardContent.cancel,
-                          style: BlackLightTextStyles.body(
-                              color: BlackLightColors.textBody)),
+                          style: BlackLightTextStyles.body(color: variant)),
                     ),
                 ],
               ),
@@ -96,15 +98,13 @@ class _OrgNewProjectState extends State<OrgNewProject> {
                       child: OutlinedButton(
                         onPressed: _back,
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: BlackLightColors.textPrimary,
-                          side:
-                              const BorderSide(color: BlackLightColors.border),
+                          foregroundColor: c.onSurface,
+                          side: BorderSide(color: c.outline),
                           shape: const StadiumBorder(),
                           padding: const EdgeInsets.symmetric(horizontal: 28),
                         ),
                         child: Text(OrgInstallerNewProjectWizardContent.back,
-                            style: BlackLightTextStyles.body(
-                                    color: BlackLightColors.textPrimary)
+                            style: BlackLightTextStyles.body(color: c.onSurface)
                                 .copyWith(fontWeight: FontWeight.w500)),
                       ),
                     ),
@@ -124,8 +124,8 @@ class _OrgNewProjectState extends State<OrgNewProject> {
                                   'notes': _notesCtrl.text,
                                 }),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: BlackLightColors.accent,
-                          foregroundColor: Colors.white,
+                          backgroundColor: c.primary,
+                          foregroundColor: c.onPrimary,
                           elevation: 0,
                           shape: const StadiumBorder(),
                         ),
@@ -134,7 +134,7 @@ class _OrgNewProjectState extends State<OrgNewProject> {
                               ? OrgInstallerNewProjectWizardContent.continue_
                               : OrgInstallerNewProjectWizardContent.createProject,
                           style: BlackLightTextStyles.bodyBold(
-                              color: Colors.white),
+                              color: c.onPrimary),
                         ),
                       ),
                     ),
@@ -163,6 +163,7 @@ class _StepProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
     return Row(
       children: List.generate(totalSteps, (i) {
         final isActive = i == currentStep;
@@ -179,9 +180,7 @@ class _StepProgress extends StatelessWidget {
                 Expanded(
                   child: Container(
                     height: 1,
-                    color: isDone
-                        ? BlackLightColors.accent
-                        : BlackLightColors.border,
+                    color: isDone ? c.primary : c.outline,
                   ),
                 ),
             ],
@@ -207,38 +206,32 @@ class _StepDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = (isActive || isDone)
-        ? BlackLightColors.accent
-        : BlackLightColors.border;
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
+    final color = (isActive || isDone) ? c.primary : c.outline;
     return Column(
       children: [
         Container(
           width: 28,
           height: 28,
           decoration: BoxDecoration(
-            color: (isActive || isDone)
-                ? BlackLightColors.accent
-                : BlackLightColors.surface,
+            color: (isActive || isDone) ? c.primary : c.surface,
             shape: BoxShape.circle,
             border: Border.all(color: color),
           ),
           child: Center(
             child: isDone
-                ? const Icon(Icons.check, size: 14, color: Colors.white)
+                ? Icon(Icons.check, size: 14, color: c.onPrimary)
                 : Text('${index + 1}',
                     style: BlackLightTextStyles.caption(
-                            color: isActive
-                                ? Colors.white
-                                : BlackLightColors.textCaption)
+                            color: isActive ? c.onPrimary : variant)
                         .copyWith(fontWeight: FontWeight.w600)),
           ),
         ),
         const SizedBox(height: 4),
         Text(label,
             style: BlackLightTextStyles.caption(
-                    color: isActive
-                        ? BlackLightColors.accent
-                        : BlackLightColors.textCaption)
+                    color: isActive ? c.primary : variant)
                 .copyWith(fontSize: 10)),
       ],
     );
@@ -258,18 +251,19 @@ class _Step1ClientInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
     return Container(
       padding: const EdgeInsets.all(BlackLightSpacing.md),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
+        color: c.surface,
         borderRadius: BorderRadius.circular(BlackLightRadius.card),
-        border: Border.all(color: BlackLightColors.border),
+        border: Border.all(color: c.outline),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(OrgInstallerNewProjectWizardContent.clientInformation,
-              style: BlackLightTextStyles.cardHeading()),
+              style: BlackLightTextStyles.cardHeading(color: c.onSurface)),
           const SizedBox(height: BlackLightSpacing.sm),
           const Divider(),
           const SizedBox(height: BlackLightSpacing.md),
@@ -308,18 +302,20 @@ class _Step2ProjectDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Container(
       padding: const EdgeInsets.all(BlackLightSpacing.md),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
+        color: c.surface,
         borderRadius: BorderRadius.circular(BlackLightRadius.card),
-        border: Border.all(color: BlackLightColors.border),
+        border: Border.all(color: c.outline),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(OrgInstallerNewProjectWizardContent.projectDetails,
-              style: BlackLightTextStyles.cardHeading()),
+              style: BlackLightTextStyles.cardHeading(color: c.onSurface)),
           const SizedBox(height: BlackLightSpacing.sm),
           const Divider(),
           const SizedBox(height: BlackLightSpacing.md),
@@ -329,7 +325,8 @@ class _Step2ProjectDetails extends StatelessWidget {
               hint: OrgInstallerNewProjectWizardContent.addressHint),
           const SizedBox(height: BlackLightSpacing.md),
           Text(OrgInstallerNewProjectWizardContent.projectTypeHeading,
-              style: BlackLightTextStyles.captionBold().copyWith(fontSize: 10)),
+              style: BlackLightTextStyles.captionBold(color: variant)
+                  .copyWith(fontSize: 10)),
           const SizedBox(height: 8),
           Row(
             children: ProjectType.values.map((t) {
@@ -341,22 +338,19 @@ class _Step2ProjectDetails extends StatelessWidget {
                     margin: const EdgeInsets.only(right: 8),
                     height: 44,
                     decoration: BoxDecoration(
-                      color: BlackLightColors.surface,
+                      color: c.surface,
                       borderRadius:
                           BorderRadius.circular(BlackLightRadius.input),
                       border: Border.all(
-                        color: isSelected
-                            ? BlackLightColors.accent
-                            : BlackLightColors.border,
+                        color: isSelected ? c.primary : c.outline,
                         width: isSelected ? 1.5 : 1,
                       ),
                     ),
                     child: Center(
                       child: Text(t.label,
                           style: BlackLightTextStyles.body(
-                                  color: isSelected
-                                      ? BlackLightColors.accent
-                                      : BlackLightColors.textBody)
+                                  color:
+                                      isSelected ? c.primary : variant)
                               .copyWith(
                                   fontWeight: isSelected
                                       ? FontWeight.w600
@@ -381,47 +375,48 @@ class _Step3Notes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Container(
       padding: const EdgeInsets.all(BlackLightSpacing.md),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
+        color: c.surface,
         borderRadius: BorderRadius.circular(BlackLightRadius.card),
-        border: Border.all(color: BlackLightColors.border),
+        border: Border.all(color: c.outline),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(OrgInstallerNewProjectWizardContent.additionalNotes,
-              style: BlackLightTextStyles.cardHeading()),
+              style: BlackLightTextStyles.cardHeading(color: c.onSurface)),
           const SizedBox(height: BlackLightSpacing.sm),
           const Divider(),
           const SizedBox(height: BlackLightSpacing.md),
           Text(OrgInstallerNewProjectWizardContent.notesFieldCaption,
-              style: BlackLightTextStyles.captionBold().copyWith(fontSize: 10)),
+              style: BlackLightTextStyles.captionBold(color: variant)
+                  .copyWith(fontSize: 10)),
           const SizedBox(height: 6),
           TextField(
             controller: notesCtrl,
             maxLines: 5,
-            style:
-                BlackLightTextStyles.body(color: BlackLightColors.textPrimary),
+            style: BlackLightTextStyles.body(color: c.onSurface),
             decoration: InputDecoration(
               hintText: OrgInstallerNewProjectWizardContent.notesHint,
-              hintStyle: BlackLightTextStyles.body(
-                  color: BlackLightColors.textCaption),
+              hintStyle: BlackLightTextStyles.body(color: variant),
               filled: true,
-              fillColor: BlackLightColors.background,
+              fillColor: c.surfaceMuted,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(BlackLightRadius.input),
-                borderSide: const BorderSide(color: BlackLightColors.border),
+                borderSide: BorderSide(color: c.outline),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(BlackLightRadius.input),
-                borderSide: const BorderSide(color: BlackLightColors.border),
+                borderSide: BorderSide(color: c.outline),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(BlackLightRadius.input),
-                borderSide: const BorderSide(
-                    color: BlackLightColors.accent, width: 1.5),
+                borderSide:
+                    BorderSide(color: c.primary, width: 1.5),
               ),
               contentPadding: const EdgeInsets.all(16),
             ),
@@ -447,34 +442,35 @@ class _LF extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label.toUpperCase(),
-            style: BlackLightTextStyles.captionBold().copyWith(fontSize: 10)),
+            style: BlackLightTextStyles.captionBold(color: variant)
+                .copyWith(fontSize: 10)),
         const SizedBox(height: 6),
         TextField(
           controller: ctrl,
           keyboardType: type,
-          style: BlackLightTextStyles.body(color: BlackLightColors.textPrimary),
+          style: BlackLightTextStyles.body(color: c.onSurface),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle:
-                BlackLightTextStyles.body(color: BlackLightColors.textCaption),
+            hintStyle: BlackLightTextStyles.body(color: variant),
             filled: true,
-            fillColor: BlackLightColors.background,
+            fillColor: c.surfaceMuted,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(BlackLightRadius.input),
-              borderSide: const BorderSide(color: BlackLightColors.border),
+              borderSide: BorderSide(color: c.outline),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(BlackLightRadius.input),
-              borderSide: const BorderSide(color: BlackLightColors.border),
+              borderSide: BorderSide(color: c.outline),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(BlackLightRadius.input),
-              borderSide:
-                  const BorderSide(color: BlackLightColors.accent, width: 1.5),
+              borderSide: BorderSide(color: c.primary, width: 1.5),
             ),
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 14),

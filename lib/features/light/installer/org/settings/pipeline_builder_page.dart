@@ -30,7 +30,7 @@ class _PipelineBuilderPageState extends ConsumerState<PipelineBuilderPage> {
     final pipes = ref.watch(pipelinesProvider);
 
     return Scaffold(
-      backgroundColor: BlackLightColors.background,
+      backgroundColor: context.colors.scaffold,
       appBar: AppBar(title: Text(OrgSettingsPipelineBuilderContent.appBarTitle)),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
@@ -88,23 +88,23 @@ class _PipelineBuilderPageState extends ConsumerState<PipelineBuilderPage> {
                     final p = items[i];
                     final id = p['id']?.toString() ?? '';
                     final selected = _selectedId == id;
+                    final colors = context.colors;
                     return Material(
-                      color: selected
-                          ? BlackLightColors.surface
-                          : BlackLightColors.surface,
+                      color: colors.surface,
                       shape: RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.circular(BlackLightRadius.card),
                         side: BorderSide(
                           color: selected
-                              ? BlackLightColors.accent
-                              : BlackLightColors.border,
+                              ? colors.primary
+                              : colors.outline,
                         ),
                       ),
                       child: ListTile(
                         title: Text(
                           (p['name'] ?? OrgSettingsPipelineBuilderContent.defaultPipelineName).toString(),
-                          style: BlackLightTextStyles.bodyBold(),
+                          style: BlackLightTextStyles.bodyBold(
+                              color: colors.onSurface),
                         ),
                         onTap: () {
                           setState(() => _selectedId = id);
@@ -129,7 +129,8 @@ class _PipelineBuilderPageState extends ConsumerState<PipelineBuilderPage> {
       return Center(
         child: Text(
           OrgSettingsPipelineBuilderContent.selectPipelineFirst,
-          style: BlackLightTextStyles.body(),
+          style: BlackLightTextStyles.body(
+              color: Theme.of(context).colorScheme.onSurfaceVariant),
         ),
       );
     }
@@ -141,7 +142,9 @@ class _PipelineBuilderPageState extends ConsumerState<PipelineBuilderPage> {
         children: [
           Row(
             children: [
-              Text(OrgSettingsPipelineBuilderContent.stagesHeading, style: BlackLightTextStyles.cardHeading()),
+              Text(OrgSettingsPipelineBuilderContent.stagesHeading,
+                  style: BlackLightTextStyles.cardHeading(
+                      color: context.colors.onSurface)),
               const Spacer(),
               TextButton.icon(
                 onPressed: () async {
@@ -241,7 +244,10 @@ class _PipelineBuilderPageState extends ConsumerState<PipelineBuilderPage> {
                   title: Text((s['name'] ?? CommonContent.fallbackStage).toString()),
                   subtitle: Text(
                     (s['trigger'] ?? '').toString(),
-                    style: BlackLightTextStyles.caption(),
+                    style: BlackLightTextStyles.caption(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurfaceVariant),
                   ),
                   trailing: IconButton(
                     icon: const Icon(Icons.tune),
@@ -275,7 +281,7 @@ class _PipelineBuilderPageState extends ConsumerState<PipelineBuilderPage> {
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: BlackLightColors.surface,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       builder: (ctx) {
         return Padding(
           padding: const EdgeInsets.all(16),
@@ -287,7 +293,8 @@ class _PipelineBuilderPageState extends ConsumerState<PipelineBuilderPage> {
                 children: [
                   Text(
                     OrgSettingsPipelineBuilderContent.dealCardFieldsTitle,
-                    style: BlackLightTextStyles.cardHeading(),
+                    style: BlackLightTextStyles.cardHeading(
+                        color: context.colors.onSurface),
                   ),
                   const SizedBox(height: 8),
                   ValueListenableBuilder<Set<String>>(

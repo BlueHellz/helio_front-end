@@ -53,12 +53,14 @@ class _MobileChatDesignState extends State<MobileChatDesign>
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Scaffold(
-      backgroundColor: BlackLightColors.background,
+      backgroundColor: c.scaffold,
       appBar: AppBar(
         leading: widget.onBack != null
             ? IconButton(
-                icon: const Icon(Icons.arrow_back),
+                icon: Icon(Icons.arrow_back, color: c.onSurface),
                 onPressed: widget.onBack,
               )
             : null,
@@ -67,30 +69,29 @@ class _MobileChatDesignState extends State<MobileChatDesign>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(OrgMobileInstallerContent.chatTitle,
-                style: BlackLightTextStyles.mobileH2()),
+                style: BlackLightTextStyles.mobileH2(color: c.onSurface)),
             if (widget.projectAddress.isNotEmpty)
               Text(widget.projectAddress,
-                  style: BlackLightTextStyles.mobileBody(
-                          color: BlackLightColors.textCaption)
+                  style: BlackLightTextStyles.mobileBody(color: variant)
                       .copyWith(fontSize: 11),
                   overflow: TextOverflow.ellipsis),
           ],
         ),
-        backgroundColor: BlackLightColors.surface,
+        backgroundColor: c.surface,
         elevation: 0,
         scrolledUnderElevation: 0,
-        shape: const Border(
-            bottom: BorderSide(color: BlackLightColors.border, width: 1)),
+        shape: Border(
+            bottom: BorderSide(color: c.outline, width: 1)),
         bottom: TabBar(
           controller: _tabCtrl,
           labelStyle:
-              BlackLightTextStyles.mobileLabelBold().copyWith(fontSize: 13),
-          unselectedLabelStyle: BlackLightTextStyles.mobileLabelBold(
-                  color: BlackLightColors.textCaption)
+              BlackLightTextStyles.mobileLabelBold(color: c.primary)
+                  .copyWith(fontSize: 13),
+          unselectedLabelStyle: BlackLightTextStyles.mobileLabelBold(color: variant)
               .copyWith(fontSize: 13),
-          labelColor: BlackLightColors.accent,
-          unselectedLabelColor: BlackLightColors.textBody,
-          indicatorColor: BlackLightColors.accent,
+          labelColor: c.primary,
+          unselectedLabelColor: variant,
+          indicatorColor: c.primary,
           indicatorWeight: 2,
           dividerColor: Colors.transparent,
           tabs: [
@@ -102,7 +103,6 @@ class _MobileChatDesignState extends State<MobileChatDesign>
       body: TabBarView(
         controller: _tabCtrl,
         children: [
-          // Chat tab
           Column(
             children: [
               Expanded(
@@ -119,8 +119,6 @@ class _MobileChatDesignState extends State<MobileChatDesign>
               _ChatInput(ctrl: _inputCtrl, onSend: _send),
             ],
           ),
-
-          // Preview tab
           SingleChildScrollView(
             padding: const EdgeInsets.all(BlackLightSpacing.sm),
             child: Column(
@@ -129,9 +127,9 @@ class _MobileChatDesignState extends State<MobileChatDesign>
                   width: double.infinity,
                   height: 240,
                   decoration: BoxDecoration(
-                    color: BlackLightColors.surface,
+                    color: c.surface,
                     borderRadius: BorderRadius.circular(BlackLightRadius.card),
-                    border: Border.all(color: BlackLightColors.border),
+                    border: Border.all(color: c.outline),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(BlackLightRadius.card),
@@ -150,13 +148,14 @@ class _MobileChatDesignState extends State<MobileChatDesign>
                     child: ElevatedButton(
                       onPressed: widget.onViewDesign,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: BlackLightColors.accent,
-                        foregroundColor: Colors.white,
+                        backgroundColor: c.primary,
+                        foregroundColor: c.onPrimary,
                         elevation: 0,
                         shape: const StadiumBorder(),
                       ),
                       child: Text(OrgMobileInstallerContent.viewFullDesign,
-                          style: BlackLightTextStyles.mobileButton()),
+                          style: BlackLightTextStyles.mobileButton(
+                              color: c.onPrimary)),
                     ),
                   ),
                 ],
@@ -172,6 +171,8 @@ class _MobileChatDesignState extends State<MobileChatDesign>
 class _EmptyChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(BlackLightSpacing.lg),
@@ -182,20 +183,20 @@ class _EmptyChat extends StatelessWidget {
               width: 52,
               height: 52,
               decoration: BoxDecoration(
-                color: BlackLightColors.surface,
+                color: c.surface,
                 shape: BoxShape.circle,
-                border: Border.all(color: BlackLightColors.border),
+                border: Border.all(color: c.outline),
               ),
-              child: const Icon(Icons.solar_power_outlined,
-                  size: 26, color: BlackLightColors.accent),
+              child: Icon(Icons.solar_power_outlined,
+                  size: 26, color: c.primary),
             ),
             const SizedBox(height: BlackLightSpacing.md),
             Text(OrgMobileInstallerContent.startDesignTitle,
-                style: BlackLightTextStyles.mobileH3()),
+                style: BlackLightTextStyles.mobileH3(color: c.onSurface)),
             const SizedBox(height: 4),
             Text(
               OrgMobileInstallerContent.startDesignBodyMobile,
-              style: BlackLightTextStyles.mobileBody(),
+              style: BlackLightTextStyles.mobileBody(color: variant),
               textAlign: TextAlign.center,
             ),
           ],
@@ -213,6 +214,8 @@ class _ChatInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Container(
       padding: EdgeInsets.only(
         left: BlackLightSpacing.sm,
@@ -220,9 +223,9 @@ class _ChatInput extends StatelessWidget {
         top: BlackLightSpacing.xs,
         bottom: BlackLightSpacing.xs + MediaQuery.of(context).padding.bottom,
       ),
-      decoration: const BoxDecoration(
-        color: BlackLightColors.surface,
-        border: Border(top: BorderSide(color: BlackLightColors.border)),
+      decoration: BoxDecoration(
+        color: c.surface,
+        border: Border(top: BorderSide(color: c.outline)),
       ),
       child: Row(
         children: [
@@ -230,26 +233,24 @@ class _ChatInput extends StatelessWidget {
             child: TextField(
               controller: ctrl,
               onSubmitted: (_) => onSend(),
-              style: BlackLightTextStyles.mobileBody(
-                  color: BlackLightColors.textPrimary),
+              style: BlackLightTextStyles.mobileBody(color: c.onSurface),
               decoration: InputDecoration(
                 hintText: OrgMobileInstallerContent.messageHint,
-                hintStyle: BlackLightTextStyles.mobileBody(
-                    color: BlackLightColors.textCaption),
+                hintStyle: BlackLightTextStyles.mobileBody(color: variant),
                 filled: true,
-                fillColor: BlackLightColors.background,
+                fillColor: c.surfaceMuted,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(999),
-                  borderSide: const BorderSide(color: BlackLightColors.border),
+                  borderSide: BorderSide(color: c.outline),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(999),
-                  borderSide: const BorderSide(color: BlackLightColors.border),
+                  borderSide: BorderSide(color: c.outline),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(999),
-                  borderSide: const BorderSide(
-                      color: BlackLightColors.accent, width: 1.5),
+                  borderSide: BorderSide(
+                      color: c.primary, width: 1.5),
                 ),
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -262,12 +263,12 @@ class _ChatInput extends StatelessWidget {
             child: Container(
               width: 44,
               height: 44,
-              decoration: const BoxDecoration(
-                color: BlackLightColors.accent,
+              decoration: BoxDecoration(
+                color: c.primary,
                 shape: BoxShape.circle,
               ),
               child:
-                  const Icon(Icons.send_rounded, size: 18, color: Colors.white),
+                  Icon(Icons.send_rounded, size: 18, color: c.onPrimary),
             ),
           ),
         ],
@@ -283,6 +284,7 @@ class _Bubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
     final isUser = message.sender == MessageSender.user;
     return Padding(
       padding: const EdgeInsets.only(bottom: BlackLightSpacing.xs),
@@ -295,10 +297,10 @@ class _Bubble extends StatelessWidget {
             Container(
               width: 26,
               height: 26,
-              decoration: const BoxDecoration(
-                  color: BlackLightColors.accent, shape: BoxShape.circle),
-              child: const Icon(Icons.solar_power_rounded,
-                  size: 12, color: Colors.white),
+              decoration: BoxDecoration(
+                  color: c.primary, shape: BoxShape.circle),
+              child: Icon(Icons.solar_power_rounded,
+                  size: 12, color: c.onPrimary),
             ),
             const SizedBox(width: 8),
           ],
@@ -307,7 +309,7 @@ class _Bubble extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               decoration: BoxDecoration(
                 color:
-                    isUser ? BlackLightColors.accent : BlackLightColors.surface,
+                    isUser ? c.primary : c.surface,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(isUser ? BlackLightRadius.card : 4),
                   topRight: Radius.circular(isUser ? 4 : BlackLightRadius.card),
@@ -315,13 +317,13 @@ class _Bubble extends StatelessWidget {
                   bottomRight: const Radius.circular(BlackLightRadius.card),
                 ),
                 border:
-                    isUser ? null : Border.all(color: BlackLightColors.border),
+                    isUser ? null : Border.all(color: c.outline),
               ),
               child: Text(
                 message.text,
                 style: BlackLightTextStyles.mobileBody(
                     color:
-                        isUser ? Colors.white : BlackLightColors.textPrimary),
+                        isUser ? c.onPrimary : c.onSurface),
               ),
             ),
           ),
@@ -334,6 +336,8 @@ class _Bubble extends StatelessWidget {
 class _SpecGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     final specs = [
       (Icons.bolt_outlined, OrgProjectDetailContent.specLabelSystemSize, CommonContent.emDash),
       (Icons.solar_power_outlined, OrgProjectDetailContent.specLabelPanels, CommonContent.emDash),
@@ -351,24 +355,22 @@ class _SpecGrid extends StatelessWidget {
               2,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: BlackLightColors.surface,
+            color: c.surface,
             borderRadius: BorderRadius.circular(BlackLightRadius.md),
-            border: Border.all(color: BlackLightColors.border),
+            border: Border.all(color: c.outline),
           ),
           child: Row(
             children: [
-              Icon(s.$1, size: 16, color: BlackLightColors.textCaption),
+              Icon(s.$1, size: 16, color: variant),
               const SizedBox(width: 8),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(s.$2,
-                      style: BlackLightTextStyles.mobileBody(
-                              color: BlackLightColors.textCaption)
+                      style: BlackLightTextStyles.mobileBody(color: variant)
                           .copyWith(fontSize: 11)),
                   Text(s.$3,
-                      style: BlackLightTextStyles.data(
-                          color: BlackLightColors.textPrimary)),
+                      style: BlackLightTextStyles.data(color: c.onSurface)),
                 ],
               ),
             ],

@@ -194,20 +194,22 @@ extension LeadStageLabel on LeadStage {
     }
   }
 
-  Color get stageColor {
+  Color stageColorIn(BuildContext context) {
+    final c = context.colors;
+    final cs = Theme.of(context).colorScheme;
     switch (this) {
       case LeadStage.newLead:
-        return BlackLightColors.accent;
+        return c.primary;
       case LeadStage.contacted:
-        return BlackLightColors.textBody;
+        return cs.onSurfaceVariant;
       case LeadStage.quoted:
-        return BlackLightColors.amber;
+        return c.warning;
       case LeadStage.negotiation:
-        return BlackLightColors.textPrimary;
+        return c.onSurface;
       case LeadStage.won:
-        return BlackLightColors.green;
+        return c.secondary;
       case LeadStage.lost:
-        return BlackLightColors.error;
+        return c.error;
     }
   }
 }

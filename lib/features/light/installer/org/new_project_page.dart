@@ -146,7 +146,7 @@ class _OrgNewProjectPageState extends ConsumerState<OrgNewProjectPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BlackLightColors.background,
+      backgroundColor: context.colors.scaffold,
       appBar: AppBar(title: Text(OrgNewProjectContent.appBarTitle)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(BlackLightSpacing.gutter),
@@ -157,7 +157,11 @@ class _OrgNewProjectPageState extends ConsumerState<OrgNewProjectPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(OrgNewProjectContent.projectTypeCaption, style: BlackLightTextStyles.caption()),
+                Text(OrgNewProjectContent.projectTypeCaption,
+                    style: BlackLightTextStyles.caption(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurfaceVariant)),
                 const SizedBox(height: 8),
                 Row(
                   children: [

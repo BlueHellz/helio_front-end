@@ -223,14 +223,13 @@ class _SidebarNavItem extends StatelessWidget {
       child: Container(
         height: 48,
         decoration: BoxDecoration(
-            color:
-                isActive
-                    ? BlackLightColors.sidebarActiveBg
-                    : Colors.transparent,
+            color: isActive
+                ? context.colors.primary.withValues(alpha: 0.08)
+                : Colors.transparent,
           border: isActive
-              ? const Border(
+              ? Border(
                   left: BorderSide(
-                      color: BlackLightColors.sidebarActiveText, width: 3),
+                      color: context.colors.primary, width: 3),
                 )
               : const Border(
                   left: BorderSide(color: Colors.transparent, width: 3)),
@@ -242,7 +241,7 @@ class _SidebarNavItem extends StatelessWidget {
               item.icon,
               size: 20,
               color: isActive
-                  ? BlackLightColors.sidebarActiveText
+                  ? context.colors.primary
                   : BlackLightAdaptive.textBody(context),
             ),
             const SizedBox(width: 12),
@@ -250,7 +249,7 @@ class _SidebarNavItem extends StatelessWidget {
               item.label,
               style: BlackLightTextStyles.body(
                 color: isActive
-                    ? BlackLightColors.sidebarActiveText
+                    ? context.colors.primary
                     : BlackLightAdaptive.textBody(context),
               ).copyWith(
                 fontSize: 14,

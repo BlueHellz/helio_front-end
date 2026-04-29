@@ -157,7 +157,7 @@ class _PremiumOrgDashboardPageState
                   child: CustomPaint(
                     painter: _StaticRevenueBarsPainter(
                       borderColor: border,
-                      accent: BlackLightColors.accent,
+                      accent: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ),

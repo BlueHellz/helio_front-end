@@ -78,7 +78,7 @@ class _BlackLightBottomNav extends StatelessWidget {
                         isActive ? item.activeIcon : item.icon,
                         size: 24,
                         color: isActive
-                            ? BlackLightColors.accent
+                            ? context.colors.primary
                             : BlackLightAdaptive.textBody(context),
                       ),
                       const SizedBox(height: 4),
@@ -86,7 +86,7 @@ class _BlackLightBottomNav extends StatelessWidget {
                         item.label,
                         style: BlackLightTextStyles.mobileLabelBold(
                           color: isActive
-                              ? BlackLightColors.accent
+                              ? context.colors.primary
                               : BlackLightAdaptive.textBody(context),
                         ).copyWith(fontSize: 10),
                       ),

@@ -49,37 +49,38 @@ class _OrgChatDesignState extends State<OrgChatDesign> {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Row(
       children: [
-        // Chat
         SizedBox(
           width: 420,
           child: Column(
             children: [
-              // Header
               Container(
                 height: 64,
                 padding: const EdgeInsets.symmetric(
                     horizontal: BlackLightSpacing.md),
-                decoration: const BoxDecoration(
-                  color: BlackLightColors.surface,
+                decoration: BoxDecoration(
+                  color: c.surface,
                   border: Border(
-                      bottom: BorderSide(color: BlackLightColors.border)),
+                      bottom: BorderSide(color: c.outline)),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.solar_power_rounded,
-                        size: 20, color: BlackLightColors.accent),
+                    Icon(Icons.solar_power_rounded,
+                        size: 20, color: c.primary),
                     const SizedBox(width: 8),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(OrgOrgChatDesignContent.aiTitle,
-                            style: BlackLightTextStyles.cardHeading()),
+                            style: BlackLightTextStyles.cardHeading(
+                                color: c.onSurface)),
                         if (widget.projectAddress.isNotEmpty)
                           Text(widget.projectAddress,
-                              style: BlackLightTextStyles.caption()
+                              style: BlackLightTextStyles.caption(color: variant)
                                   .copyWith(fontSize: 11),
                               overflow: TextOverflow.ellipsis),
                       ],
@@ -89,7 +90,7 @@ class _OrgChatDesignState extends State<OrgChatDesign> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
-                        color: BlackLightColors.surface,
+                        color: c.surfaceMuted,
                         borderRadius: BorderRadius.circular(999),
                       ),
                       child: Row(
@@ -98,15 +99,15 @@ class _OrgChatDesignState extends State<OrgChatDesign> {
                           Container(
                             width: 6,
                             height: 6,
-                            decoration: const BoxDecoration(
-                              color: BlackLightColors.green,
+                            decoration: BoxDecoration(
+                              color: c.secondary,
                               shape: BoxShape.circle,
                             ),
                           ),
                           const SizedBox(width: 5),
                           Text(OrgOrgChatDesignContent.onlineStatus,
                               style: BlackLightTextStyles.caption(
-                                      color: BlackLightColors.green)
+                                      color: c.secondary)
                                   .copyWith(fontSize: 11)),
                         ],
                       ),
@@ -114,8 +115,6 @@ class _OrgChatDesignState extends State<OrgChatDesign> {
                   ],
                 ),
               ),
-
-              // Messages
               Expanded(
                 child: widget.messages.isEmpty
                     ? _EmptyChat()
@@ -127,14 +126,12 @@ class _OrgChatDesignState extends State<OrgChatDesign> {
                             _Bubble(message: widget.messages[i]),
                       ),
               ),
-
-              // Input
               Container(
                 padding: const EdgeInsets.all(BlackLightSpacing.sm),
-                decoration: const BoxDecoration(
-                  color: BlackLightColors.surface,
+                decoration: BoxDecoration(
+                  color: c.surface,
                   border:
-                      Border(top: BorderSide(color: BlackLightColors.border)),
+                      Border(top: BorderSide(color: c.outline)),
                 ),
                 child: Row(
                   children: [
@@ -142,28 +139,26 @@ class _OrgChatDesignState extends State<OrgChatDesign> {
                       child: TextField(
                         controller: _inputCtrl,
                         onSubmitted: (_) => _send(),
-                        style: BlackLightTextStyles.body(
-                            color: BlackLightColors.textPrimary),
+                        style: BlackLightTextStyles.body(color: c.onSurface),
                         decoration: InputDecoration(
                           hintText: OrgOrgChatDesignContent.siteInputHint,
-                          hintStyle: BlackLightTextStyles.body(
-                              color: BlackLightColors.textCaption),
+                          hintStyle: BlackLightTextStyles.body(color: variant),
                           filled: true,
-                          fillColor: BlackLightColors.background,
+                          fillColor: c.surfaceMuted,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(999),
-                            borderSide: const BorderSide(
-                                color: BlackLightColors.border),
+                            borderSide:
+                                BorderSide(color: c.outline),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(999),
-                            borderSide: const BorderSide(
-                                color: BlackLightColors.border),
+                            borderSide:
+                                BorderSide(color: c.outline),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(999),
-                            borderSide: const BorderSide(
-                                color: BlackLightColors.accent, width: 1.5),
+                            borderSide: BorderSide(
+                                color: c.primary, width: 1.5),
                           ),
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 12),
@@ -176,12 +171,12 @@ class _OrgChatDesignState extends State<OrgChatDesign> {
                       child: Container(
                         width: 44,
                         height: 44,
-                        decoration: const BoxDecoration(
-                          color: BlackLightColors.accent,
+                        decoration: BoxDecoration(
+                          color: c.primary,
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(Icons.send_rounded,
-                            size: 18, color: Colors.white),
+                        child: Icon(Icons.send_rounded,
+                            size: 18, color: c.onPrimary),
                       ),
                     ),
                   ],
@@ -190,9 +185,11 @@ class _OrgChatDesignState extends State<OrgChatDesign> {
             ],
           ),
         ),
-        const VerticalDivider(width: 1, thickness: 1),
-
-        // Preview panel
+        VerticalDivider(
+          width: 1,
+          thickness: 1,
+          color: c.outline,
+        ),
         Expanded(
           child: Column(
             children: [
@@ -200,30 +197,30 @@ class _OrgChatDesignState extends State<OrgChatDesign> {
                 height: 64,
                 padding: const EdgeInsets.symmetric(
                     horizontal: BlackLightSpacing.md),
-                decoration: const BoxDecoration(
-                  color: BlackLightColors.surface,
+                decoration: BoxDecoration(
+                  color: c.surface,
                   border: Border(
-                      bottom: BorderSide(color: BlackLightColors.border)),
+                      bottom: BorderSide(color: c.outline)),
                 ),
                 child: Row(
                   children: [
                     Text(OrgOrgChatDesignContent.designPreview,
-                        style: BlackLightTextStyles.cardHeading()),
+                        style: BlackLightTextStyles.cardHeading(
+                            color: c.onSurface)),
                     const Spacer(),
                     if (widget.messages.isNotEmpty)
                       SizedBox(
                         height: 40,
                         child: OutlinedButton.icon(
                           onPressed: widget.onViewDesign,
-                          icon: const Icon(Icons.open_in_new_rounded, size: 14),
+                          icon: Icon(Icons.open_in_new_rounded, size: 14, color: c.onSurface),
                           label: Text(OrgOrgChatDesignContent.fullDesign,
                               style: BlackLightTextStyles.caption(
-                                      color: BlackLightColors.textPrimary)
+                                      color: c.onSurface)
                                   .copyWith(fontWeight: FontWeight.w600)),
                           style: OutlinedButton.styleFrom(
-                            foregroundColor: BlackLightColors.textPrimary,
-                            side: const BorderSide(
-                                color: BlackLightColors.border),
+                            foregroundColor: c.onSurface,
+                            side: BorderSide(color: c.outline),
                             shape: const StadiumBorder(),
                             padding: const EdgeInsets.symmetric(horizontal: 14),
                           ),
@@ -234,7 +231,7 @@ class _OrgChatDesignState extends State<OrgChatDesign> {
               ),
               Expanded(
                 child: Container(
-                  color: BlackLightColors.background,
+                  color: c.scaffold,
                   child: Center(
                     child: widget.messages.isNotEmpty
                         ? ActiveRoofDesign(height: 360, width: double.infinity)
@@ -253,6 +250,8 @@ class _OrgChatDesignState extends State<OrgChatDesign> {
 class _EmptyChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(BlackLightSpacing.lg),
@@ -263,18 +262,19 @@ class _EmptyChat extends StatelessWidget {
               width: 52,
               height: 52,
               decoration: BoxDecoration(
-                color: BlackLightColors.surface,
+                color: c.surface,
                 shape: BoxShape.circle,
-                border: Border.all(color: BlackLightColors.border),
+                border: Border.all(color: c.outline),
               ),
-              child: const Icon(Icons.architecture_outlined,
-                  size: 24, color: BlackLightColors.accent),
+              child: Icon(Icons.architecture_outlined,
+                  size: 24, color: c.primary),
             ),
             const SizedBox(height: BlackLightSpacing.md),
-            Text(OrgOrgChatDesignContent.readyTitle, style: BlackLightTextStyles.cardHeading()),
+            Text(OrgOrgChatDesignContent.readyTitle,
+                style: BlackLightTextStyles.cardHeading(color: c.onSurface)),
             const SizedBox(height: 4),
             Text(OrgOrgChatDesignContent.readyBody,
-                style: BlackLightTextStyles.body(),
+                style: BlackLightTextStyles.body(color: variant),
                 textAlign: TextAlign.center),
           ],
         ),
@@ -290,6 +290,7 @@ class _Bubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
     final isUser = message.sender == MessageSender.user;
     return Padding(
       padding: const EdgeInsets.only(bottom: BlackLightSpacing.sm),
@@ -302,10 +303,10 @@ class _Bubble extends StatelessWidget {
             Container(
               width: 28,
               height: 28,
-              decoration: const BoxDecoration(
-                  color: BlackLightColors.accent, shape: BoxShape.circle),
-              child: const Icon(Icons.solar_power_rounded,
-                  size: 14, color: Colors.white),
+              decoration: BoxDecoration(
+                  color: c.primary, shape: BoxShape.circle),
+              child: Icon(Icons.solar_power_rounded,
+                  size: 14, color: c.onPrimary),
             ),
             const SizedBox(width: 8),
           ],
@@ -314,7 +315,7 @@ class _Bubble extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               decoration: BoxDecoration(
                 color:
-                    isUser ? BlackLightColors.accent : BlackLightColors.surface,
+                    isUser ? c.primary : c.surface,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(isUser ? BlackLightRadius.card : 4),
                   topRight: Radius.circular(isUser ? 4 : BlackLightRadius.card),
@@ -322,13 +323,13 @@ class _Bubble extends StatelessWidget {
                   bottomRight: const Radius.circular(BlackLightRadius.card),
                 ),
                 border:
-                    isUser ? null : Border.all(color: BlackLightColors.border),
+                    isUser ? null : Border.all(color: c.outline),
               ),
               child: Text(
                 message.text,
                 style: BlackLightTextStyles.body(
                     color:
-                        isUser ? Colors.white : BlackLightColors.textPrimary),
+                        isUser ? c.onPrimary : c.onSurface),
               ),
             ),
           ),

@@ -27,6 +27,8 @@ class _MobileProjectsState extends State<MobileProjects> {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     final filtered = widget.projects
         .where((p) =>
             (_search.isEmpty ||
@@ -39,16 +41,15 @@ class _MobileProjectsState extends State<MobileProjects> {
       slivers: [
         SliverAppBar(
           title: Text(OrgMobileInstallerContent.projectsTitle,
-              style: BlackLightTextStyles.mobileH2()),
-          backgroundColor: BlackLightColors.surface,
+              style: BlackLightTextStyles.mobileH2(color: c.onSurface)),
+          backgroundColor: c.surface,
           elevation: 0,
           scrolledUnderElevation: 0,
           floating: true,
           pinned: true,
           actions: [
             IconButton(
-              icon: const Icon(Icons.add_circle_outline,
-                  color: BlackLightColors.accent),
+              icon: Icon(Icons.add_circle_outline, color: c.primary),
               onPressed: widget.onNewProject,
             ),
           ],
@@ -61,32 +62,27 @@ class _MobileProjectsState extends State<MobileProjects> {
                 height: 44,
                 child: TextField(
                   onChanged: (v) => setState(() => _search = v),
-                  style: BlackLightTextStyles.mobileBody(
-                      color: BlackLightColors.textPrimary),
+                  style: BlackLightTextStyles.mobileBody(color: c.onSurface),
                   decoration: InputDecoration(
                     hintText: OrgMobileInstallerContent.searchProjectsHint,
-                    hintStyle: BlackLightTextStyles.mobileBody(
-                        color: BlackLightColors.textCaption),
-                    prefixIcon: const Icon(Icons.search,
-                        size: 18, color: BlackLightColors.textCaption),
+                    hintStyle: BlackLightTextStyles.mobileBody(color: variant),
+                    prefixIcon: Icon(Icons.search, size: 18, color: variant),
                     filled: true,
-                    fillColor: BlackLightColors.background,
+                    fillColor: c.surfaceMuted,
                     contentPadding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 10),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(999),
-                      borderSide:
-                          const BorderSide(color: BlackLightColors.border),
+                      borderSide: BorderSide(color: c.outline),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(999),
-                      borderSide:
-                          const BorderSide(color: BlackLightColors.border),
+                      borderSide: BorderSide(color: c.outline),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(999),
-                      borderSide: const BorderSide(
-                          color: BlackLightColors.accent, width: 1.5),
+                      borderSide:
+                          BorderSide(color: c.primary, width: 1.5),
                     ),
                   ),
                 ),
@@ -103,10 +99,11 @@ class _MobileProjectsState extends State<MobileProjects> {
                   const EmptyHouseIllustration(),
                   const SizedBox(height: BlackLightSpacing.md),
                   Text(EmptyStatesContent.noProjectsMobileTitle,
-                      style: BlackLightTextStyles.mobileH3()),
+                      style: BlackLightTextStyles.mobileH3(
+                          color: c.onSurface)),
                   const SizedBox(height: 4),
                   Text(EmptyStatesContent.noProjectsMobileSubtitle,
-                      style: BlackLightTextStyles.mobileBody()),
+                      style: BlackLightTextStyles.mobileBody(color: variant)),
                 ],
               ),
             ),
@@ -140,14 +137,16 @@ class _MobileProjectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(BlackLightSpacing.sm),
         decoration: BoxDecoration(
-          color: BlackLightColors.surface,
+          color: c.surface,
           borderRadius: BorderRadius.circular(BlackLightRadius.card),
-          border: Border.all(color: BlackLightColors.border),
+          border: Border.all(color: c.outline),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,7 +155,8 @@ class _MobileProjectCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(project.clientName,
-                      style: BlackLightTextStyles.mobileH3(),
+                      style: BlackLightTextStyles.mobileH3(
+                          color: c.onSurface),
                       overflow: TextOverflow.ellipsis),
                 ),
                 StatusBadge(status: project.status),
@@ -165,12 +165,11 @@ class _MobileProjectCard extends StatelessWidget {
             const SizedBox(height: 4),
             Row(
               children: [
-                const Icon(Icons.location_on_outlined,
-                    size: 14, color: BlackLightColors.textCaption),
+                Icon(Icons.location_on_outlined, size: 14, color: variant),
                 const SizedBox(width: 4),
                 Expanded(
                   child: Text(project.address,
-                      style: BlackLightTextStyles.mobileBody(),
+                      style: BlackLightTextStyles.mobileBody(color: variant),
                       overflow: TextOverflow.ellipsis),
                 ),
               ],
@@ -192,8 +191,7 @@ class _MobileProjectCard extends StatelessWidget {
                 ],
                 const Spacer(),
                 Text(_fmtDate(project.date),
-                    style: BlackLightTextStyles.mobileBody(
-                            color: BlackLightColors.textCaption)
+                    style: BlackLightTextStyles.mobileBody(color: variant)
                         .copyWith(fontSize: 11)),
               ],
             ),
@@ -230,20 +228,21 @@ class _MiniChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
+        color: c.surfaceMuted,
         borderRadius: BorderRadius.circular(999),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 12, color: BlackLightColors.textCaption),
+          Icon(icon, size: 12, color: variant),
           const SizedBox(width: 4),
           Text(label,
-              style: BlackLightTextStyles.mobileBody(
-                      color: BlackLightColors.textBody)
+              style: BlackLightTextStyles.mobileBody(color: variant)
                   .copyWith(fontSize: 11)),
         ],
       ),

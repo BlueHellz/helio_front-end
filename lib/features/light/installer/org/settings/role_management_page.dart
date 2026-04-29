@@ -32,7 +32,7 @@ class _RoleManagementPageState extends ConsumerState<RoleManagementPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BlackLightColors.background,
+      backgroundColor: context.colors.scaffold,
       appBar: AppBar(title: Text(OrgSettingsRoleManagementContent.appBarTitle)),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _openRoleEditor(context, ref, null),
@@ -57,19 +57,23 @@ class _RoleManagementPageState extends ConsumerState<RoleManagementPage> {
                 final users =
                     (m['users'] ?? m['members'] ?? const <dynamic>[]) as List;
                 return Material(
-                  color: BlackLightColors.surface,
+                  color: context.colors.surface,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(BlackLightRadius.card),
-                    side: const BorderSide(color: BlackLightColors.border),
+                    side: BorderSide(color: context.colors.outline),
                   ),
                   child: ExpansionTile(
                     title: Text(
                       (m['name'] ?? CommonContent.fallbackRole).toString(),
-                      style: BlackLightTextStyles.bodyBold(),
+                      style: BlackLightTextStyles.bodyBold(
+                          color: context.colors.onSurface),
                     ),
                     subtitle: Text(
                       '${users.length}${OrgSettingsRoleManagementContent.usersCountSuffix}',
-                      style: BlackLightTextStyles.caption(),
+                      style: BlackLightTextStyles.caption(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurfaceVariant),
                     ),
                     children: [
                       Padding(
@@ -83,7 +87,10 @@ class _RoleManagementPageState extends ConsumerState<RoleManagementPage> {
                                     ? (u['name'] ?? u['email'] ?? CommonContent.fallbackUser)
                                         .toString()
                                     : u.toString(),
-                                style: BlackLightTextStyles.body(),
+                                style: BlackLightTextStyles.body(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurfaceVariant),
                               ),
                             const SizedBox(height: 8),
                             OutlinedButton(
@@ -126,7 +133,7 @@ class _RoleManagementPageState extends ConsumerState<RoleManagementPage> {
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: BlackLightColors.surface,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       builder: (ctx) {
         return Padding(
           padding: EdgeInsets.only(
@@ -222,7 +229,8 @@ class _RoleManagementPageState extends ConsumerState<RoleManagementPage> {
             existing == null
                 ? OrgSettingsRoleManagementContent.dialogNewRole
                 : OrgSettingsRoleManagementContent.dialogEditRole,
-            style: BlackLightTextStyles.cardHeading(),
+            style: BlackLightTextStyles.cardHeading(
+                color: context.colors.onSurface),
           ),
           content: SizedBox(
             width: 420,
@@ -237,7 +245,10 @@ class _RoleManagementPageState extends ConsumerState<RoleManagementPage> {
                   ),
                   const SizedBox(height: 12),
                   Text(OrgSettingsRoleManagementContent.permissionsCaption,
-                      style: BlackLightTextStyles.caption()),
+                      style: BlackLightTextStyles.caption(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurfaceVariant)),
                   ValueListenableBuilder<Set<String>>(
                     valueListenable: perms,
                     builder: (context, value, __) {

@@ -31,23 +31,25 @@ class WalletChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Container(
       height: 28,
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
+        color: c.surface,
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: BlackLightColors.border),
+        border: Border.all(color: c.outline),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.account_balance_wallet_outlined,
-              size: 14, color: BlackLightColors.textCaption),
+          Icon(Icons.account_balance_wallet_outlined,
+              size: 14, color: variant),
           const SizedBox(width: 6),
           Text(
             '${balance.toStringAsFixed(2)} HLIO',
-            style: BlackLightTextStyles.dataInline(),
+            style: BlackLightTextStyles.dataInline(color: c.onSurface),
           ),
         ],
       ),
@@ -69,19 +71,21 @@ class BlackLightChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
+    final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return Container(
       height: 28,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-        color: backgroundColor ?? BlackLightColors.surface,
+        color: backgroundColor ?? c.surface,
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: BlackLightColors.border),
+        border: Border.all(color: c.outline),
       ),
       child: Center(
         child: Text(
           label,
           style: BlackLightTextStyles.caption(
-            color: textColor ?? BlackLightColors.textBody,
+            color: textColor ?? variant,
           ),
         ),
       ),

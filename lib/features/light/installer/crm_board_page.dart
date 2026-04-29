@@ -530,10 +530,10 @@ class _DealCard extends StatelessWidget {
   Color _statusColor() {
     final s = _statusLabel().toLowerCase();
     if (s.contains('won') || s.contains('closed')) {
-      return BlackLightColors.green;
+      return colors.secondary;
     }
     if (s.contains('lost')) return colors.error;
-    if (s.contains('quot')) return BlackLightColors.amber;
+    if (s.contains('quot')) return colors.warning;
     return colors.primary;
   }
 

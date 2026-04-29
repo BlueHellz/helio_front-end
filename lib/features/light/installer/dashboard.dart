@@ -107,8 +107,8 @@ class _FreeInstallerDashboardPageState
                         icon: const Icon(Icons.add, size: 18),
                         label: Text(
                           OrgDashboardContent.quickActionNewProject,
-                          style:
-                              BlackLightTextStyles.bodyBold(color: Colors.white),
+                          style: BlackLightTextStyles.bodyBold(
+                              color: context.colors.onPrimary),
                         ),
                       ),
                     ),
@@ -206,30 +206,31 @@ class FreeInstallerMetricsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     final metrics = [
       (
         OrgDashboardContent.freeMetricActiveProjects,
         OrgDashboardContent.freeMetricPlaceholderZero,
         Icons.folder_outlined,
-        BlackLightColors.accent,
+        cs.primary,
       ),
       (
         OrgDashboardContent.freeMetricPipelineValue,
         OrgDashboardContent.freeMetricPlaceholderMoney,
         Icons.trending_up,
-        BlackLightColors.green,
+        cs.secondary,
       ),
       (
         OrgDashboardContent.freeMetricClosedMonth,
         OrgDashboardContent.freeMetricPlaceholderZero,
         Icons.check_circle_outline,
-        BlackLightColors.accent,
+        cs.primary,
       ),
       (
         OrgDashboardContent.freeMetricAvgCloseTime,
         OrgDashboardContent.freeMetricPlaceholderDash,
         Icons.schedule,
-        BlackLightColors.textBody,
+        cs.onSurfaceVariant,
       ),
     ];
 
