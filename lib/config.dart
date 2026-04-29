@@ -1,4 +1,7 @@
 class BlackLightConfig {
+  /// Temporary: align with backend `BYPASS_AUTH` — installer/org shell only while bypass is on.
+  static const bool bypassMode = true;
+
   /// Production API (host is composed at runtime to keep literals out of the tree).
   static String get apiBaseUrl => String.fromCharCodes(const <int>[
         104,

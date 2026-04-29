@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../../config.dart';
 import '../../services/api.dart';
 import '../../services/auth_api.dart';
 import '../app_state.dart';
@@ -64,8 +65,9 @@ class AuthSession {
 UserRole userRoleFromApiString(String? role) {
   final s = (role ?? '').toLowerCase().trim();
   if (s.isEmpty) {
-    // DEV: auth bypass / partial JWT bodies may omit role; use installer/org shell until roles are always explicit.
-    return UserRole.organization;
+    return BlackLightConfig.bypassMode
+        ? UserRole.organization
+        : UserRole.homeowner;
   }
   switch (s) {
     case 'homeowner':
