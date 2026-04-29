@@ -68,21 +68,23 @@ class _CrmBoardPageState extends ConsumerState<CrmBoardPage> {
       final stages = await api.getStages(pipelineId);
       final byStage = <String, List<Map<String, dynamic>>>{};
 
-      var embedded = false;
-      for (final s in stages) {
-        final sid = s['id']?.toString() ?? '';
-        if (sid.isEmpty) continue;
-        byStage[sid] = [];
-        final dealsRaw = s['deals'];
-        if (dealsRaw is List) {
-          embedded = true;
-          byStage[sid] = dealsRaw
-              .map((e) => Map<String, dynamic>.from(e as Map))
-              .toList();
-        }
-      }
+      final useNestedDeals =
+          stages.any((s) => s.containsKey('deals') || s.containsKey('Deals'));
 
-      if (!embedded) {
+      if (useNestedDeals) {
+        for (final s in stages) {
+          final sid = s['id']?.toString() ?? '';
+          if (sid.isEmpty) continue;
+          final dealsRaw = s['deals'] ?? s['Deals'];
+          if (dealsRaw is List) {
+            byStage[sid] = dealsRaw
+                .map((e) => Map<String, dynamic>.from(e as Map))
+                .toList();
+          } else {
+            byStage[sid] = [];
+          }
+        }
+      } else {
         final allDeals = await api.getDeals(pipelineId);
         for (final s in stages) {
           final sid = s['id']?.toString() ?? '';
