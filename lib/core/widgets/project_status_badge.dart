@@ -22,16 +22,17 @@ class ProjectStatusBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final resolved = status ?? parseProjectStatusFromApi(statusRaw);
     final s = resolved ?? ProjectStatus.designing;
+    final (bg, fg, bd) = s.resolveBadgeColors(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: s.backgroundColor,
+        color: bg,
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: s.badgeBorderColor, width: 1),
+        border: Border.all(color: bd, width: 1),
       ),
       child: Text(
         s.label.toUpperCase(),
-        style: BlackLightTextStyles.captionBold(color: s.textColor),
+        style: BlackLightTextStyles.captionBold(color: fg),
       ),
     );
   }

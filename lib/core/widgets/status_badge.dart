@@ -9,16 +9,17 @@ class StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final (bg, fg, bd) = status.resolveBadgeColors(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: status.backgroundColor,
+        color: bg,
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: status.badgeBorderColor, width: 1),
+        border: Border.all(color: bd, width: 1),
       ),
       child: Text(
         status.label.toUpperCase(),
-        style: BlackLightTextStyles.captionBold(color: status.textColor),
+        style: BlackLightTextStyles.captionBold(color: fg),
       ),
     );
   }

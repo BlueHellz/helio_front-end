@@ -41,54 +41,33 @@ extension ProjectStatusLabel on ProjectStatus {
     }
   }
 
-  Color get backgroundColor {
+  (Color bg, Color fg, Color border) resolveBadgeColors(BuildContext context) {
+    final c = context.colors;
     switch (this) {
       case ProjectStatus.designing:
       case ProjectStatus.ready:
       case ProjectStatus.inProgress:
       case ProjectStatus.completed:
-        return BlackLightColors.surface;
+        return (
+          c.surfaceMuted,
+          c.onSurface,
+          c.outline,
+        );
       case ProjectStatus.quoted:
       case ProjectStatus.pendingInspection:
-        return BlackLightColors.amber;
+        return (
+          c.warning.withOpacity(0.2),
+          c.warning,
+          c.warning,
+        );
       case ProjectStatus.contracted:
       case ProjectStatus.permitted:
       case ProjectStatus.installed:
-        return BlackLightColors.green;
-    }
-  }
-
-  Color get textColor {
-    switch (this) {
-      case ProjectStatus.designing:
-      case ProjectStatus.ready:
-      case ProjectStatus.inProgress:
-      case ProjectStatus.quoted:
-      case ProjectStatus.pendingInspection:
-        return BlackLightColors.textPrimary;
-      case ProjectStatus.contracted:
-      case ProjectStatus.permitted:
-      case ProjectStatus.installed:
-        return Colors.white;
-      case ProjectStatus.completed:
-        return BlackLightColors.textBody;
-    }
-  }
-
-  Color get badgeBorderColor {
-    switch (this) {
-      case ProjectStatus.designing:
-      case ProjectStatus.ready:
-      case ProjectStatus.inProgress:
-      case ProjectStatus.completed:
-        return BlackLightColors.border;
-      case ProjectStatus.quoted:
-      case ProjectStatus.pendingInspection:
-        return BlackLightColors.amber;
-      case ProjectStatus.contracted:
-      case ProjectStatus.permitted:
-      case ProjectStatus.installed:
-        return BlackLightColors.green;
+        return (
+          c.secondary.withOpacity(0.2),
+          c.secondary,
+          c.secondary,
+        );
     }
   }
 }
