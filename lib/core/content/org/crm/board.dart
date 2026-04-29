@@ -18,12 +18,17 @@ class OrgCrmBoardContent {
   static const emptyDealsTitle = 'No deals yet';
   static const emptyDealsSubtitle =
       'When leads enter your pipeline they appear as cards here.';
+  static const emptyStageDeals = 'No deals in this stage';
   static const dealSizeLabel = 'Deal size';
   static const statusLabel = 'Status';
   static const designModeHint =
-      'Design mode: use handles to reorder stages. Deal cards stay read-only.';
-  static const liveModeHint = 'Live mode: tap a card to open deal details.';
+      'Adjust stage order with the header handles. Long-press a deal to move it between columns.';
+  static const liveModeHint =
+      'Long-press a deal card, then drop it on another stage to update the deal.';
   static const refreshBoard = 'Refresh';
+  static const dealMovedFailedPrefix = 'Could not move deal: ';
+  static const mockDataBanner =
+      'Showing sample data — reconnect to sync your live pipeline.';
 }
 
 class OrgCrmDealContent {

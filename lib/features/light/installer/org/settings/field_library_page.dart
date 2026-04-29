@@ -52,7 +52,10 @@ class _FieldLibraryPageState extends ConsumerState<FieldLibraryPage> {
                   ref.invalidate(customFieldsProvider);
                 } catch (e) {
                   if (context.mounted) {
-                    AppFeedback.snack(context, '${ApiErrorsContent.deleteFailedPrefix}$e');
+                    AppFeedback.snack(
+                      context,
+                      '${OrgSettingsFieldLibraryContent.saveFieldFailedPrefix}$e',
+                    );
                   }
                 }
               },
@@ -64,17 +67,19 @@ class _FieldLibraryPageState extends ConsumerState<FieldLibraryPage> {
                 ),
                 child: ListTile(
                   title: Text(
-                    (m['name'] ?? m['label'] ?? CommonContent.fallbackField).toString(),
+                    (m['name'] ?? m['label'] ?? CommonContent.fallbackField)
+                        .toString(),
                     style: BlackLightTextStyles.bodyBold(
-                        color: context.colors.onSurface),
+                      color: context.colors.onSurface,
+                    ),
                   ),
                   subtitle: Text(
-                    '${m['type'] ?? 'text'} • sections: '
+                    '${m['type'] ?? CustomFieldTypes.text} · '
                     '${(m['target_sections'] ?? m['sections'] ?? const [])}',
                     style: BlackLightTextStyles.caption(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSurfaceVariant),
+                      color:
+                          Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
                   ),
                   trailing: IconButton(
                     icon: const Icon(Icons.edit_outlined),
@@ -89,6 +94,46 @@ class _FieldLibraryPageState extends ConsumerState<FieldLibraryPage> {
     );
   }
 
+  static const List<(String type, String label)> _typeChoices = [
+    (CustomFieldTypes.text, OrgSettingsFieldLibraryContent.typeText),
+    (CustomFieldTypes.number, OrgSettingsFieldLibraryContent.typeNumber),
+    (CustomFieldTypes.date, OrgSettingsFieldLibraryContent.typeDate),
+    (CustomFieldTypes.dropdown, OrgSettingsFieldLibraryContent.typeDropdown),
+    (
+      CustomFieldTypes.multiSelect,
+      OrgSettingsFieldLibraryContent.typeMultiSelect,
+    ),
+    (CustomFieldTypes.file, OrgSettingsFieldLibraryContent.typeFile),
+    (CustomFieldTypes.photo, OrgSettingsFieldLibraryContent.typePhoto),
+    (CustomFieldTypes.toggle, OrgSettingsFieldLibraryContent.typeToggle),
+    (CustomFieldTypes.url, OrgSettingsFieldLibraryContent.typeUrl),
+    (CustomFieldTypes.phone, OrgSettingsFieldLibraryContent.typePhone),
+    (CustomFieldTypes.email, OrgSettingsFieldLibraryContent.typeEmail),
+    (
+      CustomFieldTypes.currency,
+      OrgSettingsFieldLibraryContent.typeCurrency,
+    ),
+  ];
+
+  static const List<(String value, String label)> _targetDefs = [
+    (
+      OrgSettingsFieldLibraryContent.chipIntake,
+      OrgSettingsFieldLibraryContent.chipIntakeLabel,
+    ),
+    (
+      OrgSettingsFieldLibraryContent.chipProjectDetail,
+      OrgSettingsFieldLibraryContent.chipProjectDetailLabel,
+    ),
+    (
+      OrgSettingsFieldLibraryContent.chipDealCard,
+      OrgSettingsFieldLibraryContent.chipDealCardLabel,
+    ),
+  ];
+
+  bool _needsOptions(String type) =>
+      type == CustomFieldTypes.dropdown ||
+      type == CustomFieldTypes.multiSelect;
+
   Future<void> _openEditor(
     BuildContext context,
     WidgetRef ref,
@@ -98,12 +143,11 @@ class _FieldLibraryPageState extends ConsumerState<FieldLibraryPage> {
       text: (existing?['name'] ?? existing?['label'] ?? '') as String? ?? '',
     );
     final typeCtrl = ValueNotifier<String>(
-      (existing?['type'] ?? 'text').toString(),
+      (existing?['type'] ?? CustomFieldTypes.text).toString(),
     );
-    final optionsCtrl = TextEditingController(
-      text: (existing?['options'] is List)
-          ? (existing!['options'] as List).join(', ')
-          : '',
+    final optionAddCtrl = TextEditingController();
+    final options = ValueNotifier<List<String>>(
+      _parseOptions(existing?['options']),
     );
     final required = ValueNotifier<bool>(
       existing?['required'] == true,
@@ -142,32 +186,27 @@ class _FieldLibraryPageState extends ConsumerState<FieldLibraryPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(OrgSettingsFieldLibraryContent.editorHeading,
-                        style: BlackLightTextStyles.cardHeading(
-                            color: onSurf)),
+                    Text(
+                      OrgSettingsFieldLibraryContent.editorHeading,
+                      style:
+                          BlackLightTextStyles.cardHeading(color: onSurf),
+                    ),
                     const SizedBox(height: 12),
                     TextField(
                       controller: nameCtrl,
                       decoration: InputDecoration(
-                          labelText: OrgSettingsFieldLibraryContent.labelName),
+                        labelText: OrgSettingsFieldLibraryContent.labelName,
+                      ),
                     ),
                     const SizedBox(height: 12),
                     DropdownButtonFormField<String>(
                       value: typeCtrl.value,
                       items: [
-                        DropdownMenuItem(
-                            value: 'text',
-                            child: Text(OrgSettingsFieldLibraryContent.typeText)),
-                        DropdownMenuItem(
-                            value: 'number',
-                            child: Text(OrgSettingsFieldLibraryContent.typeNumber)),
-                        DropdownMenuItem(
-                            value: 'dropdown',
-                            child: Text(OrgSettingsFieldLibraryContent.typeDropdown),
-                        ),
-                        DropdownMenuItem(
-                            value: 'toggle',
-                            child: Text(OrgSettingsFieldLibraryContent.typeToggle)),
+                        for (final t in _typeChoices)
+                          DropdownMenuItem<String>(
+                            value: t.$1,
+                            child: Text(t.$2),
+                          ),
                       ],
                       onChanged: (v) {
                         if (v != null) {
@@ -176,15 +215,112 @@ class _FieldLibraryPageState extends ConsumerState<FieldLibraryPage> {
                         }
                       },
                       decoration: InputDecoration(
-                          labelText: OrgSettingsFieldLibraryContent.labelType),
-                    ),
-                    const SizedBox(height: 12),
-                    TextField(
-                      controller: optionsCtrl,
-                      decoration: InputDecoration(
-                        labelText:
-                            OrgSettingsFieldLibraryContent.labelDropdownOptions,
+                        labelText: OrgSettingsFieldLibraryContent.labelType,
                       ),
+                    ),
+                    ValueListenableBuilder<String>(
+                      valueListenable: typeCtrl,
+                      builder: (_, type, __) {
+                        if (!_needsOptions(type)) {
+                          return const SizedBox.shrink();
+                        }
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const SizedBox(height: 12),
+                            Text(
+                              OrgSettingsFieldLibraryContent.labelDropdownOptions,
+                              style: BlackLightTextStyles.caption(
+                                color: variant,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TextField(
+                                    controller: optionAddCtrl,
+                                    decoration: InputDecoration(
+                                      hintText: OrgSettingsFieldLibraryContent
+                                          .optionAddHint,
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    final t = optionAddCtrl.text.trim();
+                                    if (t.isEmpty) return;
+                                    final next = [...options.value, t];
+                                    options.value = next;
+                                    optionAddCtrl.clear();
+                                    setM(() {});
+                                  },
+                                  icon: const Icon(Icons.add),
+                                ),
+                              ],
+                            ),
+                            ValueListenableBuilder<List<String>>(
+                              valueListenable: options,
+                              builder: (_, opts, __) {
+                                return ReorderableListView.builder(
+                                  shrinkWrap: true,
+                                  physics:
+                                      const NeverScrollableScrollPhysics(),
+                                  buildDefaultDragHandles: false,
+                                  itemCount: opts.length,
+                                  onReorder: (a, b) {
+                                    if (b > a) b -= 1;
+                                    final n = [...opts];
+                                    final x = n.removeAt(a);
+                                    n.insert(b, x);
+                                    options.value = n;
+                                    setM(() {});
+                                  },
+                                  itemBuilder: (c, i) {
+                                    final o = opts[i];
+                                    return Material(
+                                      key: ValueKey('opt_$i$o'),
+                                      color: Theme.of(c)
+                                          .colorScheme
+                                          .surfaceContainerHighest
+                                          .withValues(alpha: 0.35),
+                                      shape: StadiumBorder(
+                                        side: BorderSide(
+                                          color: ctx.colors.outline,
+                                        ),
+                                      ),
+                                      child: ListTile(
+                                        dense: true,
+                                        leading:
+                                            ReorderableDragStartListener(
+                                          index: i,
+                                          child: Icon(
+                                            Icons.drag_handle,
+                                            color: ctx.colors.outline,
+                                          ),
+                                        ),
+                                        title: Text(o),
+                                        trailing: IconButton(
+                                          icon: Icon(
+                                            Icons.close,
+                                            color: ctx.colors.error,
+                                          ),
+                                          onPressed: () {
+                                            final n = [...opts]
+                                              ..removeAt(i);
+                                            options.value = n;
+                                            setM(() {});
+                                          },
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ],
+                        );
+                      },
                     ),
                     const SizedBox(height: 12),
                     Text(
@@ -194,23 +330,25 @@ class _FieldLibraryPageState extends ConsumerState<FieldLibraryPage> {
                     Wrap(
                       spacing: 8,
                       children: [
-                        for (final s in [
-                          OrgSettingsFieldLibraryContent.chipIntake,
-                          OrgSettingsFieldLibraryContent.chipDealCard,
-                          OrgSettingsFieldLibraryContent.chipProjectDetail,
-                        ])
-                          FilterChip(
-                            label: Text(s),
-                            selected: targets.value.contains(s),
-                            onSelected: (v) {
-                              final next = [...targets.value];
-                              if (v) {
-                                if (!next.contains(s)) next.add(s);
-                              } else {
-                                next.remove(s);
-                              }
-                              targets.value = next;
-                              setM(() {});
+                        for (final t in _targetDefs)
+                          ValueListenableBuilder<List<String>>(
+                            valueListenable: targets,
+                            builder: (_, sel, __) {
+                              final on = sel.contains(t.$1);
+                              return FilterChip(
+                                label: Text(t.$2),
+                                selected: on,
+                                onSelected: (v) {
+                                  final next = [...sel];
+                                  if (v) {
+                                    if (!next.contains(t.$1)) next.add(t.$1);
+                                  } else {
+                                    next.remove(t.$1);
+                                  }
+                                  targets.value = next;
+                                  setM(() {});
+                                },
+                              );
                             },
                           ),
                       ],
@@ -219,7 +357,9 @@ class _FieldLibraryPageState extends ConsumerState<FieldLibraryPage> {
                       valueListenable: required,
                       builder: (_, req, __) => SwitchListTile.adaptive(
                         contentPadding: EdgeInsets.zero,
-                        title: Text(OrgSettingsFieldLibraryContent.requiredSwitchTitle),
+                        title: Text(
+                          OrgSettingsFieldLibraryContent.requiredSwitchTitle,
+                        ),
                         value: req,
                         onChanged: (v) {
                           required.value = v;
@@ -232,17 +372,14 @@ class _FieldLibraryPageState extends ConsumerState<FieldLibraryPage> {
                       height: BlackLightSpacing.buttonHeight,
                       child: ElevatedButton(
                         onPressed: () async {
+                          final type = typeCtrl.value;
                           final body = <String, dynamic>{
                             'name': nameCtrl.text.trim(),
-                            'type': typeCtrl.value,
+                            'type': type,
                             'required': required.value,
                             'target_sections': targets.value,
-                            if (typeCtrl.value == 'dropdown')
-                              'options': optionsCtrl.text
-                                  .split(',')
-                                  .map((e) => e.trim())
-                                  .where((e) => e.isNotEmpty)
-                                  .toList(),
+                            if (_needsOptions(type))
+                              'options': options.value,
                           };
                           try {
                             if (existing == null) {
@@ -253,9 +390,18 @@ class _FieldLibraryPageState extends ConsumerState<FieldLibraryPage> {
                             }
                             if (context.mounted) Navigator.pop(context);
                             ref.invalidate(customFieldsProvider);
+                            if (context.mounted) {
+                              AppFeedback.snack(
+                                context,
+                                OrgSettingsFieldLibraryContent.savedField,
+                              );
+                            }
                           } catch (e) {
                             if (context.mounted) {
-                              AppFeedback.snack(context, '${ApiErrorsContent.saveFailedPrefix}$e');
+                              AppFeedback.snack(
+                                context,
+                                '${OrgSettingsFieldLibraryContent.saveFieldFailedPrefix}$e',
+                              );
                             }
                           }
                         },
@@ -270,5 +416,26 @@ class _FieldLibraryPageState extends ConsumerState<FieldLibraryPage> {
         );
       },
     );
+
+    nameCtrl.dispose();
+    optionAddCtrl.dispose();
+    typeCtrl.dispose();
+    options.dispose();
+    required.dispose();
+    targets.dispose();
+  }
+
+  List<String> _parseOptions(dynamic raw) {
+    if (raw is List) {
+      return raw.map((e) => e.toString()).toList();
+    }
+    if (raw is String && raw.isNotEmpty) {
+      return raw
+          .split(',')
+          .map((e) => e.trim())
+          .where((e) => e.isNotEmpty)
+          .toList();
+    }
+    return [];
   }
 }

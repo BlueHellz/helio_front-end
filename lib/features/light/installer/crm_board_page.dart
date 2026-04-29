@@ -10,6 +10,13 @@ import 'package:blacklight_app/theme/blacklight_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+class _DealDragPayload {
+  const _DealDragPayload({required this.deal, required this.fromStageId});
+
+  final Map<String, dynamic> deal;
+  final String fromStageId;
+}
+
 /// CRM Kanban — theme-aware (Light for free org, dark when wrapped in premium Theme).
 class CrmBoardPage extends ConsumerStatefulWidget {
   const CrmBoardPage({super.key});
@@ -23,33 +30,118 @@ class _CrmBoardPageState extends ConsumerState<CrmBoardPage> {
   List<Map<String, dynamic>> _stages = const [];
   Map<String, List<Map<String, dynamic>>> _dealsByStage = {};
   bool _loadingBoard = false;
+  bool _usingMockData = false;
 
-  Future<void> _load(String pipelineId) async {
-    setState(() => _loadingBoard = true);
-    final api = ref.read(apiProvider);
-    final stages = await api.getStages(pipelineId);
-    final allDeals = await api.getDeals(pipelineId);
-    final byStage = <String, List<Map<String, dynamic>>>{};
-    for (final s in stages) {
-      final sid = s['id']?.toString() ?? '';
-      if (sid.isEmpty) continue;
-      byStage[sid] = allDeals
-          .where(
-            (d) =>
-                (d['stage_id'] ?? d['stageId'] ?? '').toString() == sid,
-          )
-          .toList();
+  Color _stageAccent(Map<String, dynamic> stage, BlackLightPalette c) {
+    final key = (stage['color_key'] ?? stage['colorKey'] ?? 'primary')
+        .toString();
+    switch (key) {
+      case 'green':
+        return c.secondary;
+      case 'amber':
+        return c.warning;
+      case 'error':
+        return c.error;
+      case 'muted':
+        return c.outline;
+      case 'primary':
+      default:
+        return c.primary;
     }
-    if (!mounted) return;
-    setState(() {
-      _stages = stages;
-      _dealsByStage = byStage;
-      _loadingBoard = false;
-    });
   }
 
+  String _dealStageId(Map<String, dynamic> d) =>
+      (d['pipeline_stage_id'] ??
+              d['pipelineStageId'] ??
+              d['stage_id'] ??
+              d['stageId'] ??
+              '')
+          .toString();
+
+  Future<void> _load(String pipelineId) async {
+    setState(() {
+      _loadingBoard = true;
+      _usingMockData = false;
+    });
+    try {
+      final api = ref.read(apiProvider);
+      final stages = await api.getStages(pipelineId);
+      final byStage = <String, List<Map<String, dynamic>>>{};
+
+      var embedded = false;
+      for (final s in stages) {
+        final sid = s['id']?.toString() ?? '';
+        if (sid.isEmpty) continue;
+        byStage[sid] = [];
+        final dealsRaw = s['deals'];
+        if (dealsRaw is List) {
+          embedded = true;
+          byStage[sid] = dealsRaw
+              .map((e) => Map<String, dynamic>.from(e as Map))
+              .toList();
+        }
+      }
+
+      if (!embedded) {
+        final allDeals = await api.getDeals(pipelineId);
+        for (final s in stages) {
+          final sid = s['id']?.toString() ?? '';
+          if (sid.isEmpty) continue;
+          byStage[sid] = allDeals
+              .where((d) => _dealStageId(d) == sid)
+              .toList();
+        }
+      }
+
+      if (!mounted) return;
+      setState(() {
+        _stages = stages;
+        _dealsByStage = byStage;
+        _loadingBoard = false;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _usingMockData = true;
+        _stages = _mockStages();
+        _dealsByStage = _mockDealsByStage();
+        _loadingBoard = false;
+      });
+    }
+  }
+
+  List<Map<String, dynamic>> _mockStages() => [
+        {'id': 'mock_s1', 'name': 'Lead', 'color_key': 'primary'},
+        {'id': 'mock_s2', 'name': 'Qualified', 'color_key': 'green'},
+        {'id': 'mock_s3', 'name': 'Closed', 'color_key': 'amber'},
+      ];
+
+  Map<String, List<Map<String, dynamic>>> _mockDealsByStage() => {
+        'mock_s1': [
+          {
+            'id': 'mock_d1',
+            'title': 'Taylor Residence',
+            'address': '1200 Oak Ave',
+            'estimated_kw': 8.4,
+            'status': 'open',
+            'pipeline_stage_id': 'mock_s1',
+          },
+        ],
+        'mock_s2': [
+          {
+            'id': 'mock_d2',
+            'title': 'Northwind HQ',
+            'address': '44 Industrial Pkwy',
+            'estimated_kw': 120,
+            'status': 'quoting',
+            'pipeline_stage_id': 'mock_s2',
+          },
+        ],
+        'mock_s3': const <Map<String, dynamic>>[],
+      };
+
   Future<void> _swapStages(int a, int b) async {
-    if (_pipelineId == null) return;
+    if (_pipelineId == null || _usingMockData) return;
     final next = [..._stages];
     final tmp = next[a];
     next[a] = next[b];
@@ -74,7 +166,52 @@ class _CrmBoardPageState extends ConsumerState<CrmBoardPage> {
     }
   }
 
+  Future<void> _onDealDropped(
+    _DealDragPayload payload,
+    String targetStageId,
+  ) async {
+    if (_usingMockData) return;
+    if (payload.fromStageId == targetStageId) return;
+    final dealId = payload.deal['id']?.toString() ?? '';
+    if (dealId.isEmpty) return;
+
+    final snapshot =
+        _dealsByStage.map((k, v) => MapEntry(k, List<Map<String, dynamic>>.from(v)));
+
+    setState(() {
+      final from = List<Map<String, dynamic>>.from(
+        _dealsByStage[payload.fromStageId] ?? const [],
+      );
+      from.removeWhere((d) => d['id']?.toString() == dealId);
+      _dealsByStage[payload.fromStageId] = from;
+      final to = List<Map<String, dynamic>>.from(
+        _dealsByStage[targetStageId] ?? const [],
+      );
+      final moved = Map<String, dynamic>.from(payload.deal);
+      moved['pipeline_stage_id'] = targetStageId;
+      moved['stage_id'] = targetStageId;
+      to.add(moved);
+      _dealsByStage[targetStageId] = to;
+    });
+
+    try {
+      await ref.read(apiProvider).updateDeal(dealId, {
+        'pipeline_stage_id': targetStageId,
+        'stage_id': targetStageId,
+      });
+    } catch (e) {
+      if (mounted) {
+        setState(() => _dealsByStage = snapshot);
+        AppFeedback.snack(
+          context,
+          '${OrgCrmBoardContent.dealMovedFailedPrefix}$e',
+        );
+      }
+    }
+  }
+
   Future<void> _openDeal(BuildContext context, Map<String, dynamic> d) async {
+    if (_usingMockData) return;
     final id = d['id']?.toString() ?? '';
     try {
       final full = await ref.read(apiProvider).getDeal(id);
@@ -118,14 +255,6 @@ class _CrmBoardPageState extends ConsumerState<CrmBoardPage> {
         );
       }
     }
-  }
-
-  int _totalDealCount() {
-    var n = 0;
-    for (final e in _dealsByStage.values) {
-      n += e.length;
-    }
-    return n;
   }
 
   @override
@@ -229,6 +358,13 @@ class _CrmBoardPageState extends ConsumerState<CrmBoardPage> {
                       OrgCrmBoardContent.webPipelineSubtitle,
                       style: tt.bodyMedium,
                     ),
+                    if (_usingMockData) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        OrgCrmBoardContent.mockDataBanner,
+                        style: tt.bodySmall?.copyWith(color: c.warning),
+                      ),
+                    ],
                     const SizedBox(height: 8),
                     Container(
                       width: double.infinity,
@@ -287,8 +423,14 @@ class _CrmBoardPageState extends ConsumerState<CrmBoardPage> {
                               color: c.primary,
                             ),
                           )
-                        : _totalDealCount() == 0 && _stages.isNotEmpty
-                            ? _EmptyBoardState(colors: c, textTheme: tt)
+                        : _stages.isEmpty
+                            ? Center(
+                                child: Text(
+                                  OrgCrmBoardContent.createPipelineHint,
+                                  style: tt.bodyMedium,
+                                  textAlign: TextAlign.center,
+                                ),
+                              )
                             : LayoutBuilder(
                                 builder: (ctx, constraints) {
                                   return SingleChildScrollView(
@@ -311,6 +453,10 @@ class _CrmBoardPageState extends ConsumerState<CrmBoardPage> {
                                             textTheme: tt,
                                             designMode: design,
                                             stage: _stages[i],
+                                            stageAccent: _stageAccent(
+                                              _stages[i],
+                                              c,
+                                            ),
                                             deals: _dealsByStage[
                                                     _stages[i]['id']
                                                             ?.toString() ??
@@ -328,6 +474,8 @@ class _CrmBoardPageState extends ConsumerState<CrmBoardPage> {
                                                 : null,
                                             onOpenDeal: (d) =>
                                                 _openDeal(context, d),
+                                            onDealDropped: _onDealDropped,
+                                            usingMock: _usingMockData,
                                           ),
                                       ],
                                     ),
@@ -343,65 +491,34 @@ class _CrmBoardPageState extends ConsumerState<CrmBoardPage> {
   }
 }
 
-class _EmptyBoardState extends StatelessWidget {
-  const _EmptyBoardState({
-    required this.colors,
-    required this.textTheme,
-  });
-
-  final BlackLightPalette colors;
-  final TextTheme textTheme;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 360),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const EmptyHouseIllustration(),
-            const SizedBox(height: BlackLightSpacing.md),
-            Text(
-              OrgCrmBoardContent.emptyDealsTitle,
-              style: textTheme.titleLarge,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              OrgCrmBoardContent.emptyDealsSubtitle,
-              style: textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class _StageColumn extends StatelessWidget {
   const _StageColumn({
     required this.colors,
     required this.textTheme,
     required this.designMode,
     required this.stage,
+    required this.stageAccent,
     required this.deals,
     required this.columnHeight,
     required this.onOpenDeal,
-    this.onMoveLeft,
-    this.onMoveRight,
+    required this.onDealDropped,
+    required this.onMoveLeft,
+    required this.onMoveRight,
+    required this.usingMock,
   });
 
   final BlackLightPalette colors;
   final TextTheme textTheme;
   final bool designMode;
   final Map<String, dynamic> stage;
+  final Color stageAccent;
   final List<Map<String, dynamic>> deals;
   final double columnHeight;
   final void Function(Map<String, dynamic>) onOpenDeal;
+  final Future<void> Function(_DealDragPayload, String) onDealDropped;
   final VoidCallback? onMoveLeft;
   final VoidCallback? onMoveRight;
+  final bool usingMock;
 
   @override
   Widget build(BuildContext context) {
@@ -419,63 +536,143 @@ class _StageColumn extends StatelessWidget {
           child: SizedBox(
             width: 296,
             height: columnHeight.clamp(320, 920),
-            child: Column(
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          (stage['name'] ?? CommonContent.fallbackStage)
-                              .toString(),
-                          style: textTheme.titleMedium,
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: colors.surfaceMuted,
-                          borderRadius: BorderRadius.circular(999),
-                          border: Border.all(color: colors.outline),
-                        ),
-                        child: Text(
-                          '${deals.length}',
-                          style: textTheme.labelSmall,
-                        ),
-                      ),
-                      if (designMode) ...[
-                        IconButton(
-                          onPressed: onMoveLeft,
-                          icon: Icon(Icons.chevron_left, color: colors.primary),
-                        ),
-                        IconButton(
-                          onPressed: onMoveRight,
-                          icon: Icon(Icons.chevron_right, color: colors.primary),
-                        ),
-                      ],
-                    ],
+                Container(
+                  width: 4,
+                  decoration: BoxDecoration(
+                    color: stageAccent,
+                    borderRadius: const BorderRadius.horizontal(
+                      left: Radius.circular(BlackLightRadius.card),
+                    ),
                   ),
                 ),
-                Divider(height: 1, color: colors.outline),
                 Expanded(
-                  child: ListView.separated(
-                    padding: const EdgeInsets.all(10),
-                    itemCount: deals.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 8),
-                    itemBuilder: (context, i) {
-                      return _DealCard(
-                        colors: colors,
-                        textTheme: textTheme,
-                        deal: deals[i],
-                        designMode: designMode,
-                        onTap: designMode ? null : () => onOpenDeal(deals[i]),
-                      );
-                    },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(10, 12, 10, 8),
+                        child: Row(
+                          children: [
+                            if (designMode) ...[
+                              Icon(
+                                Icons.drag_indicator,
+                                size: 18,
+                                color: colors.outline,
+                              ),
+                              const SizedBox(width: 6),
+                            ],
+                            Expanded(
+                              child: Text(
+                                (stage['name'] ?? CommonContent.fallbackStage)
+                                    .toString(),
+                                style: textTheme.titleMedium,
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: colors.surfaceMuted,
+                                borderRadius: BorderRadius.circular(999),
+                                border: Border.all(color: colors.outline),
+                              ),
+                              child: Text(
+                                '${deals.length}',
+                                style: textTheme.labelSmall,
+                              ),
+                            ),
+                            if (designMode) ...[
+                              IconButton(
+                                onPressed: onMoveLeft,
+                                icon: Icon(
+                                  Icons.chevron_left,
+                                  color: colors.primary,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: onMoveRight,
+                                icon: Icon(
+                                  Icons.chevron_right,
+                                  color: colors.primary,
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                      Divider(height: 1, color: colors.outline),
+                      Expanded(
+                        child: DragTarget<_DealDragPayload>(
+                          onWillAcceptWithDetails: (_) => !usingMock,
+                          onAcceptWithDetails: (details) {
+                            onDealDropped(details.data, sid);
+                          },
+                          builder: (context, candidate, __) {
+                            final highlight = candidate.isNotEmpty;
+                            return AnimatedContainer(
+                              duration: const Duration(milliseconds: 120),
+                              decoration: BoxDecoration(
+                                color: highlight
+                                    ? colors.primary.withValues(alpha: 0.06)
+                                    : Colors.transparent,
+                              ),
+                              child: deals.isEmpty
+                                  ? _StageEmpty(colors: colors, tt: textTheme)
+                                  : ListView.separated(
+                                      padding: const EdgeInsets.all(10),
+                                      itemCount: deals.length,
+                                      separatorBuilder: (_, __) =>
+                                          const SizedBox(height: 8),
+                                      itemBuilder: (context, i) {
+                                        final deal = deals[i];
+                                        final card = _DealCard(
+                                          colors: colors,
+                                          textTheme: textTheme,
+                                          deal: deal,
+                                          onTap: usingMock
+                                              ? null
+                                              : () => onOpenDeal(deal),
+                                        );
+                                        if (usingMock) return card;
+                                        return LongPressDraggable<
+                                            _DealDragPayload>(
+                                          data: _DealDragPayload(
+                                            deal: deal,
+                                            fromStageId: sid,
+                                          ),
+                                          feedback: Material(
+                                            color: Colors.transparent,
+                                            child: SizedBox(
+                                              width: 280,
+                                              child: Opacity(
+                                                opacity: 0.92,
+                                                child: _DealCard(
+                                                  colors: colors,
+                                                  textTheme: textTheme,
+                                                  deal: deal,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          childWhenDragging: Opacity(
+                                            opacity: 0.35,
+                                            child: card,
+                                          ),
+                                          child: card,
+                                        );
+                                      },
+                                    ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -487,19 +684,45 @@ class _StageColumn extends StatelessWidget {
   }
 }
 
+class _StageEmpty extends StatelessWidget {
+  const _StageEmpty({required this.colors, required this.tt});
+
+  final BlackLightPalette colors;
+  final TextTheme tt;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const EmptyHouseIllustration(),
+            const SizedBox(height: BlackLightSpacing.sm),
+            Text(
+              OrgCrmBoardContent.emptyStageDeals,
+              style: tt.bodySmall?.copyWith(color: colors.onSurfaceMuted),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _DealCard extends StatelessWidget {
   const _DealCard({
     required this.colors,
     required this.textTheme,
     required this.deal,
-    required this.designMode,
     this.onTap,
   });
 
   final BlackLightPalette colors;
   final TextTheme textTheme;
   final Map<String, dynamic> deal;
-  final bool designMode;
   final VoidCallback? onTap;
 
   String get _name =>
@@ -539,7 +762,7 @@ class _DealCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final body = Material(
+    return Material(
       color: colors.surfaceMuted,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(BlackLightRadius.md),
@@ -556,11 +779,6 @@ class _DealCard extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (designMode) ...[
-                    Icon(Icons.drag_indicator,
-                        size: 18, color: colors.outline),
-                    const SizedBox(width: 6),
-                  ],
                   Expanded(
                     child: Text(
                       _name,
@@ -616,21 +834,11 @@ class _DealCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 4),
-              Text(
-                '${OrgCrmBoardContent.statusLabel}: ${_statusLabel()}',
-                style: textTheme.labelSmall,
-              ),
             ],
           ),
         ),
       ),
     );
-
-    if (designMode) {
-      return Opacity(opacity: 0.95, child: body);
-    }
-    return body;
   }
 }
 

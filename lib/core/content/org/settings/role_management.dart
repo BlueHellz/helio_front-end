@@ -16,6 +16,10 @@ class OrgSettingsRoleManagementContent {
   static const permissionProjectsWrite = 'projects.write';
   static const permissionCrmManage = 'crm.manage';
   static const permissionOrgSettings = 'org.settings';
+  static const rolesLimitReached =
+      'Your plan allows up to three roles. Upgrade or remove a role first.';
+  static const assignSelected = 'Assign selected';
+  static const noUsersSelected = 'Select at least one user';
 
   static const List<String> permissionOptions = [
     permissionProjectsRead,

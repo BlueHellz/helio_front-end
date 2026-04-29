@@ -14,6 +14,9 @@ class BlackLightColors {
   static const Color background = Color(0xFFF8F9FA);
   static const Color surface = Color(0xFFFFFFFF);
 
+  /// Nested cards / final CTA band (light).
+  static const Color surfaceMuted = Color(0xFFF1F3F5);
+
   static const Color border = Color(0xFFE8EAED);
   static const Color inputBorder = Color(0xFFDDE1E6);
 
@@ -186,6 +189,9 @@ class BlackLightDarkColors {
   static const Color background = Color(0xFF0B1E33);
   static const Color surface = Color(0xFF111F2F);
   static const Color border = Color(0xFF1A2D44);
+
+  /// Nested cards / final CTA band (dark).
+  static const Color surfaceMuted = Color(0xFF1A2D44);
   static const Color textPrimary = Color(0xFFE8EDF2);
   static const Color textBody = Color(0xFF8A9BB5);
 }
@@ -257,8 +263,8 @@ class BlackLightPalette {
 
   /// Secondary fill for nested cards / column bodies.
   Color get surfaceMuted => brightness == Brightness.dark
-      ? BlackLightDarkColors.background
-      : BlackLightColors.background;
+      ? BlackLightDarkColors.surfaceMuted
+      : BlackLightColors.surfaceMuted;
 }
 
 extension BlackLightContextPalette on BuildContext {

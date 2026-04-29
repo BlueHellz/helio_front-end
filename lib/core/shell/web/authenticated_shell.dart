@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../theme/blacklight_theme.dart';
 import '../../brand/blacklight_brand_logo.dart';
 import '../../content/content_registry.dart';
+import '../../providers/org_providers.dart';
 import 'pre_auth_shell.dart';
 
 // ─────────────────────────────────────────────────────────
@@ -34,7 +37,7 @@ const _orgSidebarItems = [
 ];
 
 /// MODE B — Authenticated shell: sidebar (240px) + content + footer
-class AuthenticatedShell extends StatelessWidget {
+class AuthenticatedShell extends ConsumerWidget {
   final Widget child;
   final int activeIndex;
   /// `true` = business (installer) nav including CRM. Homeowners never see CRM.
@@ -56,7 +59,9 @@ class AuthenticatedShell extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final designOn =
+        isOrganization ? (ref.watch(designModeProvider).valueOrNull ?? false) : false;
     return Scaffold(
       backgroundColor: BlackLightAdaptive.background(context),
       body: Row(
@@ -73,6 +78,42 @@ class AuthenticatedShell extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                if (designOn)
+                  Material(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: 0.08),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: BlackLightSpacing.sm,
+                        vertical: 10,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              OrgDesignModeContent.bannerTitle,
+                              style: BlackLightTextStyles.body(
+                                color: BlackLightAdaptive.textPrimary(context),
+                              ),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              await ref
+                                  .read(designModeProvider.notifier)
+                                  .setEnabled(false);
+                              await ref
+                                  .read(designModeProvider.notifier)
+                                  .refresh();
+                            },
+                            child: Text(OrgDesignModeContent.exitButton),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 Expanded(
                   child: child,
                 ),

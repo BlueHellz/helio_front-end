@@ -9,4 +9,6 @@ class OrgSettingsIntakeBuilderContent {
   static const tabIndustrial = 'Industrial';
   static const columnAvailable = 'Available';
   static const columnAssignedOrder = 'Assigned order';
+  static const layoutSaved = 'Intake layout saved';
+  static const layoutSaveFailedPrefix = 'Could not save layout: ';
 }

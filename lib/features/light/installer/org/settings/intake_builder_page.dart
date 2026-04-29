@@ -58,12 +58,19 @@ class _IntakeBuilderPageState extends ConsumerState<IntakeBuilderPage>
 
   Future<void> _saveLayout(String type) async {
     try {
-      await ref.read(apiProvider).saveIntakeLayout(type, {
+      await ref.read(apiProvider).saveOrgLayoutSection(type, {
         'field_ids': _assigned[type] ?? [],
       });
-      if (mounted) AppFeedback.snack(context, ApiErrorsContent.layoutSaved);
+      if (mounted) {
+        AppFeedback.snack(context, OrgSettingsIntakeBuilderContent.layoutSaved);
+      }
     } catch (e) {
-      if (mounted) AppFeedback.snack(context, '${ApiErrorsContent.saveFailedPrefix}$e');
+      if (mounted) {
+        AppFeedback.snack(
+          context,
+          '${OrgSettingsIntakeBuilderContent.layoutSaveFailedPrefix}$e',
+        );
+      }
     }
   }
 

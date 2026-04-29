@@ -26,20 +26,21 @@ class DesignModeWrapper extends ConsumerWidget {
       return child;
     }
 
+    final accent = Theme.of(context).colorScheme.primary;
+    final handleColor = Theme.of(context).colorScheme.onSurfaceVariant;
+
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(BlackLightRadius.md),
-            border: Border.all(
-              color: BlackLightColors.accent,
-              width: 1,
-              style: BorderStyle.solid,
-            ),
+        CustomPaint(
+          painter: _DashedRoundedRectPainter(
+            color: accent,
+            radius: BlackLightRadius.md,
           ),
-          padding: const EdgeInsets.all(BlackLightSpacing.sm),
-          child: child,
+          child: Padding(
+            padding: const EdgeInsets.all(BlackLightSpacing.sm),
+            child: child,
+          ),
         ),
         Positioned(
           top: 4,
@@ -47,18 +48,18 @@ class DesignModeWrapper extends ConsumerWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(
+              Icon(
                 Icons.drag_indicator,
                 size: 20,
-                color: BlackLightColors.textCaption,
+                color: handleColor,
               ),
               if (onRemove != null)
                 IconButton(
                   visualDensity: VisualDensity.compact,
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.close,
                     size: 20,
-                    color: BlackLightColors.textCaption,
+                    color: handleColor,
                   ),
                   onPressed: onRemove,
                 ),
@@ -68,4 +69,43 @@ class DesignModeWrapper extends ConsumerWidget {
       ],
     );
   }
+}
+
+class _DashedRoundedRectPainter extends CustomPainter {
+  _DashedRoundedRectPainter({
+    required this.color,
+    required this.radius,
+  });
+
+  final Color color;
+  final double radius;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (size.isEmpty) return;
+    final rrect = RRect.fromRectAndRadius(
+      Rect.fromLTWH(0, 0, size.width, size.height),
+      Radius.circular(radius),
+    );
+    final path = Path()..addRRect(rrect);
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1;
+    for (final metric in path.computeMetrics()) {
+      var d = 0.0;
+      while (d < metric.length) {
+        const dash = 5.0;
+        const gap = 4.0;
+        final end = (d + dash).clamp(0.0, metric.length);
+        final seg = metric.extractPath(d, end);
+        canvas.drawPath(seg, paint);
+        d += dash + gap;
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _DashedRoundedRectPainter old) =>
+      old.color != color || old.radius != radius;
 }

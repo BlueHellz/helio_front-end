@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:blacklight_app/core/providers/session_providers.dart';
 import 'package:blacklight_app/core/ui/app_feedback.dart';
+import 'package:blacklight_app/services/api.dart';
 import 'package:blacklight_app/theme/blacklight_theme.dart';
 
 class RoleManagementPage extends ConsumerStatefulWidget {
@@ -130,6 +131,7 @@ class _RoleManagementPageState extends ConsumerState<RoleManagementPage> {
   ) async {
     final q = TextEditingController();
     List<Map<String, dynamic>> results = const [];
+    final selected = ValueNotifier<Set<String>>({});
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -151,7 +153,8 @@ class _RoleManagementPageState extends ConsumerState<RoleManagementPage> {
                   TextField(
                     controller: q,
                     decoration: InputDecoration(
-                        labelText: OrgSettingsRoleManagementContent.searchLabel),
+                      labelText: OrgSettingsRoleManagementContent.searchLabel,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   ElevatedButton(
@@ -163,33 +166,78 @@ class _RoleManagementPageState extends ConsumerState<RoleManagementPage> {
                         setM(() {});
                       } catch (e) {
                         if (context.mounted) {
-                          AppFeedback.snack(context, '${ApiErrorsContent.searchFailedPrefix}$e');
+                          AppFeedback.snack(
+                            context,
+                            '${ApiErrorsContent.searchFailedPrefix}$e',
+                          );
                         }
                       }
                     },
                     child: Text(ButtonsContent.search),
                   ),
                   const SizedBox(height: 8),
-                  for (final u in results)
-                    ListTile(
-                      title: Text(
-                        (u['name'] ?? u['email'] ?? CommonContent.fallbackUser).toString(),
-                      ),
-                      onTap: () async {
-                        try {
+                  ValueListenableBuilder<Set<String>>(
+                    valueListenable: selected,
+                    builder: (_, sel, __) {
+                      return SizedBox(
+                        height: 280,
+                        child: ListView.builder(
+                          itemCount: results.length,
+                          itemBuilder: (context, i) {
+                            final u = results[i];
+                            final uid = u['id']?.toString() ?? '';
+                            return CheckboxListTile(
+                              value: sel.contains(uid),
+                              onChanged: (v) {
+                                final next = {...sel};
+                                if (v == true && uid.isNotEmpty) {
+                                  next.add(uid);
+                                } else {
+                                  next.remove(uid);
+                                }
+                                selected.value = next;
+                              },
+                              title: Text(
+                                (u['name'] ?? u['email'] ?? CommonContent.fallbackUser)
+                                    .toString(),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  ElevatedButton(
+                    onPressed: () async {
+                      final ids = selected.value;
+                      if (ids.isEmpty) {
+                        AppFeedback.snack(
+                          context,
+                          OrgSettingsRoleManagementContent.noUsersSelected,
+                        );
+                        return;
+                      }
+                      try {
+                        for (final uid in ids) {
                           await ref.read(apiProvider).assignRoleToUser(
                                 roleId,
-                                u['id']?.toString() ?? '',
+                                uid,
                               );
-                          if (context.mounted) Navigator.pop(ctx);
-                          _reload();
-                        } catch (e) {
-                          if (context.mounted) {
-                            AppFeedback.snack(context, '${ApiErrorsContent.assignFailedPrefix}$e');
-                          }
                         }
-                      },
-                    ),
+                        if (context.mounted) Navigator.pop(ctx);
+                        _reload();
+                      } catch (e) {
+                        if (context.mounted) {
+                          AppFeedback.snack(
+                            context,
+                            '${ApiErrorsContent.assignFailedPrefix}$e',
+                          );
+                        }
+                      }
+                    },
+                    child: Text(OrgSettingsRoleManagementContent.assignSelected),
+                  ),
                 ],
               );
             },
@@ -197,6 +245,8 @@ class _RoleManagementPageState extends ConsumerState<RoleManagementPage> {
         );
       },
     );
+    q.dispose();
+    selected.dispose();
   }
 
   Future<void> _openRoleEditor(
@@ -299,9 +349,30 @@ class _RoleManagementPageState extends ConsumerState<RoleManagementPage> {
                   }
                   if (context.mounted) Navigator.pop(ctx);
                   _reload();
+                } on ApiException catch (e) {
+                  final bodyLower = e.body.toLowerCase();
+                  if (e.statusCode == 403 ||
+                      e.statusCode == 400 ||
+                      bodyLower.contains('three') ||
+                      bodyLower.contains('limit')) {
+                    if (context.mounted) {
+                      AppFeedback.snack(
+                        context,
+                        OrgSettingsRoleManagementContent.rolesLimitReached,
+                      );
+                    }
+                  } else if (context.mounted) {
+                    AppFeedback.snack(
+                      context,
+                      '${ApiErrorsContent.saveFailedPrefix}$e',
+                    );
+                  }
                 } catch (e) {
                   if (context.mounted) {
-                    AppFeedback.snack(context, '${ApiErrorsContent.saveFailedPrefix}$e');
+                    AppFeedback.snack(
+                      context,
+                      '${ApiErrorsContent.saveFailedPrefix}$e',
+                    );
                   }
                 }
               },

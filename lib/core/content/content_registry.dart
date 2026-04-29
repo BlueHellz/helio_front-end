@@ -36,6 +36,7 @@ export 'homeowner/project_detail.dart';
 export 'homeowner/quote_request.dart';
 export 'investor/investor.dart';
 export 'landing.dart';
+export 'org/design_mode.dart';
 export 'org/chat_design.dart';
 export 'org/crm/board.dart';
 export 'org/crm/deal_detail.dart';

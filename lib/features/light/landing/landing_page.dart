@@ -59,10 +59,14 @@ class LandingPage extends StatelessWidget {
                   horizontal: BlackLightSpacing.gutter),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                children: [
+                  const SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
                   _HowItWorks(),
-                  SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  const SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  _FeaturesDeepDive(),
+                  const SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  const _SocialProofSection(),
+                  const SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
                 ],
               ),
             ),
@@ -111,11 +115,13 @@ class LandingPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: BlackLightSpacing.gutter),
-              child: const Column(
+              child: Column(
                 children: [
-                  SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
-                  _WalletSection(),
-                  SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  const SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  const _WalletSection(),
+                  const SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  _FinalCtaSection(onStart: onGetStarted),
+                  const SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
                 ],
               ),
             ),
@@ -408,7 +414,67 @@ class _HeroContentState extends State<_HeroContent> {
           controller: _addressCtrl,
           onGetStarted: widget.onGetStarted,
         ),
-        const SizedBox(height: BlackLightSpacing.xs),
+        const SizedBox(height: BlackLightSpacing.md),
+        Text(
+          LandingContent.heroStatLabel,
+          style: BlackLightTextStyles.captionBold(
+            color: BlackLightColors.textCaption,
+          ),
+        ),
+        const SizedBox(height: 4),
+        TweenAnimationBuilder<int>(
+          tween: IntTween(
+            begin: 0,
+            end: int.tryParse(LandingContent.heroStatValue) ?? 2847,
+          ),
+          duration: const Duration(milliseconds: 1200),
+          curve: Curves.easeOutCubic,
+          builder: (context, value, _) {
+            return Text(
+              '$value',
+              style: BlackLightTextStyles.dataLarge(
+                color: BlackLightColors.accent,
+              ),
+            );
+          },
+        ),
+        const SizedBox(height: BlackLightSpacing.md),
+        Text(
+          LandingContent.trustedByLine,
+          style: BlackLightTextStyles.caption(
+            color: BlackLightColors.textCaption,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: BlackLightSpacing.sm,
+          runSpacing: 6,
+          children: [
+            for (final name in [
+              LandingContent.trustedPlaceholder1,
+              LandingContent.trustedPlaceholder2,
+              LandingContent.trustedPlaceholder3,
+              LandingContent.trustedPlaceholder4,
+              LandingContent.trustedPlaceholder5,
+            ])
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  border: Border.all(color: BlackLightColors.border),
+                  borderRadius: BorderRadius.circular(999),
+                  color: BlackLightColors.surface,
+                ),
+                child: Text(
+                  name,
+                  style: BlackLightTextStyles.caption(
+                    color: BlackLightColors.textCaption,
+                  ),
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: BlackLightSpacing.sm),
         Row(
           children: [
             const Icon(Icons.bolt,
@@ -872,6 +938,500 @@ class _ForBusinessSection extends StatelessWidget {
       ),
     );
   }
+}
+
+// ─────────────────────────────────────────────
+// FEATURES DEEP-DIVE
+// ─────────────────────────────────────────────
+class _FeaturesDeepDive extends StatelessWidget {
+  const _FeaturesDeepDive();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          LandingContent.featuresSectionTitle,
+          style: BlackLightTextStyles.sectionHeading(),
+        ),
+        const SizedBox(height: BlackLightSpacing.lg),
+        LayoutBuilder(
+          builder: (context, c) {
+            final wide = c.hasBoundedWidth && c.maxWidth > 760;
+            Widget alternatingRow({
+              required bool graphicOnLeft,
+              required Widget graphic,
+              required Widget copy,
+            }) {
+              if (wide) {
+                final a = Expanded(child: graphic);
+                final b = Expanded(child: copy);
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: graphicOnLeft
+                      ? [a, const SizedBox(width: BlackLightSpacing.xl), b]
+                      : [b, const SizedBox(width: BlackLightSpacing.xl), a],
+                );
+              }
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  graphic,
+                  const SizedBox(height: BlackLightSpacing.md),
+                  copy,
+                ],
+              );
+            }
+
+            final chatIllo = SizedBox(
+              height: 220,
+              child: Center(
+                child: _LandingChatIllustration(
+                  color: BlackLightColors.border,
+                  accent: BlackLightColors.accent,
+                  wide: c.maxWidth.clamp(280.0, 360.0),
+                ),
+              ),
+            );
+            final permitIllo = SizedBox(
+              height: 220,
+              child: Center(
+                child: _LandingPermitIllustration(
+                  color: BlackLightColors.border,
+                  accent: BlackLightColors.accent,
+                  wide: c.maxWidth.clamp(280.0, 360.0),
+                ),
+              ),
+            );
+            final poolIllo = SizedBox(
+              height: 220,
+              child: Center(
+                child: _LandingPoolIllustration(
+                  color: BlackLightColors.border,
+                  accent: BlackLightColors.accent,
+                  wide: c.maxWidth.clamp(280.0, 360.0),
+                ),
+              ),
+            );
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                alternatingRow(
+                  graphicOnLeft: true,
+                  graphic: chatIllo,
+                  copy: _FeatureCopyColumn(
+                    title: LandingContent.featureAiTitle,
+                    body: LandingContent.featureAiBody,
+                    linkLabel: LandingContent.featureAiLink,
+                    onLinkTap: () {
+                      AppFeedback.showInfoDialog(
+                        context,
+                        title: LandingContent.featureAiDialogTitle,
+                        message: LandingContent.featureAiDialogBody,
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(height: BlackLightSpacing.lg),
+                alternatingRow(
+                  graphicOnLeft: false,
+                  graphic: permitIllo,
+                  copy: _FeatureCopyColumn(
+                    title: LandingContent.featurePermitTitle,
+                    body: LandingContent.featurePermitBody,
+                  ),
+                ),
+                const SizedBox(height: BlackLightSpacing.lg),
+                alternatingRow(
+                  graphicOnLeft: true,
+                  graphic: poolIllo,
+                  copy: _FeatureCopyColumn(
+                    title: LandingContent.featurePoolTitle,
+                    body: LandingContent.featurePoolBody,
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _FeatureCopyColumn extends StatelessWidget {
+  const _FeatureCopyColumn({
+    required this.title,
+    required this.body,
+    this.linkLabel,
+    this.onLinkTap,
+  });
+
+  final String title;
+  final String body;
+  final String? linkLabel;
+  final VoidCallback? onLinkTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: BlackLightTextStyles.cardHeading()),
+        const SizedBox(height: 8),
+        Text(body, style: BlackLightTextStyles.body()),
+        if (linkLabel != null && onLinkTap != null) ...[
+          const SizedBox(height: BlackLightSpacing.sm),
+          TextButton(
+            onPressed: onLinkTap,
+            style: TextButton.styleFrom(
+              foregroundColor: BlackLightColors.accent,
+              padding: EdgeInsets.zero,
+              minimumSize: Size.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+            child: Text(
+              linkLabel!,
+              style: BlackLightTextStyles.bodyBold(
+                color: BlackLightColors.accent,
+              ),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+// ─────────────────────────────────────────────
+// SOCIAL PROOF
+// ─────────────────────────────────────────────
+class _SocialProofSection extends StatelessWidget {
+  const _SocialProofSection();
+
+  static const _cards = [
+    (
+      LandingContent.testimonial1Quote,
+      LandingContent.testimonial1Attribution,
+    ),
+    (
+      LandingContent.testimonial2Quote,
+      LandingContent.testimonial2Attribution,
+    ),
+    (
+      LandingContent.testimonial3Quote,
+      LandingContent.testimonial3Attribution,
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          LandingContent.socialProofHeadline,
+          style: BlackLightTextStyles.sectionHeading(),
+        ),
+        const SizedBox(height: BlackLightSpacing.lg),
+        LayoutBuilder(
+          builder: (context, c) {
+            final wide = c.hasBoundedWidth && c.maxWidth > 900;
+            if (wide) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (var i = 0; i < _cards.length; i++) ...[
+                    if (i > 0) const SizedBox(width: BlackLightSpacing.cardGap),
+                    Expanded(child: _TestimonialCard(data: _cards[i])),
+                  ],
+                ],
+              );
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (final card in _cards) ...[
+                  _TestimonialCard(data: card),
+                  const SizedBox(height: BlackLightSpacing.sm),
+                ],
+              ],
+            );
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _TestimonialCard extends StatelessWidget {
+  const _TestimonialCard({required this.data});
+
+  final (String quote, String attribution) data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(BlackLightSpacing.cardPadding),
+      decoration: BoxDecoration(
+        color: BlackLightColors.surface,
+        borderRadius: BorderRadius.circular(BlackLightRadius.card),
+        border: Border.all(color: BlackLightColors.border),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '"${data.$1}"',
+            style: BlackLightTextStyles.body(),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            data.$2,
+            style: BlackLightTextStyles.caption(
+              color: BlackLightColors.textCaption,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────
+// FINAL CTA
+// ─────────────────────────────────────────────
+class _FinalCtaSection extends StatelessWidget {
+  const _FinalCtaSection({this.onStart});
+
+  final VoidCallback? onStart;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    final tt = Theme.of(context).textTheme;
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 560),
+        child: Material(
+          color: c.surfaceMuted,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(BlackLightRadius.lg),
+            side: BorderSide(color: c.outline),
+          ),
+          elevation: 0,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: BlackLightSpacing.lg,
+              vertical: BlackLightSpacing.md + 8,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  LandingContent.finalCtaTitle,
+                  style: tt.headlineSmall?.copyWith(color: c.onSurface),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  LandingContent.finalCtaBody,
+                  style: tt.bodyMedium?.copyWith(color: c.onSurfaceMuted),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: BlackLightSpacing.md),
+                FilledButton(
+                  onPressed: onStart,
+                  style: FilledButton.styleFrom(
+                    backgroundColor: c.primary,
+                    foregroundColor: c.onPrimary,
+                    elevation: 0,
+                  ),
+                  child: Text(LandingContent.finalCtaButton),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────
+// FEATURE ILLUSTRATIONS (CustomPaint)
+// ─────────────────────────────────────────────
+class _LandingChatIllustration extends StatelessWidget {
+  const _LandingChatIllustration({
+    required this.color,
+    required this.accent,
+    required this.wide,
+  });
+
+  final Color color;
+  final Color accent;
+  final double wide;
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      size: Size(wide, 200),
+      painter: _LandingChatPainter(
+        stroke: color,
+        accent: accent,
+      ),
+    );
+  }
+}
+
+class _LandingChatPainter extends CustomPainter {
+  _LandingChatPainter({required this.stroke, required this.accent});
+
+  final Color stroke;
+  final Color accent;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final p = Paint()
+      ..color = stroke
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.4
+      ..strokeCap = StrokeCap.round;
+    final fill = Paint()..color = accent.withValues(alpha: 0.12);
+    final r = RRect.fromRectAndRadius(
+      Rect.fromLTWH(8, 12, size.width * 0.56, 44),
+      const Radius.circular(10),
+    );
+    canvas.drawRRect(r, fill);
+    canvas.drawRRect(r, p);
+    final r2 = RRect.fromRectAndRadius(
+      Rect.fromLTWH(
+        size.width * 0.38,
+        72,
+        size.width * 0.54,
+        52,
+      ),
+      const Radius.circular(10),
+    );
+    canvas.drawRRect(r2, Paint()..color = accent.withValues(alpha: 0.08));
+    canvas.drawRRect(r2, p);
+    final r3 = RRect.fromRectAndRadius(
+      Rect.fromLTWH(24, 140, size.width * 0.5, 40),
+      const Radius.circular(10),
+    );
+    canvas.drawRRect(r3, fill);
+    canvas.drawRRect(r3, p);
+  }
+
+  @override
+  bool shouldRepaint(covariant _LandingChatPainter old) =>
+      old.stroke != stroke || old.accent != accent;
+}
+
+class _LandingPermitIllustration extends StatelessWidget {
+  const _LandingPermitIllustration({
+    required this.color,
+    required this.accent,
+    required this.wide,
+  });
+
+  final Color color;
+  final Color accent;
+  final double wide;
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      size: Size(wide, 200),
+      painter: _LandingPermitPainter(stroke: color, accent: accent),
+    );
+  }
+}
+
+class _LandingPermitPainter extends CustomPainter {
+  _LandingPermitPainter({required this.stroke, required this.accent});
+
+  final Color stroke;
+  final Color accent;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final p = Paint()
+      ..color = stroke
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.4;
+    final page = RRect.fromRectAndRadius(
+      Rect.fromLTWH(20, 12, size.width - 36, size.height - 28),
+      const Radius.circular(8),
+    );
+    canvas.drawRRect(page, p);
+    var y = 32.0;
+    for (var i = 0; i < 6; i++) {
+      final lineW = size.width - 72 - (i.isEven ? 0 : 40);
+      canvas.drawLine(Offset(40, y), Offset(40 + lineW, y), p);
+      y += 18;
+    }
+    final seal = Paint()
+      ..color = accent.withValues(alpha: 0.35)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2;
+    canvas.drawCircle(Offset(size.width * 0.72, 118), 28, seal);
+  }
+
+  @override
+  bool shouldRepaint(covariant _LandingPermitPainter old) =>
+      old.stroke != stroke || old.accent != accent;
+}
+
+class _LandingPoolIllustration extends StatelessWidget {
+  const _LandingPoolIllustration({
+    required this.color,
+    required this.accent,
+    required this.wide,
+  });
+
+  final Color color;
+  final Color accent;
+  final double wide;
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      size: Size(wide, 200),
+      painter: _LandingPoolPainter(stroke: color, accent: accent),
+    );
+  }
+}
+
+class _LandingPoolPainter extends CustomPainter {
+  _LandingPoolPainter({required this.stroke, required this.accent});
+
+  final Color stroke;
+  final Color accent;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final p = Paint()
+      ..color = stroke
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.4;
+    final cx = size.width / 2;
+    final cy = size.height / 2 + 4;
+    canvas.drawCircle(Offset(cx - 52, cy), 32, p);
+    canvas.drawCircle(Offset(cx, cy - 18), 36, p);
+    canvas.drawCircle(Offset(cx + 56, cy), 30, p);
+    final hub = Paint()
+      ..color = accent.withValues(alpha: 0.5)
+      ..strokeWidth = 1.2;
+    canvas.drawLine(Offset(cx - 20, cy - 8), Offset(cx + 20, cy - 8), hub);
+    canvas.drawLine(Offset(cx, cy - 38), Offset(cx, cy + 2), hub);
+  }
+
+  @override
+  bool shouldRepaint(covariant _LandingPoolPainter old) =>
+      old.stroke != stroke || old.accent != accent;
 }
 
 // ─────────────────────────────────────────────

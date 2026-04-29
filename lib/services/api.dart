@@ -99,7 +99,7 @@ class BlackLightApi {
     String id,
     Map<String, dynamic> body,
   ) async {
-    final r = await _patch(
+    final r = await _put(
       _u('/org/custom-fields/$id'),
       body: jsonEncode(body),
     );
@@ -205,7 +205,7 @@ class BlackLightApi {
     String id,
     Map<String, dynamic> body,
   ) async {
-    final r = await _patch(
+    final r = await _put(
       _u('/org/pipelines/$id'),
       body: jsonEncode(body),
     );
@@ -293,6 +293,18 @@ class BlackLightApi {
     return (d as Map).cast<String, dynamic>();
   }
 
+  Future<Map<String, dynamic>> updateDeal(
+    String dealId,
+    Map<String, dynamic> body,
+  ) async {
+    final r = await _put(
+      _u('/org/deals/$dealId'),
+      body: jsonEncode(body),
+    );
+    final d = await _decode(r);
+    return (d as Map).cast<String, dynamic>();
+  }
+
   // ─── Design mode & layouts ─────────────────────────────────────
 
   Future<bool> getDesignMode() async {
@@ -308,7 +320,22 @@ class BlackLightApi {
   Future<void> setDesignMode(bool enabled) async {
     final r = await _put(
       _u('/org/design-mode'),
-      body: jsonEncode(<String, dynamic>{'enabled': enabled}),
+      body: jsonEncode(<String, dynamic>{
+        'enabled': enabled,
+        'design_mode': enabled,
+      }),
+    );
+    await _decode(r);
+  }
+
+  /// POST /org/layout/{section} — layout payload (e.g. field_ids for intake).
+  Future<void> saveOrgLayoutSection(
+    String section,
+    Map<String, dynamic> body,
+  ) async {
+    final r = await _post(
+      _u('/org/layout/$section'),
+      body: jsonEncode(body),
     );
     await _decode(r);
   }
