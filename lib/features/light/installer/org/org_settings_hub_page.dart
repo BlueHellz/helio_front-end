@@ -8,7 +8,7 @@ import 'package:blacklight_app/core/ui/app_feedback.dart';
 import 'package:blacklight_app/theme/blacklight_theme.dart';
 import 'settings/field_library_page.dart';
 import 'settings/intake_builder_page.dart';
-import 'settings/pipeline_builder_page.dart';
+import '../settings/pipeline_builder_page.dart';
 import 'settings/role_management_page.dart';
 
 class OrgSettingsHubPage extends ConsumerWidget {
