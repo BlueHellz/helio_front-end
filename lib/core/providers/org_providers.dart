@@ -47,9 +47,16 @@ final pipelinesProvider =
   return api.getPipelines();
 });
 
+/// Client-only pipelines created while the server list is unavailable (id prefix `local-`).
+bool isLocalPipelineId(String pipelineId) =>
+    pipelineId.startsWith('local-');
+
 /// Stages for one pipeline (Flow Mesh + CRM sources).
 final pipelineStagesProvider = FutureProvider.autoDispose
     .family<List<Map<String, dynamic>>, String>((ref, pipelineId) async {
+  if (isLocalPipelineId(pipelineId)) {
+    return [];
+  }
   final api = ref.watch(apiProvider);
   return api.getStages(pipelineId);
 });
@@ -57,6 +64,9 @@ final pipelineStagesProvider = FutureProvider.autoDispose
 /// Flow Mesh edges (`GET …/edges` or `custom_data.flow_mesh_edges`).
 final pipelineEdgesProvider = FutureProvider.autoDispose
     .family<List<Map<String, dynamic>>, String>((ref, pipelineId) async {
+  if (isLocalPipelineId(pipelineId)) {
+    return [];
+  }
   final api = ref.watch(apiProvider);
   return api.getPipelineEdges(pipelineId);
 });

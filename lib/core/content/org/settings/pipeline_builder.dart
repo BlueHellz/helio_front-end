@@ -11,6 +11,8 @@ class OrgSettingsPipelineBuilderContent {
   static const fabCreatePipeline = 'Create Pipeline';
   static const defaultPipelineName = 'Pipeline';
   static const selectPipelineFirst = 'Select a pipeline to edit stages.';
+  static const pipelinesLoadFailedHint =
+      'Could not load pipelines from the server. You can still create one and open Flow Mesh locally.';
   static const stagesHeading = 'Stages';
   static const addStageDialogTitle = 'Add stage';
   static const labelStageName = 'Name';
