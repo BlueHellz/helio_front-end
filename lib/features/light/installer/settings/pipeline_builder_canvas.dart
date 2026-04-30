@@ -329,21 +329,24 @@ class _PipelineBuilderCanvasState extends ConsumerState<PipelineBuilderCanvas> {
     final stagesAsync = ref.watch(pipelineStagesProvider(widget.pipelineId));
     final edgesAsync = ref.watch(pipelineEdgesProvider(widget.pipelineId));
 
-    return stagesAsync.when(
-      loading: () => Center(child: CircularProgressIndicator(color: c.primary)),
-      error: (e, _) => Center(child: Text(e.toString(), style: tt.bodyMedium)),
-      data: (stages) {
-        return edgesAsync.when(
-          loading: () => Center(child: CircularProgressIndicator(color: c.primary)),
-          error: (e, _) => Center(child: Text(e.toString(), style: tt.bodyMedium)),
-          data: (edgeRows) {
-            if (_draggingNodeId == null && _wireFromId == null) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                if (mounted) _hydrate(stages, edgeRows);
-              });
-            }
+    final stagesReady = stagesAsync.hasValue || stagesAsync.hasError;
+    final edgesReady = edgesAsync.hasValue || edgesAsync.hasError;
+    if (!stagesReady || !edgesReady) {
+      return Center(child: CircularProgressIndicator(color: c.primary));
+    }
 
-            return LayoutBuilder(
+    final stages =
+        stagesAsync.hasError ? <Map<String, dynamic>>[] : stagesAsync.requireValue;
+    final edgeRows =
+        edgesAsync.hasError ? <Map<String, dynamic>>[] : edgesAsync.requireValue;
+
+    if (_draggingNodeId == null && _wireFromId == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _hydrate(stages, edgeRows);
+      });
+    }
+
+    return LayoutBuilder(
               builder: (context, constraints) {
                 final narrow = constraints.maxWidth < 560;
                 final stageById = {
@@ -546,10 +549,6 @@ class _PipelineBuilderCanvasState extends ConsumerState<PipelineBuilderCanvas> {
                 );
               },
             );
-          },
-        );
-      },
-    );
   }
 
   Widget _buildNode(
