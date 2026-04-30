@@ -425,10 +425,15 @@ class _PipelineBuilderCanvasState extends ConsumerState<PipelineBuilderCanvas> {
                                           CustomPaint(
                                             size: const Size(_kCanvas, _kCanvas),
                                             painter: _DotGridPainter(
-                                              background: Theme.of(context).brightness == Brightness.dark
-                                                  ? c.scaffold
-                                                  : c.scaffold,
-                                              dotColor: c.outline.withValues(alpha: 0.55),
+                                              background:
+                                                  Theme.of(context).brightness ==
+                                                          Brightness.dark
+                                                      ? const Color(0xFF0B1E33)
+                                                      : const Color(0xFFF8F9FA),
+                                              dotColor: Theme.of(context).brightness ==
+                                                      Brightness.dark
+                                                  ? Colors.white.withValues(alpha: 0.28)
+                                                  : c.outline.withValues(alpha: 0.52),
                                               spacing: _kGrid,
                                             ),
                                           ),
