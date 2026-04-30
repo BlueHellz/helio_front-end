@@ -329,16 +329,16 @@ class _PipelineBuilderCanvasState extends ConsumerState<PipelineBuilderCanvas> {
     final stagesAsync = ref.watch(pipelineStagesProvider(widget.pipelineId));
     final edgesAsync = ref.watch(pipelineEdgesProvider(widget.pipelineId));
 
-    final stagesReady = stagesAsync.hasValue || stagesAsync.hasError;
-    final edgesReady = edgesAsync.hasValue || edgesAsync.hasError;
-    if (!stagesReady || !edgesReady) {
-      return Center(child: CircularProgressIndicator(color: c.primary));
-    }
-
-    final stages =
-        stagesAsync.hasError ? <Map<String, dynamic>>[] : stagesAsync.requireValue;
-    final edgeRows =
-        edgesAsync.hasError ? <Map<String, dynamic>>[] : edgesAsync.requireValue;
+    final stages = stagesAsync.when(
+      data: (s) => s,
+      error: (_, __) => <Map<String, dynamic>>[],
+      loading: () => <Map<String, dynamic>>[],
+    );
+    final edgeRows = edgesAsync.when(
+      data: (e) => e,
+      error: (_, __) => <Map<String, dynamic>>[],
+      loading: () => <Map<String, dynamic>>[],
+    );
 
     if (_draggingNodeId == null && _wireFromId == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
