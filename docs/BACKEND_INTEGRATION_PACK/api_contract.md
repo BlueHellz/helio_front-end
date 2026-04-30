@@ -15,7 +15,7 @@
 | `UserRole.droneOperator` | `droneOperator` | Mobile drone-operator shell. |
 | `UserRole.none` | `none` (or omit) | Logged out / unknown. |
 
-**Backend expectation:** The authoritative role should come from **Supabase / your DB** after auth, not only from client-selected UI. The app currently sets role via `signIn(role: ...)` with no network call.
+**Backend expectation:** The authoritative role should come from **your DB** (or `/me` / token claims) after auth, not only from client-selected UI. The app currently sets role via `signIn(role: ...)` with no network call.
 
 ---
 
@@ -36,8 +36,8 @@ Navigation indices (`webSidebarIndex`, `mobileNavIndex`, `droneOperatorNavIndex`
 
 **Auth/session expectations**
 
-- **Supabase Auth:** Login/register produces a **JWT**. The Flutter app is prepared for a future layer that stores the session and sends `Authorization: Bearer <access_token>` to FastAPI.
-- **`/auth/verify`:** Server validates the Supabase JWT and returns 200 with normalized user + role, or 401/403. Used to sync `BlackLightAppState` on app load.
+- **API auth:** Login/register (`POST /api/v1/auth/login`, `POST /api/v1/auth/signup`) returns **access/refresh tokens**. The Flutter client stores the session and sends `Authorization: Bearer <access_token>` to FastAPI.
+- **`/auth/verify`:** Server validates the access JWT and returns 200 with normalized user + role, or 401/403. Used to sync `BlackLightAppState` on app load when needed.
 - **`signOut`:** Client clears local state; server may revoke refresh tokens if you implement a revoke endpoint.
 - **Wallet:** `connectWallet` today only stores address locally. Backend should support **link wallet** (sign message) and return updated `walletAddress` + `hlioBalance`.
 
@@ -123,7 +123,7 @@ Mapping is from **`lib/core/router.dart`** only (which widgets mount and which `
 | `DroneOpsInfoPage` | Pillar | Drone program info; form submit → `POST` operator application. |
 | `PoolInfoPage` | Pillar | Waitlist / whitepaper; `onJoinWaitlist` → auth or `POST` waitlist. |
 | `EvInfoPage` | Pillar | Host interest → auth or `POST` host interest. |
-| `AuthPage` | Sign in / get started | **Supabase Auth** (or your auth): register/login; then load `/me`, projects, etc. |
+| `AuthPage` | Sign in / get started | **Backend auth:** register/login; then load `/me`, projects, etc. |
 
 ### Web — homeowner (`_HomeownerFlow`, `UserRole.homeowner`)
 
@@ -191,4 +191,4 @@ Mapping is from **`lib/core/router.dart`** only (which widgets mount and which `
 - Pillar page copy, forms (drone/pool/EV) — see feature files for fields when defining `POST` bodies.
 - `test/` and assets — N/A to REST contract.
 
-This document is the handoff for implementing FastAPI + Supabase to match the app’s data shapes and navigation intent.
+This document is the handoff for implementing FastAPI + JWT-backed auth to match the app’s data shapes and navigation intent.

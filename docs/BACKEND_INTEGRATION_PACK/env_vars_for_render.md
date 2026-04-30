@@ -1,15 +1,13 @@
 # Environment variables (Render + local) — no secrets in repo
 
-**Purpose:** Single reference for **name**, **role**, and **where used** (FastAPI/Supabase/integrations). **Values are never committed**; set them in the Render dashboard and in local `.env`.
+**Purpose:** Single reference for **name**, **role**, and **where used** (FastAPI and integrations). **Values are never committed**; set them in the Render dashboard and in local `.env`.
 
 | Name | Purpose | Where used (typical) |
 |------|---------|------------------------|
 | `ENV` or `APP_ENV` | `development` vs `production` (logging, CORS strictness) | `config.py`, `main.py` |
 | `CORS_ORIGINS` | Comma-separated list of allowed web origins (Vercel + localhost) | `CORSMiddleware` in FastAPI |
 | `PORT` | HTTP port (Render injects; local often `8000`) | Uvicorn / Render |
-| `SUPABASE_URL` | Supabase project URL | `supabase-py` client, Auth |
-| `SUPABASE_SERVICE_KEY` | Service role key (server only; **never** in Flutter) | Admin DB, Storage, bypass RLS where intended |
-| `SUPABASE_JWT_SECRET` or JWKS | Verify user JWTs from Supabase Auth | `/auth/verify`, `/me`, protected routes |
+| `JWT_SECRET` (or equivalent) | Sign/verify access tokens issued by your API | `/auth/verify`, `/me`, protected routes |
 | `DEEPSEEK_API_KEY` | LLM (OpenAI-compatible) | `services/ai_brain.py` |
 | `GOOGLE_SOLAR_API_KEY` | Rooftop / building solar API | Roof / design services |
 | `MAPBOX_ACCESS_TOKEN` | Geocoding, map tiles, styles | Map / address services |
@@ -25,8 +23,8 @@
 
 **Security reminders**
 
-- **Never** put `SUPABASE_SERVICE_KEY` in the browser or in the Flutter app.  
+- **Never** put server signing secrets (e.g. `JWT_SECRET`) in the browser or in the Flutter app.  
 - Rotate keys if a client bundle ever leaks.  
-- Use **separate** Supabase projects (or at least keys) for dev vs prod if possible.
+- Use **separate** secrets for dev vs prod when possible.
 
-This table aligns with a typical Black Light stack (FastAPI on Render, Supabase, external APIs, Redis, Solana devnet for simulation). Add rows as you introduce new services.
+This table aligns with a typical Black Light stack (FastAPI on Render, JWT auth, external APIs, Redis, Solana devnet for simulation). Add rows as you introduce new services.

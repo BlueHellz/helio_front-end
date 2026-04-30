@@ -31,7 +31,7 @@ paths:
 
   /auth/verify:
     post:
-      summary: Validate Supabase JWT and return current user (stub until implemented)
+      summary: Validate access JWT and return current user (stub until implemented)
       operationId: authVerify
       tags: [Auth]
       security: []
@@ -45,7 +45,7 @@ paths:
               properties:
                 accessToken:
                   type: string
-                  description: Supabase (or other) access JWT
+                  description: API-issued access JWT (Bearer token)
       responses:
         "200":
           description: Token valid; user + role
