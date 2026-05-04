@@ -28,7 +28,8 @@ import 'package:blacklight_app/features/light/ev/ev_info_page.dart';
 import 'package:blacklight_app/features/light/installer/org/new_project_page.dart';
 import 'package:blacklight_app/core/providers/theme_provider.dart';
 import 'package:blacklight_app/features/black_light/crm_board_page.dart';
-import 'package:blacklight_app/features/light/installer/org/org_settings_hub_page.dart';
+import 'package:blacklight_app/genui/genui_surface.dart';
+import 'package:blacklight_app/features/light/installer/settings/settings_hub_redesigned.dart';
 
 import 'package:blacklight_app/features/light/installer/mobile_shell.dart';
 import 'package:blacklight_app/features/light/auth/mobile_auth.dart';
@@ -300,7 +301,7 @@ class _OrgFlowState extends State<_OrgFlow> {
             if (v != null) state.updateLocalProfile(companyName: v);
           },
         ),
-      4 => const OrgSettingsHubPage(),
+      4 => const SettingsHubRedesigned(),
       5 => const _OrgWebHelpPage(),
       _ => BlackLightConfig.bypassMode
           ? PremiumOrgDashboardPage(
@@ -317,14 +318,16 @@ class _OrgFlowState extends State<_OrgFlow> {
 
     return wrapPremiumBlackLightShell(
       state,
-      AuthenticatedShell(
-        activeIndex: idx,
-        isOrganization: true,
-        userName: state.userName,
-        hlioBalance: state.hlioBalance,
-        onNavTap: state.setWebSidebarIndex,
-        onSignOut: _signOut,
-        child: contentBody,
+      LimyeGenUiShell(
+        child: AuthenticatedShell(
+          activeIndex: idx,
+          isOrganization: true,
+          userName: state.userName,
+          hlioBalance: state.hlioBalance,
+          onNavTap: state.setWebSidebarIndex,
+          onSignOut: _signOut,
+          child: contentBody,
+        ),
       ),
     );
   }

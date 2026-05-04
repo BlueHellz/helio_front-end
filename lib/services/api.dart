@@ -579,6 +579,42 @@ class BlackLightApi {
     return (d as Map).cast<String, dynamic>();
   }
 
+  // ─── Org custom components & AI configure ──────────────────────
+
+  Future<List<Map<String, dynamic>>> getOrgCustomComponents() async {
+    final r = await _get(_u('/org/custom-components'));
+    final d = await _decode(r);
+    if (d is List) return d.cast<Map<String, dynamic>>();
+    if (d is Map && d['items'] is List) {
+      return (d['items'] as List).cast<Map<String, dynamic>>();
+    }
+    return const [];
+  }
+
+  Future<dynamic> postAiConfigure(Map<String, dynamic> body) async {
+    final r = await _post(
+      _u('/ai/configure'),
+      body: jsonEncode(body),
+    );
+    return _decode(r);
+  }
+
+  Future<Map<String, dynamic>> postAiAddCustomComponent(
+    Map<String, dynamic> body,
+  ) async {
+    final r = await _post(
+      _u('/ai/add-custom-component'),
+      body: jsonEncode(body),
+    );
+    final d = await _decode(r);
+    return (d as Map).cast<String, dynamic>();
+  }
+
+  Future<void> deleteOrgCustomComponent(String id) async {
+    final r = await _delete(_u('/org/custom-components/$id'));
+    await _decode(r);
+  }
+
   void dispose() => _client.close();
 }
 
