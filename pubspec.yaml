@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  genui: ^0.9.0
+  genui: 0.7.0
   provider: ^6.1.5+1
   flutter_riverpod: ^2.6.1
   url_launcher: ^6.2.0
