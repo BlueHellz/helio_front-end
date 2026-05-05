@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  flutter_gl_windows
   flutter_secure_storage_windows
   url_launcher_windows
 )
