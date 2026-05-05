@@ -730,27 +730,36 @@ class _HowItWorks extends StatelessWidget {
           final isWide =
               constraints.hasBoundedWidth && constraints.maxWidth > 700;
           if (isWide) {
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: _steps
-                  .asMap()
-                  .entries
-                  .map((e) =>
-                      Expanded(child: _StepCard(stepIndex: e.key, step: e.value)))
-                  .expand((w) => [
-                        w,
-                        const SizedBox(width: LimyeSpacing.cardGap),
-                      ])
-                  .take(_steps.length * 2 - 1)
-                  .toList(),
+            return IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: _steps
+                    .asMap()
+                    .entries
+                    .map((e) => Expanded(
+                        child: _StepCard(
+                          stepIndex: e.key,
+                          step: e.value,
+                          expandBody: true,
+                        )))
+                    .expand((w) => [
+                          w,
+                          const SizedBox(width: LimyeSpacing.cardGap),
+                        ])
+                    .take(_steps.length * 2 - 1)
+                    .toList(),
+              ),
             );
           }
           return Column(
             children: _steps
                 .asMap()
                 .entries
-                .map((e) =>
-                    _StepCard(stepIndex: e.key, step: e.value))
+                .map((e) => _StepCard(
+                      stepIndex: e.key,
+                      step: e.value,
+                      expandBody: false,
+                    ))
                 .expand((w) => [
                       w,
                       const SizedBox(height: LimyeSpacing.cardGap),
@@ -767,11 +776,26 @@ class _HowItWorks extends StatelessWidget {
 class _StepCard extends StatelessWidget {
   final int stepIndex;
   final (String, String) step;
+  /// When true (desktop row), body fills remaining height so card heights match.
+  final bool expandBody;
 
-  const _StepCard({required this.stepIndex, required this.step});
+  const _StepCard({
+    required this.stepIndex,
+    required this.step,
+    required this.expandBody,
+  });
+
+  static const int _bodyMaxLines = 3;
 
   @override
   Widget build(BuildContext context) {
+    final body = Text(
+      step.$2,
+      style: LimyeTextStyles.body(),
+      maxLines: _bodyMaxLines,
+      overflow: TextOverflow.ellipsis,
+    );
+
     return Container(
       padding: const EdgeInsets.all(LimyeSpacing.cardPadding),
       decoration: BoxDecoration(
@@ -796,10 +820,18 @@ class _StepCard extends StatelessWidget {
           ),
           const SizedBox(height: LimyeSpacing.md),
           Text(step.$1, style: LimyeTextStyles.cardHeading()),
-          const SizedBox(height: 4),
+          const SizedBox(height: LimyeSpacing.xs / 2),
           const Divider(),
           const SizedBox(height: LimyeSpacing.xs),
-          Text(step.$2, style: LimyeTextStyles.body()),
+          if (expandBody)
+            Expanded(
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: body,
+              ),
+            )
+          else
+            body,
         ],
       ),
     );
