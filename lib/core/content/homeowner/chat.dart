@@ -1,5 +1,6 @@
 // FILE: homeowner/chat.dart
 // Homeowner Messages page and placeholder chat copy.
+// Primary AI design chat strings: homeowner/ai_chat.dart (AiChatContent).
 
 class HomeownerChatContent {
   static const pageTitle = 'Messages';

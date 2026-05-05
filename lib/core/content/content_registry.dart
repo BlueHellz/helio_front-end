@@ -5,8 +5,8 @@
 // Landing, hero, pillars, wallet teaser: landing.dart
 // Pre-auth navbar, shared footer dialogs: shared/navigation.dart, shared/footer.dart
 // Web + mobile auth, social stubs: auth.dart
-// Homeowner dashboard, dashboard_page, quote, design summary, intake, chat, project detail:
-//   homeowner/*.dart
+// Homeowner dashboard, intake, AI design chat (homeowner/ai_chat.dart), messages
+//   keys (homeowner/chat.dart), quote, design summary, project detail: homeowner/*.dart
 // App router snackbars / edit dialogs: shared/router_strings.dart
 // Shared feedback / snackbars / generic dialogs: shared/feedback_strings.dart
 // Drone ops marketing: drone_ops/drone_ops.dart
@@ -27,6 +27,7 @@ export 'enterprise/business_solutions.dart';
 export 'drone_ops/drone_ops.dart';
 export 'ev_host.dart';
 export 'homeowner/chat.dart';
+export 'homeowner/ai_chat.dart';
 export 'homeowner/dashboard.dart';
 export 'homeowner/design_summary.dart';
 export 'homeowner/intake.dart';

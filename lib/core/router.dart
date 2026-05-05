@@ -18,7 +18,7 @@ import 'package:limye_app/features/light/enterprise/enterprise_auth_page.dart';
 import 'package:limye_app/features/light/enterprise/business_solutions_page.dart';
 import 'package:limye_app/features/light/homeowner/project_tracking_page.dart';
 import 'package:limye_app/features/light/homeowner/intake_page.dart';
-import 'package:limye_app/features/light/homeowner/chat_page.dart';
+import 'package:limye_app/features/light/homeowner/ai_chat_page.dart';
 import 'package:limye_app/features/light/homeowner/homeowner_design_result_page.dart';
 import 'package:limye_app/features/light/homeowner/homeowner_wallet_page.dart';
 import 'package:limye_app/features/light/homeowner/mobile_homeowner_shell.dart';
@@ -168,7 +168,7 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
         case _WebPublicPage.publicDesignChat:
           return Scaffold(
             appBar: AppBar(
-              title: Text(HomeownerChatContent.pageTitleDesign),
+              title: Text(AiChatContent.pageTitle),
               leading: BackButton(
                 onPressed: () => _go(_WebPublicPage.landing),
               ),
@@ -182,7 +182,7 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
                 ),
               ],
             ),
-            body: HomeownerChatPage(
+            body: AiChatPage(
               designFlowMode: true,
               onFallbackToForm: () => _go(_WebPublicPage.intake),
             ),
@@ -245,7 +245,7 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
     final idx = app.webSidebarIndex;
     final Widget body = switch (idx) {
       1 => const HomeownerIntakePage(),
-      2 => const HomeownerChatPage(),
+      2 => const AiChatPage(),
       3 => HomeownerWalletPage(
           userName: app.userName,
           hlioBalance: app.hlioBalance,
@@ -437,7 +437,7 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
         case _MobilePublic.designChat:
           return Scaffold(
             appBar: AppBar(
-              title: Text(HomeownerChatContent.pageTitleDesign),
+              title: Text(AiChatContent.pageTitle),
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () =>
@@ -454,7 +454,7 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
                 ),
               ],
             ),
-            body: HomeownerChatPage(
+            body: AiChatPage(
               designFlowMode: true,
               onFallbackToForm: () =>
                   setState(() => _pub = _MobilePublic.intake),
@@ -564,7 +564,7 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
     final idx = app.mobileNavIndex;
     final body = switch (idx) {
       1 => const HomeownerIntakePage(),
-      2 => const HomeownerChatPage(),
+      2 => const AiChatPage(),
       3 => HomeownerWalletPage(
           userName: app.userName,
           hlioBalance: app.hlioBalance,
