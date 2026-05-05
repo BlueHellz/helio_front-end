@@ -9,7 +9,6 @@ typedef AuthHeadersBuilder = Map<String, String> Function();
 typedef TokenRefreshFn = Future<bool> Function();
 
 /// HTTP client for the Helio backend. All paths use the `/api/v1` prefix.
-/// Adjust parsing if the live API differs slightly from these shapes.
 class ApiException implements Exception {
   ApiException(this.statusCode, this.body);
   final int statusCode;
@@ -54,9 +53,6 @@ class BlackLightApi {
   Future<http.Response> _get(Uri uri) =>
       _withRetry((h) => _client.get(uri, headers: h));
 
-  Future<http.Response> _delete(Uri uri) =>
-      _withRetry((h) => _client.delete(uri, headers: h));
-
   Future<http.Response> _post(Uri uri, {Object? body}) =>
       _withRetry((h) => _client.post(uri, headers: h, body: body));
 
@@ -72,419 +68,6 @@ class BlackLightApi {
       return jsonDecode(r.body);
     }
     throw ApiException(r.statusCode, r.body);
-  }
-
-  // ─── Custom fields ─────────────────────────────────────────────
-
-  Future<List<Map<String, dynamic>>> getCustomFields() async {
-    final r = await _get(_u('/org/custom-fields'));
-    final d = await _decode(r);
-    if (d is List) return d.cast<Map<String, dynamic>>();
-    if (d is Map && d['items'] is List) {
-      return (d['items'] as List).cast<Map<String, dynamic>>();
-    }
-    return const [];
-  }
-
-  Future<Map<String, dynamic>> createField(Map<String, dynamic> body) async {
-    final r = await _post(
-      _u('/org/custom-fields'),
-      body: jsonEncode(body),
-    );
-    final d = await _decode(r);
-    return (d as Map).cast<String, dynamic>();
-  }
-
-  Future<Map<String, dynamic>> updateField(
-    String id,
-    Map<String, dynamic> body,
-  ) async {
-    final r = await _put(
-      _u('/org/custom-fields/$id'),
-      body: jsonEncode(body),
-    );
-    final d = await _decode(r);
-    return (d as Map).cast<String, dynamic>();
-  }
-
-  Future<void> deleteField(String id) async {
-    final r = await _delete(
-      _u('/org/custom-fields/$id'),
-    );
-    await _decode(r);
-  }
-
-  // ─── Roles ─────────────────────────────────────────────────────
-
-  Future<List<Map<String, dynamic>>> getRoles() async {
-    final r = await _get(_u('/org/roles'));
-    final d = await _decode(r);
-    if (d is List) return d.cast<Map<String, dynamic>>();
-    if (d is Map && d['items'] is List) {
-      return (d['items'] as List).cast<Map<String, dynamic>>();
-    }
-    return const [];
-  }
-
-  Future<Map<String, dynamic>> createRole(Map<String, dynamic> body) async {
-    final r = await _post(
-      _u('/org/roles'),
-      body: jsonEncode(body),
-    );
-    final d = await _decode(r);
-    return (d as Map).cast<String, dynamic>();
-  }
-
-  Future<Map<String, dynamic>> updateRole(
-    String id,
-    Map<String, dynamic> body,
-  ) async {
-    final r = await _patch(
-      _u('/org/roles/$id'),
-      body: jsonEncode(body),
-    );
-    final d = await _decode(r);
-    return (d as Map).cast<String, dynamic>();
-  }
-
-  Future<void> deleteRole(String id) async {
-    final r = await _delete(_u('/org/roles/$id'));
-    await _decode(r);
-  }
-
-  Future<void> assignRoleToUser(String roleId, String userId) async {
-    final r = await _post(
-      _u('/org/roles/$roleId/assign'),
-      body: jsonEncode(<String, dynamic>{'user_id': userId}),
-    );
-    await _decode(r);
-  }
-
-  Future<void> removeRoleFromUser(String roleId, String userId) async {
-    final r = await _post(
-      _u('/org/roles/$roleId/unassign'),
-      body: jsonEncode(<String, dynamic>{'user_id': userId}),
-    );
-    await _decode(r);
-  }
-
-  Future<List<Map<String, dynamic>>> searchUsers(String query) async {
-    final r = await _get(
-      _u('/org/users/search', <String, String>{'q': query}),
-    );
-    final d = await _decode(r);
-    if (d is List) return d.cast<Map<String, dynamic>>();
-    if (d is Map && d['items'] is List) {
-      return (d['items'] as List).cast<Map<String, dynamic>>();
-    }
-    return const [];
-  }
-
-  // ─── Pipelines & stages ────────────────────────────────────────
-
-  Future<List<Map<String, dynamic>>> getPipelines() async {
-    final r = await _get(_u('/org/pipelines'));
-    final d = await _decode(r);
-    if (d is List) return d.cast<Map<String, dynamic>>();
-    if (d is Map && d['items'] is List) {
-      return (d['items'] as List).cast<Map<String, dynamic>>();
-    }
-    return const [];
-  }
-
-  Future<Map<String, dynamic>> createPipeline(Map<String, dynamic> body) async {
-    final r = await _post(
-      _u('/org/pipelines'),
-      body: jsonEncode(body),
-    );
-    final d = await _decode(r);
-    return (d as Map).cast<String, dynamic>();
-  }
-
-  Future<Map<String, dynamic>> updatePipeline(
-    String id,
-    Map<String, dynamic> body,
-  ) async {
-    final r = await _put(
-      _u('/org/pipelines/$id'),
-      body: jsonEncode(body),
-    );
-    final d = await _decode(r);
-    return (d as Map).cast<String, dynamic>();
-  }
-
-  Future<void> deletePipeline(String id) async {
-    final r =
-        await _delete(_u('/org/pipelines/$id'));
-    await _decode(r);
-  }
-
-  Future<List<Map<String, dynamic>>> getStages(String pipelineId) async {
-    final r = await _get(
-      _u('/org/pipelines/$pipelineId/stages'),
-    );
-    final d = await _decode(r);
-    if (d is List) return d.cast<Map<String, dynamic>>();
-    if (d is Map && d['items'] is List) {
-      return (d['items'] as List).cast<Map<String, dynamic>>();
-    }
-    return const [];
-  }
-
-  Future<Map<String, dynamic>> addStage(
-    String pipelineId,
-    Map<String, dynamic> body,
-  ) async {
-    final r = await _post(
-      _u('/org/pipelines/$pipelineId/stages'),
-      body: jsonEncode(body),
-    );
-    final d = await _decode(r);
-    return (d as Map).cast<String, dynamic>();
-  }
-
-  Future<Map<String, dynamic>> updateStage(
-    String pipelineId,
-    String stageId,
-    Map<String, dynamic> body,
-  ) async {
-    final r = await _put(
-      _u('/org/pipelines/$pipelineId/stages/$stageId'),
-      body: jsonEncode(body),
-    );
-    final d = await _decode(r);
-    return (d as Map).cast<String, dynamic>();
-  }
-
-  Future<void> deleteStage(String pipelineId, String stageId) async {
-    final r = await _delete(
-      _u('/org/pipelines/$pipelineId/stages/$stageId'),
-    );
-    await _decode(r);
-  }
-
-  Future<Map<String, dynamic>> getPipeline(String id) async {
-    try {
-      final r = await _get(_u('/org/pipelines/$id'));
-      final d = await _decode(r);
-      return (d as Map).cast<String, dynamic>();
-    } on ApiException catch (e) {
-      if (e.statusCode == 404) {
-        final all = await getPipelines();
-        for (final p in all) {
-          if (p['id']?.toString() == id) {
-            return Map<String, dynamic>.from(p);
-          }
-        }
-        return <String, dynamic>{};
-      }
-      rethrow;
-    }
-  }
-
-  /// Flow Mesh edges. Tries GET `/edges`; on 404 reads `custom_data.flow_mesh_edges`.
-  Future<List<Map<String, dynamic>>> getPipelineEdges(String pipelineId) async {
-    try {
-      final r = await _get(_u('/org/pipelines/$pipelineId/edges'));
-      final d = await _decode(r);
-      if (d is List) return d.cast<Map<String, dynamic>>();
-      if (d is Map && d['items'] is List) {
-        return (d['items'] as List).cast<Map<String, dynamic>>();
-      }
-      return const [];
-    } on ApiException catch (e) {
-      if (e.statusCode != 404) rethrow;
-      final p = await getPipeline(pipelineId);
-      final cd = p['custom_data'];
-      if (cd is Map && cd['flow_mesh_edges'] is List) {
-        return (cd['flow_mesh_edges'] as List)
-            .map((e) => Map<String, dynamic>.from(e as Map))
-            .toList();
-      }
-      return const [];
-    }
-  }
-
-  Future<void> _saveEdgesFallback(
-    String pipelineId,
-    List<Map<String, dynamic>> edges,
-  ) async {
-    final p = await getPipeline(pipelineId);
-    final raw = p['custom_data'];
-    final cd = Map<String, dynamic>.from(
-      raw is Map ? raw.cast<String, dynamic>() : <String, dynamic>{},
-    );
-    cd['flow_mesh_edges'] = edges;
-    await updatePipeline(pipelineId, {'custom_data': cd});
-  }
-
-  /// POST `/edges` or persist under pipeline `custom_data`.
-  Future<void> addPipelineEdge(
-    String pipelineId,
-    String sourceStageId,
-    String targetStageId,
-  ) async {
-    try {
-      final r = await _post(
-        _u('/org/pipelines/$pipelineId/edges'),
-        body: jsonEncode(<String, dynamic>{
-          'source_stage_id': sourceStageId,
-          'target_stage_id': targetStageId,
-        }),
-      );
-      await _decode(r);
-      return;
-    } on ApiException catch (e) {
-      if (e.statusCode != 404 &&
-          e.statusCode != 405 &&
-          e.statusCode != 400) {
-        rethrow;
-      }
-    }
-    final existing = await getPipelineEdges(pipelineId);
-    final next = [
-      ...existing.map((e) => Map<String, dynamic>.from(e)),
-      <String, dynamic>{
-        'id': 'edge_${DateTime.now().millisecondsSinceEpoch}',
-        'source_stage_id': sourceStageId,
-        'target_stage_id': targetStageId,
-      },
-    ];
-    await _saveEdgesFallback(pipelineId, next);
-  }
-
-  Future<void> removePipelineEdge(String pipelineId, String edgeId) async {
-    try {
-      final r = await _delete(
-        _u('/org/pipelines/$pipelineId/edges/$edgeId'),
-      );
-      await _decode(r);
-      return;
-    } on ApiException catch (e) {
-      if (e.statusCode != 404 && e.statusCode != 405) rethrow;
-    }
-    final list = await getPipelineEdges(pipelineId);
-    list.removeWhere((e) => e['id']?.toString() == edgeId);
-    await _saveEdgesFallback(pipelineId, list);
-  }
-
-  Future<void> reorderStages(
-    String pipelineId,
-    List<String> orderedStageIds,
-  ) async {
-    final r = await _post(
-      _u('/org/pipelines/$pipelineId/stages/reorder'),
-      body: jsonEncode(<String, dynamic>{'order': orderedStageIds}),
-    );
-    await _decode(r);
-  }
-
-  /// CRM deals for a pipeline (Kanban source).
-  Future<List<Map<String, dynamic>>> getDeals(String pipelineId) async {
-    final r = await _get(
-      _u('/org/pipelines/$pipelineId/deals'),
-    );
-    final d = await _decode(r);
-    if (d is List) return d.cast<Map<String, dynamic>>();
-    if (d is Map && d['items'] is List) {
-      return (d['items'] as List).cast<Map<String, dynamic>>();
-    }
-    return const [];
-  }
-
-  Future<Map<String, dynamic>> getDeal(String dealId) async {
-    final r = await _get(_u('/org/deals/$dealId'));
-    final d = await _decode(r);
-    return (d as Map).cast<String, dynamic>();
-  }
-
-  Future<Map<String, dynamic>> updateDeal(
-    String dealId,
-    Map<String, dynamic> body,
-  ) async {
-    final r = await _put(
-      _u('/org/deals/$dealId'),
-      body: jsonEncode(body),
-    );
-    final d = await _decode(r);
-    return (d as Map).cast<String, dynamic>();
-  }
-
-  // ─── Design mode & layouts ─────────────────────────────────────
-
-  Future<bool> getDesignMode() async {
-    final r = await _get(_u('/org/design-mode'));
-    final d = await _decode(r);
-    if (d is Map && d['enabled'] is bool) return d['enabled'] as bool;
-    if (d is Map && d['design_mode'] is bool) {
-      return d['design_mode'] as bool;
-    }
-    return false;
-  }
-
-  Future<void> setDesignMode(bool enabled) async {
-    final r = await _put(
-      _u('/org/design-mode'),
-      body: jsonEncode(<String, dynamic>{
-        'enabled': enabled,
-        'design_mode': enabled,
-      }),
-    );
-    await _decode(r);
-  }
-
-  /// POST /org/layout/{section} — layout payload (e.g. field_ids for intake).
-  Future<void> saveOrgLayoutSection(
-    String section,
-    Map<String, dynamic> body,
-  ) async {
-    final r = await _post(
-      _u('/org/layout/$section'),
-      body: jsonEncode(body),
-    );
-    await _decode(r);
-  }
-
-  Future<Map<String, dynamic>> getLayout({required String section}) async {
-    final r = await _get(
-      _u('/org/layout', <String, String>{'section': section}),
-    );
-    final d = await _decode(r);
-    if (d is Map) return d.cast<String, dynamic>();
-    return <String, dynamic>{};
-  }
-
-  Future<void> saveLayout({
-    required String section,
-    required Map<String, dynamic> layout,
-  }) async {
-    final r = await _put(
-      _u('/org/layout'),
-      body: jsonEncode(<String, dynamic>{'section': section, 'layout': layout}),
-    );
-    await _decode(r);
-  }
-
-  /// Intake field ordering per project type:
-  /// `residential` | `commercial` | `industrial`
-  Future<Map<String, dynamic>> getIntakeLayout(String projectType) async {
-    final r = await _get(
-      _u('/org/intake-layout', <String, String>{'type': projectType}),
-    );
-    final d = await _decode(r);
-    if (d is Map) return d.cast<String, dynamic>();
-    return <String, dynamic>{};
-  }
-
-  Future<void> saveIntakeLayout(
-    String projectType,
-    Map<String, dynamic> body,
-  ) async {
-    final r = await _put(
-      _u('/org/intake-layout'),
-      body: jsonEncode(<String, dynamic>{'project_type': projectType, ...body}),
-    );
-    await _decode(r);
   }
 
   // ─── Projects ──────────────────────────────────────────────────
@@ -535,6 +118,37 @@ class BlackLightApi {
     return (d as Map).cast<String, dynamic>();
   }
 
+  // ─── Design / layout / financials (project-scoped) ─────────────
+
+  Future<Map<String, dynamic>> getProjectRoof(String projectId) async {
+    final r = await _get(_u('/projects/$projectId/roof'));
+    final d = await _decode(r);
+    if (d is Map) return d.cast<String, dynamic>();
+    return <String, dynamic>{};
+  }
+
+  Future<Map<String, dynamic>> getProjectLayout(String projectId) async {
+    final r = await _get(_u('/projects/$projectId/layout'));
+    final d = await _decode(r);
+    if (d is Map) return d.cast<String, dynamic>();
+    return <String, dynamic>{};
+  }
+
+  Future<Map<String, dynamic>> getProjectFinancials(String projectId) async {
+    final r = await _get(_u('/projects/$projectId/financials'));
+    final d = await _decode(r);
+    if (d is Map) return d.cast<String, dynamic>();
+    return <String, dynamic>{};
+  }
+
+  Future<List<int>> getProjectReportPdf(String projectId) async {
+    final r = await _get(_u('/projects/$projectId/report'));
+    if (r.statusCode >= 200 && r.statusCode < 300) {
+      return r.bodyBytes;
+    }
+    throw ApiException(r.statusCode, r.body);
+  }
+
   // ─── Wallet ────────────────────────────────────────────────────
 
   Future<Map<String, dynamic>> getWallet() async {
@@ -553,7 +167,7 @@ class BlackLightApi {
     return (d as Map).cast<String, dynamic>();
   }
 
-  // ─── Chat (placeholder thread) ─────────────────────────────────
+  // ─── Chat ──────────────────────────────────────────────────────
 
   Future<List<Map<String, dynamic>>> getProjectMessages(String projectId) async {
     final r = await _get(
@@ -577,42 +191,6 @@ class BlackLightApi {
     );
     final d = await _decode(r);
     return (d as Map).cast<String, dynamic>();
-  }
-
-  // ─── Org custom components & AI configure ──────────────────────
-
-  Future<List<Map<String, dynamic>>> getOrgCustomComponents() async {
-    final r = await _get(_u('/org/custom-components'));
-    final d = await _decode(r);
-    if (d is List) return d.cast<Map<String, dynamic>>();
-    if (d is Map && d['items'] is List) {
-      return (d['items'] as List).cast<Map<String, dynamic>>();
-    }
-    return const [];
-  }
-
-  Future<dynamic> postAiConfigure(Map<String, dynamic> body) async {
-    final r = await _post(
-      _u('/ai/configure'),
-      body: jsonEncode(body),
-    );
-    return _decode(r);
-  }
-
-  Future<Map<String, dynamic>> postAiAddCustomComponent(
-    Map<String, dynamic> body,
-  ) async {
-    final r = await _post(
-      _u('/ai/add-custom-component'),
-      body: jsonEncode(body),
-    );
-    final d = await _decode(r);
-    return (d as Map).cast<String, dynamic>();
-  }
-
-  Future<void> deleteOrgCustomComponent(String id) async {
-    final r = await _delete(_u('/org/custom-components/$id'));
-    await _decode(r);
   }
 
   void dispose() => _client.close();
@@ -653,7 +231,7 @@ Project projectFromApiMap(Map<String, dynamic> j) {
         : null,
     panelCount: _readInt(j['panelCount'] ?? j['panel_count']),
     annualProductionKwh: (j['annualProductionKwh'] ?? j['annual_production_kwh'])
-        is num
+            is num
         ? ((j['annualProductionKwh'] ?? j['annual_production_kwh']) as num)
             .toDouble()
         : null,

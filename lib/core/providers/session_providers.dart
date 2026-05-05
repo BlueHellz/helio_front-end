@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../../config.dart';
 import '../../services/api.dart';
 import '../../services/auth_api.dart';
 import '../app_state.dart';
@@ -61,31 +60,17 @@ class AuthSession {
   }
 }
 
-/// Maps API role strings to app [UserRole].
-UserRole userRoleFromApiString(String? role) {
+/// True when API role is allowed for the homeowner app.
+bool apiRoleIsHomeowner(String? role) {
   final s = (role ?? '').toLowerCase().trim();
-  if (s.isEmpty) {
-    return BlackLightConfig.bypassMode
-        ? UserRole.organization
-        : UserRole.homeowner;
-  }
-  switch (s) {
-    case 'homeowner':
-      return UserRole.homeowner;
-    case 'installer':
-    case 'organization':
-    case 'org':
-      return UserRole.organization;
-    case 'drone_operator':
-    case 'droneoperator':
-    case 'drone operator':
-      return UserRole.droneOperator;
-    default:
-      return UserRole.homeowner;
-  }
+  if (s.isEmpty || s == 'homeowner') return true;
+  return false;
 }
 
-/// Prefer Riverpod [AuthSession] when logged in so routing matches the API role even if [BlackLightAppState] is stale.
+UserRole userRoleFromApiString(String? role) {
+  return apiRoleIsHomeowner(role) ? UserRole.homeowner : UserRole.none;
+}
+
 UserRole resolvedNavigationRole({
   required bool authenticated,
   required UserRole appRole,
@@ -98,15 +83,10 @@ UserRole resolvedNavigationRole({
   return appRole;
 }
 
-/// Maps [UserRole] to API `role` field for signup.
 String apiRoleString(UserRole role) {
   switch (role) {
     case UserRole.homeowner:
       return 'homeowner';
-    case UserRole.organization:
-      return 'installer';
-    case UserRole.droneOperator:
-      return 'drone_operator';
     case UserRole.none:
       return 'homeowner';
   }
@@ -175,7 +155,6 @@ class SessionNotifier extends StateNotifier<AuthSession> {
     await _storage.delete(key: _kCompanyName);
   }
 
-  /// Apply login/signup/refresh response and persist.
   Future<void> applyAuthResult(AuthResult r) async {
     final session = AuthSession(
       bearerToken: r.accessToken,
@@ -194,7 +173,6 @@ class SessionNotifier extends StateNotifier<AuthSession> {
     }
   }
 
-  /// Replaces session (persists when [persist] is true).
   void replaceSession({
     String? bearerToken,
     String? refreshToken,
@@ -225,7 +203,6 @@ class SessionNotifier extends StateNotifier<AuthSession> {
     unawaited(_persist(state));
   }
 
-  /// Refresh access token using stored refresh token. Returns true if successful.
   Future<bool> tryRefreshAccessToken() async {
     final refresh = state.refreshToken ?? await _storage.read(key: _kRefresh);
     if (refresh == null || refresh.isEmpty) return false;
@@ -249,6 +226,7 @@ final sessionProvider =
   return SessionNotifier(ref);
 });
 
+/// Homeowner app API client (Bearer from session).
 final apiProvider = Provider<BlackLightApi>((ref) {
   return BlackLightApi(
     readHeaders: () {

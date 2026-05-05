@@ -1,8 +1,7 @@
 import 'package:blacklight_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
 import 'package:blacklight_app/theme/blacklight_theme.dart';
-import 'package:blacklight_app/core/shell/web/pre_auth_shell.dart';
-import 'package:blacklight_app/core/app_state.dart';
+import 'package:blacklight_app/core/shell/web/homeowner_web_chrome.dart';
 
 // ─────────────────────────────────────────────
 // BLACK LIGHT — Drone Operator Program (web)
@@ -13,15 +12,17 @@ import 'package:blacklight_app/core/app_state.dart';
 class DroneOpsInfoPage extends StatefulWidget {
   /// Called when an applicant submits and the demo flow should treat them
   /// as a drone operator (role auto-applied — no role chooser anywhere).
-  final void Function(UserRole role)? onApplicationApproved;
+  final VoidCallback? onLaunchTerminal;
   final VoidCallback? onHomeTap;
   final VoidCallback? onSignIn;
+  final VoidCallback? onMyProjects;
 
   const DroneOpsInfoPage({
     super.key,
-    this.onApplicationApproved,
+    this.onLaunchTerminal,
     this.onHomeTap,
     this.onSignIn,
+    this.onMyProjects,
   });
 
   @override
@@ -35,8 +36,7 @@ class _DroneOpsInfoPageState extends State<DroneOpsInfoPage> {
   final _zipCtrl = TextEditingController();
   bool _submitted = false;
 
-  // Locked role — drone operator applicants cannot select another role.
-  static const UserRole _appliedRole = UserRole.droneOperator;
+  // Locked label for applicant UI (no role auth in homeowner app).
 
   @override
   void dispose() {
@@ -53,10 +53,11 @@ class _DroneOpsInfoPageState extends State<DroneOpsInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PreAuthShell(
+    return HomeownerPublicChrome(
       activeNavIndex: 1,
       onHomeTap: widget.onHomeTap,
       onSignIn: widget.onSignIn,
+      onMyProjects: widget.onMyProjects,
       child: Center(
         child: ConstrainedBox(
           constraints:
@@ -81,12 +82,9 @@ class _DroneOpsInfoPageState extends State<DroneOpsInfoPage> {
                   emailCtrl: _emailCtrl,
                   droneModelCtrl: _droneModelCtrl,
                   zipCtrl: _zipCtrl,
-                  appliedRole: _appliedRole,
                   submitted: _submitted,
                   onSubmit: _handleSubmit,
-                  onLaunchTerminal: () {
-                    widget.onApplicationApproved?.call(_appliedRole);
-                  },
+                  onLaunchTerminal: widget.onLaunchTerminal,
                 ),
                 const SizedBox(height: BlackLightSpacing.xl),
               ],
@@ -740,20 +738,18 @@ class _ApplicationSection extends StatelessWidget {
   final TextEditingController emailCtrl;
   final TextEditingController droneModelCtrl;
   final TextEditingController zipCtrl;
-  final UserRole appliedRole;
   final bool submitted;
   final VoidCallback onSubmit;
-  final VoidCallback onLaunchTerminal;
+  final VoidCallback? onLaunchTerminal;
 
   const _ApplicationSection({
     required this.fullNameCtrl,
     required this.emailCtrl,
     required this.droneModelCtrl,
     required this.zipCtrl,
-    required this.appliedRole,
     required this.submitted,
     required this.onSubmit,
-    required this.onLaunchTerminal,
+    this.onLaunchTerminal,
   });
 
   @override
@@ -814,7 +810,6 @@ class _ApplicationSection extends StatelessWidget {
         emailCtrl: emailCtrl,
         droneModelCtrl: droneModelCtrl,
         zipCtrl: zipCtrl,
-        appliedRole: appliedRole,
         submitted: submitted,
         onSubmit: onSubmit,
       );
@@ -846,7 +841,6 @@ class _ApplicationForm extends StatelessWidget {
   final TextEditingController emailCtrl;
   final TextEditingController droneModelCtrl;
   final TextEditingController zipCtrl;
-  final UserRole appliedRole;
   final bool submitted;
   final VoidCallback onSubmit;
 
@@ -855,7 +849,6 @@ class _ApplicationForm extends StatelessWidget {
     required this.emailCtrl,
     required this.droneModelCtrl,
     required this.zipCtrl,
-    required this.appliedRole,
     required this.submitted,
     required this.onSubmit,
   });
@@ -873,7 +866,7 @@ class _ApplicationForm extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Auto-applied role badge — locked, not selectable.
-          _RoleAppliedBadge(role: appliedRole),
+          _RoleAppliedBadge(),
           const SizedBox(height: BlackLightSpacing.md),
           LayoutBuilder(builder: (context, c) {
             final isWide = c.maxWidth > 540;
@@ -1029,21 +1022,11 @@ class _ApplicationForm extends StatelessWidget {
 }
 
 class _RoleAppliedBadge extends StatelessWidget {
-  final UserRole role;
-
-  const _RoleAppliedBadge({required this.role});
-
-  String get _label {
-    switch (role) {
-      case UserRole.droneOperator:
-        return DroneOpsContent.roleLabelDroneOperator;
-      default:
-        return DroneOpsContent.roleLabelOperator;
-    }
-  }
+  const _RoleAppliedBadge();
 
   @override
   Widget build(BuildContext context) {
+    final label = DroneOpsContent.roleLabelDroneOperator;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
@@ -1057,7 +1040,7 @@ class _RoleAppliedBadge extends StatelessWidget {
           const Icon(Icons.lock_outline,
               size: 14, color: BlackLightColors.accent),
           const SizedBox(width: 8),
-          Text('${DroneOpsContent.applyingAsPrefix}$_label',
+          Text('${DroneOpsContent.applyingAsPrefix}$label',
               style: BlackLightTextStyles.captionBold(
                   color: BlackLightColors.accent)),
         ],

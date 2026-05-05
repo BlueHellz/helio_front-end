@@ -6,6 +6,7 @@ class NavigationContent {
   static const sidebarNewDesign = 'New Design';
   static const sidebarCrm = 'CRM';
   static const sidebarWallet = 'Wallet';
+  static const sidebarMessages = 'Messages';
   static const sidebarSettings = 'Settings';
   static const sidebarHelp = 'Help';
 
@@ -21,6 +22,7 @@ class NavigationContent {
 
   static const preAuthHomeowners = 'Homeowners';
   static const preAuthForBusiness = 'For Business';
+  static const preAuthMyProjects = 'My Projects';
   static const preAuthSignIn = 'Sign In';
 
   static const shellSignOut = 'Sign Out';

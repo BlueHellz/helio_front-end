@@ -32,4 +32,11 @@ class HomeownerDesignSummaryContent {
   static const equipMonitoringCategory = 'Monitoring';
   static const equipMonitoringDetail =
       'Real-time production tracking and alerts';
+
+  static const saveTrackProject = 'Save & Track Your Project';
+  static const saveTrackDialogTitle = 'Create your account';
+  static const saveTrackDialogBody =
+      'Save this design to your dashboard and track quotes and installation milestones.';
+  static const saveTrackSubmit = 'Create account & save';
+  static const projectSavedSnack = 'Project saved. Welcome to your dashboard.';
 }

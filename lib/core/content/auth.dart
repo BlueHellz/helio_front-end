@@ -65,4 +65,7 @@ class AuthContent {
 
   /// Fallback full name when mobile signup derives from email local-part.
   static const installerSignupNameFallback = 'Installer';
+
+  static const homeownerLoginOnly =
+      'This app is for homeowners. Use a homeowner account to continue.';
 }

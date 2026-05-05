@@ -9,7 +9,7 @@ class WalletContent {
   static const connectShort = 'Connect';
   static const manageWallet = 'Manage';
   static const landingWalletSnack =
-      'Use Sign In to create an account. You can connect a wallet from your dashboard after you log in.';
+      'Connect a wallet from your account page after you sign in.';
 
   static const dialogConnectWalletTitle = 'Connect wallet';
   static const dialogConnectWalletBody =

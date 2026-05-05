@@ -1,7 +1,6 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:blacklight_app/core/content/content_registry.dart';
 
 import '../theme/blacklight_theme.dart';
@@ -213,7 +212,7 @@ class _DynamicFormState extends State<DynamicForm> {
     if (v == null) {
       text = CommonContent.emDash;
     } else if (v is DateTime) {
-      text = DateFormat.yMMMd().format(v);
+      text = MaterialLocalizations.of(context).formatMediumDate(v);
     } else if (v is List) {
       text = v.join(', ');
     } else {
@@ -256,7 +255,7 @@ class _DatePickerRow extends StatelessWidget {
       child: Text(
         value == null
             ? CommonContent.selectDate
-            : DateFormat.yMMMd().format(value!),
+            : MaterialLocalizations.of(context).formatMediumDate(value!),
         style: BlackLightTextStyles.body(),
       ),
     );

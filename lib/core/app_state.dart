@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'models/project.dart';
 import 'models/chat_message.dart';
 
@@ -11,8 +13,6 @@ import 'models/chat_message.dart';
 
 enum UserRole {
   homeowner,
-  organization,
-  droneOperator,
   none,
 }
 
@@ -30,7 +30,6 @@ class BlackLightAppState extends ChangeNotifier {
   // Navigation indices (UI-only)
   int _webSidebarIndex = 0;
   int _mobileNavIndex = 0;
-  int _droneOperatorNavIndex = 0;
 
   // Collections — empty until backend provides data
   final List<Project> _projects = [];
@@ -45,7 +44,6 @@ class BlackLightAppState extends ChangeNotifier {
   String? get walletAddress => _walletAddress;
   int get webSidebarIndex => _webSidebarIndex;
   int get mobileNavIndex => _mobileNavIndex;
-  int get droneOperatorNavIndex => _droneOperatorNavIndex;
   List<Project> get projects => List.unmodifiable(_projects);
   List<ChatMessage> get chatMessages => List.unmodifiable(_chatMessages);
 
@@ -62,7 +60,6 @@ class BlackLightAppState extends ChangeNotifier {
     _companyName = companyName;
     _webSidebarIndex = 0;
     _mobileNavIndex = 0;
-    _droneOperatorNavIndex = 0;
     notifyListeners();
   }
 
@@ -89,13 +86,6 @@ class BlackLightAppState extends ChangeNotifier {
   void setMobileNavIndex(int index) {
     if (_mobileNavIndex != index) {
       _mobileNavIndex = index;
-      notifyListeners();
-    }
-  }
-
-  void setDroneOperatorNavIndex(int index) {
-    if (_droneOperatorNavIndex != index) {
-      _droneOperatorNavIndex = index;
       notifyListeners();
     }
   }
@@ -131,3 +121,6 @@ class BlackLightAppState extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+final blackLightAppStateProvider =
+    ChangeNotifierProvider<BlackLightAppState>((ref) => BlackLightAppState());

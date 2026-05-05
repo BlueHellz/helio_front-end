@@ -4,15 +4,28 @@ import 'package:blacklight_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:blacklight_app/core/providers/session_providers.dart';
+import 'package:blacklight_app/features/light/homeowner/local_design_estimate.dart';
 import 'package:blacklight_app/core/secrets/app_secrets.dart';
 import 'package:blacklight_app/core/ui/app_feedback.dart';
+import 'package:blacklight_app/core/providers/homeowner_draft_provider.dart';
+import 'package:blacklight_app/core/providers/session_providers.dart';
+import 'package:blacklight_app/features/light/homeowner/homeowner_design_result_page.dart';
 import 'package:blacklight_app/services/api.dart';
 import 'package:blacklight_app/services/mapbox_geocoding_service.dart';
 import 'package:blacklight_app/theme/blacklight_theme.dart';
 
 class HomeownerIntakePage extends ConsumerStatefulWidget {
-  const HomeownerIntakePage({super.key});
+  const HomeownerIntakePage({
+    super.key,
+    this.onLocalDesignReady,
+    this.onAbandon,
+  });
+
+  /// When set and user is not logged in, intake stores a local preview and calls this instead of the API.
+  final VoidCallback? onLocalDesignReady;
+
+  /// Web public flow: back to landing without a navigator stack.
+  final VoidCallback? onAbandon;
 
   @override
   ConsumerState<HomeownerIntakePage> createState() => _HomeownerIntakePageState();
@@ -110,7 +123,6 @@ class _HomeownerIntakePageState extends ConsumerState<HomeownerIntakePage> {
     }
     setState(() => _submitting = true);
     try {
-      final api = ref.read(apiProvider);
       final custom = <String, dynamic>{
         'monthly_electricity_bill': _billCtrl.text.trim(),
         'homeowner_name': _nameCtrl.text.trim(),
@@ -121,19 +133,54 @@ class _HomeownerIntakePageState extends ConsumerState<HomeownerIntakePage> {
         'homeowner_goal': _goal,
         'hoa_restrictions': _hoa,
       };
-      await api.createProject(
-        projectCreateBody(
-          address: address,
-          projectType: 'residential',
-          customData: custom,
-          clientName: _nameCtrl.text.trim().isEmpty
-              ? null
-              : _nameCtrl.text.trim(),
-        ),
+      final session = ref.read(sessionProvider);
+      if (session.isLoggedIn) {
+        final api = ref.read(apiProvider);
+        await api.createProject(
+          projectCreateBody(
+            address: address,
+            projectType: 'residential',
+            customData: custom,
+            clientName: _nameCtrl.text.trim().isEmpty
+                ? null
+                : _nameCtrl.text.trim(),
+          ),
+        );
+        if (!mounted) return;
+        AppFeedback.snack(context, HomeownerIntakeContent.projectSubmittedSnack);
+        Navigator.of(context).pop();
+        return;
+      }
+
+      final bill = double.tryParse(
+        _billCtrl.text.replaceAll(RegExp(r'[^0-9.]'), ''),
       );
+      final preview = buildLocalPreviewProject(
+        address: address,
+        clientName: _nameCtrl.text.trim(),
+        clientEmail: _emailCtrl.text.trim().isEmpty ? null : _emailCtrl.text.trim(),
+        clientPhone: _phoneCtrl.text.trim().isEmpty ? null : _phoneCtrl.text.trim(),
+        monthlyBillUsd: bill,
+      );
+      ref.read(homeownerDraftProvider.notifier).setDraft(
+            previewProject: preview,
+            intakeCustomData: custom,
+            address: address,
+          );
       if (!mounted) return;
-      AppFeedback.snack(context, HomeownerIntakeContent.projectSubmittedSnack);
-      Navigator.of(context).pop();
+      final next = widget.onLocalDesignReady;
+      if (next != null) {
+        next();
+      } else {
+        await Navigator.of(context).push<void>(
+          MaterialPageRoute<void>(
+            builder: (_) => Scaffold(
+              appBar: AppBar(title: Text(HomeownerDesignSummaryContent.title)),
+              body: const HomeownerDesignResultPage(),
+            ),
+          ),
+        );
+      }
     } catch (e) {
       if (!mounted) return;
       AppFeedback.snack(
@@ -149,6 +196,9 @@ class _HomeownerIntakePageState extends ConsumerState<HomeownerIntakePage> {
       backgroundColor: BlackLightColors.background,
       appBar: AppBar(
         title: Text(HomeownerIntakeContent.appBarTitle),
+        leading: widget.onAbandon != null
+            ? BackButton(onPressed: widget.onAbandon)
+            : null,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(BlackLightSpacing.gutter),

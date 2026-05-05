@@ -1,342 +1,216 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider/provider.dart';
 
-import 'package:blacklight_app/config.dart';
 import 'package:blacklight_app/core/content/content_registry.dart';
+import 'package:blacklight_app/theme/blacklight_theme.dart';
 
 import 'app_state.dart';
 import 'providers/session_providers.dart';
+import 'providers/theme_provider.dart';
+import 'shell/web/homeowner_web_chrome.dart';
 import 'ui/app_feedback.dart';
-import 'package:blacklight_app/theme/blacklight_theme.dart';
 
-// Web shells
-import 'shell/web/authenticated_shell.dart';
-
-// Features — Light (free tier)
 import 'package:blacklight_app/features/light/landing/landing_page.dart';
 import 'package:blacklight_app/features/light/auth/auth_page.dart';
 import 'package:blacklight_app/features/light/homeowner/dashboard_page.dart';
 import 'package:blacklight_app/features/light/homeowner/intake_page.dart';
 import 'package:blacklight_app/features/light/homeowner/chat_page.dart';
+import 'package:blacklight_app/features/light/homeowner/homeowner_design_result_page.dart';
+import 'package:blacklight_app/features/light/homeowner/homeowner_wallet_page.dart';
+import 'package:blacklight_app/features/light/homeowner/mobile_homeowner_shell.dart';
+import 'package:blacklight_app/features/light/auth/mobile_auth.dart';
 
 import 'package:blacklight_app/features/light/drone_ops/web/drone_ops_info_page.dart';
 import 'package:blacklight_app/features/light/pool_funding/web/pool_info_page.dart';
 import 'package:blacklight_app/features/light/ev/ev_info_page.dart';
 
-import 'package:blacklight_app/features/light/installer/org/new_project_page.dart';
-import 'package:blacklight_app/core/providers/theme_provider.dart';
-import 'package:blacklight_app/features/black_light/crm_board_page.dart';
-import 'package:blacklight_app/genui/genui_surface.dart';
-import 'package:blacklight_app/features/light/installer/settings/settings_hub_redesigned.dart';
-
-import 'package:blacklight_app/features/light/installer/mobile_shell.dart';
-import 'package:blacklight_app/features/light/auth/mobile_auth.dart';
-import 'package:blacklight_app/features/light/installer/mobile_settings.dart';
-import 'package:blacklight_app/features/light/installer/dashboard.dart';
-import 'package:blacklight_app/features/black_light/dashboard/premium_org_dashboard.dart';
-
-// Drone operator (mobile)
-import 'package:blacklight_app/features/light/drone_ops/mobile/drone_operator_shell.dart';
-import 'package:blacklight_app/features/light/drone_ops/mobile/drone_jobs_screen.dart';
-import 'package:blacklight_app/features/light/drone_ops/mobile/drone_capture_screen.dart';
-import 'package:blacklight_app/features/light/drone_ops/mobile/drone_earnings_screen.dart';
-import 'package:blacklight_app/features/light/drone_ops/mobile/drone_profile_screen.dart';
-
-// Shared settings
-import 'settings/settings_wallet.dart';
-
-// ─────────────────────────────────────────────
-// ROOT ROUTER — decides platform + auth routing
-// ─────────────────────────────────────────────
+/// Root router: public homeowner marketing + intake without auth; dashboard after login.
 class BlackLightRouter extends ConsumerWidget {
   const BlackLightRouter({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = context.watch<BlackLightAppState>();
+    final app = ref.watch(blackLightAppStateProvider);
     final session = ref.watch(sessionProvider);
 
     if (kIsWeb) {
-      return _WebRouter(state: state, session: session, ref: ref);
-    } else {
-      return _MobileRouter(state: state, session: session, ref: ref);
+      return _WebSwitch(app: app, session: session);
     }
+    return _MobileSwitch(app: app, session: session);
   }
 }
 
-// ─────────────────────────────────────────────
-// WEB ROUTER
-// ─────────────────────────────────────────────
-class _WebRouter extends StatelessWidget {
-  final BlackLightAppState state;
-  final AuthSession session;
-  final WidgetRef ref;
+// ─── Web ───────────────────────────────────────────────────────────
 
-  const _WebRouter({
-    required this.state,
-    required this.session,
-    required this.ref,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    if (!state.isAuthenticated) {
-      return _WebPreAuthFlow(state: state);
-    }
-    final role = resolvedNavigationRole(
-      authenticated: state.isAuthenticated,
-      appRole: state.role,
-      session: session,
-    );
-    if (role == UserRole.homeowner) {
-      return _HomeownerFlow(state: state, ref: ref);
-    }
-    return _OrgFlow(state: state, ref: ref);
-  }
-}
-
-enum _PreAuthPage {
+enum _WebPublicPage {
   landing,
   droneOps,
   pool,
   ev,
-  auth,
+  login,
+  intake,
+  designSummary,
 }
 
-class _WebPreAuthFlow extends StatefulWidget {
-  final BlackLightAppState state;
+class _WebSwitch extends ConsumerStatefulWidget {
+  const _WebSwitch({
+    required this.app,
+    required this.session,
+  });
 
-  const _WebPreAuthFlow({required this.state});
+  final BlackLightAppState app;
+  final AuthSession session;
 
   @override
-  State<_WebPreAuthFlow> createState() => _WebPreAuthFlowState();
+  ConsumerState<_WebSwitch> createState() => _WebSwitchState();
 }
 
-class _WebPreAuthFlowState extends State<_WebPreAuthFlow> {
-  _PreAuthPage _page = _PreAuthPage.landing;
+class _WebSwitchState extends ConsumerState<_WebSwitch> {
+  _WebPublicPage _public = _WebPublicPage.landing;
 
-  void _go(_PreAuthPage page) => setState(() => _page = page);
+  void _go(_WebPublicPage p) => setState(() => _public = p);
 
-  @override
-  Widget build(BuildContext context) {
-    switch (_page) {
-      case _PreAuthPage.auth:
-        return AuthPage(
-          onHomeTap: () => _go(_PreAuthPage.landing),
-          onNavbarSignIn: () => _go(_PreAuthPage.auth),
-        );
-      case _PreAuthPage.droneOps:
-        return DroneOpsInfoPage(
-          onHomeTap: () => _go(_PreAuthPage.landing),
-          onSignIn: () => _go(_PreAuthPage.auth),
-          onApplicationApproved: (role) => widget.state.signIn(role: role),
-        );
-      case _PreAuthPage.pool:
-        return PoolInfoPage(
-          onHomeTap: () => _go(_PreAuthPage.landing),
-          onSignIn: () => _go(_PreAuthPage.auth),
-          onJoinWaitlist: () => _go(_PreAuthPage.auth),
-        );
-      case _PreAuthPage.ev:
-        return EvInfoPage(
-          onHomeTap: () => _go(_PreAuthPage.landing),
-          onSignIn: () => _go(_PreAuthPage.auth),
-          onApplyAsHost: () => _go(_PreAuthPage.auth),
-        );
-      case _PreAuthPage.landing:
-        return LandingPage(
-          onHomeTap: () => _go(_PreAuthPage.landing),
-          onGetStarted: () => _go(_PreAuthPage.auth),
-          onSignIn: () => _go(_PreAuthPage.auth),
-          onOpenDroneOps: () => _go(_PreAuthPage.droneOps),
-          onOpenPool: () => _go(_PreAuthPage.pool),
-          onOpenEv: () => _go(_PreAuthPage.ev),
-        );
-    }
-  }
-}
-
-class _HomeownerFlow extends StatefulWidget {
-  final BlackLightAppState state;
-  final WidgetRef ref;
-
-  const _HomeownerFlow({required this.state, required this.ref});
-
-  @override
-  State<_HomeownerFlow> createState() => _HomeownerFlowState();
-}
-
-class _HomeownerFlowState extends State<_HomeownerFlow> {
-  void _signOut() {
-    widget.ref.read(sessionProvider.notifier).clear();
-    widget.state.signOut();
+  Future<void> _signOut() async {
+    ref.read(sessionProvider.notifier).clear();
+    widget.app.signOut();
+    setState(() => _public = _WebPublicPage.landing);
   }
 
-  void _openWalletConnect(BlackLightAppState state) {
+  void _openWalletConnect() {
     AppFeedback.showWalletConnectDialog(
       context,
       onAddress: (addr) {
-        state.connectWallet(addr);
+        widget.app.connectWallet(addr);
         AppFeedback.snack(context, RouterStrings.walletSavedSession);
       },
     );
   }
 
-  Future<void> _editName(BlackLightAppState state) async {
+  Future<void> _editName() async {
     final v = await AppFeedback.showEditStringDialog(
       context,
       title: RouterStrings.editFullNameTitle,
-      initial: state.userName,
+      initial: widget.app.userName,
     );
-    if (v != null && v.isNotEmpty) state.updateLocalProfile(userName: v);
+    if (v != null && v.isNotEmpty) widget.app.updateLocalProfile(userName: v);
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = widget.state;
-    final idx = state.webSidebarIndex;
+    final app = widget.app;
+    final session = widget.session;
 
-    final Widget contentBody = switch (idx) {
+    if (!app.isAuthenticated || !session.isLoggedIn) {
+      switch (_public) {
+        case _WebPublicPage.login:
+          return AuthPage(
+            onHomeTap: () => _go(_WebPublicPage.landing),
+            onNavbarSignIn: () => _go(_WebPublicPage.login),
+          );
+        case _WebPublicPage.droneOps:
+          return DroneOpsInfoPage(
+            onHomeTap: () => _go(_WebPublicPage.landing),
+            onSignIn: () => _go(_WebPublicPage.login),
+            onMyProjects: () => _go(_WebPublicPage.login),
+            onLaunchTerminal: () => _go(_WebPublicPage.login),
+          );
+        case _WebPublicPage.pool:
+          return PoolInfoPage(
+            onHomeTap: () => _go(_WebPublicPage.landing),
+            onSignIn: () => _go(_WebPublicPage.login),
+            onMyProjects: () => _go(_WebPublicPage.login),
+            onJoinWaitlist: () => _go(_WebPublicPage.login),
+          );
+        case _WebPublicPage.ev:
+          return EvInfoPage(
+            onHomeTap: () => _go(_WebPublicPage.landing),
+            onSignIn: () => _go(_WebPublicPage.login),
+            onMyProjects: () => _go(_WebPublicPage.login),
+            onApplyAsHost: () => _go(_WebPublicPage.login),
+          );
+        case _WebPublicPage.intake:
+          return HomeownerIntakePage(
+            onLocalDesignReady: () =>
+                setState(() => _public = _WebPublicPage.designSummary),
+            onAbandon: () => _go(_WebPublicPage.landing),
+          );
+        case _WebPublicPage.designSummary:
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(HomeownerDesignSummaryContent.title),
+              leading: BackButton(
+                onPressed: () => _go(_WebPublicPage.intake),
+              ),
+            ),
+            body: const HomeownerDesignResultPage(),
+          );
+        case _WebPublicPage.landing:
+          return LandingPage(
+            onHomeTap: () => _go(_WebPublicPage.landing),
+            onGetStarted: () => _go(_WebPublicPage.intake),
+            onSignIn: () => _go(_WebPublicPage.login),
+            onMyProjects: () => _go(_WebPublicPage.login),
+            onOpenDroneOps: () => _go(_WebPublicPage.droneOps),
+            onOpenPool: () => _go(_WebPublicPage.pool),
+            onOpenEv: () => _go(_WebPublicPage.ev),
+          );
+      }
+    }
+
+    final role = resolvedNavigationRole(
+      authenticated: app.isAuthenticated,
+      appRole: app.role,
+      session: session,
+    );
+    if (role != UserRole.homeowner) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(BlackLightSpacing.gutter),
+          child: Text(
+            AuthContent.homeownerLoginOnly,
+            textAlign: TextAlign.center,
+            style: BlackLightTextStyles.body(),
+          ),
+        ),
+      );
+    }
+
+    final idx = app.webSidebarIndex;
+    final Widget body = switch (idx) {
       1 => const HomeownerIntakePage(),
-      2 => SettingsWallet(
-          userName: state.userName,
-          hlioBalance: state.hlioBalance,
-          onConnectWallet: () => _openWalletConnect(state),
+      2 => const HomeownerChatPage(),
+      3 => HomeownerWalletPage(
+          userName: app.userName,
+          hlioBalance: app.hlioBalance,
+          walletAddress: app.walletAddress,
+          onConnectWallet: _openWalletConnect,
           onSignOut: _signOut,
-          onEditUserName: () => _editName(state),
+          onEditUserName: _editName,
           onEditEmail: () => AppFeedback.comingSoon(
                 context,
                 feature: FeedbackStrings.featureEmailChanges,
               ),
         ),
-      3 => SettingsWallet(
-          userName: state.userName,
-          hlioBalance: state.hlioBalance,
-          onSignOut: _signOut,
-          onConnectWallet: () => _openWalletConnect(state),
-          onEditUserName: () => _editName(state),
-          onEditEmail: () => AppFeedback.comingSoon(
-                context,
-                feature: FeedbackStrings.featureEmailChanges,
-              ),
-        ),
-      4 => const HomeownerChatPage(),
+      4 => _WebHelpPage(),
       _ => const HomeownerDashboardPage(),
     };
 
-    return AuthenticatedShell(
-      activeIndex: idx,
-      isOrganization: false,
-      userName: state.userName,
-      hlioBalance: state.hlioBalance,
-      onNavTap: state.setWebSidebarIndex,
-      onSignOut: _signOut,
-      child: contentBody,
-    );
-  }
-}
-
-class _OrgFlow extends StatefulWidget {
-  final BlackLightAppState state;
-  final WidgetRef ref;
-
-  const _OrgFlow({required this.state, required this.ref});
-
-  @override
-  State<_OrgFlow> createState() => _OrgFlowState();
-}
-
-class _OrgFlowState extends State<_OrgFlow> {
-  void _signOut() {
-    widget.ref.read(sessionProvider.notifier).clear();
-    widget.state.signOut();
-  }
-
-  void _openWalletConnect(BlackLightAppState state) {
-    AppFeedback.showWalletConnectDialog(
-      context,
-      onAddress: (addr) {
-        state.connectWallet(addr);
-        AppFeedback.snack(context, RouterStrings.walletSavedSession);
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final state = widget.state;
-    final idx = state.webSidebarIndex;
-
-    final Widget contentBody = switch (idx) {
-      1 => const OrgNewProjectPage(),
-      2 => const CrmBoardPage(),
-      3 => SettingsWallet(
-          userName: state.userName,
-          companyName: state.companyName,
-          hlioBalance: state.hlioBalance,
-          onSignOut: _signOut,
-          onConnectWallet: () => _openWalletConnect(state),
-          onEditUserName: () async {
-            final v = await AppFeedback.showEditStringDialog(
-              context,
-              title: RouterStrings.editFullNameTitle,
-              initial: state.userName,
-            );
-            if (v != null && v.isNotEmpty) {
-              state.updateLocalProfile(userName: v);
-            }
-          },
-          onEditEmail: () => AppFeedback.comingSoon(
-                context,
-                feature: FeedbackStrings.featureEmailChanges,
-              ),
-          onEditCompany: () async {
-            final v = await AppFeedback.showEditStringDialog(
-              context,
-              title: RouterStrings.editCompanyNameTitle,
-              initial: state.companyName,
-            );
-            if (v != null) state.updateLocalProfile(companyName: v);
-          },
-        ),
-      4 => const SettingsHubRedesigned(),
-      5 => const _OrgWebHelpPage(),
-      _ => BlackLightConfig.bypassMode
-          ? PremiumOrgDashboardPage(
-              companyName: state.companyName,
-              onNewProject: () => state.setWebSidebarIndex(1),
-              onImportLeads: () => state.setWebSidebarIndex(2),
-            )
-          : FreeInstallerDashboardPage(
-              companyName: state.companyName,
-              onNewProject: () => state.setWebSidebarIndex(1),
-              onImportLeads: () => state.setWebSidebarIndex(2),
-            ),
-    };
-
     return wrapPremiumBlackLightShell(
-      state,
-      LimyeGenUiShell(
-        child: AuthenticatedShell(
-          activeIndex: idx,
-          isOrganization: true,
-          userName: state.userName,
-          hlioBalance: state.hlioBalance,
-          onNavTap: state.setWebSidebarIndex,
-          onSignOut: _signOut,
-          child: contentBody,
-        ),
+      app,
+      HomeownerAuthenticatedChrome(
+        activeIndex: idx,
+        userName: app.userName,
+        hlioBalance: app.hlioBalance,
+        onNavTap: app.setWebSidebarIndex,
+        onSignOut: _signOut,
+        child: body,
       ),
     );
   }
 }
 
-/// Installer web sidebar — Help (index 5).
-class _OrgWebHelpPage extends StatelessWidget {
-  const _OrgWebHelpPage();
-
+class _WebHelpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -365,59 +239,37 @@ class _OrgWebHelpPage extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────
-// MOBILE ROUTER
-// ─────────────────────────────────────────────
-class _MobileRouter extends StatelessWidget {
-  final BlackLightAppState state;
-  final AuthSession session;
-  final WidgetRef ref;
+// ─── Mobile ──────────────────────────────────────────────────────────
 
-  const _MobileRouter({
-    required this.state,
+enum _MobilePublic { home, intake, designSummary, login }
+
+class _MobileSwitch extends ConsumerStatefulWidget {
+  const _MobileSwitch({
+    required this.app,
     required this.session,
-    required this.ref,
   });
 
-  @override
-  Widget build(BuildContext context) {
-    if (!state.isAuthenticated) {
-      return MobileAuth();
-    }
-    final role = resolvedNavigationRole(
-      authenticated: state.isAuthenticated,
-      appRole: state.role,
-      session: session,
-    );
-    if (role == UserRole.droneOperator) {
-      return _MobileDroneOperatorFlow(state: state, ref: ref);
-    }
-    return _MobileAuthenticatedFlow(state: state, ref: ref);
-  }
-}
-
-class _MobileAuthenticatedFlow extends StatefulWidget {
-  final BlackLightAppState state;
-  final WidgetRef ref;
-
-  const _MobileAuthenticatedFlow({required this.state, required this.ref});
+  final BlackLightAppState app;
+  final AuthSession session;
 
   @override
-  State<_MobileAuthenticatedFlow> createState() =>
-      _MobileAuthenticatedFlowState();
+  ConsumerState<_MobileSwitch> createState() => _MobileSwitchState();
 }
 
-class _MobileAuthenticatedFlowState extends State<_MobileAuthenticatedFlow> {
+class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
+  _MobilePublic _pub = _MobilePublic.home;
+
   void _signOut() {
-    widget.ref.read(sessionProvider.notifier).clear();
-    widget.state.signOut();
+    ref.read(sessionProvider.notifier).clear();
+    widget.app.signOut();
+    setState(() => _pub = _MobilePublic.home);
   }
 
-  void _openWallet(BlackLightAppState state) {
+  void _openWallet(BlackLightAppState app) {
     AppFeedback.showWalletConnectDialog(
       context,
       onAddress: (addr) {
-        state.connectWallet(addr);
+        app.connectWallet(addr);
         AppFeedback.snack(context, RouterStrings.walletSavedSession);
       },
     );
@@ -425,149 +277,101 @@ class _MobileAuthenticatedFlowState extends State<_MobileAuthenticatedFlow> {
 
   @override
   Widget build(BuildContext context) {
-    final state = widget.state;
-    final session = widget.ref.watch(sessionProvider);
-    final role = resolvedNavigationRole(
-      authenticated: state.isAuthenticated,
-      appRole: state.role,
-      session: session,
-    );
-    final idx = state.mobileNavIndex;
+    final app = widget.app;
+    final session = widget.session;
 
-    if (role == UserRole.homeowner) {
-      final body = switch (idx) {
-        1 => const HomeownerIntakePage(),
-        2 => const HomeownerChatPage(),
-        3 => MobileSettings(
-            userName: state.userName,
-            companyName: state.companyName,
-            hlioBalance: state.hlioBalance,
-            walletAddress: state.walletAddress,
-            onConnectWallet: () => _openWallet(state),
-            onSignOut: _signOut,
-          ),
-        _ => const HomeownerDashboardPage(),
-      };
-      return MobileShell(
-        activeIndex: idx,
-        onNavTap: state.setMobileNavIndex,
-        child: body,
-      );
+    if (!app.isAuthenticated || !session.isLoggedIn) {
+      switch (_pub) {
+        case _MobilePublic.login:
+          return MobileAuth(
+            onBack: () => setState(() => _pub = _MobilePublic.home),
+          );
+        case _MobilePublic.intake:
+          return HomeownerIntakePage(
+            onLocalDesignReady: () =>
+                setState(() => _pub = _MobilePublic.designSummary),
+          );
+        case _MobilePublic.designSummary:
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(HomeownerDesignSummaryContent.title),
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () =>
+                    setState(() => _pub = _MobilePublic.home),
+              ),
+            ),
+            body: const HomeownerDesignResultPage(),
+          );
+        case _MobilePublic.home:
+          return Scaffold(
+            backgroundColor: BlackLightColors.background,
+            body: SafeArea(
+              child: ListView(
+                padding: const EdgeInsets.all(BlackLightSpacing.gutter),
+                children: [
+                  const SizedBox(height: BlackLightSpacing.lg),
+                  Text(
+                    LandingContent.heroTitle,
+                    style: BlackLightTextStyles.hero(),
+                  ),
+                  const SizedBox(height: BlackLightSpacing.md),
+                  Text(LandingContent.heroBody,
+                      style: BlackLightTextStyles.body()),
+                  const SizedBox(height: BlackLightSpacing.xl),
+                  ElevatedButton(
+                    onPressed: () =>
+                        setState(() => _pub = _MobilePublic.intake),
+                    child: Text(LandingContent.heroPrimaryCta,
+                        style: BlackLightTextStyles.bodyBold(color: Colors.white)),
+                  ),
+                  const SizedBox(height: BlackLightSpacing.md),
+                  OutlinedButton(
+                    onPressed: () =>
+                        setState(() => _pub = _MobilePublic.login),
+                    child: Text(HomeownerDashboardContent.myProjectsPageTitle,
+                        style: BlackLightTextStyles.bodyBold()),
+                  ),
+                ],
+              ),
+            ),
+          );
+      }
     }
 
+    final idx = app.mobileNavIndex;
     final body = switch (idx) {
-      1 => const OrgNewProjectPage(),
-      2 => const CrmBoardPage(),
-      3 => MobileSettings(
-          userName: state.userName,
-          companyName: state.companyName,
-          hlioBalance: state.hlioBalance,
-          walletAddress: state.walletAddress,
-          onConnectWallet: () => _openWallet(state),
+      1 => const HomeownerIntakePage(),
+      2 => const HomeownerChatPage(),
+      3 => HomeownerWalletPage(
+          userName: app.userName,
+          hlioBalance: app.hlioBalance,
+          walletAddress: app.walletAddress,
+          onConnectWallet: () => _openWallet(app),
           onSignOut: _signOut,
+          onEditUserName: () async {
+            final v = await AppFeedback.showEditStringDialog(
+              context,
+              title: RouterStrings.editFullNameTitle,
+              initial: app.userName,
+            );
+            if (v != null && v.isNotEmpty) app.updateLocalProfile(userName: v);
+          },
+          onEditEmail: () => AppFeedback.comingSoon(
+                context,
+                feature: FeedbackStrings.featureEmailChanges,
+              ),
         ),
-      _ => BlackLightConfig.bypassMode
-          ? PremiumOrgDashboardPage(
-              companyName: state.companyName,
-              onNewProject: () => state.setMobileNavIndex(1),
-              onImportLeads: () => state.setMobileNavIndex(2),
-            )
-          : FreeInstallerDashboardPage(
-              companyName: state.companyName,
-              onNewProject: () => state.setMobileNavIndex(1),
-              onImportLeads: () => state.setMobileNavIndex(2),
-            ),
+      _ => const HomeownerDashboardPage(),
     };
 
     return wrapPremiumBlackLightShell(
-      state,
-      MobileShell(
+      app,
+      MobileHomeownerShell(
         activeIndex: idx,
-        onNavTap: state.setMobileNavIndex,
+        onNavTap: app.setMobileNavIndex,
         child: body,
       ),
-    );
-  }
-}
-
-// ─────────────────────────────────────────────
-// MOBILE DRONE-OPERATOR FLOW
-// ─────────────────────────────────────────────
-class _MobileDroneOperatorFlow extends StatefulWidget {
-  final BlackLightAppState state;
-  final WidgetRef ref;
-
-  const _MobileDroneOperatorFlow({required this.state, required this.ref});
-
-  @override
-  State<_MobileDroneOperatorFlow> createState() =>
-      _MobileDroneOperatorFlowState();
-}
-
-class _MobileDroneOperatorFlowState extends State<_MobileDroneOperatorFlow> {
-  bool _showCapture = false;
-
-  void _signOut() {
-    widget.ref.read(sessionProvider.notifier).clear();
-    widget.state.signOut();
-  }
-
-  void _openWallet(BlackLightAppState state) {
-    AppFeedback.showWalletConnectDialog(
-      context,
-      onAddress: (addr) {
-        state.connectWallet(addr);
-        AppFeedback.snack(context, RouterStrings.walletSavedSession);
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final state = widget.state;
-    final idx = state.droneOperatorNavIndex;
-
-    // Full-screen viewfinder takes precedence over the tabbed shell.
-    if (_showCapture) {
-      return DroneCaptureScreen(
-        onClose: () => setState(() => _showCapture = false),
-      );
-    }
-
-    Widget body;
-    switch (idx) {
-      case 0:
-        body = const DroneJobsScreen();
-        break;
-      case 2:
-        body = DroneEarningsScreen(hlioBalance: state.hlioBalance);
-        break;
-      case 3:
-        body = DroneProfileScreen(
-          operatorName: state.userName,
-          walletAddress: state.walletAddress,
-          onConnectWallet: () => _openWallet(state),
-          onSignOut: _signOut,
-        );
-        break;
-      default:
-        // Capture (idx == 1) opens as a full-screen overlay; the underlying
-        // tab falls back to Jobs so the back state is consistent.
-        body = const DroneJobsScreen();
-    }
-
-    return DroneOperatorShell(
-      activeIndex: idx,
-      onNavTap: (i) {
-        if (i == 1) {
-          // Tapping Capture launches the viewfinder overlay rather than
-          // swapping the body — the tab itself never "stays" selected.
-          setState(() => _showCapture = true);
-          return;
-        }
-        state.setDroneOperatorNavIndex(i);
-      },
-      child: body,
     );
   }
 }

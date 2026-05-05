@@ -1,37 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart'
-    hide Consumer, ChangeNotifierProvider;
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app_state.dart';
 import 'content/content_registry.dart';
 import 'providers/theme_provider.dart';
-import '../theme/blacklight_theme.dart';
 import 'router.dart';
 import 'providers/session_providers.dart';
 import '../services/auth_api.dart';
+import '../theme/blacklight_theme.dart';
 
-class BlackLightApp extends StatelessWidget {
+class BlackLightApp extends ConsumerWidget {
   const BlackLightApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => BlackLightAppState(),
-      child: Consumer<BlackLightAppState>(
-        builder: (context, appState, _) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: CommonContent.appName,
-            themeMode: blackLightThemeMode(appState),
-            theme: BlackLightTheme.lightTheme(),
-            // Kept for API completeness; root never uses ThemeMode.dark — premium
-            // org chrome is wrapped with [wrapPremiumBlackLightShell] in the router.
-            darkTheme: BlackLightTheme.darkTheme(),
-            home: const _HydratedSessionHome(),
-          );
-        },
-      ),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appState = ref.watch(blackLightAppStateProvider);
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: CommonContent.appName,
+      themeMode: blackLightThemeMode(appState),
+      theme: BlackLightTheme.lightTheme(),
+      darkTheme: BlackLightTheme.darkTheme(),
+      home: const _HydratedSessionHome(),
     );
   }
 }
@@ -74,19 +64,15 @@ class _HydratedSessionHomeState extends ConsumerState<_HydratedSessionHome> {
         s = ref.read(sessionProvider);
       } catch (_) {}
     }
-    final app = context.read<BlackLightAppState>();
-    if (s.isLoggedIn) {
-      final apiRole = userRoleFromApiString(s.userRole);
+    final app = ref.read(blackLightAppStateProvider);
+    if (s.isLoggedIn && apiRoleIsHomeowner(s.userRole)) {
       final name = s.fullName ?? '';
-      final comp = s.companyName?.trim();
-      final displayCompany = (comp != null && comp.isNotEmpty)
-          ? comp
-          : (apiRole == UserRole.organization ? name : '');
       app.signIn(
-        role: apiRole,
+        role: UserRole.homeowner,
         name: name,
-        companyName: displayCompany,
       );
+    } else if (s.isLoggedIn && !apiRoleIsHomeowner(s.userRole)) {
+      await ref.read(sessionProvider.notifier).clear();
     }
     setState(() => _ready = true);
   }

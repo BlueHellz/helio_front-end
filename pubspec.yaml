@@ -10,17 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  genui: 0.7.0
-  provider: ^6.1.5+1
   flutter_riverpod: ^2.6.1
-  url_launcher: ^6.2.0
   http: ^1.2.0
+  url_launcher: ^6.2.0
   file_picker: ^8.1.7
-  intl: ^0.20.2
   flutter_secure_storage: ^9.2.4
-  vector_math: ^2.2.0
-  three_js: ^0.3.0
-  three_js_math: ^0.3.0
 
 dev_dependencies:
   flutter_test:

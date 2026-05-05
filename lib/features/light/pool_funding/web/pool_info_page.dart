@@ -2,7 +2,7 @@ import 'package:blacklight_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
 import 'package:blacklight_app/core/ui/app_feedback.dart';
 import 'package:blacklight_app/theme/blacklight_theme.dart';
-import 'package:blacklight_app/core/shell/web/pre_auth_shell.dart';
+import 'package:blacklight_app/core/shell/web/homeowner_web_chrome.dart';
 import 'package:blacklight_app/core/illustrations/geometric_illustrations.dart';
 
 // ─────────────────────────────────────────────
@@ -15,20 +15,23 @@ class PoolInfoPage extends StatelessWidget {
   final VoidCallback? onJoinWaitlist;
   final VoidCallback? onHomeTap;
   final VoidCallback? onSignIn;
+  final VoidCallback? onMyProjects;
 
   const PoolInfoPage({
     super.key,
     this.onJoinWaitlist,
     this.onHomeTap,
     this.onSignIn,
+    this.onMyProjects,
   });
 
   @override
   Widget build(BuildContext context) {
-    return PreAuthShell(
+    return HomeownerPublicChrome(
       activeNavIndex: 0,
       onHomeTap: onHomeTap,
       onSignIn: onSignIn,
+      onMyProjects: onMyProjects,
       child: Center(
         child: ConstrainedBox(
           constraints:

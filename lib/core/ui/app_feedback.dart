@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../content/content_registry.dart';
-import '../models/project.dart';
 import '../../theme/blacklight_theme.dart';
 
 /// User-visible feedback for actions that will be fully implemented with the
@@ -102,61 +101,6 @@ class AppFeedback {
       context,
       title: title,
       message: FeedbackStrings.socialStubTail,
-    );
-  }
-
-  /// Quick-add lead for CRM demo (persists only in local app state until API).
-  static Future<Lead?> showAddLeadDialog(BuildContext context) async {
-    final nameCtrl = TextEditingController();
-    final addressCtrl = TextEditingController();
-    return showDialog<Lead>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(OrgCrmBoardContent.addLeadTitle,
-            style: BlackLightTextStyles.cardHeading()),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: nameCtrl,
-              decoration: InputDecoration(
-                labelText: OrgCrmBoardContent.addLeadNameLabel,
-                border: const OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: addressCtrl,
-              decoration: InputDecoration(
-                labelText: OrgCrmBoardContent.addLeadAddressLabel,
-                border: const OutlineInputBorder(),
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: Text(ButtonsContent.cancel),
-          ),
-          FilledButton(
-            onPressed: () {
-              final name = nameCtrl.text.trim();
-              final address = addressCtrl.text.trim();
-              if (name.isEmpty || address.isEmpty) return;
-              Navigator.of(ctx).pop(Lead(
-                id: DateTime.now().millisecondsSinceEpoch.toString(),
-                name: name,
-                address: address,
-                source: OrgCrmBoardContent.leadSourceManual,
-                addedAt: DateTime.now(),
-                stage: LeadStage.newLead,
-              ));
-            },
-            child: Text(ButtonsContent.add),
-          ),
-        ],
-      ),
     );
   }
 

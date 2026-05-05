@@ -4,7 +4,7 @@ import 'package:blacklight_app/core/content/content_registry.dart';
 import 'package:blacklight_app/core/ui/app_feedback.dart';
 import 'package:blacklight_app/theme/blacklight_theme.dart';
 import 'package:blacklight_app/core/illustrations/geometric_illustrations.dart';
-import 'package:blacklight_app/core/shell/web/pre_auth_shell.dart';
+import 'package:blacklight_app/core/shell/web/homeowner_web_chrome.dart';
 
 class LandingPage extends StatelessWidget {
   final VoidCallback? onGetStarted;
@@ -14,11 +14,14 @@ class LandingPage extends StatelessWidget {
   final VoidCallback? onOpenPool;
   final VoidCallback? onOpenEv;
 
+  final VoidCallback? onMyProjects;
+
   const LandingPage({
     super.key,
     this.onGetStarted,
     this.onSignIn,
     this.onHomeTap,
+    this.onMyProjects,
     this.onOpenDroneOps,
     this.onOpenPool,
     this.onOpenEv,
@@ -26,10 +29,11 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PreAuthShell(
+    return HomeownerPublicChrome(
       activeNavIndex: 0,
       onSignIn: onSignIn,
       onHomeTap: onHomeTap,
+      onMyProjects: onMyProjects,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
