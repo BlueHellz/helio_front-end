@@ -21,6 +21,7 @@ export 'auth.dart';
 export 'errors/api_errors.dart';
 export 'errors/empty_states.dart';
 export 'errors/field_validation.dart';
+export 'enterprise.dart';
 export 'drone_ops/drone_ops.dart';
 export 'ev_host.dart';
 export 'homeowner/chat.dart';

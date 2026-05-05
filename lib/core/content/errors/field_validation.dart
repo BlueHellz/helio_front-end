@@ -6,6 +6,8 @@ class FieldValidationContent {
   static const enterEmailAndPassword = 'Enter email and password.';
   static const enterNameEmailAndPassword =
       'Enter your name, email, and password.';
+  static const enterOrgSignupFields =
+      'Enter your name, company, email, and password.';
   static const enterFullName = 'Enter your full name.';
   static const enterCompanyName = 'Enter your company name.';
   static const nameAndAddressRequired =

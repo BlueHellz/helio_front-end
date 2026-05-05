@@ -8,32 +8,28 @@ import 'package:limye_app/core/shell/web/homeowner_web_chrome.dart';
 
 class LandingPage extends StatelessWidget {
   final VoidCallback? onGetStarted;
-  final VoidCallback? onSignIn;
   final VoidCallback? onHomeTap;
-  final VoidCallback? onOpenDroneOps;
-  final VoidCallback? onOpenPool;
-  final VoidCallback? onOpenEv;
-
+  final VoidCallback? onOpenEnterprise;
+  final VoidCallback? onEnterprise;
   final VoidCallback? onMyProjects;
 
   const LandingPage({
     super.key,
     this.onGetStarted,
-    this.onSignIn,
     this.onHomeTap,
     this.onMyProjects,
-    this.onOpenDroneOps,
-    this.onOpenPool,
-    this.onOpenEv,
+    this.onOpenEnterprise,
+    this.onEnterprise,
   });
 
   @override
   Widget build(BuildContext context) {
     return HomeownerPublicChrome(
       activeNavIndex: 0,
-      onSignIn: onSignIn,
       onHomeTap: onHomeTap,
       onMyProjects: onMyProjects,
+      onForBusiness: onOpenEnterprise,
+      onEnterprise: onEnterprise,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -85,11 +81,7 @@ class LandingPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
-                  _PillarsSection(
-                    onOpenDroneOps: onOpenDroneOps,
-                    onOpenPool: onOpenPool,
-                    onOpenEv: onOpenEv,
-                  ),
+                  _PillarsSection(onOpenEnterprise: onOpenEnterprise),
                   const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
                 ],
               ),
@@ -97,7 +89,7 @@ class LandingPage extends StatelessWidget {
           ),
 
           // For business — full bleed
-          const _ForBusinessSection(),
+          _ForBusinessSection(onNavigateEnterprise: onOpenEnterprise),
 
           // In-product mockups
           _Constrained(
@@ -140,15 +132,9 @@ class LandingPage extends StatelessWidget {
 // PILLARS — Drone Ops · Solar Pool · EV Charging
 // ─────────────────────────────────────────────
 class _PillarsSection extends StatelessWidget {
-  final VoidCallback? onOpenDroneOps;
-  final VoidCallback? onOpenPool;
-  final VoidCallback? onOpenEv;
+  final VoidCallback? onOpenEnterprise;
 
-  const _PillarsSection({
-    this.onOpenDroneOps,
-    this.onOpenPool,
-    this.onOpenEv,
-  });
+  const _PillarsSection({this.onOpenEnterprise});
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +146,7 @@ class _PillarsSection extends StatelessWidget {
             LandingContent.pillarDroneBody,
         icon: Icons.flight_takeoff_outlined,
         cta: LandingContent.pillarDroneCta,
-        onTap: onOpenDroneOps,
+        onTap: onOpenEnterprise,
       ),
       _PillarCardData(
         eyebrow: LandingContent.pillarPoolEyebrow,
@@ -169,7 +155,7 @@ class _PillarsSection extends StatelessWidget {
             LandingContent.pillarPoolBody,
         icon: Icons.savings_outlined,
         cta: LandingContent.pillarPoolCta,
-        onTap: onOpenPool,
+        onTap: onOpenEnterprise,
       ),
       _PillarCardData(
         eyebrow: LandingContent.pillarEvEyebrow,
@@ -178,7 +164,7 @@ class _PillarsSection extends StatelessWidget {
             LandingContent.pillarEvBody,
         icon: Icons.ev_station_outlined,
         cta: LandingContent.pillarEvCta,
-        onTap: onOpenEv,
+        onTap: onOpenEnterprise,
       ),
     ];
 
@@ -749,7 +735,7 @@ class _StepCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(999),
             ),
             child: Center(
-              child: LandingHowItWorksIsoIcon(stepIndex: stepIndex),
+              child: _HowItWorksStepLeading(stepIndex: stepIndex),
             ),
           ),
           const SizedBox(height: LimyeSpacing.md),
@@ -761,6 +747,81 @@ class _StepCard extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _HowItWorksStepLeading extends StatelessWidget {
+  const _HowItWorksStepLeading({required this.stepIndex});
+
+  final int stepIndex;
+
+  @override
+  Widget build(BuildContext context) {
+    switch (stepIndex) {
+      case 0:
+        return Icon(
+          Icons.add_home_work_outlined,
+          size: 22,
+          color: LimyeColors.accent,
+        );
+      case 1:
+        return SizedBox(
+          width: 28,
+          height: 22,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Icon(
+                  Icons.chat_bubble_outline,
+                  size: 22,
+                  color: LimyeColors.accent,
+                ),
+              ),
+              Positioned(
+                right: -2,
+                top: -4,
+                child: Icon(
+                  Icons.auto_awesome,
+                  size: 12,
+                  color: LimyeColors.textBody,
+                ),
+              ),
+            ],
+          ),
+        );
+      case 2:
+        return SizedBox(
+          width: 26,
+          height: 22,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              const Icon(
+                Icons.description_outlined,
+                size: 22,
+                color: LimyeColors.accent,
+              ),
+              Positioned(
+                right: -4,
+                bottom: -2,
+                child: Icon(
+                  Icons.check_circle_outline,
+                  size: 14,
+                  color: LimyeColors.accent,
+                ),
+              ),
+            ],
+          ),
+        );
+      default:
+        return Icon(
+          Icons.circle_outlined,
+          size: 22,
+          color: LimyeColors.accent,
+        );
+    }
   }
 }
 
@@ -843,7 +904,9 @@ class _SeeLightInActionSection extends StatelessWidget {
 // FOR BUSINESS — full bleed
 // ─────────────────────────────────────────────
 class _ForBusinessSection extends StatelessWidget {
-  const _ForBusinessSection();
+  const _ForBusinessSection({this.onNavigateEnterprise});
+
+  final VoidCallback? onNavigateEnterprise;
 
   @override
   Widget build(BuildContext context) {
@@ -883,13 +946,7 @@ class _ForBusinessSection extends StatelessWidget {
                   SizedBox(
                     height: LimyeSpacing.buttonHeight,
                     child: OutlinedButton(
-                      onPressed: () {
-                        AppFeedback.showInfoDialog(
-                          context,
-                          title: LandingContent.forBusinessDialogTitle,
-                          message: LandingContent.forBusinessDialogMessage,
-                        );
-                      },
+                      onPressed: onNavigateEnterprise,
                       style: OutlinedButton.styleFrom(
                         foregroundColor: LimyeColors.textPrimary,
                         side: const BorderSide(color: LimyeColors.border),
@@ -918,13 +975,7 @@ class _ForBusinessSection extends StatelessWidget {
                 SizedBox(
                   height: LimyeSpacing.buttonHeight,
                   child: OutlinedButton(
-                    onPressed: () {
-                      AppFeedback.showInfoDialog(
-                        context,
-                        title: LandingContent.forBusinessDialogTitle,
-                        message: LandingContent.forBusinessDialogMessage,
-                      );
-                    },
+                    onPressed: onNavigateEnterprise,
                     style: OutlinedButton.styleFrom(
                       foregroundColor: LimyeColors.textPrimary,
                       side: const BorderSide(color: LimyeColors.border),

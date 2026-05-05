@@ -61,15 +61,26 @@ class AuthSession {
   }
 }
 
+bool apiRoleIsOrganization(String? role) {
+  final s = (role ?? '').toLowerCase().trim();
+  return s == 'organization' ||
+      s == 'installer' ||
+      s == 'org' ||
+      s == 'solar_org';
+}
+
 /// True when API role is allowed for the homeowner app.
 bool apiRoleIsHomeowner(String? role) {
   final s = (role ?? '').toLowerCase().trim();
   if (s.isEmpty || s == 'homeowner') return true;
+  if (apiRoleIsOrganization(role)) return false;
   return false;
 }
 
 UserRole userRoleFromApiString(String? role) {
-  return apiRoleIsHomeowner(role) ? UserRole.homeowner : UserRole.none;
+  if (apiRoleIsOrganization(role)) return UserRole.organization;
+  if (apiRoleIsHomeowner(role)) return UserRole.homeowner;
+  return UserRole.none;
 }
 
 UserRole resolvedNavigationRole({
@@ -88,6 +99,8 @@ String apiRoleString(UserRole role) {
   switch (role) {
     case UserRole.homeowner:
       return 'homeowner';
+    case UserRole.organization:
+      return 'installer';
     case UserRole.none:
       return 'homeowner';
   }

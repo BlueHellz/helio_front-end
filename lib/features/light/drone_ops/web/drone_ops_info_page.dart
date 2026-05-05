@@ -14,14 +14,12 @@ class DroneOpsInfoPage extends StatefulWidget {
   /// as a drone operator (role auto-applied — no role chooser anywhere).
   final VoidCallback? onLaunchTerminal;
   final VoidCallback? onHomeTap;
-  final VoidCallback? onSignIn;
   final VoidCallback? onMyProjects;
 
   const DroneOpsInfoPage({
     super.key,
     this.onLaunchTerminal,
     this.onHomeTap,
-    this.onSignIn,
     this.onMyProjects,
   });
 
@@ -56,7 +54,6 @@ class _DroneOpsInfoPageState extends State<DroneOpsInfoPage> {
     return HomeownerPublicChrome(
       activeNavIndex: 1,
       onHomeTap: widget.onHomeTap,
-      onSignIn: widget.onSignIn,
       onMyProjects: widget.onMyProjects,
       child: Center(
         child: ConstrainedBox(

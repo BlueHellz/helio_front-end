@@ -289,6 +289,7 @@ class AuthApi {
     required String password,
     required String fullName,
     required String role,
+    String? companyName,
   }) async {
     final r = await _client.post(
       _auth('/signup'),
@@ -298,6 +299,8 @@ class AuthApi {
         'password': password,
         'full_name': fullName,
         'role': role,
+        if (companyName != null && companyName.trim().isNotEmpty)
+          'company_name': companyName.trim(),
       }),
     );
     // 200 OK or 201 Created — same JSON shape as login; no extra login call.

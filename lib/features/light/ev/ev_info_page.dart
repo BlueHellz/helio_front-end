@@ -12,14 +12,12 @@ import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
 class EvInfoPage extends StatelessWidget {
   final VoidCallback? onApplyAsHost;
   final VoidCallback? onHomeTap;
-  final VoidCallback? onSignIn;
   final VoidCallback? onMyProjects;
 
   const EvInfoPage({
     super.key,
     this.onApplyAsHost,
     this.onHomeTap,
-    this.onSignIn,
     this.onMyProjects,
   });
 
@@ -28,7 +26,6 @@ class EvInfoPage extends StatelessWidget {
     return HomeownerPublicChrome(
       activeNavIndex: 0,
       onHomeTap: onHomeTap,
-      onSignIn: onSignIn,
       onMyProjects: onMyProjects,
       child: Center(
         child: ConstrainedBox(

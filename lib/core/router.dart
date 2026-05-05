@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:limye_app/core/content/content_registry.dart';
+import 'package:limye_app/core/platform/web_history.dart';
 import 'package:limye_app/theme/limye_theme.dart';
 
 import 'app_state.dart';
@@ -13,6 +14,8 @@ import 'ui/app_feedback.dart';
 
 import 'package:limye_app/features/light/landing/landing_page.dart';
 import 'package:limye_app/features/light/auth/auth_page.dart';
+import 'package:limye_app/features/light/enterprise/enterprise_auth_page.dart';
+import 'package:limye_app/features/light/enterprise/enterprise_sales_page.dart';
 import 'package:limye_app/features/light/homeowner/project_tracking_page.dart';
 import 'package:limye_app/features/light/homeowner/intake_page.dart';
 import 'package:limye_app/features/light/homeowner/chat_page.dart';
@@ -21,11 +24,8 @@ import 'package:limye_app/features/light/homeowner/homeowner_wallet_page.dart';
 import 'package:limye_app/features/light/homeowner/mobile_homeowner_shell.dart';
 import 'package:limye_app/features/light/auth/mobile_auth.dart';
 
-import 'package:limye_app/features/light/drone_ops/web/drone_ops_info_page.dart';
-import 'package:limye_app/features/light/pool_funding/web/pool_info_page.dart';
-import 'package:limye_app/features/light/ev/ev_info_page.dart';
-
-/// Root router: public homeowner marketing + intake without auth; dashboard after login.
+/// Root router: public marketing, auth-free design chat, enterprise funnel;
+/// homeowner vs org dashboards after login.
 class BlackLightRouter extends ConsumerWidget {
   const BlackLightRouter({super.key});
 
@@ -45,9 +45,9 @@ class BlackLightRouter extends ConsumerWidget {
 
 enum _WebPublicPage {
   landing,
-  droneOps,
-  pool,
-  ev,
+  enterprise,
+  enterpriseAuth,
+  publicDesignChat,
   login,
   intake,
   designSummary,
@@ -69,12 +69,56 @@ class _WebSwitch extends ConsumerStatefulWidget {
 class _WebSwitchState extends ConsumerState<_WebSwitch> {
   _WebPublicPage _public = _WebPublicPage.landing;
 
-  void _go(_WebPublicPage p) => setState(() => _public = p);
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!kIsWeb) return;
+      final mapped = _pageForBrowserPath(readAppPath());
+      if (mounted) setState(() => _public = mapped);
+    });
+  }
+
+  _WebPublicPage _pageForBrowserPath(String raw) {
+    final path = raw.split('?').first;
+    if (path == '/enterprise-auth') return _WebPublicPage.enterpriseAuth;
+    if (path == '/enterprise') return _WebPublicPage.enterprise;
+    if (path == '/design-chat') return _WebPublicPage.publicDesignChat;
+    if (path == '/my-projects') return _WebPublicPage.login;
+    if (path == '/intake') return _WebPublicPage.intake;
+    if (path == '/design-summary') return _WebPublicPage.designSummary;
+    return _WebPublicPage.landing;
+  }
+
+  String _pathForPage(_WebPublicPage p) {
+    switch (p) {
+      case _WebPublicPage.landing:
+        return '/';
+      case _WebPublicPage.enterprise:
+        return '/enterprise';
+      case _WebPublicPage.enterpriseAuth:
+        return '/enterprise-auth';
+      case _WebPublicPage.publicDesignChat:
+        return '/design-chat';
+      case _WebPublicPage.login:
+        return '/my-projects';
+      case _WebPublicPage.intake:
+        return '/intake';
+      case _WebPublicPage.designSummary:
+        return '/design-summary';
+    }
+  }
+
+  void _go(_WebPublicPage p) {
+    setState(() => _public = p);
+    if (kIsWeb) pushAppPath(_pathForPage(p));
+  }
 
   Future<void> _signOut() async {
     ref.read(sessionProvider.notifier).clear();
     widget.app.signOut();
     setState(() => _public = _WebPublicPage.landing);
+    if (kIsWeb) pushAppPath('/');
   }
 
   void _openWalletConnect() {
@@ -106,33 +150,52 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
         case _WebPublicPage.login:
           return AuthPage(
             onHomeTap: () => _go(_WebPublicPage.landing),
-            onNavbarSignIn: () => _go(_WebPublicPage.login),
-          );
-        case _WebPublicPage.droneOps:
-          return DroneOpsInfoPage(
-            onHomeTap: () => _go(_WebPublicPage.landing),
-            onSignIn: () => _go(_WebPublicPage.login),
             onMyProjects: () => _go(_WebPublicPage.login),
-            onLaunchTerminal: () => _go(_WebPublicPage.login),
+            onForBusiness: () => _go(_WebPublicPage.enterprise),
+            onEnterprise: () => _go(_WebPublicPage.enterpriseAuth),
           );
-        case _WebPublicPage.pool:
-          return PoolInfoPage(
+        case _WebPublicPage.enterpriseAuth:
+          return EnterpriseAuthPage(
             onHomeTap: () => _go(_WebPublicPage.landing),
-            onSignIn: () => _go(_WebPublicPage.login),
+            onForBusiness: () => _go(_WebPublicPage.enterprise),
             onMyProjects: () => _go(_WebPublicPage.login),
-            onJoinWaitlist: () => _go(_WebPublicPage.login),
+            onEnterprise: () => _go(_WebPublicPage.enterpriseAuth),
           );
-        case _WebPublicPage.ev:
-          return EvInfoPage(
+        case _WebPublicPage.enterprise:
+          return EnterpriseSalesPage(
             onHomeTap: () => _go(_WebPublicPage.landing),
-            onSignIn: () => _go(_WebPublicPage.login),
+            onForBusiness: () => _go(_WebPublicPage.enterprise),
             onMyProjects: () => _go(_WebPublicPage.login),
-            onApplyAsHost: () => _go(_WebPublicPage.login),
+            onEnterprise: () => _go(_WebPublicPage.enterpriseAuth),
+          );
+        case _WebPublicPage.publicDesignChat:
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(HomeownerChatContent.pageTitleDesign),
+              leading: BackButton(
+                onPressed: () => _go(_WebPublicPage.landing),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => _go(_WebPublicPage.intake),
+                  child: Text(
+                    HomeownerChatContent.fallbackToFormLabel,
+                    style: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
+                  ),
+                ),
+              ],
+            ),
+            body: HomeownerChatPage(
+              designFlowMode: true,
+              onFallbackToForm: () => _go(_WebPublicPage.intake),
+            ),
           );
         case _WebPublicPage.intake:
           return HomeownerIntakePage(
-            onLocalDesignReady: () =>
-                setState(() => _public = _WebPublicPage.designSummary),
+            onLocalDesignReady: () {
+              setState(() => _public = _WebPublicPage.designSummary);
+              if (kIsWeb) pushAppPath('/design-summary');
+            },
             onAbandon: () => _go(_WebPublicPage.landing),
           );
         case _WebPublicPage.designSummary:
@@ -148,12 +211,10 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
         case _WebPublicPage.landing:
           return LandingPage(
             onHomeTap: () => _go(_WebPublicPage.landing),
-            onGetStarted: () => _go(_WebPublicPage.intake),
-            onSignIn: () => _go(_WebPublicPage.login),
+            onGetStarted: () => _go(_WebPublicPage.publicDesignChat),
+            onOpenEnterprise: () => _go(_WebPublicPage.enterprise),
+            onEnterprise: () => _go(_WebPublicPage.enterpriseAuth),
             onMyProjects: () => _go(_WebPublicPage.login),
-            onOpenDroneOps: () => _go(_WebPublicPage.droneOps),
-            onOpenPool: () => _go(_WebPublicPage.pool),
-            onOpenEv: () => _go(_WebPublicPage.ev),
           );
       }
     }
@@ -163,6 +224,15 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
       appRole: app.role,
       session: session,
     );
+
+    if (role == UserRole.organization) {
+      return _EnterpriseOrgHome(
+        userName: app.userName,
+        companyName: app.companyName,
+        onSignOut: _signOut,
+      );
+    }
+
     if (role != UserRole.homeowner) {
       return Center(
         child: Padding(
@@ -210,6 +280,64 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
   }
 }
 
+class _EnterpriseOrgHome extends StatelessWidget {
+  const _EnterpriseOrgHome({
+    required this.userName,
+    required this.companyName,
+    required this.onSignOut,
+  });
+
+  final String userName;
+  final String companyName;
+  final VoidCallback onSignOut;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(EnterpriseContent.orgPortalTitle),
+        actions: [
+          TextButton(
+            onPressed: onSignOut,
+            child: Text(
+              EnterpriseContent.orgPortalSignOut,
+              style: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
+            ),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(LimyeSpacing.gutter),
+        child: Align(
+          alignment: Alignment.topLeft,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 560),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (companyName.isNotEmpty)
+                  Text(
+                    companyName,
+                    style: LimyeTextStyles.sectionHeading(),
+                  ),
+                if (userName.isNotEmpty) ...[
+                  const SizedBox(height: LimyeSpacing.sm),
+                  Text(userName, style: LimyeTextStyles.body()),
+                ],
+                const SizedBox(height: LimyeSpacing.lg),
+                Text(
+                  EnterpriseContent.orgPortalBody,
+                  style: LimyeTextStyles.body(),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _WebHelpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -241,7 +369,15 @@ class _WebHelpPage extends StatelessWidget {
 
 // ─── Mobile ──────────────────────────────────────────────────────────
 
-enum _MobilePublic { home, intake, designSummary, login }
+enum _MobilePublic {
+  home,
+  designChat,
+  enterprise,
+  enterpriseAuth,
+  intake,
+  designSummary,
+  login,
+}
 
 class _MobileSwitch extends ConsumerStatefulWidget {
   const _MobileSwitch({
@@ -286,6 +422,50 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
           return MobileAuth(
             onBack: () => setState(() => _pub = _MobilePublic.home),
           );
+        case _MobilePublic.enterpriseAuth:
+          return EnterpriseAuthPage(
+            onHomeTap: () => setState(() => _pub = _MobilePublic.home),
+            onForBusiness: () =>
+                setState(() => _pub = _MobilePublic.enterprise),
+            onMyProjects: () => setState(() => _pub = _MobilePublic.login),
+            onEnterprise: () =>
+                setState(() => _pub = _MobilePublic.enterpriseAuth),
+          );
+        case _MobilePublic.enterprise:
+          return EnterpriseSalesPage(
+            onHomeTap: () => setState(() => _pub = _MobilePublic.home),
+            onForBusiness: () =>
+                setState(() => _pub = _MobilePublic.enterprise),
+            onMyProjects: () => setState(() => _pub = _MobilePublic.login),
+            onEnterprise: () =>
+                setState(() => _pub = _MobilePublic.enterpriseAuth),
+          );
+        case _MobilePublic.designChat:
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(HomeownerChatContent.pageTitleDesign),
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () =>
+                    setState(() => _pub = _MobilePublic.home),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () =>
+                      setState(() => _pub = _MobilePublic.intake),
+                  child: Text(
+                    HomeownerChatContent.fallbackToFormLabel,
+                    style: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
+                  ),
+                ),
+              ],
+            ),
+            body: HomeownerChatPage(
+              designFlowMode: true,
+              onFallbackToForm: () =>
+                  setState(() => _pub = _MobilePublic.intake),
+            ),
+          );
         case _MobilePublic.intake:
           return HomeownerIntakePage(
             onLocalDesignReady: () =>
@@ -321,9 +501,30 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
                   const SizedBox(height: LimyeSpacing.xl),
                   ElevatedButton(
                     onPressed: () =>
-                        setState(() => _pub = _MobilePublic.intake),
+                        setState(() => _pub = _MobilePublic.designChat),
                     child: Text(LandingContent.heroPrimaryCta,
                         style: LimyeTextStyles.bodyBold(color: Colors.white)),
+                  ),
+                  const SizedBox(height: LimyeSpacing.md),
+                  OutlinedButton(
+                    onPressed: () =>
+                        setState(() => _pub = _MobilePublic.enterprise),
+                    child: Text(
+                      NavigationContent.preAuthForBusiness,
+                      style: LimyeTextStyles.bodyBold(),
+                    ),
+                  ),
+                  const SizedBox(height: LimyeSpacing.sm),
+                  OutlinedButton(
+                    onPressed: () =>
+                        setState(() => _pub = _MobilePublic.enterpriseAuth),
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: LimyeColors.accent),
+                    ),
+                    child: Text(
+                      NavigationContent.preAuthEnterprise,
+                      style: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
+                    ),
                   ),
                   const SizedBox(height: LimyeSpacing.md),
                   OutlinedButton(
@@ -337,6 +538,33 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
             ),
           );
       }
+    }
+
+    final role = resolvedNavigationRole(
+      authenticated: app.isAuthenticated,
+      appRole: app.role,
+      session: session,
+    );
+
+    if (role == UserRole.organization) {
+      return _EnterpriseOrgHome(
+        userName: app.userName,
+        companyName: app.companyName,
+        onSignOut: _signOut,
+      );
+    }
+
+    if (role != UserRole.homeowner) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(LimyeSpacing.gutter),
+          child: Text(
+            AuthContent.homeownerLoginOnly,
+            textAlign: TextAlign.center,
+            style: LimyeTextStyles.body(),
+          ),
+        ),
+      );
     }
 
     final idx = app.mobileNavIndex;

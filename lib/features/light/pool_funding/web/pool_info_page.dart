@@ -14,14 +14,12 @@ import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
 class PoolInfoPage extends StatelessWidget {
   final VoidCallback? onJoinWaitlist;
   final VoidCallback? onHomeTap;
-  final VoidCallback? onSignIn;
   final VoidCallback? onMyProjects;
 
   const PoolInfoPage({
     super.key,
     this.onJoinWaitlist,
     this.onHomeTap,
-    this.onSignIn,
     this.onMyProjects,
   });
 
@@ -30,7 +28,6 @@ class PoolInfoPage extends StatelessWidget {
     return HomeownerPublicChrome(
       activeNavIndex: 0,
       onHomeTap: onHomeTap,
-      onSignIn: onSignIn,
       onMyProjects: onMyProjects,
       child: Center(
         child: ConstrainedBox(

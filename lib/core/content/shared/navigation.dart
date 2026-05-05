@@ -23,7 +23,7 @@ class NavigationContent {
   static const preAuthHomeowners = 'Homeowners';
   static const preAuthForBusiness = 'For Business';
   static const preAuthMyProjects = 'My Projects';
-  static const preAuthSignIn = 'Sign In';
+  static const preAuthEnterprise = 'ENTERPRISE';
 
   static const shellSignOut = 'Sign Out';
   static const shellUserFallback = 'User';

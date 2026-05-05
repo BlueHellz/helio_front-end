@@ -73,7 +73,17 @@ class _HydratedSessionHomeState extends ConsumerState<_HydratedSessionHome> {
         role: UserRole.homeowner,
         name: name,
       );
-    } else if (s.isLoggedIn && !apiRoleIsHomeowner(s.userRole)) {
+    } else if (s.isLoggedIn && apiRoleIsOrganization(s.userRole)) {
+      final name = s.fullName ?? '';
+      final company = s.companyName ?? '';
+      app.signIn(
+        role: UserRole.organization,
+        name: name,
+        companyName: company,
+      );
+    } else if (s.isLoggedIn &&
+        !apiRoleIsHomeowner(s.userRole) &&
+        !apiRoleIsOrganization(s.userRole)) {
       await ref.read(sessionProvider.notifier).clear();
     }
     setState(() => _ready = true);

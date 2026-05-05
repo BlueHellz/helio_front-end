@@ -13,14 +13,16 @@ class HomeownerPublicChrome extends StatelessWidget {
     this.activeNavIndex = 0,
     this.onHomeTap,
     this.onMyProjects,
-    this.onSignIn,
+    this.onForBusiness,
+    this.onEnterprise,
   });
 
   final Widget child;
   final int activeNavIndex;
   final VoidCallback? onHomeTap;
   final VoidCallback? onMyProjects;
-  final VoidCallback? onSignIn;
+  final VoidCallback? onForBusiness;
+  final VoidCallback? onEnterprise;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,8 @@ class HomeownerPublicChrome extends StatelessWidget {
             activeIndex: activeNavIndex,
             onHomeTap: onHomeTap,
             onMyProjects: onMyProjects,
-            onSignIn: onSignIn,
+            onForBusiness: onForBusiness,
+            onEnterprise: onEnterprise,
           ),
           Expanded(
             child: SingleChildScrollView(
@@ -57,13 +60,15 @@ class _PublicNavbar extends StatelessWidget {
     required this.activeIndex,
     this.onHomeTap,
     this.onMyProjects,
-    this.onSignIn,
+    this.onForBusiness,
+    this.onEnterprise,
   });
 
   final int activeIndex;
   final VoidCallback? onHomeTap;
   final VoidCallback? onMyProjects;
-  final VoidCallback? onSignIn;
+  final VoidCallback? onForBusiness;
+  final VoidCallback? onEnterprise;
 
   @override
   Widget build(BuildContext context) {
@@ -99,30 +104,62 @@ class _PublicNavbar extends StatelessWidget {
                   isActive: activeIndex == 0,
                   onTap: onHomeTap,
                 ),
+                if (onForBusiness != null) ...[
+                  const SizedBox(width: 24),
+                  _NavLink(
+                    label: NavigationContent.preAuthForBusiness,
+                    isActive: activeIndex == 1,
+                    onTap: onForBusiness,
+                  ),
+                ],
                 const SizedBox(width: 24),
                 _NavLink(
                   label: NavigationContent.preAuthMyProjects,
                   isActive: activeIndex == 2,
                   onTap: onMyProjects,
                 ),
-                const SizedBox(width: 32),
-                GestureDetector(
-                  onTap: onSignIn,
-                  behavior: HitTestBehavior.opaque,
-                  child: Row(
-                    children: [
-                      Text(
-                        NavigationContent.preAuthSignIn,
-                        style: LimyeTextStyles.body(
-                            color: LimyeColors.accent),
-                      ),
-                      const SizedBox(width: 4),
-                      const Icon(Icons.arrow_forward,
-                          size: 16, color: LimyeColors.accent),
-                    ],
-                  ),
-                ),
+                if (onEnterprise != null) ...[
+                  const SizedBox(width: LimyeSpacing.sm),
+                  _EnterpriseNavPill(onTap: onEnterprise),
+                ],
               ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _EnterpriseNavPill extends StatelessWidget {
+  const _EnterpriseNavPill({this.onTap});
+
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: onTap == null
+          ? SystemMouseCursors.basic
+          : SystemMouseCursors.click,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(LimyeRadius.chip),
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: LimyeSpacing.md,
+              vertical: LimyeSpacing.xs,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(LimyeRadius.chip),
+              border: Border.all(color: LimyeColors.accent, width: 1.5),
+            ),
+            child: Text(
+              NavigationContent.preAuthEnterprise,
+              style: LimyeTextStyles.captionBold(color: LimyeColors.accent)
+                  .copyWith(letterSpacing: 0.7, fontSize: 11),
             ),
           ),
         ),

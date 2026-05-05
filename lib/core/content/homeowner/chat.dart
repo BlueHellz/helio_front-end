@@ -3,6 +3,25 @@
 
 class HomeownerChatContent {
   static const pageTitle = 'Messages';
+  static const pageTitleDesign = 'Design with LIMYÈ AI';
+
+  /// Auth-free design assistant entry (replaces legacy placeholder stack).
+  static const welcomeSystemDesign =
+      'Welcome. I am your LIMYÈ design assistant. Share your home address '
+      'to begin—we will walk through your bill and goals conversationally.';
+  static const aiReplyAfterAddress =
+      'Thanks—I have that address. What is your typical monthly electricity bill in US dollars? '
+      'A rough average is perfect.';
+  static const aiReplyAfterBill =
+      'Got it. If you have a goal in mind—max savings, backup power, or offsetting a target share '
+      'of your usage—tell me in a sentence. Otherwise say “continue” and we will proceed.';
+  static const aiReplyContinue =
+      'Noted. Keep going: roof age, main panel size, or anything else about your home '
+      'helps tighten the design. When you are ready for a structured form, use the link below.';
+  static const composerHint =
+      'Message the assistant. No account needed to explore your design.';
+  static const fallbackToFormLabel = 'Prefer the structured form instead';
+
   static const placeholderSystemMessage =
       'Welcome to LIMYÈ NOIR. When design automation is enabled, your assistant will appear here.';
   static const placeholderAiMessage =

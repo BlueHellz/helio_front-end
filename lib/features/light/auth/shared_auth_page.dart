@@ -14,14 +14,18 @@ import 'package:limye_app/core/providers/session_providers.dart';
 import 'package:limye_app/services/auth_api.dart';
 
 class AuthPage extends ConsumerStatefulWidget {
-  final VoidCallback? onHomeTap;
-  final VoidCallback? onNavbarSignIn;
-
   const AuthPage({
     super.key,
     this.onHomeTap,
-    this.onNavbarSignIn,
+    this.onMyProjects,
+    this.onForBusiness,
+    this.onEnterprise,
   });
+
+  final VoidCallback? onHomeTap;
+  final VoidCallback? onMyProjects;
+  final VoidCallback? onForBusiness;
+  final VoidCallback? onEnterprise;
 
   @override
   ConsumerState<AuthPage> createState() => _AuthPageState();
@@ -94,9 +98,10 @@ class _AuthPageState extends ConsumerState<AuthPage> {
   Widget build(BuildContext context) {
     return HomeownerPublicChrome(
       activeNavIndex: 2,
-      onSignIn: widget.onNavbarSignIn,
       onHomeTap: widget.onHomeTap,
-      onMyProjects: widget.onNavbarSignIn,
+      onMyProjects: widget.onMyProjects,
+      onForBusiness: widget.onForBusiness,
+      onEnterprise: widget.onEnterprise,
       child: SizedBox(
         height: MediaQuery.of(context).size.height -
             LimyeSpacing.navbarHeight -

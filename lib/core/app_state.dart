@@ -13,6 +13,7 @@ import 'models/chat_message.dart';
 
 enum UserRole {
   homeowner,
+  organization,
   none,
 }
 
