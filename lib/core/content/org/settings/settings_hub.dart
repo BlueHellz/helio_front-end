@@ -20,8 +20,8 @@ class OrgSettingsAccountContent {
   static const signOutTileSubtitle =
       'You will be returned to the sign-in screen';
   static const mobileLegalFooter =
-      '© 2026 Black Light · Privacy · Terms · Contact';
-  static const signOutDescription = 'Sign out of Black Light';
+      '© 2026 LIMYÈ · Privacy · Terms · Contact';
+  static const signOutDescription = 'Sign out of LIMYÈ';
   static const signOutButton = 'Sign Out';
   static const editLink = 'Edit';
   static const transactionsHeading = 'TRANSACTIONS';

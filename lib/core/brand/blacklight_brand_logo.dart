@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:blacklight_app/core/content/content_registry.dart';
+import 'package:limye_app/core/content/content_registry.dart';
 
-import '../../theme/blacklight_theme.dart';
+import '../../theme/limye_theme.dart';
 
 // ─────────────────────────────────────────────
-// BLACK LIGHT — official lockup (raster, theme-tinted)
+// LIMYÈ — official lockup (raster, theme-tinted)
 // Source: assets/images/black_light_logo.png
 // ─────────────────────────────────────────────
 
 const String kBlackLightLogoAsset = 'assets/images/black_light_logo.png';
 
-/// Tints a single-color+alpha brand asset to [BlackLightColors.textPrimary].
+/// Tints a single-color+alpha brand asset to [LimyeColors.textPrimary].
 class _BlackLightAssetPaint extends StatelessWidget {
   const _BlackLightAssetPaint();
 
@@ -18,7 +18,7 @@ class _BlackLightAssetPaint extends StatelessWidget {
   Widget build(BuildContext context) {
     return ColorFiltered(
       colorFilter: const ColorFilter.mode(
-        BlackLightColors.textPrimary,
+        LimyeColors.textPrimary,
         BlendMode.srcIn,
       ),
       child: Image.asset(
@@ -56,7 +56,7 @@ class BlackLightMark extends StatelessWidget {
   }
 }
 
-/// Lockup: mark + optional “Black Light” wordmark. Constrained, scales as one unit.
+/// Lockup: mark + optional “LIMYÈ” wordmark. Constrained, scales as one unit.
 class BlackLightLogo extends StatelessWidget {
   final double height;
   final double? maxWidth;
@@ -74,7 +74,7 @@ class BlackLightLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     final cap = maxWidth ?? (showWordmark ? height * 5.2 : height * 1.05);
     final markSize = (height * _markToRowHeight).clamp(20.0, 56.0);
-    final wordStyle = BlackLightTextStyles.cardHeading().copyWith(
+    final wordStyle = LimyeTextStyles.cardHeading().copyWith(
       fontSize: (markSize * 0.44).clamp(12.0, 18.0),
       height: 1.0,
     );

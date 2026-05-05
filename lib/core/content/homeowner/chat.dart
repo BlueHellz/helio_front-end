@@ -4,14 +4,14 @@
 class HomeownerChatContent {
   static const pageTitle = 'Messages';
   static const placeholderSystemMessage =
-      'Welcome to Light. When design automation is enabled, your assistant will appear here.';
+      'Welcome to LIMYÈ NOIR. When design automation is enabled, your assistant will appear here.';
   static const placeholderAiMessage =
       'For now, this chat is a visual placeholder. Messages are not sent to a model.';
   static const composerDisabledHint =
       'Composer disabled until the assistant is connected.';
 
   // Design studio (split layout)
-  static const designAiTitle = 'Black Light AI';
+  static const designAiTitle = 'LIMYÈ AI';
   static const designLiveChip = 'Live';
   static const designInputPlaceholder = 'Type a message...';
   static const designPreviewTitle = 'Design Preview';

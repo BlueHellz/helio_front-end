@@ -59,7 +59,7 @@ class AuthContent {
   static const mobileApprovedDroneCue = 'Approved drone operator?';
   static const mobileDroneSignInCta = 'Sign in →';
   static const mobileLegalFooterShort =
-      '© 2026 Black Light · Privacy · Terms';
+      '© 2026 LIMYÈ · Privacy · Terms';
 
   static const mobileButtonCreateAccount = 'Create Account';
 

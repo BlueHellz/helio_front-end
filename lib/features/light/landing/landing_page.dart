@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:blacklight_app/core/content/content_registry.dart';
+import 'package:limye_app/core/content/content_registry.dart';
 
-import 'package:blacklight_app/core/ui/app_feedback.dart';
-import 'package:blacklight_app/theme/blacklight_theme.dart';
-import 'package:blacklight_app/core/illustrations/geometric_illustrations.dart';
-import 'package:blacklight_app/core/shell/web/homeowner_web_chrome.dart';
+import 'package:limye_app/core/ui/app_feedback.dart';
+import 'package:limye_app/theme/limye_theme.dart';
+import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
+import 'package:limye_app/core/shell/web/homeowner_web_chrome.dart';
 
 class LandingPage extends StatelessWidget {
   final VoidCallback? onGetStarted;
@@ -41,13 +41,13 @@ class LandingPage extends StatelessWidget {
           _Constrained(
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                  horizontal: BlackLightSpacing.gutter),
+                  horizontal: LimyeSpacing.gutter),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
                   _HeroSection(onGetStarted: onGetStarted),
-                  const SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
                 ],
               ),
             ),
@@ -60,17 +60,17 @@ class LandingPage extends StatelessWidget {
           _Constrained(
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                  horizontal: BlackLightSpacing.gutter),
+                  horizontal: LimyeSpacing.gutter),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
                   _HowItWorks(),
-                  const SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
                   _FeaturesDeepDive(),
-                  const SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
                   const _SocialProofSection(),
-                  const SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
                 ],
               ),
             ),
@@ -80,17 +80,17 @@ class LandingPage extends StatelessWidget {
           _Constrained(
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                  horizontal: BlackLightSpacing.gutter),
+                  horizontal: LimyeSpacing.gutter),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
                   _PillarsSection(
                     onOpenDroneOps: onOpenDroneOps,
                     onOpenPool: onOpenPool,
                     onOpenEv: onOpenEv,
                   ),
-                  const SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
                 ],
               ),
             ),
@@ -103,12 +103,12 @@ class LandingPage extends StatelessWidget {
           _Constrained(
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                  horizontal: BlackLightSpacing.gutter),
+                  horizontal: LimyeSpacing.gutter),
               child: const Column(
                 children: [
-                  SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  SizedBox(height: LimyeSpacing.sectionPaddingVertical),
                   _SeeLightInActionSection(),
-                  SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  SizedBox(height: LimyeSpacing.sectionPaddingVertical),
                 ],
               ),
             ),
@@ -118,14 +118,14 @@ class LandingPage extends StatelessWidget {
           _Constrained(
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                  horizontal: BlackLightSpacing.gutter),
+                  horizontal: LimyeSpacing.gutter),
               child: Column(
                 children: [
-                  const SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
                   const _WalletSection(),
-                  const SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
                   _FinalCtaSection(onStart: onGetStarted),
-                  const SizedBox(height: BlackLightSpacing.sectionPaddingVertical),
+                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
                 ],
               ),
             ),
@@ -186,12 +186,12 @@ class _PillarsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(LandingContent.programsHeadline,
-            style: BlackLightTextStyles.sectionHeading()),
-        const SizedBox(height: BlackLightSpacing.xs),
+            style: LimyeTextStyles.sectionHeading()),
+        const SizedBox(height: LimyeSpacing.xs),
         Text(
             LandingContent.programsSubcopy,
-            style: BlackLightTextStyles.body()),
-        const SizedBox(height: BlackLightSpacing.lg),
+            style: LimyeTextStyles.body()),
+        const SizedBox(height: LimyeSpacing.lg),
         // Row + Expanded *requires* bounded width. Some browsers (e.g. Brave)
         // can pass an unbounded maxWidth here; that throws during layout and
         // the rest of the page (and footer) never paints.
@@ -207,7 +207,7 @@ class _PillarsSection extends StatelessWidget {
                     .map((p) => Expanded(child: _PillarCard(data: p)))
                     .expand((w) => [
                         w,
-                        const SizedBox(width: BlackLightSpacing.cardGap),
+                        const SizedBox(width: LimyeSpacing.cardGap),
                       ])
                     .take(pillars.length * 2 - 1)
                     .toList(),
@@ -218,7 +218,7 @@ class _PillarsSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: pillars
                 .map((p) => _PillarCard(data: p))
-                .expand((w) => [w, const SizedBox(height: BlackLightSpacing.md)])
+                .expand((w) => [w, const SizedBox(height: LimyeSpacing.md)])
                 .take(pillars.length * 2 - 1)
                 .toList(),
           );
@@ -268,14 +268,14 @@ class _PillarCardState extends State<_PillarCard> {
         onTap: widget.data.onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 150),
-          padding: const EdgeInsets.all(BlackLightSpacing.cardPadding),
+          padding: const EdgeInsets.all(LimyeSpacing.cardPadding),
           decoration: BoxDecoration(
-            color: BlackLightColors.surface,
-            borderRadius: BorderRadius.circular(BlackLightRadius.card),
+            color: LimyeColors.surface,
+            borderRadius: BorderRadius.circular(LimyeRadius.card),
             border: Border.all(
                 color: _hover
-                    ? BlackLightColors.accent
-                    : BlackLightColors.border),
+                    ? LimyeColors.accent
+                    : LimyeColors.border),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -284,31 +284,31 @@ class _PillarCardState extends State<_PillarCard> {
                 width: 44,
                 height: 44,
                 decoration: BoxDecoration(
-                  color: BlackLightColors.background,
-                  border: Border.all(color: BlackLightColors.border),
+                  color: LimyeColors.background,
+                  border: Border.all(color: LimyeColors.border),
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Icon(widget.data.icon,
-                    size: 22, color: BlackLightColors.accent),
+                    size: 22, color: LimyeColors.accent),
               ),
-              const SizedBox(height: BlackLightSpacing.md),
+              const SizedBox(height: LimyeSpacing.md),
               Text(widget.data.eyebrow,
-                  style: BlackLightTextStyles.captionBold(
-                      color: BlackLightColors.textBody)),
+                  style: LimyeTextStyles.captionBold(
+                      color: LimyeColors.textBody)),
               const SizedBox(height: 4),
               Text(widget.data.title,
-                  style: BlackLightTextStyles.cardHeading()),
+                  style: LimyeTextStyles.cardHeading()),
               const SizedBox(height: 6),
-              Text(widget.data.body, style: BlackLightTextStyles.body()),
-              const SizedBox(height: BlackLightSpacing.md),
+              Text(widget.data.body, style: LimyeTextStyles.body()),
+              const SizedBox(height: LimyeSpacing.md),
               Row(
                 children: [
                   Text(widget.data.cta,
-                      style: BlackLightTextStyles.bodyBold(
-                          color: BlackLightColors.accent)),
+                      style: LimyeTextStyles.bodyBold(
+                          color: LimyeColors.accent)),
                   const SizedBox(width: 4),
                   const Icon(Icons.arrow_forward,
-                      size: 16, color: BlackLightColors.accent),
+                      size: 16, color: LimyeColors.accent),
                 ],
               ),
             ],
@@ -330,7 +330,7 @@ class _Constrained extends StatelessWidget {
     return Center(
       child: ConstrainedBox(
         constraints:
-            const BoxConstraints(maxWidth: BlackLightSpacing.containerMax),
+            const BoxConstraints(maxWidth: LimyeSpacing.containerMax),
         child: child,
       ),
     );
@@ -357,7 +357,7 @@ class _HeroSection extends StatelessWidget {
             flex: 55,
             child: _HeroContent(onGetStarted: onGetStarted),
           ),
-          const SizedBox(width: BlackLightSpacing.xl),
+          const SizedBox(width: LimyeSpacing.xl),
           const Expanded(
             flex: 45,
             child: Center(
@@ -372,7 +372,7 @@ class _HeroSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _HeroContent(onGetStarted: onGetStarted),
-        const SizedBox(height: BlackLightSpacing.lg),
+        const SizedBox(height: LimyeSpacing.lg),
         const LandingHeroIsometricIllustration(
             width: double.infinity, height: 280),
       ],
@@ -406,23 +406,23 @@ class _HeroContentState extends State<_HeroContent> {
       children: [
         Text(
           LandingContent.heroTitle,
-          style: BlackLightTextStyles.hero(),
+          style: LimyeTextStyles.hero(),
         ),
-        const SizedBox(height: BlackLightSpacing.md),
+        const SizedBox(height: LimyeSpacing.md),
         Text(
           LandingContent.heroBody,
-          style: BlackLightTextStyles.body(),
+          style: LimyeTextStyles.body(),
         ),
-        const SizedBox(height: BlackLightSpacing.lg),
+        const SizedBox(height: LimyeSpacing.lg),
         _AddressInputRow(
           controller: _addressCtrl,
           onGetStarted: widget.onGetStarted,
         ),
-        const SizedBox(height: BlackLightSpacing.md),
+        const SizedBox(height: LimyeSpacing.md),
         Text(
           LandingContent.heroStatLabel,
-          style: BlackLightTextStyles.captionBold(
-            color: BlackLightColors.textCaption,
+          style: LimyeTextStyles.captionBold(
+            color: LimyeColors.textCaption,
           ),
         ),
         const SizedBox(height: 4),
@@ -436,22 +436,22 @@ class _HeroContentState extends State<_HeroContent> {
           builder: (context, value, _) {
             return Text(
               '$value',
-              style: BlackLightTextStyles.dataLarge(
-                color: BlackLightColors.accent,
+              style: LimyeTextStyles.dataLarge(
+                color: LimyeColors.accent,
               ),
             );
           },
         ),
-        const SizedBox(height: BlackLightSpacing.md),
+        const SizedBox(height: LimyeSpacing.md),
         Text(
           LandingContent.trustedByLine,
-          style: BlackLightTextStyles.caption(
-            color: BlackLightColors.textCaption,
+          style: LimyeTextStyles.caption(
+            color: LimyeColors.textCaption,
           ),
         ),
         const SizedBox(height: 8),
         Wrap(
-          spacing: BlackLightSpacing.sm,
+          spacing: LimyeSpacing.sm,
           runSpacing: 6,
           children: [
             for (final name in [
@@ -465,30 +465,30 @@ class _HeroContentState extends State<_HeroContent> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  border: Border.all(color: BlackLightColors.border),
+                  border: Border.all(color: LimyeColors.border),
                   borderRadius: BorderRadius.circular(999),
-                  color: BlackLightColors.surface,
+                  color: LimyeColors.surface,
                 ),
                 child: Text(
                   name,
-                  style: BlackLightTextStyles.caption(
-                    color: BlackLightColors.textCaption,
+                  style: LimyeTextStyles.caption(
+                    color: LimyeColors.textCaption,
                   ),
                 ),
               ),
           ],
         ),
-        const SizedBox(height: BlackLightSpacing.sm),
+        const SizedBox(height: LimyeSpacing.sm),
         Row(
           children: [
             const Icon(Icons.bolt,
-                size: 14, color: BlackLightColors.textCaption),
+                size: 14, color: LimyeColors.textCaption),
             const SizedBox(width: 4),
             Flexible(
               child: Text(
                 LandingContent.heroTrustLine,
-                style: BlackLightTextStyles.caption(
-                    color: BlackLightColors.textCaption),
+                style: LimyeTextStyles.caption(
+                    color: LimyeColors.textCaption),
               ),
             ),
           ],
@@ -518,29 +518,29 @@ class _AddressInputRow extends StatelessWidget {
               children: [
                 Text(
                   LandingContent.heroAddressLabel,
-                  style: BlackLightTextStyles.captionBold(
-                      color: BlackLightColors.textCaption),
+                  style: LimyeTextStyles.captionBold(
+                      color: LimyeColors.textCaption),
                 ),
                 const SizedBox(height: 6),
                 SizedBox(
-                  height: BlackLightSpacing.inputHeight,
+                  height: LimyeSpacing.inputHeight,
                   child: TextField(
                     controller: controller,
-                    style: BlackLightTextStyles.body(
-                        color: BlackLightColors.textPrimary),
+                    style: LimyeTextStyles.body(
+                        color: LimyeColors.textPrimary),
                     decoration: _inputDeco(LandingContent.heroAddressPlaceholder),
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: BlackLightSpacing.sm),
+          const SizedBox(width: LimyeSpacing.sm),
           SizedBox(
-            height: BlackLightSpacing.buttonHeight,
+            height: LimyeSpacing.buttonHeight,
             child: ElevatedButton(
               onPressed: onGetStarted,
               style: ElevatedButton.styleFrom(
-                backgroundColor: BlackLightColors.accent,
+                backgroundColor: LimyeColors.accent,
                 foregroundColor: Colors.white,
                 elevation: 0,
                 shape: const StadiumBorder(),
@@ -548,7 +548,7 @@ class _AddressInputRow extends StatelessWidget {
               ),
               child: Text(
                 LandingContent.heroPrimaryCta,
-                style: BlackLightTextStyles.bodyBold(color: Colors.white),
+                style: LimyeTextStyles.bodyBold(color: Colors.white),
               ),
             ),
           ),
@@ -560,29 +560,29 @@ class _AddressInputRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          height: BlackLightSpacing.inputHeight,
+          height: LimyeSpacing.inputHeight,
           child: TextField(
             controller: controller,
             style:
-                BlackLightTextStyles.body(color: BlackLightColors.textPrimary),
+                LimyeTextStyles.body(color: LimyeColors.textPrimary),
             decoration: _inputDeco(LandingContent.heroAddressPlaceholder),
           ),
         ),
         const SizedBox(height: 12),
         SizedBox(
           width: double.infinity,
-          height: BlackLightSpacing.buttonHeight,
+          height: LimyeSpacing.buttonHeight,
           child: ElevatedButton(
             onPressed: onGetStarted,
             style: ElevatedButton.styleFrom(
-              backgroundColor: BlackLightColors.accent,
+              backgroundColor: LimyeColors.accent,
               foregroundColor: Colors.white,
               elevation: 0,
               shape: const StadiumBorder(),
             ),
             child: Text(
               LandingContent.heroPrimaryCta,
-              style: BlackLightTextStyles.bodyBold(color: Colors.white),
+              style: LimyeTextStyles.bodyBold(color: Colors.white),
             ),
           ),
         ),
@@ -593,21 +593,21 @@ class _AddressInputRow extends StatelessWidget {
   InputDecoration _inputDeco(String hint) => InputDecoration(
         hintText: hint,
         hintStyle:
-            BlackLightTextStyles.body(color: BlackLightColors.textCaption),
+            LimyeTextStyles.body(color: LimyeColors.textCaption),
         filled: true,
-        fillColor: BlackLightColors.surface,
+        fillColor: LimyeColors.surface,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(BlackLightRadius.input),
-          borderSide: const BorderSide(color: BlackLightColors.border),
+          borderRadius: BorderRadius.circular(LimyeRadius.input),
+          borderSide: const BorderSide(color: LimyeColors.border),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(BlackLightRadius.input),
-          borderSide: const BorderSide(color: BlackLightColors.border),
+          borderRadius: BorderRadius.circular(LimyeRadius.input),
+          borderSide: const BorderSide(color: LimyeColors.border),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(BlackLightRadius.input),
+          borderRadius: BorderRadius.circular(LimyeRadius.input),
           borderSide:
-              const BorderSide(color: BlackLightColors.accent, width: 1.5),
+              const BorderSide(color: LimyeColors.accent, width: 1.5),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16),
       );
@@ -630,28 +630,28 @@ class _TrustStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: BlackLightSpacing.md),
+      padding: const EdgeInsets.symmetric(vertical: LimyeSpacing.md),
       decoration: const BoxDecoration(
-        color: BlackLightColors.surface,
+        color: LimyeColors.surface,
         border: Border.symmetric(
-          horizontal: BorderSide(color: BlackLightColors.border),
+          horizontal: BorderSide(color: LimyeColors.border),
         ),
       ),
       child: Wrap(
-        spacing: BlackLightSpacing.xl,
-        runSpacing: BlackLightSpacing.sm,
+        spacing: LimyeSpacing.xl,
+        runSpacing: LimyeSpacing.sm,
         alignment: WrapAlignment.center,
         children: _items
             .map(
               (item) => Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(item.$1, size: 18, color: BlackLightColors.textBody),
+                  Icon(item.$1, size: 18, color: LimyeColors.textBody),
                   const SizedBox(width: 6),
                   Text(
                     item.$2,
-                    style: BlackLightTextStyles.caption(
-                        color: BlackLightColors.textBody),
+                    style: LimyeTextStyles.caption(
+                        color: LimyeColors.textBody),
                   ),
                 ],
               ),
@@ -679,8 +679,8 @@ class _HowItWorks extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(LandingContent.howItWorksTitle, style: BlackLightTextStyles.sectionHeading()),
-        const SizedBox(height: BlackLightSpacing.lg),
+        Text(LandingContent.howItWorksTitle, style: LimyeTextStyles.sectionHeading()),
+        const SizedBox(height: LimyeSpacing.lg),
         // Row + Expanded requires bounded width. Unbounded maxWidth in some
         // browsers makes `infinity > 700` true, which would pick the Row and
         // crash layout — content below (pillars, footer) never shows.
@@ -697,7 +697,7 @@ class _HowItWorks extends StatelessWidget {
                       Expanded(child: _StepCard(stepIndex: e.key, step: e.value)))
                   .expand((w) => [
                         w,
-                        const SizedBox(width: BlackLightSpacing.cardGap),
+                        const SizedBox(width: LimyeSpacing.cardGap),
                       ])
                   .take(_steps.length * 2 - 1)
                   .toList(),
@@ -711,7 +711,7 @@ class _HowItWorks extends StatelessWidget {
                     _StepCard(stepIndex: e.key, step: e.value))
                 .expand((w) => [
                       w,
-                      const SizedBox(height: BlackLightSpacing.cardGap),
+                      const SizedBox(height: LimyeSpacing.cardGap),
                     ])
                 .take(_steps.length * 2 - 1)
                 .toList(),
@@ -731,11 +731,11 @@ class _StepCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(BlackLightSpacing.cardPadding),
+      padding: const EdgeInsets.all(LimyeSpacing.cardPadding),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
-        borderRadius: BorderRadius.circular(BlackLightRadius.card),
-        border: Border.all(color: BlackLightColors.border),
+        color: LimyeColors.surface,
+        borderRadius: BorderRadius.circular(LimyeRadius.card),
+        border: Border.all(color: LimyeColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -744,20 +744,20 @@ class _StepCard extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: BlackLightColors.surface,
-              border: Border.all(color: BlackLightColors.border),
+              color: LimyeColors.surface,
+              border: Border.all(color: LimyeColors.border),
               borderRadius: BorderRadius.circular(999),
             ),
             child: Center(
               child: LandingHowItWorksIsoIcon(stepIndex: stepIndex),
             ),
           ),
-          const SizedBox(height: BlackLightSpacing.md),
-          Text(step.$1, style: BlackLightTextStyles.cardHeading()),
+          const SizedBox(height: LimyeSpacing.md),
+          Text(step.$1, style: LimyeTextStyles.cardHeading()),
           const SizedBox(height: 4),
           const Divider(),
-          const SizedBox(height: BlackLightSpacing.xs),
-          Text(step.$2, style: BlackLightTextStyles.body()),
+          const SizedBox(height: LimyeSpacing.xs),
+          Text(step.$2, style: LimyeTextStyles.body()),
         ],
       ),
     );
@@ -776,15 +776,15 @@ class _SeeLightInActionSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          LandingContent.seeLightInActionTitle,
-          style: BlackLightTextStyles.sectionHeading(),
+          LandingContent.seeLimyeInActionTitle,
+          style: LimyeTextStyles.sectionHeading(),
         ),
-        const SizedBox(height: BlackLightSpacing.xs),
+        const SizedBox(height: LimyeSpacing.xs),
         Text(
-          LandingContent.seeLightInActionSubtitle,
-          style: BlackLightTextStyles.body(),
+          LandingContent.seeLimyeInActionSubtitle,
+          style: LimyeTextStyles.body(),
         ),
-        const SizedBox(height: BlackLightSpacing.lg),
+        const SizedBox(height: LimyeSpacing.lg),
         LayoutBuilder(builder: (context, c) {
           final wide = c.hasBoundedWidth && c.maxWidth > 860;
           final left = Column(
@@ -794,10 +794,10 @@ class _SeeLightInActionSection extends StatelessWidget {
                 final w = b.maxWidth.clamp(280.0, 520.0).toDouble();
                 return BrowserMockupHomeownerIllustration(width: w, height: 240);
               }),
-              const SizedBox(height: BlackLightSpacing.xs),
+              const SizedBox(height: LimyeSpacing.xs),
               Text(
                 LandingContent.mockupHomeownerCaption,
-                style: BlackLightTextStyles.caption(),
+                style: LimyeTextStyles.caption(),
               ),
             ],
           );
@@ -808,10 +808,10 @@ class _SeeLightInActionSection extends StatelessWidget {
                 final w = b.maxWidth.clamp(280.0, 520.0).toDouble();
                 return BrowserMockupOrgDashboardIllustration(width: w, height: 240);
               }),
-              const SizedBox(height: BlackLightSpacing.xs),
+              const SizedBox(height: LimyeSpacing.xs),
               Text(
                 LandingContent.mockupOrgCaption,
-                style: BlackLightTextStyles.caption(),
+                style: LimyeTextStyles.caption(),
               ),
             ],
           );
@@ -820,7 +820,7 @@ class _SeeLightInActionSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(child: left),
-                const SizedBox(width: BlackLightSpacing.cardGap),
+                const SizedBox(width: LimyeSpacing.cardGap),
                 Expanded(child: right),
               ],
             );
@@ -829,7 +829,7 @@ class _SeeLightInActionSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               left,
-              const SizedBox(height: BlackLightSpacing.lg),
+              const SizedBox(height: LimyeSpacing.lg),
               right,
             ],
           );
@@ -850,13 +850,13 @@ class _ForBusinessSection extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
-          horizontal: BlackLightSpacing.gutter,
-          vertical: BlackLightSpacing.sectionPaddingVertical),
-      color: BlackLightColors.background,
+          horizontal: LimyeSpacing.gutter,
+          vertical: LimyeSpacing.sectionPaddingVertical),
+      color: LimyeColors.background,
       child: Center(
         child: ConstrainedBox(
           constraints:
-              const BoxConstraints(maxWidth: BlackLightSpacing.containerMax),
+              const BoxConstraints(maxWidth: LimyeSpacing.containerMax),
           child: LayoutBuilder(builder: (ctx, constraints) {
             final isWide =
                 constraints.hasBoundedWidth && constraints.maxWidth > 700;
@@ -870,18 +870,18 @@ class _ForBusinessSection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(LandingContent.forBusinessTitle,
-                            style: BlackLightTextStyles.sectionHeading()),
-                        const SizedBox(height: BlackLightSpacing.xs),
+                            style: LimyeTextStyles.sectionHeading()),
+                        const SizedBox(height: LimyeSpacing.xs),
                         Text(
                           LandingContent.forBusinessBody,
-                          style: BlackLightTextStyles.body(),
+                          style: LimyeTextStyles.body(),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(width: BlackLightSpacing.xl),
+                  const SizedBox(width: LimyeSpacing.xl),
                   SizedBox(
-                    height: BlackLightSpacing.buttonHeight,
+                    height: LimyeSpacing.buttonHeight,
                     child: OutlinedButton(
                       onPressed: () {
                         AppFeedback.showInfoDialog(
@@ -891,14 +891,14 @@ class _ForBusinessSection extends StatelessWidget {
                         );
                       },
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: BlackLightColors.textPrimary,
-                        side: const BorderSide(color: BlackLightColors.border),
+                        foregroundColor: LimyeColors.textPrimary,
+                        side: const BorderSide(color: LimyeColors.border),
                         shape: const StadiumBorder(),
                         padding: const EdgeInsets.symmetric(horizontal: 28),
                       ),
                       child: Text(LandingContent.forBusinessLearnMore,
-                          style: BlackLightTextStyles.bodyBold(
-                              color: BlackLightColors.textPrimary)),
+                          style: LimyeTextStyles.bodyBold(
+                              color: LimyeColors.textPrimary)),
                     ),
                   ),
                 ],
@@ -908,15 +908,15 @@ class _ForBusinessSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(LandingContent.forBusinessTitle,
-                    style: BlackLightTextStyles.sectionHeading()),
-                const SizedBox(height: BlackLightSpacing.xs),
+                    style: LimyeTextStyles.sectionHeading()),
+                const SizedBox(height: LimyeSpacing.xs),
                 Text(
                   LandingContent.forBusinessBody,
-                  style: BlackLightTextStyles.body(),
+                  style: LimyeTextStyles.body(),
                 ),
-                const SizedBox(height: BlackLightSpacing.md),
+                const SizedBox(height: LimyeSpacing.md),
                 SizedBox(
-                  height: BlackLightSpacing.buttonHeight,
+                  height: LimyeSpacing.buttonHeight,
                   child: OutlinedButton(
                     onPressed: () {
                       AppFeedback.showInfoDialog(
@@ -926,13 +926,13 @@ class _ForBusinessSection extends StatelessWidget {
                       );
                     },
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: BlackLightColors.textPrimary,
-                      side: const BorderSide(color: BlackLightColors.border),
+                      foregroundColor: LimyeColors.textPrimary,
+                      side: const BorderSide(color: LimyeColors.border),
                       shape: const StadiumBorder(),
                     ),
                     child: Text(LandingContent.forBusinessLearnMore,
-                        style: BlackLightTextStyles.bodyBold(
-                            color: BlackLightColors.textPrimary)),
+                        style: LimyeTextStyles.bodyBold(
+                            color: LimyeColors.textPrimary)),
                   ),
                 ),
               ],
@@ -957,9 +957,9 @@ class _FeaturesDeepDive extends StatelessWidget {
       children: [
         Text(
           LandingContent.featuresSectionTitle,
-          style: BlackLightTextStyles.sectionHeading(),
+          style: LimyeTextStyles.sectionHeading(),
         ),
-        const SizedBox(height: BlackLightSpacing.lg),
+        const SizedBox(height: LimyeSpacing.lg),
         LayoutBuilder(
           builder: (context, c) {
             final wide = c.hasBoundedWidth && c.maxWidth > 760;
@@ -974,15 +974,15 @@ class _FeaturesDeepDive extends StatelessWidget {
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: graphicOnLeft
-                      ? [a, const SizedBox(width: BlackLightSpacing.xl), b]
-                      : [b, const SizedBox(width: BlackLightSpacing.xl), a],
+                      ? [a, const SizedBox(width: LimyeSpacing.xl), b]
+                      : [b, const SizedBox(width: LimyeSpacing.xl), a],
                 );
               }
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   graphic,
-                  const SizedBox(height: BlackLightSpacing.md),
+                  const SizedBox(height: LimyeSpacing.md),
                   copy,
                 ],
               );
@@ -992,8 +992,8 @@ class _FeaturesDeepDive extends StatelessWidget {
               height: 220,
               child: Center(
                 child: _LandingChatIllustration(
-                  color: BlackLightColors.border,
-                  accent: BlackLightColors.accent,
+                  color: LimyeColors.border,
+                  accent: LimyeColors.accent,
                   wide: c.maxWidth.clamp(280.0, 360.0),
                 ),
               ),
@@ -1002,8 +1002,8 @@ class _FeaturesDeepDive extends StatelessWidget {
               height: 220,
               child: Center(
                 child: _LandingPermitIllustration(
-                  color: BlackLightColors.border,
-                  accent: BlackLightColors.accent,
+                  color: LimyeColors.border,
+                  accent: LimyeColors.accent,
                   wide: c.maxWidth.clamp(280.0, 360.0),
                 ),
               ),
@@ -1012,8 +1012,8 @@ class _FeaturesDeepDive extends StatelessWidget {
               height: 220,
               child: Center(
                 child: _LandingPoolIllustration(
-                  color: BlackLightColors.border,
-                  accent: BlackLightColors.accent,
+                  color: LimyeColors.border,
+                  accent: LimyeColors.accent,
                   wide: c.maxWidth.clamp(280.0, 360.0),
                 ),
               ),
@@ -1038,7 +1038,7 @@ class _FeaturesDeepDive extends StatelessWidget {
                     },
                   ),
                 ),
-                const SizedBox(height: BlackLightSpacing.lg),
+                const SizedBox(height: LimyeSpacing.lg),
                 alternatingRow(
                   graphicOnLeft: false,
                   graphic: permitIllo,
@@ -1047,7 +1047,7 @@ class _FeaturesDeepDive extends StatelessWidget {
                     body: LandingContent.featurePermitBody,
                   ),
                 ),
-                const SizedBox(height: BlackLightSpacing.lg),
+                const SizedBox(height: LimyeSpacing.lg),
                 alternatingRow(
                   graphicOnLeft: true,
                   graphic: poolIllo,
@@ -1083,23 +1083,23 @@ class _FeatureCopyColumn extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: BlackLightTextStyles.cardHeading()),
+        Text(title, style: LimyeTextStyles.cardHeading()),
         const SizedBox(height: 8),
-        Text(body, style: BlackLightTextStyles.body()),
+        Text(body, style: LimyeTextStyles.body()),
         if (linkLabel != null && onLinkTap != null) ...[
-          const SizedBox(height: BlackLightSpacing.sm),
+          const SizedBox(height: LimyeSpacing.sm),
           TextButton(
             onPressed: onLinkTap,
             style: TextButton.styleFrom(
-              foregroundColor: BlackLightColors.accent,
+              foregroundColor: LimyeColors.accent,
               padding: EdgeInsets.zero,
               minimumSize: Size.zero,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
             child: Text(
               linkLabel!,
-              style: BlackLightTextStyles.bodyBold(
-                color: BlackLightColors.accent,
+              style: LimyeTextStyles.bodyBold(
+                color: LimyeColors.accent,
               ),
             ),
           ),
@@ -1137,9 +1137,9 @@ class _SocialProofSection extends StatelessWidget {
       children: [
         Text(
           LandingContent.socialProofHeadline,
-          style: BlackLightTextStyles.sectionHeading(),
+          style: LimyeTextStyles.sectionHeading(),
         ),
-        const SizedBox(height: BlackLightSpacing.lg),
+        const SizedBox(height: LimyeSpacing.lg),
         LayoutBuilder(
           builder: (context, c) {
             final wide = c.hasBoundedWidth && c.maxWidth > 900;
@@ -1148,7 +1148,7 @@ class _SocialProofSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   for (var i = 0; i < _cards.length; i++) ...[
-                    if (i > 0) const SizedBox(width: BlackLightSpacing.cardGap),
+                    if (i > 0) const SizedBox(width: LimyeSpacing.cardGap),
                     Expanded(child: _TestimonialCard(data: _cards[i])),
                   ],
                 ],
@@ -1159,7 +1159,7 @@ class _SocialProofSection extends StatelessWidget {
               children: [
                 for (final card in _cards) ...[
                   _TestimonialCard(data: card),
-                  const SizedBox(height: BlackLightSpacing.sm),
+                  const SizedBox(height: LimyeSpacing.sm),
                 ],
               ],
             );
@@ -1178,24 +1178,24 @@ class _TestimonialCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(BlackLightSpacing.cardPadding),
+      padding: const EdgeInsets.all(LimyeSpacing.cardPadding),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
-        borderRadius: BorderRadius.circular(BlackLightRadius.card),
-        border: Border.all(color: BlackLightColors.border),
+        color: LimyeColors.surface,
+        borderRadius: BorderRadius.circular(LimyeRadius.card),
+        border: Border.all(color: LimyeColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             '"${data.$1}"',
-            style: BlackLightTextStyles.body(),
+            style: LimyeTextStyles.body(),
           ),
           const SizedBox(height: 10),
           Text(
             data.$2,
-            style: BlackLightTextStyles.caption(
-              color: BlackLightColors.textCaption,
+            style: LimyeTextStyles.caption(
+              color: LimyeColors.textCaption,
             ),
           ),
         ],
@@ -1222,14 +1222,14 @@ class _FinalCtaSection extends StatelessWidget {
         child: Material(
           color: c.surfaceMuted,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(BlackLightRadius.lg),
+            borderRadius: BorderRadius.circular(LimyeRadius.lg),
             side: BorderSide(color: c.outline),
           ),
           elevation: 0,
           child: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: BlackLightSpacing.lg,
-              vertical: BlackLightSpacing.md + 8,
+              horizontal: LimyeSpacing.lg,
+              vertical: LimyeSpacing.md + 8,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -1245,7 +1245,7 @@ class _FinalCtaSection extends StatelessWidget {
                   style: tt.bodyMedium?.copyWith(color: c.onSurfaceMuted),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: BlackLightSpacing.md),
+                const SizedBox(height: LimyeSpacing.md),
                 FilledButton(
                   onPressed: onStart,
                   style: FilledButton.styleFrom(
@@ -1450,11 +1450,11 @@ class _WalletSection extends StatelessWidget {
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 800),
         child: Container(
-          padding: const EdgeInsets.all(BlackLightSpacing.lg),
+          padding: const EdgeInsets.all(LimyeSpacing.lg),
           decoration: BoxDecoration(
-            color: BlackLightColors.surface,
-            borderRadius: BorderRadius.circular(BlackLightRadius.card),
-            border: Border.all(color: BlackLightColors.border),
+            color: LimyeColors.surface,
+            borderRadius: BorderRadius.circular(LimyeRadius.card),
+            border: Border.all(color: LimyeColors.border),
           ),
           child: LayoutBuilder(builder: (ctx, constraints) {
             final isWide =
@@ -1465,7 +1465,7 @@ class _WalletSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _WalletBalance(),
-                  const SizedBox(width: BlackLightSpacing.md),
+                  const SizedBox(width: LimyeSpacing.md),
                   _ConnectWalletBtn(),
                 ],
               );
@@ -1474,7 +1474,7 @@ class _WalletSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _WalletBalance(),
-                const SizedBox(height: BlackLightSpacing.md),
+                const SizedBox(height: LimyeSpacing.md),
                 _ConnectWalletBtn(),
               ],
             );
@@ -1495,29 +1495,29 @@ class _WalletBalance extends StatelessWidget {
           width: 48,
           height: 48,
           decoration: BoxDecoration(
-            color: BlackLightColors.surface,
+            color: LimyeColors.surface,
             borderRadius: BorderRadius.circular(999),
-            border: Border.all(color: BlackLightColors.border),
+            border: Border.all(color: LimyeColors.border),
           ),
           child: const Icon(Icons.account_balance_wallet_outlined,
-              size: 22, color: BlackLightColors.textBody),
+              size: 22, color: LimyeColors.textBody),
         ),
-        const SizedBox(width: BlackLightSpacing.md),
+        const SizedBox(width: LimyeSpacing.md),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(WalletContent.hlioBalanceLabel,
-                style: BlackLightTextStyles.caption(
-                    color: BlackLightColors.textCaption)),
+                style: LimyeTextStyles.caption(
+                    color: LimyeColors.textCaption)),
             Row(
               children: [
                 Text(WalletContent.demoBalanceAmount,
-                    style: BlackLightTextStyles.dataLarge()),
+                    style: LimyeTextStyles.dataLarge()),
                 const SizedBox(width: 6),
                 Text(WalletContent.hlioTicker,
-                    style: BlackLightTextStyles.body(
-                        color: BlackLightColors.textBody)),
+                    style: LimyeTextStyles.body(
+                        color: LimyeColors.textBody)),
               ],
             ),
           ],
@@ -1531,7 +1531,7 @@ class _ConnectWalletBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: BlackLightSpacing.buttonHeight,
+      height: LimyeSpacing.buttonHeight,
       child: ElevatedButton.icon(
         onPressed: () {
           AppFeedback.snack(
@@ -1541,9 +1541,9 @@ class _ConnectWalletBtn extends StatelessWidget {
         },
         icon: const Icon(Icons.link, size: 18),
         label: Text(WalletContent.connectWallet,
-            style: BlackLightTextStyles.bodyBold(color: Colors.white)),
+            style: LimyeTextStyles.bodyBold(color: Colors.white)),
         style: ElevatedButton.styleFrom(
-          backgroundColor: BlackLightColors.accent,
+          backgroundColor: LimyeColors.accent,
           foregroundColor: Colors.white,
           elevation: 0,
           shape: const StadiumBorder(),

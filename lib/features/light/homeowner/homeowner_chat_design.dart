@@ -1,8 +1,8 @@
-import 'package:blacklight_app/core/content/content_registry.dart';
+import 'package:limye_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
-import 'package:blacklight_app/theme/blacklight_theme.dart';
-import 'package:blacklight_app/core/models/chat_message.dart';
-import 'package:blacklight_app/core/illustrations/geometric_illustrations.dart';
+import 'package:limye_app/theme/limye_theme.dart';
+import 'package:limye_app/core/models/chat_message.dart';
+import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
 
 class HomeownerChatDesign extends StatefulWidget {
   final List<ChatMessage> messages;
@@ -60,27 +60,27 @@ class _HomeownerChatDesignState extends State<HomeownerChatDesign> {
               Container(
                 height: 64,
                 padding: const EdgeInsets.symmetric(
-                    horizontal: BlackLightSpacing.md),
+                    horizontal: LimyeSpacing.md),
                 decoration: const BoxDecoration(
-                  color: BlackLightColors.surface,
+                  color: LimyeColors.surface,
                   border: Border(
-                      bottom: BorderSide(color: BlackLightColors.border)),
+                      bottom: BorderSide(color: LimyeColors.border)),
                 ),
                 child: Row(
                   children: [
                     const Icon(Icons.solar_power_rounded,
-                        size: 20, color: BlackLightColors.accent),
+                        size: 20, color: LimyeColors.accent),
                     const SizedBox(width: 8),
                     Text(HomeownerChatContent.designAiTitle,
-                        style: BlackLightTextStyles.cardHeading()),
+                        style: LimyeTextStyles.cardHeading()),
                     const Spacer(),
                     Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
-                        color: BlackLightColors.surface,
+                        color: LimyeColors.surface,
                         borderRadius: BorderRadius.circular(999),
-                        border: Border.all(color: BlackLightColors.green),
+                        border: Border.all(color: LimyeColors.green),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -89,14 +89,14 @@ class _HomeownerChatDesignState extends State<HomeownerChatDesign> {
                             width: 6,
                             height: 6,
                             decoration: const BoxDecoration(
-                              color: BlackLightColors.green,
+                              color: LimyeColors.green,
                               shape: BoxShape.circle,
                             ),
                           ),
                           const SizedBox(width: 5),
                           Text(HomeownerChatContent.designLiveChip,
-                              style: BlackLightTextStyles.caption(
-                                  color: BlackLightColors.green)),
+                              style: LimyeTextStyles.caption(
+                                  color: LimyeColors.green)),
                         ],
                       ),
                     ),
@@ -110,7 +110,7 @@ class _HomeownerChatDesignState extends State<HomeownerChatDesign> {
                     ? const _EmptyChatState()
                     : ListView.builder(
                         controller: _scrollCtrl,
-                        padding: const EdgeInsets.all(BlackLightSpacing.md),
+                        padding: const EdgeInsets.all(LimyeSpacing.md),
                         itemCount: widget.messages.length,
                         itemBuilder: (context, i) {
                           return _MessageBubble(message: widget.messages[i]);
@@ -120,11 +120,11 @@ class _HomeownerChatDesignState extends State<HomeownerChatDesign> {
 
               // Input
               Container(
-                padding: const EdgeInsets.all(BlackLightSpacing.sm),
+                padding: const EdgeInsets.all(LimyeSpacing.sm),
                 decoration: const BoxDecoration(
-                  color: BlackLightColors.surface,
+                  color: LimyeColors.surface,
                   border:
-                      Border(top: BorderSide(color: BlackLightColors.border)),
+                      Border(top: BorderSide(color: LimyeColors.border)),
                 ),
                 child: Row(
                   children: [
@@ -132,28 +132,28 @@ class _HomeownerChatDesignState extends State<HomeownerChatDesign> {
                       child: TextField(
                         controller: _inputCtrl,
                         onSubmitted: (_) => _send(),
-                        style: BlackLightTextStyles.body(
-                            color: BlackLightColors.textPrimary),
+                        style: LimyeTextStyles.body(
+                            color: LimyeColors.textPrimary),
                         decoration: InputDecoration(
                           hintText: HomeownerChatContent.designInputPlaceholder,
-                          hintStyle: BlackLightTextStyles.body(
-                              color: BlackLightColors.textCaption),
+                          hintStyle: LimyeTextStyles.body(
+                              color: LimyeColors.textCaption),
                           filled: true,
-                          fillColor: BlackLightColors.background,
+                          fillColor: LimyeColors.background,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(999),
                             borderSide: const BorderSide(
-                                color: BlackLightColors.border),
+                                color: LimyeColors.border),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(999),
                             borderSide: const BorderSide(
-                                color: BlackLightColors.border),
+                                color: LimyeColors.border),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(999),
                             borderSide: const BorderSide(
-                                color: BlackLightColors.accent, width: 1.5),
+                                color: LimyeColors.accent, width: 1.5),
                           ),
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 12),
@@ -167,7 +167,7 @@ class _HomeownerChatDesignState extends State<HomeownerChatDesign> {
                         width: 44,
                         height: 44,
                         decoration: const BoxDecoration(
-                          color: BlackLightColors.accent,
+                          color: LimyeColors.accent,
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(Icons.send_rounded,
@@ -190,16 +190,16 @@ class _HomeownerChatDesignState extends State<HomeownerChatDesign> {
               Container(
                 height: 64,
                 padding: const EdgeInsets.symmetric(
-                    horizontal: BlackLightSpacing.md),
+                    horizontal: LimyeSpacing.md),
                 decoration: const BoxDecoration(
-                  color: BlackLightColors.surface,
+                  color: LimyeColors.surface,
                   border: Border(
-                      bottom: BorderSide(color: BlackLightColors.border)),
+                      bottom: BorderSide(color: LimyeColors.border)),
                 ),
                 child: Row(
                   children: [
                     Text(HomeownerChatContent.designPreviewTitle,
-                        style: BlackLightTextStyles.cardHeading()),
+                        style: LimyeTextStyles.cardHeading()),
                     const Spacer(),
                     if (widget.messages.isNotEmpty)
                       SizedBox(
@@ -208,10 +208,10 @@ class _HomeownerChatDesignState extends State<HomeownerChatDesign> {
                           onPressed: widget.onViewSummary,
                           icon: const Icon(Icons.arrow_forward, size: 16),
                           label: Text(HomeownerChatContent.designViewSummary,
-                              style: BlackLightTextStyles.caption(
+                              style: LimyeTextStyles.caption(
                                   color: Colors.white)),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: BlackLightColors.accent,
+                            backgroundColor: LimyeColors.accent,
                             foregroundColor: Colors.white,
                             elevation: 0,
                             shape: const StadiumBorder(),
@@ -224,7 +224,7 @@ class _HomeownerChatDesignState extends State<HomeownerChatDesign> {
               ),
               Expanded(
                 child: Container(
-                  color: BlackLightColors.background,
+                  color: LimyeColors.background,
                   child: Center(
                     child: widget.messages.isNotEmpty
                         ? _ActivePreview()
@@ -247,7 +247,7 @@ class _EmptyChatState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(BlackLightSpacing.lg),
+        padding: const EdgeInsets.all(LimyeSpacing.lg),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -255,20 +255,20 @@ class _EmptyChatState extends StatelessWidget {
               width: 56,
               height: 56,
               decoration: BoxDecoration(
-                color: BlackLightColors.surface,
+                color: LimyeColors.surface,
                 shape: BoxShape.circle,
-                border: Border.all(color: BlackLightColors.border),
+                border: Border.all(color: LimyeColors.border),
               ),
               child: const Icon(Icons.solar_power_outlined,
-                  size: 26, color: BlackLightColors.accent),
+                  size: 26, color: LimyeColors.accent),
             ),
-            const SizedBox(height: BlackLightSpacing.md),
+            const SizedBox(height: LimyeSpacing.md),
             Text(HomeownerChatContent.designStartTitle,
-                style: BlackLightTextStyles.cardHeading()),
+                style: LimyeTextStyles.cardHeading()),
             const SizedBox(height: 4),
             Text(
               HomeownerChatContent.designStartBody,
-              style: BlackLightTextStyles.body(),
+              style: LimyeTextStyles.body(),
               textAlign: TextAlign.center,
             ),
           ],
@@ -285,10 +285,10 @@ class _IdlePreview extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         RoofPlaceholder(height: 300, width: 480),
-        const SizedBox(height: BlackLightSpacing.md),
+        const SizedBox(height: LimyeSpacing.md),
         Text(HomeownerChatContent.designAwaitingInput,
             style:
-                BlackLightTextStyles.body(color: BlackLightColors.textCaption)),
+                LimyeTextStyles.body(color: LimyeColors.textCaption)),
       ],
     );
   }
@@ -298,12 +298,12 @@ class _ActivePreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(BlackLightSpacing.md),
+      padding: const EdgeInsets.all(LimyeSpacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ActiveRoofDesign(height: 320),
-          const SizedBox(height: BlackLightSpacing.md),
+          const SizedBox(height: LimyeSpacing.md),
           _SpecChipsRow(),
         ],
       ),
@@ -329,18 +329,18 @@ class _SpecChipsRow extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(
-                  color: BlackLightColors.surface,
-                  borderRadius: BorderRadius.circular(BlackLightRadius.md),
-                  border: Border.all(color: BlackLightColors.border),
+                  color: LimyeColors.surface,
+                  borderRadius: BorderRadius.circular(LimyeRadius.md),
+                  border: Border.all(color: LimyeColors.border),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(s.$1, size: 14, color: BlackLightColors.textCaption),
+                    Icon(s.$1, size: 14, color: LimyeColors.textCaption),
                     const SizedBox(width: 6),
                     Text(s.$2,
-                        style: BlackLightTextStyles.caption(
-                            color: BlackLightColors.textCaption)),
+                        style: LimyeTextStyles.caption(
+                            color: LimyeColors.textCaption)),
                   ],
                 ),
               ))
@@ -359,7 +359,7 @@ class _MessageBubble extends StatelessWidget {
     final isUser = message.sender == MessageSender.user;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: BlackLightSpacing.sm),
+      padding: const EdgeInsets.only(bottom: LimyeSpacing.sm),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment:
@@ -370,7 +370,7 @@ class _MessageBubble extends StatelessWidget {
               width: 28,
               height: 28,
               decoration: const BoxDecoration(
-                color: BlackLightColors.accent,
+                color: LimyeColors.accent,
                 shape: BoxShape.circle,
               ),
               child: const Icon(Icons.solar_power_rounded,
@@ -381,24 +381,24 @@ class _MessageBubble extends StatelessWidget {
           Flexible(
             child: Container(
               padding: const EdgeInsets.symmetric(
-                  horizontal: 14, vertical: BlackLightSpacing.xs),
+                  horizontal: 14, vertical: LimyeSpacing.xs),
               decoration: BoxDecoration(
                 color:
-                    isUser ? BlackLightColors.accent : BlackLightColors.surface,
+                    isUser ? LimyeColors.accent : LimyeColors.surface,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(isUser ? BlackLightRadius.card : 4),
-                  topRight: Radius.circular(isUser ? 4 : BlackLightRadius.card),
-                  bottomLeft: const Radius.circular(BlackLightRadius.card),
-                  bottomRight: const Radius.circular(BlackLightRadius.card),
+                  topLeft: Radius.circular(isUser ? LimyeRadius.card : 4),
+                  topRight: Radius.circular(isUser ? 4 : LimyeRadius.card),
+                  bottomLeft: const Radius.circular(LimyeRadius.card),
+                  bottomRight: const Radius.circular(LimyeRadius.card),
                 ),
                 border:
-                    isUser ? null : Border.all(color: BlackLightColors.border),
+                    isUser ? null : Border.all(color: LimyeColors.border),
               ),
               child: Text(
                 message.text,
-                style: BlackLightTextStyles.body(
+                style: LimyeTextStyles.body(
                     color:
-                        isUser ? Colors.white : BlackLightColors.textPrimary),
+                        isUser ? Colors.white : LimyeColors.textPrimary),
               ),
             ),
           ),

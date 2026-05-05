@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/project.dart';
 import '../../services/api.dart';
-import '../../theme/blacklight_theme.dart';
+import '../../theme/limye_theme.dart';
 
 /// Status pill for project rows; supports both enum and raw API strings.
 class ProjectStatusBadge extends StatelessWidget {
@@ -32,7 +32,7 @@ class ProjectStatusBadge extends StatelessWidget {
       ),
       child: Text(
         s.label.toUpperCase(),
-        style: BlackLightTextStyles.captionBold(color: fg),
+        style: LimyeTextStyles.captionBold(color: fg),
       ),
     );
   }

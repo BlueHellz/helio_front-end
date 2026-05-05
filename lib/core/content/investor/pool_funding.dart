@@ -6,7 +6,7 @@ class PoolFundingContent {
   static const heroTitleLine1 = 'Own a piece of solar.';
   static const heroTitleLine2 = 'Even without a roof.';
   static const heroBody =
-      'Black Light pools let everyday investors fund verified solar '
+      'LIMYÈ pools let everyday investors fund verified solar '
       'installations and earn a share of the energy revenue. '
       'Tokenized. Transparent. Powered by Helio Coin (HLIO).';
   static const readWhitepaper = 'Read whitepaper';

@@ -1,8 +1,8 @@
-import 'package:blacklight_app/core/content/content_registry.dart';
+import 'package:limye_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
 
-import 'package:blacklight_app/core/models/chat_message.dart';
-import 'package:blacklight_app/theme/blacklight_theme.dart';
+import 'package:limye_app/core/models/chat_message.dart';
+import 'package:limye_app/theme/limye_theme.dart';
 
 class HomeownerChatPage extends StatelessWidget {
   const HomeownerChatPage({super.key});
@@ -28,14 +28,14 @@ class HomeownerChatPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: const EdgeInsets.all(BlackLightSpacing.gutter),
+          padding: const EdgeInsets.all(LimyeSpacing.gutter),
           child: Text(HomeownerChatContent.pageTitle,
-              style: BlackLightTextStyles.sectionHeading()),
+              style: LimyeTextStyles.sectionHeading()),
         ),
         Expanded(
           child: ListView.separated(
             padding: const EdgeInsets.symmetric(
-              horizontal: BlackLightSpacing.gutter,
+              horizontal: LimyeSpacing.gutter,
             ),
             itemCount: messages.length,
             separatorBuilder: (_, __) => const SizedBox(height: 10),
@@ -49,11 +49,11 @@ class HomeownerChatPage extends StatelessWidget {
                   constraints: const BoxConstraints(maxWidth: 520),
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color: BlackLightColors.surface,
-                    borderRadius: BorderRadius.circular(BlackLightRadius.md),
-                    border: Border.all(color: BlackLightColors.border),
+                    color: LimyeColors.surface,
+                    borderRadius: BorderRadius.circular(LimyeRadius.md),
+                    border: Border.all(color: LimyeColors.border),
                   ),
-                  child: Text(m.text, style: BlackLightTextStyles.body()),
+                  child: Text(m.text, style: LimyeTextStyles.body()),
                 ),
               );
             },
@@ -61,10 +61,10 @@ class HomeownerChatPage extends StatelessWidget {
         ),
         const Divider(height: 1),
         Padding(
-          padding: const EdgeInsets.all(BlackLightSpacing.gutter),
+          padding: const EdgeInsets.all(LimyeSpacing.gutter),
           child: Text(
             HomeownerChatContent.composerDisabledHint,
-            style: BlackLightTextStyles.caption(),
+            style: LimyeTextStyles.caption(),
           ),
         ),
       ],

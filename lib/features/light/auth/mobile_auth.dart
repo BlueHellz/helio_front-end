@@ -1,16 +1,16 @@
 import 'dart:developer' as developer;
 
-import 'package:blacklight_app/core/content/content_registry.dart';
+import 'package:limye_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:blacklight_app/core/ui/app_feedback.dart';
-import 'package:blacklight_app/theme/blacklight_theme.dart';
-import 'package:blacklight_app/core/brand/blacklight_brand_logo.dart';
-import 'package:blacklight_app/core/app_state.dart';
-import 'package:blacklight_app/core/illustrations/geometric_illustrations.dart';
-import 'package:blacklight_app/core/providers/session_providers.dart';
-import 'package:blacklight_app/services/auth_api.dart';
+import 'package:limye_app/core/ui/app_feedback.dart';
+import 'package:limye_app/theme/limye_theme.dart';
+import 'package:limye_app/core/brand/blacklight_brand_logo.dart';
+import 'package:limye_app/core/app_state.dart';
+import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
+import 'package:limye_app/core/providers/session_providers.dart';
+import 'package:limye_app/services/auth_api.dart';
 
 class MobileAuth extends ConsumerStatefulWidget {
   const MobileAuth({super.key, this.onBack});
@@ -88,7 +88,7 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BlackLightColors.background,
+      backgroundColor: LimyeColors.background,
       appBar: AppBar(
         leading: widget.onBack != null
             ? IconButton(
@@ -100,65 +100,65 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(BlackLightSpacing.md),
+          padding: const EdgeInsets.all(LimyeSpacing.md),
           child: Column(
             children: [
-              const SizedBox(height: BlackLightSpacing.md),
+              const SizedBox(height: LimyeSpacing.md),
               const BlackLightLogo(height: 48, maxWidth: 300),
-              const SizedBox(height: BlackLightSpacing.lg),
+              const SizedBox(height: LimyeSpacing.lg),
               const SunRingsIllustration(size: 160),
               const SizedBox(height: 6),
               Text(
                 AuthContent.platformTagline,
-                style: BlackLightTextStyles.mobileBody(
-                    color: BlackLightColors.textCaption),
+                style: LimyeTextStyles.mobileBody(
+                    color: LimyeColors.textCaption),
               ),
-              const SizedBox(height: BlackLightSpacing.xl),
+              const SizedBox(height: LimyeSpacing.xl),
               Container(
-                padding: const EdgeInsets.all(BlackLightSpacing.cardPadding),
+                padding: const EdgeInsets.all(LimyeSpacing.cardPadding),
                 decoration: BoxDecoration(
-                  color: BlackLightColors.surface,
-                  borderRadius: BorderRadius.circular(BlackLightRadius.card),
-                  border: Border.all(color: BlackLightColors.border),
+                  color: LimyeColors.surface,
+                  borderRadius: BorderRadius.circular(LimyeRadius.card),
+                  border: Border.all(color: LimyeColors.border),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       AuthContent.welcomeBack,
-                      style: BlackLightTextStyles.mobileH2(),
+                      style: LimyeTextStyles.mobileH2(),
                     ),
-                    const SizedBox(height: BlackLightSpacing.md),
+                    const SizedBox(height: LimyeSpacing.md),
                     Text(
                       AuthContent.mobileLabelEmail.toUpperCase(),
-                      style: BlackLightTextStyles.mobileLabelBold(),
+                      style: LimyeTextStyles.mobileLabelBold(),
                     ),
                     const SizedBox(height: 6),
                     SizedBox(
-                      height: BlackLightSpacing.inputHeightMobile,
+                      height: LimyeSpacing.inputHeightMobile,
                       child: TextField(
                         controller: _emailCtrl,
                         keyboardType: TextInputType.emailAddress,
                         enabled: !_submitting,
-                        style: BlackLightTextStyles.mobileBody(
-                            color: BlackLightColors.textPrimary),
+                        style: LimyeTextStyles.mobileBody(
+                            color: LimyeColors.textPrimary),
                         decoration: _inputDeco(AuthContent.hintEmail),
                       ),
                     ),
-                    const SizedBox(height: BlackLightSpacing.sm),
+                    const SizedBox(height: LimyeSpacing.sm),
                     Text(
                       AuthContent.passwordFieldCaption,
-                      style: BlackLightTextStyles.mobileLabelBold(),
+                      style: LimyeTextStyles.mobileLabelBold(),
                     ),
                     const SizedBox(height: 6),
                     SizedBox(
-                      height: BlackLightSpacing.inputHeightMobile,
+                      height: LimyeSpacing.inputHeightMobile,
                       child: TextField(
                         controller: _passwordCtrl,
                         obscureText: _obscurePassword,
                         enabled: !_submitting,
-                        style: BlackLightTextStyles.mobileBody(
-                            color: BlackLightColors.textPrimary),
+                        style: LimyeTextStyles.mobileBody(
+                            color: LimyeColors.textPrimary),
                         decoration:
                             _inputDeco(AuthContent.hintPasswordObscured).copyWith(
                           suffixIcon: GestureDetector(
@@ -170,21 +170,21 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
                               _obscurePassword
                                   ? Icons.visibility_off_outlined
                                   : Icons.visibility_outlined,
-                              color: BlackLightColors.textCaption,
+                              color: LimyeColors.textCaption,
                               size: 18,
                             ),
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: BlackLightSpacing.md),
+                    const SizedBox(height: LimyeSpacing.md),
                     SizedBox(
                       width: double.infinity,
-                      height: BlackLightSpacing.buttonHeight,
+                      height: LimyeSpacing.buttonHeight,
                       child: ElevatedButton(
                         onPressed: _submitting ? null : _submit,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: BlackLightColors.accent,
+                          backgroundColor: LimyeColors.accent,
                           foregroundColor: Colors.white,
                           elevation: 0,
                           shape: const StadiumBorder(),
@@ -200,14 +200,14 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
                               )
                             : Text(
                                 AuthContent.mobileTabSignIn,
-                                style: BlackLightTextStyles.mobileButton(),
+                                style: LimyeTextStyles.mobileButton(),
                               ),
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: BlackLightSpacing.md),
+              const SizedBox(height: LimyeSpacing.md),
               Row(
                 children: [
                   const Expanded(child: Divider()),
@@ -215,17 +215,17 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Text(
                       AuthContent.dividerOr,
-                      style: BlackLightTextStyles.mobileBody(
-                          color: BlackLightColors.textCaption),
+                      style: LimyeTextStyles.mobileBody(
+                          color: LimyeColors.textCaption),
                     ),
                   ),
                   const Expanded(child: Divider()),
                 ],
               ),
-              const SizedBox(height: BlackLightSpacing.md),
+              const SizedBox(height: LimyeSpacing.md),
               SizedBox(
                 width: double.infinity,
-                height: BlackLightSpacing.buttonHeight,
+                height: LimyeSpacing.buttonHeight,
                 child: OutlinedButton.icon(
                   onPressed: _submitting
                       ? null
@@ -235,10 +235,10 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
                   label: Text(AuthContent.mobileContinueGoogle),
                 ),
               ),
-              const SizedBox(height: BlackLightSpacing.xs),
+              const SizedBox(height: LimyeSpacing.xs),
               SizedBox(
                 width: double.infinity,
-                height: BlackLightSpacing.buttonHeight,
+                height: LimyeSpacing.buttonHeight,
                 child: OutlinedButton.icon(
                   onPressed: _submitting
                       ? null
@@ -248,11 +248,11 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
                   label: Text(AuthContent.mobileContinueApple),
                 ),
               ),
-              const SizedBox(height: BlackLightSpacing.xl),
+              const SizedBox(height: LimyeSpacing.xl),
               Text(
                 AuthContent.mobileLegalFooterShort,
-                style: BlackLightTextStyles.mobileBody(
-                        color: BlackLightColors.textCaption)
+                style: LimyeTextStyles.mobileBody(
+                        color: LimyeColors.textCaption)
                     .copyWith(fontSize: 11),
               ),
             ],
@@ -264,24 +264,24 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
 
   InputDecoration _inputDeco(String hint) => InputDecoration(
         hintText: hint,
-        hintStyle: BlackLightTextStyles.mobileBody(
-            color: BlackLightColors.textCaption),
+        hintStyle: LimyeTextStyles.mobileBody(
+            color: LimyeColors.textCaption),
         filled: true,
-        fillColor: BlackLightColors.surface,
+        fillColor: LimyeColors.surface,
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(BlackLightRadius.inputMobile),
-          borderSide: const BorderSide(color: BlackLightColors.inputBorder),
+          borderRadius: BorderRadius.circular(LimyeRadius.inputMobile),
+          borderSide: const BorderSide(color: LimyeColors.inputBorder),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(BlackLightRadius.inputMobile),
-          borderSide: const BorderSide(color: BlackLightColors.inputBorder),
+          borderRadius: BorderRadius.circular(LimyeRadius.inputMobile),
+          borderSide: const BorderSide(color: LimyeColors.inputBorder),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(BlackLightRadius.inputMobile),
+          borderRadius: BorderRadius.circular(LimyeRadius.inputMobile),
           borderSide:
-              const BorderSide(color: BlackLightColors.accent, width: 1),
+              const BorderSide(color: LimyeColors.accent, width: 1),
         ),
       );
 }

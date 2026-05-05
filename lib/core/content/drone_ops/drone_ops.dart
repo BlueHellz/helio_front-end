@@ -5,7 +5,7 @@ class DroneOpsContent {
   // Web hero
   static const heroTitle = 'Fly. Earn. Power Solar.';
   static const heroBody =
-      'Become a certified Black Light drone operator and earn '
+      'Become a certified LIMYÈ drone operator and earn '
       'Helio Coin (HLIO) for every roof inspection. High-precision '
       'flights. Verifiable data. Meaningful rewards.';
   static const applyNow = 'Apply Now';

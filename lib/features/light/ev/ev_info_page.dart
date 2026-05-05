@@ -1,11 +1,11 @@
-import 'package:blacklight_app/core/content/content_registry.dart';
+import 'package:limye_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
-import 'package:blacklight_app/theme/blacklight_theme.dart';
-import 'package:blacklight_app/core/shell/web/homeowner_web_chrome.dart';
-import 'package:blacklight_app/core/illustrations/geometric_illustrations.dart';
+import 'package:limye_app/theme/limye_theme.dart';
+import 'package:limye_app/core/shell/web/homeowner_web_chrome.dart';
+import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
 
 // ─────────────────────────────────────────────
-// BLACK LIGHT — EV Charging info page (web)
+// LIMYÈ — EV Charging info page (web)
 // CTA-only public landing. Apply-as-host flow comes later.
 // ─────────────────────────────────────────────
 
@@ -33,14 +33,14 @@ class EvInfoPage extends StatelessWidget {
       child: Center(
         child: ConstrainedBox(
           constraints:
-              const BoxConstraints(maxWidth: BlackLightSpacing.containerMax),
+              const BoxConstraints(maxWidth: LimyeSpacing.containerMax),
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: BlackLightSpacing.gutter),
+                horizontal: LimyeSpacing.gutter),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: BlackLightSpacing.xl),
+                const SizedBox(height: LimyeSpacing.xl),
                 Center(
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 560),
@@ -50,15 +50,15 @@ class EvInfoPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: BlackLightSpacing.lg),
+                const SizedBox(height: LimyeSpacing.lg),
                 _EvHero(onApplyAsHost: onApplyAsHost),
-                const SizedBox(height: BlackLightSpacing.xl),
+                const SizedBox(height: LimyeSpacing.xl),
                 const _EvWhy(),
-                const SizedBox(height: BlackLightSpacing.lg),
+                const SizedBox(height: LimyeSpacing.lg),
                 _EvNetworkSection(),
-                const SizedBox(height: BlackLightSpacing.xl),
+                const SizedBox(height: LimyeSpacing.xl),
                 _EvCta(onApplyAsHost: onApplyAsHost),
-                const SizedBox(height: BlackLightSpacing.xl),
+                const SizedBox(height: LimyeSpacing.xl),
               ],
             ),
           ),
@@ -81,45 +81,45 @@ class _EvHero extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           decoration: BoxDecoration(
-            color: BlackLightColors.surface,
-            border: Border.all(color: BlackLightColors.border),
+            color: LimyeColors.surface,
+            border: Border.all(color: LimyeColors.border),
             borderRadius: BorderRadius.circular(999),
           ),
           child: Text(EvHostContent.heroEyebrow,
-              style: BlackLightTextStyles.captionBold(
-                  color: BlackLightColors.textBody)),
+              style: LimyeTextStyles.captionBold(
+                  color: LimyeColors.textBody)),
         ),
-        const SizedBox(height: BlackLightSpacing.md),
-        Text(EvHostContent.heroTitle, style: BlackLightTextStyles.hero()),
-        const SizedBox(height: BlackLightSpacing.md),
+        const SizedBox(height: LimyeSpacing.md),
+        Text(EvHostContent.heroTitle, style: LimyeTextStyles.hero()),
+        const SizedBox(height: LimyeSpacing.md),
         Text(
           EvHostContent.heroBody,
-          style: BlackLightTextStyles.body(),
+          style: LimyeTextStyles.body(),
         ),
-        const SizedBox(height: BlackLightSpacing.md),
+        const SizedBox(height: LimyeSpacing.md),
         Wrap(
-          spacing: BlackLightSpacing.sm,
-          runSpacing: BlackLightSpacing.xs,
+          spacing: LimyeSpacing.sm,
+          runSpacing: LimyeSpacing.xs,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             SizedBox(
-              height: BlackLightSpacing.buttonHeight,
+              height: LimyeSpacing.buttonHeight,
               child: ElevatedButton(
                 onPressed: onApplyAsHost,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: BlackLightColors.accent,
+                  backgroundColor: LimyeColors.accent,
                   foregroundColor: Colors.white,
                   elevation: 0,
                   shape: const StadiumBorder(),
                   padding: const EdgeInsets.symmetric(horizontal: 28),
                 ),
                 child: Text(EvHostContent.applyCta,
-                    style: BlackLightTextStyles.bodyBold(color: Colors.white)),
+                    style: LimyeTextStyles.bodyBold(color: Colors.white)),
               ),
             ),
             Text(EvHostContent.applicationsOpenLine,
-                style: BlackLightTextStyles.caption(
-                    color: BlackLightColors.textBody)),
+                style: LimyeTextStyles.caption(
+                    color: LimyeColors.textBody)),
           ],
         ),
       ],
@@ -131,38 +131,38 @@ class _EvNetworkSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(BlackLightSpacing.lg),
+      padding: const EdgeInsets.all(LimyeSpacing.lg),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
-        border: Border.all(color: BlackLightColors.border),
-        borderRadius: BorderRadius.circular(BlackLightRadius.card),
+        color: LimyeColors.surface,
+        border: Border.all(color: LimyeColors.border),
+        borderRadius: BorderRadius.circular(LimyeRadius.card),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             EvHostContent.networkSectionTitle,
-            style: BlackLightTextStyles.sectionHeading(),
+            style: LimyeTextStyles.sectionHeading(),
           ),
-          const SizedBox(height: BlackLightSpacing.xs),
+          const SizedBox(height: LimyeSpacing.xs),
           Text(
             EvHostContent.networkSectionLead,
-            style: BlackLightTextStyles.body(),
+            style: LimyeTextStyles.body(),
           ),
-          const SizedBox(height: BlackLightSpacing.md),
+          const SizedBox(height: LimyeSpacing.md),
           Text(
             EvHostContent.networkBullet1,
-            style: BlackLightTextStyles.body(),
+            style: LimyeTextStyles.body(),
           ),
-          const SizedBox(height: BlackLightSpacing.sm),
+          const SizedBox(height: LimyeSpacing.sm),
           Text(
             EvHostContent.networkBullet2,
-            style: BlackLightTextStyles.body(),
+            style: LimyeTextStyles.body(),
           ),
-          const SizedBox(height: BlackLightSpacing.sm),
+          const SizedBox(height: LimyeSpacing.sm),
           Text(
             EvHostContent.networkBullet3,
-            style: BlackLightTextStyles.body(),
+            style: LimyeTextStyles.body(),
           ),
         ],
       ),
@@ -196,11 +196,11 @@ class _EvWhy extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(EvHostContent.whyHostTitle, style: BlackLightTextStyles.sectionHeading()),
-        const SizedBox(height: BlackLightSpacing.xs),
+        Text(EvHostContent.whyHostTitle, style: LimyeTextStyles.sectionHeading()),
+        const SizedBox(height: LimyeSpacing.xs),
         Text(EvHostContent.whyHostSubtitle,
-            style: BlackLightTextStyles.body()),
-        const SizedBox(height: BlackLightSpacing.lg),
+            style: LimyeTextStyles.body()),
+        const SizedBox(height: LimyeSpacing.lg),
         LayoutBuilder(builder: (context, c) {
           final isWide = c.maxWidth > 860;
           if (isWide) {
@@ -211,7 +211,7 @@ class _EvWhy extends StatelessWidget {
                       child: _EvCard(
                           icon: i.$1, title: i.$2, body: i.$3)))
                   .expand((w) =>
-                      [w, const SizedBox(width: BlackLightSpacing.gutter)])
+                      [w, const SizedBox(width: LimyeSpacing.gutter)])
                   .take(_items.length * 2 - 1)
                   .toList(),
             );
@@ -220,7 +220,7 @@ class _EvWhy extends StatelessWidget {
             children: _items
                 .map((i) =>
                     _EvCard(icon: i.$1, title: i.$2, body: i.$3))
-                .expand((w) => [w, const SizedBox(height: BlackLightSpacing.md)])
+                .expand((w) => [w, const SizedBox(height: LimyeSpacing.md)])
                 .take(_items.length * 2 - 1)
                 .toList(),
           );
@@ -241,11 +241,11 @@ class _EvCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(BlackLightSpacing.md),
+      padding: const EdgeInsets.all(LimyeSpacing.md),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
-        border: Border.all(color: BlackLightColors.border),
-        borderRadius: BorderRadius.circular(BlackLightRadius.card),
+        color: LimyeColors.surface,
+        border: Border.all(color: LimyeColors.border),
+        borderRadius: BorderRadius.circular(LimyeRadius.card),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,16 +254,16 @@ class _EvCard extends StatelessWidget {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: BlackLightColors.background,
-              border: Border.all(color: BlackLightColors.border),
+              color: LimyeColors.background,
+              border: Border.all(color: LimyeColors.border),
               borderRadius: BorderRadius.circular(999),
             ),
-            child: Icon(icon, size: 22, color: BlackLightColors.accent),
+            child: Icon(icon, size: 22, color: LimyeColors.accent),
           ),
-          const SizedBox(height: BlackLightSpacing.md),
-          Text(title, style: BlackLightTextStyles.cardHeading()),
+          const SizedBox(height: LimyeSpacing.md),
+          Text(title, style: LimyeTextStyles.cardHeading()),
           const SizedBox(height: 6),
-          Text(body, style: BlackLightTextStyles.body()),
+          Text(body, style: LimyeTextStyles.body()),
         ],
       ),
     );
@@ -278,11 +278,11 @@ class _EvCta extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(BlackLightSpacing.lg),
+      padding: const EdgeInsets.all(LimyeSpacing.lg),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
-        border: Border.all(color: BlackLightColors.border),
-        borderRadius: BorderRadius.circular(BlackLightRadius.card),
+        color: LimyeColors.surface,
+        border: Border.all(color: LimyeColors.border),
+        borderRadius: BorderRadius.circular(LimyeRadius.card),
       ),
       child: LayoutBuilder(builder: (context, c) {
         final isWide = c.maxWidth > 760;
@@ -290,26 +290,26 @@ class _EvCta extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(EvHostContent.readyTitle,
-                style: BlackLightTextStyles.sectionHeading()),
-            const SizedBox(height: BlackLightSpacing.xs),
+                style: LimyeTextStyles.sectionHeading()),
+            const SizedBox(height: LimyeSpacing.xs),
             Text(
                 EvHostContent.readyBody,
-                style: BlackLightTextStyles.body()),
+                style: LimyeTextStyles.body()),
           ],
         );
         final right = SizedBox(
-          height: BlackLightSpacing.buttonHeight,
+          height: LimyeSpacing.buttonHeight,
           child: ElevatedButton(
             onPressed: onApplyAsHost,
             style: ElevatedButton.styleFrom(
-              backgroundColor: BlackLightColors.accent,
+              backgroundColor: LimyeColors.accent,
               foregroundColor: Colors.white,
               elevation: 0,
               shape: const StadiumBorder(),
               padding: const EdgeInsets.symmetric(horizontal: 28),
             ),
             child: Text(EvHostContent.applyCta,
-                style: BlackLightTextStyles.bodyBold(color: Colors.white)),
+                style: LimyeTextStyles.bodyBold(color: Colors.white)),
           ),
         );
         if (isWide) {
@@ -317,7 +317,7 @@ class _EvCta extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(child: left),
-              const SizedBox(width: BlackLightSpacing.xl),
+              const SizedBox(width: LimyeSpacing.xl),
               right,
             ],
           );
@@ -326,7 +326,7 @@ class _EvCta extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             left,
-            const SizedBox(height: BlackLightSpacing.md),
+            const SizedBox(height: LimyeSpacing.md),
             right,
           ],
         );

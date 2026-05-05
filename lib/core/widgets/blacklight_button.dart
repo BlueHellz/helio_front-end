@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../theme/blacklight_theme.dart';
+import '../../theme/limye_theme.dart';
 
 class BlackLightPrimaryButton extends StatelessWidget {
   final String label;
@@ -14,7 +14,7 @@ class BlackLightPrimaryButton extends StatelessWidget {
     this.onPressed,
     this.icon,
     this.width,
-    this.height = BlackLightSpacing.buttonHeight,
+    this.height = LimyeSpacing.buttonHeight,
   });
 
   @override
@@ -25,7 +25,7 @@ class BlackLightPrimaryButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: BlackLightColors.accent,
+          backgroundColor: LimyeColors.accent,
           foregroundColor: Colors.white,
           elevation: 0,
           shadowColor: Colors.transparent,
@@ -42,7 +42,7 @@ class BlackLightPrimaryButton extends StatelessWidget {
             ],
             Text(
               label,
-              style: BlackLightTextStyles.bodyBold(color: Colors.white),
+              style: LimyeTextStyles.bodyBold(color: Colors.white),
             ),
           ],
         ),
@@ -64,7 +64,7 @@ class BlackLightSecondaryButton extends StatelessWidget {
     this.onPressed,
     this.icon,
     this.width,
-    this.height = BlackLightSpacing.buttonHeight,
+    this.height = LimyeSpacing.buttonHeight,
   });
 
   @override
@@ -75,9 +75,9 @@ class BlackLightSecondaryButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
-          foregroundColor: BlackLightColors.textPrimary,
+          foregroundColor: LimyeColors.textPrimary,
           elevation: 0,
-          side: const BorderSide(color: BlackLightColors.border),
+          side: const BorderSide(color: LimyeColors.border),
           shape: const StadiumBorder(),
           padding: const EdgeInsets.symmetric(horizontal: 24),
         ),
@@ -86,13 +86,13 @@ class BlackLightSecondaryButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (icon != null) ...[
-              Icon(icon, size: 20, color: BlackLightColors.textBody),
+              Icon(icon, size: 20, color: LimyeColors.textBody),
               const SizedBox(width: 8),
             ],
             Text(
               label,
-              style: BlackLightTextStyles.bodyBold(
-                  color: BlackLightColors.textPrimary),
+              style: LimyeTextStyles.bodyBold(
+                  color: LimyeColors.textPrimary),
             ),
           ],
         ),
@@ -117,11 +117,11 @@ class BlackLightMobilePrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: BlackLightSpacing.buttonHeight,
+      height: LimyeSpacing.buttonHeight,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: BlackLightColors.accent,
+          backgroundColor: LimyeColors.accent,
           foregroundColor: Colors.white,
           elevation: 0,
           shadowColor: Colors.transparent,
@@ -134,7 +134,7 @@ class BlackLightMobilePrimaryButton extends StatelessWidget {
               Icon(icon, size: 20),
               const SizedBox(width: 8),
             ],
-            Text(label, style: BlackLightTextStyles.mobileButton()),
+            Text(label, style: LimyeTextStyles.mobileButton()),
           ],
         ),
       ),

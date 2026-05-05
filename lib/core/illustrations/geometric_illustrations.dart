@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import '../../theme/blacklight_theme.dart';
+import '../../theme/limye_theme.dart';
 
 // ─────────────────────────────────────────────────────────
 // ALL ILLUSTRATIONS ARE GEOMETRIC CUSTOMPAINT — ZERO PHOTOS
@@ -34,7 +34,7 @@ class _IsometricHousePainter extends CustomPainter {
     final cy = size.height * 0.55;
 
     final borderPaint = Paint()
-      ..color = BlackLightColors.border
+      ..color = LimyeColors.border
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
 
@@ -43,24 +43,24 @@ class _IsometricHousePainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     final wallShadePaint = Paint()
-      ..color = BlackLightColors.background
+      ..color = LimyeColors.background
       ..style = PaintingStyle.fill;
 
     final roofPaint = Paint()
-      ..color = BlackLightColors.surface
+      ..color = LimyeColors.surface
       ..style = PaintingStyle.fill;
 
     final panelPaint = Paint()
-      ..color = BlackLightColors.surface
+      ..color = LimyeColors.surface
       ..style = PaintingStyle.fill;
 
     final panelBorderPaint = Paint()
-      ..color = BlackLightColors.accent
+      ..color = LimyeColors.accent
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.8;
 
     final panelGreenPaint = Paint()
-      ..color = BlackLightColors.green
+      ..color = LimyeColors.green
       ..style = PaintingStyle.fill;
 
     // House dimensions in isometric projection
@@ -186,13 +186,13 @@ class _SunRingsPainter extends CustomPainter {
       if (i < radii.length - 1) {
         final paint = Paint()
           ..color =
-              i == 0 ? BlackLightColors.border : BlackLightColors.accent
+              i == 0 ? LimyeColors.border : LimyeColors.accent
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.0;
         canvas.drawCircle(center, radii[i], paint);
       } else {
         final corePaint = Paint()
-          ..color = BlackLightColors.accent
+          ..color = LimyeColors.accent
           ..style = PaintingStyle.fill;
         canvas.drawCircle(center, radii[i], corePaint);
         final icon = Icons.light_mode;
@@ -214,7 +214,7 @@ class _SunRingsPainter extends CustomPainter {
 
     // Cross-hair lines
     final linePaint = Paint()
-      ..color = BlackLightColors.border
+      ..color = LimyeColors.border
       ..strokeWidth = 1.0;
     canvas.drawLine(
         Offset(center.dx, 0), Offset(center.dx, size.height), linePaint);
@@ -223,7 +223,7 @@ class _SunRingsPainter extends CustomPainter {
 
     // Diagonal lines
     final diagPaint = Paint()
-      ..color = BlackLightColors.border
+      ..color = LimyeColors.border
       ..strokeWidth = 1.0;
     canvas.save();
     canvas.translate(center.dx, center.dy);
@@ -235,7 +235,7 @@ class _SunRingsPainter extends CustomPainter {
 
     // Small accent dots
     final dotPaint = Paint()
-      ..color = BlackLightColors.accent
+      ..color = LimyeColors.accent
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
     canvas.drawCircle(center + const Offset(-120, -100), 6, dotPaint);
@@ -269,7 +269,7 @@ class _RoofPlaceholderPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     // Grid background
     final gridPaint = Paint()
-      ..color = BlackLightColors.border
+      ..color = LimyeColors.border
       ..strokeWidth = 0.5;
 
     const step = 24.0;
@@ -286,10 +286,10 @@ class _RoofPlaceholderPainter extends CustomPainter {
     final h = size.height * 0.42;
 
     final roofPaint = Paint()
-      ..color = BlackLightColors.surface
+      ..color = LimyeColors.surface
       ..style = PaintingStyle.fill;
     final borderP = Paint()
-      ..color = BlackLightColors.border
+      ..color = LimyeColors.border
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.2;
 
@@ -307,10 +307,10 @@ class _RoofPlaceholderPainter extends CustomPainter {
 
     // Panel grid hint
     final panelPaint = Paint()
-      ..color = BlackLightColors.surface
+      ..color = LimyeColors.surface
       ..style = PaintingStyle.fill;
     final panelBorder = Paint()
-      ..color = BlackLightColors.accent
+      ..color = LimyeColors.accent
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.6;
 
@@ -354,7 +354,7 @@ class _ActiveRoofPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final gridPaint = Paint()
-      ..color = BlackLightColors.border
+      ..color = LimyeColors.border
       ..strokeWidth = 0.4;
 
     const step = 20.0;
@@ -372,10 +372,10 @@ class _ActiveRoofPainter extends CustomPainter {
 
     // Roof surface
     final roofPaint = Paint()
-      ..color = BlackLightColors.background
+      ..color = LimyeColors.background
       ..style = PaintingStyle.fill;
     final borderP = Paint()
-      ..color = BlackLightColors.border
+      ..color = LimyeColors.border
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.2;
 
@@ -391,26 +391,26 @@ class _ActiveRoofPainter extends CustomPainter {
 
     // Green panels (ideal zones)
     final greenPaint = Paint()
-      ..color = BlackLightColors.green
+      ..color = LimyeColors.green
       ..style = PaintingStyle.fill;
     final greenBorder = Paint()
-      ..color = BlackLightColors.border
+      ..color = LimyeColors.border
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.8;
 
     final bluePaint = Paint()
-      ..color = BlackLightColors.surface
+      ..color = LimyeColors.surface
       ..style = PaintingStyle.fill;
     final blueBorder = Paint()
-      ..color = BlackLightColors.accent
+      ..color = LimyeColors.accent
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.8;
 
     final grayPaint = Paint()
-      ..color = BlackLightColors.surface
+      ..color = LimyeColors.surface
       ..style = PaintingStyle.fill;
     final grayBorder = Paint()
-      ..color = BlackLightColors.border
+      ..color = LimyeColors.border
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.8;
 
@@ -468,7 +468,7 @@ class _EmptyHousePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = BlackLightColors.border
+      ..color = LimyeColors.border
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5
       ..strokeCap = StrokeCap.round
@@ -523,7 +523,7 @@ class _LandingHeroSolarPainter extends CustomPainter {
     _IsometricHousePainter().paint(canvas, size);
 
     final rayPaint = Paint()
-      ..color = BlackLightColors.accent.withValues(alpha: 0.35)
+      ..color = LimyeColors.accent.withValues(alpha: 0.35)
       ..strokeWidth = 1
       ..style = PaintingStyle.stroke;
     final sunCenter = Offset(size.width * 0.82, size.height * 0.12);
@@ -537,14 +537,14 @@ class _LandingHeroSolarPainter extends CustomPainter {
       );
     }
     final sunCore = Paint()
-      ..color = BlackLightColors.amber.withValues(alpha: 0.9)
+      ..color = LimyeColors.amber.withValues(alpha: 0.9)
       ..style = PaintingStyle.fill;
     canvas.drawCircle(sunCenter, 10, sunCore);
     canvas.drawCircle(
       sunCenter,
       10,
       Paint()
-        ..color = BlackLightColors.border
+        ..color = LimyeColors.border
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1,
     );
@@ -577,14 +577,14 @@ class _HowItWorksIsoPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final border = Paint()
-      ..color = BlackLightColors.border
+      ..color = LimyeColors.border
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
     final fill = Paint()
-      ..color = BlackLightColors.surface
+      ..color = LimyeColors.surface
       ..style = PaintingStyle.fill;
     final acc = Paint()
-      ..color = BlackLightColors.accent
+      ..color = LimyeColors.accent
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
 
@@ -664,13 +664,13 @@ class _BrowserHomeownerPainter extends CustomPainter {
       ..lineTo(inner.right - 16, roofTop + 48)
       ..lineTo(inner.left + 16, roofTop + 48)
       ..close();
-    canvas.drawPath(path, Paint()..color = BlackLightColors.surface);
+    canvas.drawPath(path, Paint()..color = LimyeColors.surface);
     canvas.drawPath(path, Paint()
-      ..color = BlackLightColors.border
+      ..color = LimyeColors.border
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1);
     final panelP = Paint()
-      ..color = BlackLightColors.green.withValues(alpha: 0.35)
+      ..color = LimyeColors.green.withValues(alpha: 0.35)
       ..style = PaintingStyle.fill;
     for (int i = 0; i < 4; i++) {
       final r = RRect.fromRectAndRadius(
@@ -682,7 +682,7 @@ class _BrowserHomeownerPainter extends CustomPainter {
       canvas.drawRRect(
         r,
         Paint()
-          ..color = BlackLightColors.accent
+          ..color = LimyeColors.accent
           ..style = PaintingStyle.stroke
           ..strokeWidth = 0.6,
       );
@@ -692,11 +692,11 @@ class _BrowserHomeownerPainter extends CustomPainter {
       Rect.fromLTWH(inner.left + 12, inner.bottom - 72, inner.width * 0.65, 48),
       const Radius.circular(10),
     );
-    canvas.drawRRect(bubble, Paint()..color = BlackLightColors.background);
+    canvas.drawRRect(bubble, Paint()..color = LimyeColors.background);
     canvas.drawRRect(
       bubble,
       Paint()
-        ..color = BlackLightColors.accent
+        ..color = LimyeColors.accent
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1,
     );
@@ -705,7 +705,7 @@ class _BrowserHomeownerPainter extends CustomPainter {
         Offset(bubble.outerRect.left + 14, bubble.outerRect.top + 14.0 + i * 12),
         Offset(bubble.outerRect.right - 40, bubble.outerRect.top + 14.0 + i * 12),
         Paint()
-          ..color = BlackLightColors.border
+          ..color = LimyeColors.border
           ..strokeWidth = 1,
       );
     }
@@ -745,11 +745,11 @@ class _BrowserOrgDashPainter extends CustomPainter {
       Rect.fromLTWH(inner.left + 4, inner.top + 4, 48, inner.height - 8),
       const Radius.circular(6),
     );
-    canvas.drawRRect(sidebar, Paint()..color = BlackLightColors.background);
+    canvas.drawRRect(sidebar, Paint()..color = LimyeColors.background);
     canvas.drawRRect(
       sidebar,
       Paint()
-        ..color = BlackLightColors.border
+        ..color = LimyeColors.border
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1,
     );
@@ -760,7 +760,7 @@ class _BrowserOrgDashPainter extends CustomPainter {
               sidebar.outerRect.left + 8, sidebar.outerRect.top + 12.0 + i * 20, 32, 8),
           const Radius.circular(2),
         ),
-        Paint()..color = BlackLightColors.border.withValues(alpha: 0.4),
+        Paint()..color = LimyeColors.border.withValues(alpha: 0.4),
       );
     }
 
@@ -774,11 +774,11 @@ class _BrowserOrgDashPainter extends CustomPainter {
               originX + c * (cardW + 8), originY + r * 56, cardW, 48),
           const Radius.circular(8),
         );
-        canvas.drawRRect(card, Paint()..color = BlackLightColors.surface);
+        canvas.drawRRect(card, Paint()..color = LimyeColors.surface);
         canvas.drawRRect(
           card,
           Paint()
-            ..color = BlackLightColors.border
+            ..color = LimyeColors.border
             ..style = PaintingStyle.stroke
             ..strokeWidth = 1,
         );
@@ -788,7 +788,7 @@ class _BrowserOrgDashPainter extends CustomPainter {
                 card.outerRect.left + 12, card.outerRect.top + 14, cardW * 0.35, 8),
             const Radius.circular(2),
           ),
-          Paint()..color = BlackLightColors.accent.withValues(alpha: 0.3),
+          Paint()..color = LimyeColors.accent.withValues(alpha: 0.3),
         );
       }
     }
@@ -801,29 +801,29 @@ class _BrowserOrgDashPainter extends CustomPainter {
 void _paintBrowserChrome(Canvas canvas, Size size) {
   final outer = RRect.fromRectAndRadius(
     Rect.fromLTWH(0, 0, size.width, size.height),
-    Radius.circular(BlackLightRadius.card),
+    Radius.circular(LimyeRadius.card),
   );
-  canvas.drawRRect(outer, Paint()..color = BlackLightColors.surface);
+  canvas.drawRRect(outer, Paint()..color = LimyeColors.surface);
   canvas.drawRRect(
     outer,
     Paint()
-      ..color = BlackLightColors.border
+      ..color = LimyeColors.border
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1,
   );
   for (int i = 0; i < 3; i++) {
     canvas.drawCircle(Offset(18.0 + i * 14, 22), 4,
-        Paint()..color = BlackLightColors.border);
+        Paint()..color = LimyeColors.border);
   }
   final bar = RRect.fromRectAndRadius(
     Rect.fromLTWH(54, 14, size.width - 68, 18),
     const Radius.circular(6),
   );
-  canvas.drawRRect(bar, Paint()..color = BlackLightColors.background);
+  canvas.drawRRect(bar, Paint()..color = LimyeColors.background);
   canvas.drawRRect(
     bar,
     Paint()
-      ..color = BlackLightColors.border
+      ..color = LimyeColors.border
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1,
   );
@@ -854,10 +854,10 @@ class _EvIsoPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final border = Paint()
-      ..color = BlackLightColors.border
+      ..color = LimyeColors.border
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
-    final fill = Paint()..color = BlackLightColors.surface;
+    final fill = Paint()..color = LimyeColors.surface;
     final cx = size.width * 0.5;
     final cy = size.height * 0.62;
 
@@ -880,7 +880,7 @@ class _EvIsoPainter extends CustomPainter {
     canvas.drawPath(
       ped,
       Paint()
-        ..color = BlackLightColors.background
+        ..color = LimyeColors.background
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1,
     );
@@ -891,7 +891,7 @@ class _EvIsoPainter extends CustomPainter {
         ..moveTo(cx + 18, cy - 4)
         ..quadraticBezierTo(cx - 10, cy - 40, cx - 52, cy - 12),
       Paint()
-        ..color = BlackLightColors.accent
+        ..color = LimyeColors.accent
         ..strokeWidth = 1.2
         ..style = PaintingStyle.stroke,
     );
@@ -916,12 +916,12 @@ class _EvIsoPainter extends CustomPainter {
         ..lineTo(cx + 18, cy - 14)
         ..lineTo(cx - 12, cy + 0)
         ..close(),
-      Paint()..color = BlackLightColors.accent.withValues(alpha: 0.12),
+      Paint()..color = LimyeColors.accent.withValues(alpha: 0.12),
     );
 
     // Connector head
     canvas.drawCircle(Offset(cx - 52, cy - 12), 5,
-        Paint()..color = BlackLightColors.accent);
+        Paint()..color = LimyeColors.accent);
   }
 
   @override
@@ -960,15 +960,15 @@ class _PoolPeopleRoofPainter extends CustomPainter {
       ..lineTo(cx, cy + 38)
       ..lineTo(cx - 88, cy + 6)
       ..close();
-    canvas.drawPath(roof, Paint()..color = BlackLightColors.surface);
+    canvas.drawPath(roof, Paint()..color = LimyeColors.surface);
     canvas.drawPath(
       roof,
       Paint()
-        ..color = BlackLightColors.border
+        ..color = LimyeColors.border
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1,
     );
-    final panel = Paint()..color = BlackLightColors.green.withValues(alpha: 0.28);
+    final panel = Paint()..color = LimyeColors.green.withValues(alpha: 0.28);
     for (int i = -2; i <= 2; i++) {
       final r = RRect.fromRectAndRadius(
         Rect.fromLTWH(cx + i * 14.0 - 10, cy - 4 + i * 3.0, 22, 12),
@@ -978,7 +978,7 @@ class _PoolPeopleRoofPainter extends CustomPainter {
       canvas.drawRRect(
         r,
         Paint()
-          ..color = BlackLightColors.accent
+          ..color = LimyeColors.accent
           ..style = PaintingStyle.stroke
           ..strokeWidth = 0.6,
       );
@@ -996,16 +996,16 @@ class _PoolPeopleRoofPainter extends CustomPainter {
       canvas.drawPath(
         b,
         Paint()
-          ..color = BlackLightColors.border
+          ..color = LimyeColors.border
           ..style = PaintingStyle.stroke
           ..strokeWidth = 0.8,
       );
     }
 
-    person(Offset(cx - 108, cy + 18), BlackLightColors.accent);
-    person(Offset(cx + 108, cy + 18), BlackLightColors.textBody);
-    person(Offset(cx - 40, cy + 52), BlackLightColors.green);
-    person(Offset(cx + 44, cy + 52), BlackLightColors.textBody);
+    person(Offset(cx - 108, cy + 18), LimyeColors.accent);
+    person(Offset(cx + 108, cy + 18), LimyeColors.textBody);
+    person(Offset(cx - 40, cy + 52), LimyeColors.green);
+    person(Offset(cx + 44, cy + 52), LimyeColors.textBody);
   }
 
   @override

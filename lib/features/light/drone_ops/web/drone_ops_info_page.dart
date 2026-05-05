@@ -1,10 +1,10 @@
-import 'package:blacklight_app/core/content/content_registry.dart';
+import 'package:limye_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
-import 'package:blacklight_app/theme/blacklight_theme.dart';
-import 'package:blacklight_app/core/shell/web/homeowner_web_chrome.dart';
+import 'package:limye_app/theme/limye_theme.dart';
+import 'package:limye_app/core/shell/web/homeowner_web_chrome.dart';
 
 // ─────────────────────────────────────────────
-// BLACK LIGHT — Drone Operator Program (web)
+// LIMYÈ — Drone Operator Program (web)
 // Public landing for prospective drone operators.
 // All data lives in form controllers; submit is a UI state change only.
 // ─────────────────────────────────────────────
@@ -61,22 +61,22 @@ class _DroneOpsInfoPageState extends State<DroneOpsInfoPage> {
       child: Center(
         child: ConstrainedBox(
           constraints:
-              const BoxConstraints(maxWidth: BlackLightSpacing.containerMax),
+              const BoxConstraints(maxWidth: LimyeSpacing.containerMax),
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: BlackLightSpacing.gutter),
+                horizontal: LimyeSpacing.gutter),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: BlackLightSpacing.xl),
+                const SizedBox(height: LimyeSpacing.xl),
                 const _Hero(),
-                const SizedBox(height: BlackLightSpacing.xl),
+                const SizedBox(height: LimyeSpacing.xl),
                 const _Benefits(),
-                const SizedBox(height: BlackLightSpacing.xl),
+                const SizedBox(height: LimyeSpacing.xl),
                 const _Process(),
-                const SizedBox(height: BlackLightSpacing.xl),
+                const SizedBox(height: LimyeSpacing.xl),
                 const _Requirements(),
-                const SizedBox(height: BlackLightSpacing.xl),
+                const SizedBox(height: LimyeSpacing.xl),
                 _ApplicationSection(
                   fullNameCtrl: _fullNameCtrl,
                   emailCtrl: _emailCtrl,
@@ -86,7 +86,7 @@ class _DroneOpsInfoPageState extends State<DroneOpsInfoPage> {
                   onSubmit: _handleSubmit,
                   onLaunchTerminal: widget.onLaunchTerminal,
                 ),
-                const SizedBox(height: BlackLightSpacing.xl),
+                const SizedBox(height: LimyeSpacing.xl),
               ],
             ),
           ),
@@ -110,31 +110,31 @@ class _Hero extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const _RecruitmentPill(),
-          const SizedBox(height: BlackLightSpacing.md),
+          const SizedBox(height: LimyeSpacing.md),
           Text(DroneOpsContent.heroTitle,
-              style: BlackLightTextStyles.hero()),
-          const SizedBox(height: BlackLightSpacing.md),
+              style: LimyeTextStyles.hero()),
+          const SizedBox(height: LimyeSpacing.md),
           Text(
             DroneOpsContent.heroBody,
-            style: BlackLightTextStyles.body(),
+            style: LimyeTextStyles.body(),
           ),
-          const SizedBox(height: BlackLightSpacing.md),
+          const SizedBox(height: LimyeSpacing.md),
           SizedBox(
-            height: BlackLightSpacing.buttonHeight,
+            height: LimyeSpacing.buttonHeight,
             child: ElevatedButton(
               onPressed: () {
                 Scrollable.ensureVisible(context,
                     duration: const Duration(milliseconds: 400));
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: BlackLightColors.accent,
+                backgroundColor: LimyeColors.accent,
                 foregroundColor: Colors.white,
                 elevation: 0,
                 shape: const StadiumBorder(),
                 padding: const EdgeInsets.symmetric(horizontal: 28),
               ),
               child: Text(DroneOpsContent.applyNow,
-                  style: BlackLightTextStyles.bodyBold(color: Colors.white)),
+                  style: LimyeTextStyles.bodyBold(color: Colors.white)),
             ),
           ),
         ],
@@ -144,9 +144,9 @@ class _Hero extends StatelessWidget {
         aspectRatio: 1.05,
         child: Container(
           decoration: BoxDecoration(
-            color: BlackLightColors.surface,
-            border: Border.all(color: BlackLightColors.border),
-            borderRadius: BorderRadius.circular(BlackLightRadius.card),
+            color: LimyeColors.surface,
+            border: Border.all(color: LimyeColors.border),
+            borderRadius: BorderRadius.circular(LimyeRadius.card),
           ),
           child: const _TelemetryPanel(),
         ),
@@ -157,7 +157,7 @@ class _Hero extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(flex: 55, child: left),
-            const SizedBox(width: BlackLightSpacing.xl),
+            const SizedBox(width: LimyeSpacing.xl),
             Expanded(flex: 45, child: telemetry),
           ],
         );
@@ -167,7 +167,7 @@ class _Hero extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           left,
-          const SizedBox(height: BlackLightSpacing.lg),
+          const SizedBox(height: LimyeSpacing.lg),
           telemetry,
         ],
       );
@@ -184,8 +184,8 @@ class _RecruitmentPill extends StatelessWidget {
       padding:
           const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
-        border: Border.all(color: BlackLightColors.border),
+        color: LimyeColors.surface,
+        border: Border.all(color: LimyeColors.border),
         borderRadius: BorderRadius.circular(999),
       ),
       child: Row(
@@ -195,14 +195,14 @@ class _RecruitmentPill extends StatelessWidget {
             width: 8,
             height: 8,
             decoration: const BoxDecoration(
-              color: BlackLightColors.accent,
+              color: LimyeColors.accent,
               shape: BoxShape.circle,
             ),
           ),
           const SizedBox(width: 8),
           Text(DroneOpsContent.activeRecruitment,
-              style: BlackLightTextStyles.captionBold(
-                  color: BlackLightColors.textBody)),
+              style: LimyeTextStyles.captionBold(
+                  color: LimyeColors.textBody)),
         ],
       ),
     );
@@ -215,7 +215,7 @@ class _TelemetryPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(BlackLightRadius.card),
+      borderRadius: BorderRadius.circular(LimyeRadius.card),
       child: Stack(
         children: [
           // Dot grid
@@ -230,7 +230,7 @@ class _TelemetryPanel extends StatelessWidget {
             left: 12,
             child: _MetaChip(
               text: DroneOpsContent.telemetryChip,
-              color: BlackLightColors.textBody,
+              color: LimyeColors.textBody,
             ),
           ),
           Positioned(
@@ -238,8 +238,8 @@ class _TelemetryPanel extends StatelessWidget {
             right: 12,
             child: _MetaChip(
               text: DroneOpsContent.hlioRewardChip,
-              color: BlackLightColors.accent,
-              borderColor: BlackLightColors.accent,
+              color: LimyeColors.accent,
+              borderColor: LimyeColors.accent,
             ),
           ),
         ],
@@ -252,7 +252,7 @@ class _DotGridPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final dot = Paint()
-      ..color = BlackLightColors.border
+      ..color = LimyeColors.border
       ..style = PaintingStyle.fill;
     const step = 22.0;
     for (double y = step / 2; y < size.height; y += step) {
@@ -286,12 +286,12 @@ class _TargetPainter extends CustomPainter {
     final ringOuter = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0
-      ..color = BlackLightColors.border;
+      ..color = LimyeColors.border;
     canvas.drawCircle(centre, size.width * 0.48, ringOuter);
     final ringMid = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0
-      ..color = BlackLightColors.accent;
+      ..color = LimyeColors.accent;
     canvas.drawCircle(centre, size.width * 0.36, ringMid);
     canvas.drawCircle(
         centre,
@@ -299,11 +299,11 @@ class _TargetPainter extends CustomPainter {
         Paint()
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.6
-          ..color = BlackLightColors.accent);
+          ..color = LimyeColors.accent);
 
     // Crosshair
     final ch = Paint()
-      ..color = BlackLightColors.accent
+      ..color = LimyeColors.accent
       ..strokeWidth = 1.0;
     canvas.drawLine(Offset(0, centre.dy), Offset(size.width, centre.dy), ch);
     canvas.drawLine(Offset(centre.dx, 0), Offset(centre.dx, size.height), ch);
@@ -325,12 +325,12 @@ class _MetaChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
-        border: Border.all(color: borderColor ?? BlackLightColors.border),
+        color: LimyeColors.surface,
+        border: Border.all(color: borderColor ?? LimyeColors.border),
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(text,
-          style: BlackLightTextStyles.captionBold(color: color)
+          style: LimyeTextStyles.captionBold(color: color)
               .copyWith(fontSize: 10, letterSpacing: 0.06 * 10)),
     );
   }
@@ -366,11 +366,11 @@ class _Benefits extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(DroneOpsContent.operationalAdvantagesTitle,
-            style: BlackLightTextStyles.sectionHeading()),
-        const SizedBox(height: BlackLightSpacing.xs),
+            style: LimyeTextStyles.sectionHeading()),
+        const SizedBox(height: LimyeSpacing.xs),
         Text(DroneOpsContent.operationalAdvantagesSubtitle,
-            style: BlackLightTextStyles.body()),
-        const SizedBox(height: BlackLightSpacing.lg),
+            style: LimyeTextStyles.body()),
+        const SizedBox(height: LimyeSpacing.lg),
         LayoutBuilder(builder: (context, c) {
           final isWide = c.maxWidth > 860;
           if (isWide) {
@@ -380,7 +380,7 @@ class _Benefits extends StatelessWidget {
                   .map((i) =>
                       Expanded(child: _BenefitCard(icon: i.$1, title: i.$2, body: i.$3)))
                   .expand((w) =>
-                      [w, const SizedBox(width: BlackLightSpacing.gutter)])
+                      [w, const SizedBox(width: LimyeSpacing.gutter)])
                   .take(_items.length * 2 - 1)
                   .toList(),
             );
@@ -388,7 +388,7 @@ class _Benefits extends StatelessWidget {
           return Column(
             children: _items
                 .map((i) => _BenefitCard(icon: i.$1, title: i.$2, body: i.$3))
-                .expand((w) => [w, const SizedBox(height: BlackLightSpacing.md)])
+                .expand((w) => [w, const SizedBox(height: LimyeSpacing.md)])
                 .take(_items.length * 2 - 1)
                 .toList(),
           );
@@ -420,14 +420,14 @@ class _BenefitCardState extends State<_BenefitCard> {
       onExit: (_) => setState(() => _hover = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 150),
-        padding: const EdgeInsets.all(BlackLightSpacing.md),
+        padding: const EdgeInsets.all(LimyeSpacing.md),
         decoration: BoxDecoration(
-          color: BlackLightColors.surface,
-          borderRadius: BorderRadius.circular(BlackLightRadius.card),
+          color: LimyeColors.surface,
+          borderRadius: BorderRadius.circular(LimyeRadius.card),
           border: Border.all(
               color: _hover
-                  ? BlackLightColors.accent
-                  : BlackLightColors.border),
+                  ? LimyeColors.accent
+                  : LimyeColors.border),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -436,22 +436,22 @@ class _BenefitCardState extends State<_BenefitCard> {
               width: 44,
               height: 44,
               decoration: BoxDecoration(
-                color: BlackLightColors.background,
-                border: Border.all(color: BlackLightColors.border),
+                color: LimyeColors.background,
+                border: Border.all(color: LimyeColors.border),
                 borderRadius: BorderRadius.circular(999),
               ),
               child: Icon(
                 widget.icon,
                 size: 22,
                 color: _hover
-                    ? BlackLightColors.accent
-                    : BlackLightColors.textPrimary,
+                    ? LimyeColors.accent
+                    : LimyeColors.textPrimary,
               ),
             ),
-            const SizedBox(height: BlackLightSpacing.md),
-            Text(widget.title, style: BlackLightTextStyles.cardHeading()),
+            const SizedBox(height: LimyeSpacing.md),
+            Text(widget.title, style: LimyeTextStyles.cardHeading()),
             const SizedBox(height: 6),
-            Text(widget.body, style: BlackLightTextStyles.body()),
+            Text(widget.body, style: LimyeTextStyles.body()),
           ],
         ),
       ),
@@ -486,19 +486,19 @@ class _Process extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: BlackLightSpacing.lg),
+      padding: const EdgeInsets.symmetric(vertical: LimyeSpacing.lg),
       decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: BlackLightColors.border)),
+        border: Border(top: BorderSide(color: LimyeColors.border)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(DroneOpsContent.deploymentTitle,
-              style: BlackLightTextStyles.sectionHeading()),
-          const SizedBox(height: BlackLightSpacing.xs),
+              style: LimyeTextStyles.sectionHeading()),
+          const SizedBox(height: LimyeSpacing.xs),
           Text(DroneOpsContent.deploymentSubtitle,
-              style: BlackLightTextStyles.body()),
-          const SizedBox(height: BlackLightSpacing.lg),
+              style: LimyeTextStyles.body()),
+          const SizedBox(height: LimyeSpacing.lg),
           LayoutBuilder(builder: (context, c) {
             final isWide = c.maxWidth > 720;
             if (isWide) {
@@ -523,7 +523,7 @@ class _Process extends StatelessWidget {
                 final s = _steps[i];
                 final isLast = i == _steps.length - 1;
                 return Padding(
-                  padding: const EdgeInsets.only(bottom: BlackLightSpacing.md),
+                  padding: const EdgeInsets.only(bottom: LimyeSpacing.md),
                   child: _ProcessStep(
                       number: s.$1,
                       title: s.$2,
@@ -561,27 +561,27 @@ class _ProcessStep extends StatelessWidget {
           height: 48,
           decoration: BoxDecoration(
             color:
-                highlighted ? BlackLightColors.accent : BlackLightColors.surface,
+                highlighted ? LimyeColors.accent : LimyeColors.surface,
             border: Border.all(
                 color: highlighted
-                    ? BlackLightColors.accent
-                    : BlackLightColors.border),
+                    ? LimyeColors.accent
+                    : LimyeColors.border),
             shape: BoxShape.circle,
           ),
           alignment: Alignment.center,
           child: Text(number,
-              style: BlackLightTextStyles.bodyBold(
+              style: LimyeTextStyles.bodyBold(
                   color: highlighted
                       ? Colors.white
-                      : BlackLightColors.textPrimary)),
+                      : LimyeColors.textPrimary)),
         ),
-        const SizedBox(height: BlackLightSpacing.md),
+        const SizedBox(height: LimyeSpacing.md),
         Text(title,
-            style: BlackLightTextStyles.cardHeading(),
+            style: LimyeTextStyles.cardHeading(),
             textAlign: TextAlign.center),
         const SizedBox(height: 6),
         Text(body,
-            style: BlackLightTextStyles.body(), textAlign: TextAlign.center),
+            style: LimyeTextStyles.body(), textAlign: TextAlign.center),
       ],
     );
   }
@@ -607,11 +607,11 @@ class _Requirements extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(BlackLightSpacing.lg),
+      padding: const EdgeInsets.all(LimyeSpacing.lg),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
-        border: Border.all(color: BlackLightColors.border),
-        borderRadius: BorderRadius.circular(BlackLightRadius.card),
+        color: LimyeColors.surface,
+        border: Border.all(color: LimyeColors.border),
+        borderRadius: BorderRadius.circular(LimyeRadius.card),
       ),
       child: LayoutBuilder(builder: (context, c) {
         final isWide = c.maxWidth > 760;
@@ -619,10 +619,10 @@ class _Requirements extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(DroneOpsContent.systemRequirementsTitle,
-                style: BlackLightTextStyles.sectionHeading()),
-            const SizedBox(height: BlackLightSpacing.xs),
+                style: LimyeTextStyles.sectionHeading()),
+            const SizedBox(height: LimyeSpacing.xs),
             Text(DroneOpsContent.systemRequirementsSubtitle,
-                style: BlackLightTextStyles.body()),
+                style: LimyeTextStyles.body()),
           ],
         );
         final lists = LayoutBuilder(builder: (context, lc) {
@@ -636,7 +636,7 @@ class _Requirements extends StatelessWidget {
                         icon: Icons.flight_takeoff_outlined,
                         label: DroneOpsContent.requirementsHardwareHeading,
                         items: _hardware)),
-                const SizedBox(width: BlackLightSpacing.lg),
+                const SizedBox(width: LimyeSpacing.lg),
                 Expanded(
                     child: _ReqList(
                         icon: Icons.verified_user_outlined,
@@ -652,7 +652,7 @@ class _Requirements extends StatelessWidget {
                   icon: Icons.flight_takeoff_outlined,
                   label: DroneOpsContent.requirementsHardwareHeading,
                   items: _hardware),
-              const SizedBox(height: BlackLightSpacing.md),
+              const SizedBox(height: LimyeSpacing.md),
               _ReqList(
                   icon: Icons.verified_user_outlined,
                   label: DroneOpsContent.requirementsEligibilityHeading,
@@ -666,7 +666,7 @@ class _Requirements extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(flex: 1, child: intro),
-              const SizedBox(width: BlackLightSpacing.lg),
+              const SizedBox(width: LimyeSpacing.lg),
               Expanded(flex: 2, child: lists),
             ],
           );
@@ -675,7 +675,7 @@ class _Requirements extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             intro,
-            const SizedBox(height: BlackLightSpacing.md),
+            const SizedBox(height: LimyeSpacing.md),
             lists,
           ],
         );
@@ -699,11 +699,11 @@ class _ReqList extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(icon, size: 16, color: BlackLightColors.textBody),
+            Icon(icon, size: 16, color: LimyeColors.textBody),
             const SizedBox(width: 8),
             Text(label,
-                style: BlackLightTextStyles.captionBold(
-                    color: BlackLightColors.textBody)),
+                style: LimyeTextStyles.captionBold(
+                    color: LimyeColors.textBody)),
           ],
         ),
         const SizedBox(height: 10),
@@ -715,12 +715,12 @@ class _ReqList extends StatelessWidget {
                   const Padding(
                     padding: EdgeInsets.only(top: 7, right: 8),
                     child: Icon(Icons.circle,
-                        size: 6, color: BlackLightColors.accent),
+                        size: 6, color: LimyeColors.accent),
                   ),
                   Expanded(
                     child: Text(t,
-                        style: BlackLightTextStyles.body(
-                            color: BlackLightColors.textPrimary)),
+                        style: LimyeTextStyles.body(
+                            color: LimyeColors.textPrimary)),
                   ),
                 ],
               ),
@@ -760,41 +760,41 @@ class _ApplicationSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(DroneOpsContent.initiateApplicationTitle,
-              style: BlackLightTextStyles.sectionHeading()),
-          const SizedBox(height: BlackLightSpacing.xs),
+              style: LimyeTextStyles.sectionHeading()),
+          const SizedBox(height: LimyeSpacing.xs),
           Text(
               DroneOpsContent.initiateApplicationBody,
-              style: BlackLightTextStyles.body()),
-          const SizedBox(height: BlackLightSpacing.md),
+              style: LimyeTextStyles.body()),
+          const SizedBox(height: LimyeSpacing.md),
           Container(
-            padding: const EdgeInsets.all(BlackLightSpacing.md),
+            padding: const EdgeInsets.all(LimyeSpacing.md),
             decoration: BoxDecoration(
-              color: BlackLightColors.surface,
-              border: Border.all(color: BlackLightColors.border),
-              borderRadius: BorderRadius.circular(BlackLightRadius.card),
+              color: LimyeColors.surface,
+              border: Border.all(color: LimyeColors.border),
+              borderRadius: BorderRadius.circular(LimyeRadius.card),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Icon(Icons.info_outline,
-                    color: BlackLightColors.accent, size: 22),
-                const SizedBox(width: BlackLightSpacing.sm),
+                    color: LimyeColors.accent, size: 22),
+                const SizedBox(width: LimyeSpacing.sm),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(DroneOpsContent.alreadyApprovedTitle,
-                          style: BlackLightTextStyles.bodyBold()),
+                          style: LimyeTextStyles.bodyBold()),
                       const SizedBox(height: 4),
                       Text(
                           DroneOpsContent.alreadyApprovedBody,
-                          style: BlackLightTextStyles.body()),
+                          style: LimyeTextStyles.body()),
                       const SizedBox(height: 6),
                       GestureDetector(
                         onTap: onLaunchTerminal,
                         child: Text(DroneOpsContent.launchTerminal,
-                            style: BlackLightTextStyles.bodyBold(
-                                color: BlackLightColors.accent)),
+                            style: LimyeTextStyles.bodyBold(
+                                color: LimyeColors.accent)),
                       ),
                     ],
                   ),
@@ -819,7 +819,7 @@ class _ApplicationSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(flex: 4, child: left),
-            const SizedBox(width: BlackLightSpacing.xl),
+            const SizedBox(width: LimyeSpacing.xl),
             Expanded(flex: 7, child: right),
           ],
         );
@@ -828,7 +828,7 @@ class _ApplicationSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           left,
-          const SizedBox(height: BlackLightSpacing.md),
+          const SizedBox(height: LimyeSpacing.md),
           right,
         ],
       );
@@ -856,18 +856,18 @@ class _ApplicationForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(BlackLightSpacing.lg),
+      padding: const EdgeInsets.all(LimyeSpacing.lg),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
-        border: Border.all(color: BlackLightColors.border),
-        borderRadius: BorderRadius.circular(BlackLightRadius.card),
+        color: LimyeColors.surface,
+        border: Border.all(color: LimyeColors.border),
+        borderRadius: BorderRadius.circular(LimyeRadius.card),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Auto-applied role badge — locked, not selectable.
           _RoleAppliedBadge(),
-          const SizedBox(height: BlackLightSpacing.md),
+          const SizedBox(height: LimyeSpacing.md),
           LayoutBuilder(builder: (context, c) {
             final isWide = c.maxWidth > 540;
             final fullName = _FieldInput(
@@ -897,13 +897,13 @@ class _ApplicationForm extends StatelessWidget {
                 children: [
                   Row(children: [
                     Expanded(child: fullName),
-                    const SizedBox(width: BlackLightSpacing.md),
+                    const SizedBox(width: LimyeSpacing.md),
                     Expanded(child: email),
                   ]),
-                  const SizedBox(height: BlackLightSpacing.md),
+                  const SizedBox(height: LimyeSpacing.md),
                   Row(children: [
                     Expanded(child: drone),
-                    const SizedBox(width: BlackLightSpacing.md),
+                    const SizedBox(width: LimyeSpacing.md),
                     Expanded(child: zip),
                   ]),
                 ],
@@ -912,35 +912,35 @@ class _ApplicationForm extends StatelessWidget {
             return Column(
               children: [
                 fullName,
-                const SizedBox(height: BlackLightSpacing.md),
+                const SizedBox(height: LimyeSpacing.md),
                 email,
-                const SizedBox(height: BlackLightSpacing.md),
+                const SizedBox(height: LimyeSpacing.md),
                 drone,
-                const SizedBox(height: BlackLightSpacing.md),
+                const SizedBox(height: LimyeSpacing.md),
                 zip,
               ],
             );
           }),
-          const SizedBox(height: BlackLightSpacing.md),
+          const SizedBox(height: LimyeSpacing.md),
           const Divider(),
-          const SizedBox(height: BlackLightSpacing.sm),
+          const SizedBox(height: LimyeSpacing.sm),
           LayoutBuilder(builder: (context, c) {
             final isWide = c.maxWidth > 540;
             final disclaimer = Text(
               DroneOpsContent.submitDisclaimer,
-              style: BlackLightTextStyles.caption(
-                  color: BlackLightColors.textBody),
+              style: LimyeTextStyles.caption(
+                  color: LimyeColors.textBody),
             );
             final cta = SizedBox(
-              height: BlackLightSpacing.buttonHeight,
+              height: LimyeSpacing.buttonHeight,
               child: ElevatedButton(
                 onPressed: submitted ? null : onSubmit,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: submitted
-                      ? BlackLightColors.surface
-                      : BlackLightColors.accent,
+                      ? LimyeColors.surface
+                      : LimyeColors.accent,
                   foregroundColor:
-                      submitted ? BlackLightColors.textPrimary : Colors.white,
+                      submitted ? LimyeColors.textPrimary : Colors.white,
                   elevation: 0,
                   shape: const StadiumBorder(),
                   padding: const EdgeInsets.symmetric(horizontal: 28),
@@ -950,16 +950,16 @@ class _ApplicationForm extends StatelessWidget {
                   children: [
                     if (submitted) ...[
                       const Icon(Icons.check,
-                          size: 18, color: BlackLightColors.accent),
+                          size: 18, color: LimyeColors.accent),
                       const SizedBox(width: 8),
                     ],
                     Text(
                         submitted
                             ? DroneOpsContent.applicationSent
                             : DroneOpsContent.submitTelemetry,
-                        style: BlackLightTextStyles.bodyBold(
+                        style: LimyeTextStyles.bodyBold(
                             color: submitted
-                                ? BlackLightColors.textPrimary
+                                ? LimyeColors.textPrimary
                                 : Colors.white)),
                   ],
                 ),
@@ -969,7 +969,7 @@ class _ApplicationForm extends StatelessWidget {
               return Row(
                 children: [
                   Expanded(child: disclaimer),
-                  const SizedBox(width: BlackLightSpacing.md),
+                  const SizedBox(width: LimyeSpacing.md),
                   cta,
                 ],
               );
@@ -978,36 +978,36 @@ class _ApplicationForm extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 disclaimer,
-                const SizedBox(height: BlackLightSpacing.md),
+                const SizedBox(height: LimyeSpacing.md),
                 cta,
               ],
             );
           }),
           if (submitted) ...[
-            const SizedBox(height: BlackLightSpacing.md),
+            const SizedBox(height: LimyeSpacing.md),
             Container(
-              padding: const EdgeInsets.all(BlackLightSpacing.md),
+              padding: const EdgeInsets.all(LimyeSpacing.md),
               decoration: BoxDecoration(
-                color: BlackLightColors.background,
-                border: Border.all(color: BlackLightColors.border),
-                borderRadius: BorderRadius.circular(BlackLightRadius.card),
+                color: LimyeColors.background,
+                border: Border.all(color: LimyeColors.border),
+                borderRadius: BorderRadius.circular(LimyeRadius.card),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Icon(Icons.mark_email_read_outlined,
-                      color: BlackLightColors.accent, size: 22),
-                  const SizedBox(width: BlackLightSpacing.sm),
+                      color: LimyeColors.accent, size: 22),
+                  const SizedBox(width: LimyeSpacing.sm),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(DroneOpsContent.verificationPendingTitle,
-                            style: BlackLightTextStyles.bodyBold()),
+                            style: LimyeTextStyles.bodyBold()),
                         const SizedBox(height: 4),
                         Text(
                             DroneOpsContent.verificationPendingBody,
-                            style: BlackLightTextStyles.body()),
+                            style: LimyeTextStyles.body()),
                       ],
                     ),
                   ),
@@ -1030,19 +1030,19 @@ class _RoleAppliedBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
-        border: Border.all(color: BlackLightColors.accent),
+        color: LimyeColors.surface,
+        border: Border.all(color: LimyeColors.accent),
         borderRadius: BorderRadius.circular(999),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(Icons.lock_outline,
-              size: 14, color: BlackLightColors.accent),
+              size: 14, color: LimyeColors.accent),
           const SizedBox(width: 8),
           Text('${DroneOpsContent.applyingAsPrefix}$label',
-              style: BlackLightTextStyles.captionBold(
-                  color: BlackLightColors.accent)),
+              style: LimyeTextStyles.captionBold(
+                  color: LimyeColors.accent)),
         ],
       ),
     );
@@ -1068,38 +1068,38 @@ class _FieldInput extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label,
-            style: BlackLightTextStyles.captionBold(
-                color: BlackLightColors.textBody)),
+            style: LimyeTextStyles.captionBold(
+                color: LimyeColors.textBody)),
         const SizedBox(height: 6),
         SizedBox(
-          height: BlackLightSpacing.inputHeight,
+          height: LimyeSpacing.inputHeight,
           child: TextField(
             controller: controller,
             keyboardType: type,
             style:
-                BlackLightTextStyles.body(color: BlackLightColors.textPrimary),
+                LimyeTextStyles.body(color: LimyeColors.textPrimary),
             decoration: InputDecoration(
               hintText: hint,
-              hintStyle: BlackLightTextStyles.body(
-                  color: BlackLightColors.textCaption),
+              hintStyle: LimyeTextStyles.body(
+                  color: LimyeColors.textCaption),
               filled: true,
-              fillColor: BlackLightColors.background,
+              fillColor: LimyeColors.background,
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(BlackLightRadius.input),
+                borderRadius: BorderRadius.circular(LimyeRadius.input),
                 borderSide:
-                    const BorderSide(color: BlackLightColors.border),
+                    const BorderSide(color: LimyeColors.border),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(BlackLightRadius.input),
+                borderRadius: BorderRadius.circular(LimyeRadius.input),
                 borderSide:
-                    const BorderSide(color: BlackLightColors.border),
+                    const BorderSide(color: LimyeColors.border),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(BlackLightRadius.input),
+                borderRadius: BorderRadius.circular(LimyeRadius.input),
                 borderSide: const BorderSide(
-                    color: BlackLightColors.accent, width: 1.5),
+                    color: LimyeColors.accent, width: 1.5),
               ),
             ),
           ),

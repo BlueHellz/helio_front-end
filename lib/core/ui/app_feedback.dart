@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../content/content_registry.dart';
-import '../../theme/blacklight_theme.dart';
+import '../../theme/limye_theme.dart';
 
 /// User-visible feedback for actions that will be fully implemented with the
 /// backend, or to confirm local/demo interactions.
@@ -18,7 +18,7 @@ class AppFeedback {
     messenger.clearSnackBars();
     messenger.showSnackBar(
       SnackBar(
-        content: Text(message, style: BlackLightTextStyles.body()),
+        content: Text(message, style: LimyeTextStyles.body()),
         behavior: SnackBarBehavior.floating,
         showCloseIcon: true,
         width: 420,
@@ -35,12 +35,12 @@ class AppFeedback {
     showDialog<void>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(title, style: BlackLightTextStyles.cardHeading()),
-        content: Text(message, style: BlackLightTextStyles.body()),
+        title: Text(title, style: LimyeTextStyles.cardHeading()),
+        content: Text(message, style: LimyeTextStyles.body()),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: Text(ButtonsContent.ok, style: BlackLightTextStyles.bodyBold()),
+            child: Text(ButtonsContent.ok, style: LimyeTextStyles.bodyBold()),
           ),
         ],
       ),
@@ -70,7 +70,7 @@ class AppFeedback {
     return showDialog<String>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(title, style: BlackLightTextStyles.cardHeading()),
+        title: Text(title, style: LimyeTextStyles.cardHeading()),
         content: TextField(
           controller: ctrl,
           autofocus: true,
@@ -121,22 +121,22 @@ class AppFeedback {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(WalletContent.dialogConnectWalletTitle,
-            style: BlackLightTextStyles.cardHeading()),
+            style: LimyeTextStyles.cardHeading()),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
               WalletContent.dialogConnectWalletBody,
-              style: BlackLightTextStyles.caption(),
+              style: LimyeTextStyles.caption(),
             ),
             const SizedBox(height: 12),
             TextField(
               controller: ctrl,
-              style: BlackLightTextStyles.data(),
+              style: LimyeTextStyles.data(),
               decoration: InputDecoration(
                 hintText: WalletContent.dialogWalletAddressHint,
-                hintStyle: BlackLightTextStyles.caption(),
+                hintStyle: LimyeTextStyles.caption(),
                 border: const OutlineInputBorder(),
               ),
             ),
@@ -168,8 +168,8 @@ class AppFeedback {
     return showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(title, style: BlackLightTextStyles.cardHeading()),
-        content: Text(message, style: BlackLightTextStyles.body()),
+        title: Text(title, style: LimyeTextStyles.cardHeading()),
+        content: Text(message, style: LimyeTextStyles.body()),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),

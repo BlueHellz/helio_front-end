@@ -1,9 +1,9 @@
-import 'package:blacklight_app/core/content/content_registry.dart';
+import 'package:limye_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
-import 'package:blacklight_app/theme/blacklight_theme.dart';
-import 'package:blacklight_app/core/models/project.dart';
-import 'package:blacklight_app/core/illustrations/geometric_illustrations.dart';
-import 'package:blacklight_app/core/widgets/status_badge.dart';
+import 'package:limye_app/theme/limye_theme.dart';
+import 'package:limye_app/core/models/project.dart';
+import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
+import 'package:limye_app/core/widgets/status_badge.dart';
 
 class HomeownerDashboard extends StatelessWidget {
   final List<Project> projects;
@@ -20,22 +20,22 @@ class HomeownerDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(BlackLightSpacing.gutter),
+      padding: const EdgeInsets.all(LimyeSpacing.gutter),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _DashboardHeader(onNewDesign: onNewDesign),
-          const SizedBox(height: BlackLightSpacing.lg),
+          const SizedBox(height: LimyeSpacing.lg),
 
           if (projects.isEmpty) ...[
             _EmptyState(onNewDesign: onNewDesign),
           ] else ...[
             Text(HomeownerDashboardContent.yourProjects,
-                style: BlackLightTextStyles.sectionHeading()),
-            const SizedBox(height: BlackLightSpacing.md),
+                style: LimyeTextStyles.sectionHeading()),
+            const SizedBox(height: LimyeSpacing.md),
             _ProjectsGrid(projects: projects, onTap: onProjectTap),
           ],
-          const SizedBox(height: BlackLightSpacing.xl),
+          const SizedBox(height: LimyeSpacing.xl),
 
           // Savings summary row
           if (projects.isNotEmpty) _SavingsSummary(projects: projects),
@@ -59,24 +59,24 @@ class _DashboardHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(HomeownerDashboardContent.yourSolarDashboard,
-                style: BlackLightTextStyles.sectionHeading()),
+                style: LimyeTextStyles.sectionHeading()),
             const SizedBox(height: 4),
             Text(
               HomeownerDashboardContent.dashboardSubtitle,
-              style: BlackLightTextStyles.body(),
+              style: LimyeTextStyles.body(),
             ),
           ],
         ),
         const Spacer(),
         SizedBox(
-          height: BlackLightSpacing.buttonHeight,
+          height: LimyeSpacing.buttonHeight,
           child: ElevatedButton.icon(
             onPressed: onNewDesign,
             icon: const Icon(Icons.add, size: 18),
             label: Text(HomeownerDashboardContent.newDesign,
-                style: BlackLightTextStyles.bodyBold(color: Colors.white)),
+                style: LimyeTextStyles.bodyBold(color: Colors.white)),
             style: ElevatedButton.styleFrom(
-              backgroundColor: BlackLightColors.accent,
+              backgroundColor: LimyeColors.accent,
               foregroundColor: Colors.white,
               elevation: 0,
               shape: const StadiumBorder(),
@@ -98,33 +98,33 @@ class _EmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: BlackLightSpacing.xl),
+        padding: const EdgeInsets.symmetric(vertical: LimyeSpacing.xl),
         child: Column(
           children: [
             const IsometricHouseIllustration(width: 320, height: 260),
-            const SizedBox(height: BlackLightSpacing.md),
+            const SizedBox(height: LimyeSpacing.md),
             Text(HomeownerDashboardContent.noDesignsTitle,
-                style: BlackLightTextStyles.cardHeading()),
-            const SizedBox(height: BlackLightSpacing.xs),
+                style: LimyeTextStyles.cardHeading()),
+            const SizedBox(height: LimyeSpacing.xs),
             Text(
               HomeownerDashboardContent.noDesignsBody,
-              style: BlackLightTextStyles.body(),
+              style: LimyeTextStyles.body(),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: BlackLightSpacing.md),
+            const SizedBox(height: LimyeSpacing.md),
             SizedBox(
-              height: BlackLightSpacing.buttonHeight,
+              height: LimyeSpacing.buttonHeight,
               child: ElevatedButton(
                 onPressed: onNewDesign,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: BlackLightColors.accent,
+                  backgroundColor: LimyeColors.accent,
                   foregroundColor: Colors.white,
                   elevation: 0,
                   shape: const StadiumBorder(),
                   padding: const EdgeInsets.symmetric(horizontal: 32),
                 ),
                 child: Text(HomeownerDashboardContent.startDesign,
-                    style: BlackLightTextStyles.bodyBold(color: Colors.white)),
+                    style: LimyeTextStyles.bodyBold(color: Colors.white)),
               ),
             ),
           ],
@@ -149,12 +149,12 @@ class _ProjectsGrid extends StatelessWidget {
               ? 2
               : 1;
       final itemWidth =
-          (constraints.maxWidth - (BlackLightSpacing.md * (columns - 1))) /
+          (constraints.maxWidth - (LimyeSpacing.md * (columns - 1))) /
               columns;
 
       return Wrap(
-        spacing: BlackLightSpacing.md,
-        runSpacing: BlackLightSpacing.md,
+        spacing: LimyeSpacing.md,
+        runSpacing: LimyeSpacing.md,
         children: projects
             .map((p) => SizedBox(
                   width: itemWidth,
@@ -177,11 +177,11 @@ class _ProjectCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(BlackLightSpacing.md),
+        padding: const EdgeInsets.all(LimyeSpacing.md),
         decoration: BoxDecoration(
-          color: BlackLightColors.surface,
-          borderRadius: BorderRadius.circular(BlackLightRadius.card),
-          border: Border.all(color: BlackLightColors.border),
+          color: LimyeColors.surface,
+          borderRadius: BorderRadius.circular(LimyeRadius.card),
+          border: Border.all(color: LimyeColors.border),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,16 +190,16 @@ class _ProjectCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(project.address,
-                      style: BlackLightTextStyles.cardHeading(),
+                      style: LimyeTextStyles.cardHeading(),
                       overflow: TextOverflow.ellipsis),
                 ),
                 const SizedBox(width: 8),
                 StatusBadge(status: project.status),
               ],
             ),
-            const SizedBox(height: BlackLightSpacing.sm),
+            const SizedBox(height: LimyeSpacing.sm),
             const Divider(),
-            const SizedBox(height: BlackLightSpacing.sm),
+            const SizedBox(height: LimyeSpacing.sm),
             Row(
               children: [
                 if (project.systemSizeKw != null)
@@ -208,7 +208,7 @@ class _ProjectCard extends StatelessWidget {
                     value: '${project.systemSizeKw!.toStringAsFixed(1)} kW',
                   ),
                 if (project.panelCount != null) ...[
-                  const SizedBox(width: BlackLightSpacing.md),
+                  const SizedBox(width: LimyeSpacing.md),
                   _DataRow(label: HomeownerDashboardContent.labelPanels, value: '${project.panelCount}'),
                 ],
               ],
@@ -225,19 +225,19 @@ class _ProjectCard extends StatelessWidget {
               _DataRow(
                 label: HomeownerDashboardContent.labelYearOneSavings,
                 value: '\$${_fmt(project.yearOneSavings!)}',
-                valueColor: BlackLightColors.green,
+                valueColor: LimyeColors.green,
               ),
             ],
-            const SizedBox(height: BlackLightSpacing.md),
+            const SizedBox(height: LimyeSpacing.md),
             Row(
               children: [
                 Text(
                   _formatDate(project.date),
-                  style: BlackLightTextStyles.caption(),
+                  style: LimyeTextStyles.caption(),
                 ),
                 const Spacer(),
                 const Icon(Icons.arrow_forward_ios_rounded,
-                    size: 14, color: BlackLightColors.textCaption),
+                    size: 14, color: LimyeColors.textCaption),
               ],
             ),
           ],
@@ -283,13 +283,13 @@ class _DataRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label.toUpperCase(),
-            style: BlackLightTextStyles.captionBold(
-                    color: BlackLightColors.textCaption)
+            style: LimyeTextStyles.captionBold(
+                    color: LimyeColors.textCaption)
                 .copyWith(fontSize: 10)),
         Text(
           value,
-          style: BlackLightTextStyles.data(
-              color: valueColor ?? BlackLightColors.textPrimary),
+          style: LimyeTextStyles.data(
+              color: valueColor ?? LimyeColors.textPrimary),
         ),
       ],
     );
@@ -314,8 +314,8 @@ class _SavingsSummary extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(HomeownerDashboardContent.summaryHeading,
-            style: BlackLightTextStyles.sectionHeading()),
-        const SizedBox(height: BlackLightSpacing.md),
+            style: LimyeTextStyles.sectionHeading()),
+        const SizedBox(height: LimyeSpacing.md),
         LayoutBuilder(builder: (context, constraints) {
           final isWide = constraints.maxWidth > 600;
           return Flex(
@@ -326,29 +326,29 @@ class _SavingsSummary extends StatelessWidget {
                   label: HomeownerDashboardContent.summaryYearOneSavings,
                   value: '\$${totalSavings.toStringAsFixed(0)}',
                   icon: Icons.savings_outlined,
-                  color: BlackLightColors.green,
+                  color: LimyeColors.green,
                 ),
               ),
               SizedBox(
-                  width: isWide ? BlackLightSpacing.md : 0,
-                  height: isWide ? 0 : BlackLightSpacing.md),
+                  width: isWide ? LimyeSpacing.md : 0,
+                  height: isWide ? 0 : LimyeSpacing.md),
               Flexible(
                 child: _SummaryCard(
                   label: HomeownerDashboardContent.summaryTotalCapacity,
                   value: '${totalKw.toStringAsFixed(1)} kW',
                   icon: Icons.bolt_outlined,
-                  color: BlackLightColors.accent,
+                  color: LimyeColors.accent,
                 ),
               ),
               SizedBox(
-                  width: isWide ? BlackLightSpacing.md : 0,
-                  height: isWide ? 0 : BlackLightSpacing.md),
+                  width: isWide ? LimyeSpacing.md : 0,
+                  height: isWide ? 0 : LimyeSpacing.md),
               Flexible(
                 child: _SummaryCard(
                   label: HomeownerDashboardContent.summaryTotalPanels,
                   value: '$totalPanels',
                   icon: Icons.solar_power_outlined,
-                  color: BlackLightColors.accent,
+                  color: LimyeColors.accent,
                 ),
               ),
             ],
@@ -375,11 +375,11 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(BlackLightSpacing.md),
+      padding: const EdgeInsets.all(LimyeSpacing.md),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
-        borderRadius: BorderRadius.circular(BlackLightRadius.card),
-        border: Border.all(color: BlackLightColors.border),
+        color: LimyeColors.surface,
+        borderRadius: BorderRadius.circular(LimyeRadius.card),
+        border: Border.all(color: LimyeColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -389,12 +389,12 @@ class _SummaryCard extends StatelessWidget {
               Icon(icon, size: 18, color: color),
               const SizedBox(width: 6),
               Text(label.toUpperCase(),
-                  style: BlackLightTextStyles.captionBold()
+                  style: LimyeTextStyles.captionBold()
                       .copyWith(fontSize: 10)),
             ],
           ),
-          const SizedBox(height: BlackLightSpacing.xs),
-          Text(value, style: BlackLightTextStyles.dataLarge(color: color)),
+          const SizedBox(height: LimyeSpacing.xs),
+          Text(value, style: LimyeTextStyles.dataLarge(color: color)),
         ],
       ),
     );

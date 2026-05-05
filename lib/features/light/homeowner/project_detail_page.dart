@@ -1,13 +1,13 @@
-import 'package:blacklight_app/core/content/content_registry.dart';
+import 'package:limye_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:blacklight_app/core/dynamic_form.dart';
-import 'package:blacklight_app/core/models/project.dart';
-import 'package:blacklight_app/core/providers/session_providers.dart';
-import 'package:blacklight_app/core/widgets/project_status_badge.dart';
-import 'package:blacklight_app/services/api.dart';
-import 'package:blacklight_app/theme/blacklight_theme.dart';
+import 'package:limye_app/core/dynamic_form.dart';
+import 'package:limye_app/core/models/project.dart';
+import 'package:limye_app/core/providers/session_providers.dart';
+import 'package:limye_app/core/widgets/project_status_badge.dart';
+import 'package:limye_app/services/api.dart';
+import 'package:limye_app/theme/limye_theme.dart';
 
 class HomeownerProjectDetailPage extends ConsumerStatefulWidget {
   const HomeownerProjectDetailPage({super.key, required this.projectId});
@@ -84,7 +84,7 @@ class _HomeownerProjectDetailPageState
             title: Text(HomeownerProjectDetailContent.appBarFallbackTitle)),
         body: Center(
           child: Text(_error ?? HomeownerProjectDetailContent.notFound,
-              style: BlackLightTextStyles.body()),
+              style: LimyeTextStyles.body()),
         ),
       );
     }
@@ -94,10 +94,10 @@ class _HomeownerProjectDetailPageState
     final customMap = custom?.cast<String, dynamic>();
 
     return Scaffold(
-      backgroundColor: BlackLightColors.background,
+      backgroundColor: LimyeColors.background,
       appBar: AppBar(title: Text(p.address)),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(BlackLightSpacing.gutter),
+        padding: const EdgeInsets.all(LimyeSpacing.gutter),
         child: Align(
           alignment: Alignment.topLeft,
           child: ConstrainedBox(
@@ -111,21 +111,21 @@ class _HomeownerProjectDetailPageState
                     const SizedBox(width: 12),
                     Text(
                       p.type.label,
-                      style: BlackLightTextStyles.caption(),
+                      style: LimyeTextStyles.caption(),
                     ),
                   ],
                 ),
-                const SizedBox(height: BlackLightSpacing.md),
+                const SizedBox(height: LimyeSpacing.md),
                 Text(HomeownerProjectDetailContent.systemOverviewTitle,
-                    style: BlackLightTextStyles.cardHeading()),
+                    style: LimyeTextStyles.cardHeading()),
                 const SizedBox(height: 8),
                 Text(
                   HomeownerProjectDetailContent.systemOverviewBody,
-                  style: BlackLightTextStyles.body(),
+                  style: LimyeTextStyles.body(),
                 ),
-                const SizedBox(height: BlackLightSpacing.lg),
+                const SizedBox(height: LimyeSpacing.lg),
                 Text(HomeownerProjectDetailContent.yourDetailsTitle,
-                    style: BlackLightTextStyles.cardHeading()),
+                    style: LimyeTextStyles.cardHeading()),
                 const SizedBox(height: 12),
                 DynamicForm(
                   fields: _fieldsFromCustom(customMap),

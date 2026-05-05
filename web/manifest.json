@@ -1,11 +1,11 @@
 {
-    "name": "Black Light",
-    "short_name": "Black Light",
+    "name": "LIMYÈ",
+    "short_name": "LIMYÈ",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Black Light — AI solar design for homes and installers.",
+    "description": "LIMYÈ — AI solar design for homes and installers.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

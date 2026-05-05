@@ -1,14 +1,14 @@
 import 'dart:developer' as developer;
 
-import 'package:blacklight_app/core/app_state.dart';
-import 'package:blacklight_app/core/content/content_registry.dart';
-import 'package:blacklight_app/core/providers/homeowner_draft_provider.dart';
-import 'package:blacklight_app/core/providers/session_providers.dart';
-import 'package:blacklight_app/core/ui/app_feedback.dart';
-import 'package:blacklight_app/features/light/homeowner/homeowner_design_summary.dart';
-import 'package:blacklight_app/services/api.dart';
-import 'package:blacklight_app/services/auth_api.dart';
-import 'package:blacklight_app/theme/blacklight_theme.dart';
+import 'package:limye_app/core/app_state.dart';
+import 'package:limye_app/core/content/content_registry.dart';
+import 'package:limye_app/core/providers/homeowner_draft_provider.dart';
+import 'package:limye_app/core/providers/session_providers.dart';
+import 'package:limye_app/core/ui/app_feedback.dart';
+import 'package:limye_app/features/light/homeowner/homeowner_design_summary.dart';
+import 'package:limye_app/services/api.dart';
+import 'package:limye_app/services/auth_api.dart';
+import 'package:limye_app/theme/limye_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,11 +22,11 @@ class HomeownerDesignResultPage extends ConsumerWidget {
     if (draft == null) {
       return Center(
         child: Padding(
-          padding: const EdgeInsets.all(BlackLightSpacing.gutter),
+          padding: const EdgeInsets.all(LimyeSpacing.gutter),
           child: Text(
             HomeownerDashboardContent.emptyStateMessage,
             textAlign: TextAlign.center,
-            style: BlackLightTextStyles.body(),
+            style: LimyeTextStyles.body(),
           ),
         ),
       );
@@ -41,7 +41,7 @@ class HomeownerDesignResultPage extends ConsumerWidget {
           onDownload: () => AppFeedback.comingSoon(context),
         ),
         Padding(
-          padding: const EdgeInsets.all(BlackLightSpacing.gutter),
+          padding: const EdgeInsets.all(LimyeSpacing.gutter),
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 400),
@@ -75,15 +75,15 @@ class _SaveAndTrackDialog {
         context: context,
         builder: (ctx) => AlertDialog(
           title: Text(HomeownerDesignSummaryContent.saveTrackDialogTitle,
-              style: BlackLightTextStyles.cardHeading()),
+              style: LimyeTextStyles.cardHeading()),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(HomeownerDesignSummaryContent.saveTrackDialogBody,
-                    style: BlackLightTextStyles.body()),
-                const SizedBox(height: BlackLightSpacing.md),
+                    style: LimyeTextStyles.body()),
+                const SizedBox(height: LimyeSpacing.md),
                 TextField(
                   controller: nameCtrl,
                   decoration: InputDecoration(
@@ -91,7 +91,7 @@ class _SaveAndTrackDialog {
                     hintText: AuthContent.hintYourName,
                   ),
                 ),
-                const SizedBox(height: BlackLightSpacing.sm),
+                const SizedBox(height: LimyeSpacing.sm),
                 TextField(
                   controller: emailCtrl,
                   keyboardType: TextInputType.emailAddress,
@@ -100,7 +100,7 @@ class _SaveAndTrackDialog {
                     hintText: AuthContent.hintEmail,
                   ),
                 ),
-                const SizedBox(height: BlackLightSpacing.sm),
+                const SizedBox(height: LimyeSpacing.sm),
                 TextField(
                   controller: passwordCtrl,
                   obscureText: true,

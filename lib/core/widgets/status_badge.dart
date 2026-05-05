@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../theme/blacklight_theme.dart';
+import '../../theme/limye_theme.dart';
 import '../models/project.dart';
 
 class StatusBadge extends StatelessWidget {
@@ -19,7 +19,7 @@ class StatusBadge extends StatelessWidget {
       ),
       child: Text(
         status.label.toUpperCase(),
-        style: BlackLightTextStyles.captionBold(color: fg),
+        style: LimyeTextStyles.captionBold(color: fg),
       ),
     );
   }
@@ -50,7 +50,7 @@ class WalletChip extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             '${balance.toStringAsFixed(2)} HLIO',
-            style: BlackLightTextStyles.dataInline(color: c.onSurface),
+            style: LimyeTextStyles.dataInline(color: c.onSurface),
           ),
         ],
       ),
@@ -85,7 +85,7 @@ class BlackLightChip extends StatelessWidget {
       child: Center(
         child: Text(
           label,
-          style: BlackLightTextStyles.caption(
+          style: LimyeTextStyles.caption(
             color: textColor ?? variant,
           ),
         ),

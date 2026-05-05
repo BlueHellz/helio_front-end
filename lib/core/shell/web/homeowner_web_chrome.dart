@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../theme/blacklight_theme.dart';
+import '../../../theme/limye_theme.dart';
 import '../../brand/blacklight_brand_logo.dart';
 import '../../content/content_registry.dart';
 import '../../ui/app_feedback.dart';
@@ -68,7 +68,7 @@ class _PublicNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: BlackLightSpacing.navbarHeight,
+      height: LimyeSpacing.navbarHeight,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         border: Border(
@@ -78,10 +78,10 @@ class _PublicNavbar extends StatelessWidget {
       child: Center(
         child: ConstrainedBox(
           constraints:
-              const BoxConstraints(maxWidth: BlackLightSpacing.containerMax),
+              const BoxConstraints(maxWidth: LimyeSpacing.containerMax),
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: BlackLightSpacing.gutter),
+                horizontal: LimyeSpacing.gutter),
             child: Row(
               children: [
                 MouseRegion(
@@ -113,12 +113,12 @@ class _PublicNavbar extends StatelessWidget {
                     children: [
                       Text(
                         NavigationContent.preAuthSignIn,
-                        style: BlackLightTextStyles.body(
-                            color: BlackLightColors.accent),
+                        style: LimyeTextStyles.body(
+                            color: LimyeColors.accent),
                       ),
                       const SizedBox(width: 4),
                       const Icon(Icons.arrow_forward,
-                          size: 16, color: BlackLightColors.accent),
+                          size: 16, color: LimyeColors.accent),
                     ],
                   ),
                 ),
@@ -151,22 +151,22 @@ class _NavLink extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          height: BlackLightSpacing.navbarHeight,
+          height: LimyeSpacing.navbarHeight,
           alignment: Alignment.center,
           decoration: isActive
               ? const BoxDecoration(
                   border: Border(
                     bottom:
-                        BorderSide(color: BlackLightColors.accent, width: 2),
+                        BorderSide(color: LimyeColors.accent, width: 2),
                   ),
                 )
               : null,
           child: Text(
             label,
-            style: BlackLightTextStyles.body(
+            style: LimyeTextStyles.body(
               color: isActive
-                  ? BlackLightColors.accent
-                  : BlackLightColors.textBody,
+                  ? LimyeColors.accent
+                  : LimyeColors.textBody,
             ).copyWith(fontWeight: FontWeight.w500, fontSize: 14),
           ),
         ),
@@ -182,7 +182,7 @@ class BlackLightFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: BlackLightSpacing.footerHeight,
+      height: LimyeSpacing.footerHeight,
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
         border: Border(
@@ -298,7 +298,7 @@ class HomeownerAuthenticatedChrome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BlackLightAdaptive.background(context),
+      backgroundColor: LimyeAdaptive.background(context),
       body: Row(
         children: [
           _Sidebar(
@@ -341,12 +341,12 @@ class _Sidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: BlackLightSpacing.sidebarWidth,
+      width: LimyeSpacing.sidebarWidth,
       height: double.infinity,
       decoration: BoxDecoration(
-        color: BlackLightAdaptive.sidebarBg(context),
+        color: LimyeAdaptive.sidebarBg(context),
         border: Border(
-          right: BorderSide(color: BlackLightAdaptive.sidebarBorder(context)),
+          right: BorderSide(color: LimyeAdaptive.sidebarBorder(context)),
         ),
       ),
       child: Column(
@@ -378,14 +378,14 @@ class _Sidebar extends StatelessWidget {
                       width: 32,
                       height: 32,
                       decoration: BoxDecoration(
-                        color: BlackLightAdaptive.surface(context),
+                        color: LimyeAdaptive.surface(context),
                         borderRadius: BorderRadius.circular(999),
                         border: Border.all(
-                            color: BlackLightAdaptive.border(context)),
+                            color: LimyeAdaptive.border(context)),
                       ),
                       child: Icon(Icons.person_outline,
                           size: 18,
-                          color: BlackLightAdaptive.textBody(context)),
+                          color: LimyeAdaptive.textBody(context)),
                     ),
                     const SizedBox(width: 10),
                     Expanded(
@@ -393,8 +393,8 @@ class _Sidebar extends StatelessWidget {
                         userName.isEmpty
                             ? NavigationContent.shellUserFallback
                             : userName,
-                        style: BlackLightTextStyles.body(
-                                color: BlackLightAdaptive.textPrimary(context))
+                        style: LimyeTextStyles.body(
+                                color: LimyeAdaptive.textPrimary(context))
                             .copyWith(
                                 fontSize: 13, fontWeight: FontWeight.w500),
                         overflow: TextOverflow.ellipsis,
@@ -406,8 +406,8 @@ class _Sidebar extends StatelessWidget {
                   const SizedBox(height: 8),
                   Text(
                     '${WalletContent.hlioTicker} ${hlioBalance.toStringAsFixed(2)}',
-                    style: BlackLightTextStyles.caption(
-                        color: BlackLightAdaptive.textCaption(context)),
+                    style: LimyeTextStyles.caption(
+                        color: LimyeAdaptive.textCaption(context)),
                   ),
                 ],
                 const SizedBox(height: 12),
@@ -417,12 +417,12 @@ class _Sidebar extends StatelessWidget {
                     children: [
                       Icon(Icons.logout_outlined,
                           size: 16,
-                          color: BlackLightAdaptive.textCaption(context)),
+                          color: LimyeAdaptive.textCaption(context)),
                       const SizedBox(width: 8),
                       Text(
                         NavigationContent.shellSignOut,
-                        style: BlackLightTextStyles.caption(
-                            color: BlackLightAdaptive.textCaption(context)),
+                        style: LimyeTextStyles.caption(
+                            color: LimyeAdaptive.textCaption(context)),
                       ),
                     ],
                   ),
@@ -472,15 +472,15 @@ class _SidebarNavItem extends StatelessWidget {
               size: 20,
               color: isActive
                   ? context.colors.primary
-                  : BlackLightAdaptive.textBody(context),
+                  : LimyeAdaptive.textBody(context),
             ),
             const SizedBox(width: 12),
             Text(
               item.label,
-              style: BlackLightTextStyles.body(
+              style: LimyeTextStyles.body(
                 color: isActive
                     ? context.colors.primary
-                    : BlackLightAdaptive.textBody(context),
+                    : LimyeAdaptive.textBody(context),
               ).copyWith(
                 fontSize: 14,
                 fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,

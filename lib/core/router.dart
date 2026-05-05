@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:blacklight_app/core/content/content_registry.dart';
-import 'package:blacklight_app/theme/blacklight_theme.dart';
+import 'package:limye_app/core/content/content_registry.dart';
+import 'package:limye_app/theme/limye_theme.dart';
 
 import 'app_state.dart';
 import 'providers/session_providers.dart';
@@ -11,19 +11,19 @@ import 'providers/theme_provider.dart';
 import 'shell/web/homeowner_web_chrome.dart';
 import 'ui/app_feedback.dart';
 
-import 'package:blacklight_app/features/light/landing/landing_page.dart';
-import 'package:blacklight_app/features/light/auth/auth_page.dart';
-import 'package:blacklight_app/features/light/homeowner/dashboard_page.dart';
-import 'package:blacklight_app/features/light/homeowner/intake_page.dart';
-import 'package:blacklight_app/features/light/homeowner/chat_page.dart';
-import 'package:blacklight_app/features/light/homeowner/homeowner_design_result_page.dart';
-import 'package:blacklight_app/features/light/homeowner/homeowner_wallet_page.dart';
-import 'package:blacklight_app/features/light/homeowner/mobile_homeowner_shell.dart';
-import 'package:blacklight_app/features/light/auth/mobile_auth.dart';
+import 'package:limye_app/features/light/landing/landing_page.dart';
+import 'package:limye_app/features/light/auth/auth_page.dart';
+import 'package:limye_app/features/light/homeowner/dashboard_page.dart';
+import 'package:limye_app/features/light/homeowner/intake_page.dart';
+import 'package:limye_app/features/light/homeowner/chat_page.dart';
+import 'package:limye_app/features/light/homeowner/homeowner_design_result_page.dart';
+import 'package:limye_app/features/light/homeowner/homeowner_wallet_page.dart';
+import 'package:limye_app/features/light/homeowner/mobile_homeowner_shell.dart';
+import 'package:limye_app/features/light/auth/mobile_auth.dart';
 
-import 'package:blacklight_app/features/light/drone_ops/web/drone_ops_info_page.dart';
-import 'package:blacklight_app/features/light/pool_funding/web/pool_info_page.dart';
-import 'package:blacklight_app/features/light/ev/ev_info_page.dart';
+import 'package:limye_app/features/light/drone_ops/web/drone_ops_info_page.dart';
+import 'package:limye_app/features/light/pool_funding/web/pool_info_page.dart';
+import 'package:limye_app/features/light/ev/ev_info_page.dart';
 
 /// Root router: public homeowner marketing + intake without auth; dashboard after login.
 class BlackLightRouter extends ConsumerWidget {
@@ -166,11 +166,11 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
     if (role != UserRole.homeowner) {
       return Center(
         child: Padding(
-          padding: const EdgeInsets.all(BlackLightSpacing.gutter),
+          padding: const EdgeInsets.all(LimyeSpacing.gutter),
           child: Text(
             AuthContent.homeownerLoginOnly,
             textAlign: TextAlign.center,
-            style: BlackLightTextStyles.body(),
+            style: LimyeTextStyles.body(),
           ),
         ),
       );
@@ -214,7 +214,7 @@ class _WebHelpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(BlackLightSpacing.gutter),
+      padding: const EdgeInsets.all(LimyeSpacing.gutter),
       child: Align(
         alignment: Alignment.topLeft,
         child: ConstrainedBox(
@@ -226,7 +226,7 @@ class _WebHelpPage extends StatelessWidget {
                 NavigationContent.sidebarHelp,
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
-              const SizedBox(height: BlackLightSpacing.md),
+              const SizedBox(height: LimyeSpacing.md),
               Text(
                 RouterStrings.orgWebHelpBody,
                 style: Theme.of(context).textTheme.bodyMedium,
@@ -305,32 +305,32 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
           );
         case _MobilePublic.home:
           return Scaffold(
-            backgroundColor: BlackLightColors.background,
+            backgroundColor: LimyeColors.background,
             body: SafeArea(
               child: ListView(
-                padding: const EdgeInsets.all(BlackLightSpacing.gutter),
+                padding: const EdgeInsets.all(LimyeSpacing.gutter),
                 children: [
-                  const SizedBox(height: BlackLightSpacing.lg),
+                  const SizedBox(height: LimyeSpacing.lg),
                   Text(
                     LandingContent.heroTitle,
-                    style: BlackLightTextStyles.hero(),
+                    style: LimyeTextStyles.hero(),
                   ),
-                  const SizedBox(height: BlackLightSpacing.md),
+                  const SizedBox(height: LimyeSpacing.md),
                   Text(LandingContent.heroBody,
-                      style: BlackLightTextStyles.body()),
-                  const SizedBox(height: BlackLightSpacing.xl),
+                      style: LimyeTextStyles.body()),
+                  const SizedBox(height: LimyeSpacing.xl),
                   ElevatedButton(
                     onPressed: () =>
                         setState(() => _pub = _MobilePublic.intake),
                     child: Text(LandingContent.heroPrimaryCta,
-                        style: BlackLightTextStyles.bodyBold(color: Colors.white)),
+                        style: LimyeTextStyles.bodyBold(color: Colors.white)),
                   ),
-                  const SizedBox(height: BlackLightSpacing.md),
+                  const SizedBox(height: LimyeSpacing.md),
                   OutlinedButton(
                     onPressed: () =>
                         setState(() => _pub = _MobilePublic.login),
                     child: Text(HomeownerDashboardContent.myProjectsPageTitle,
-                        style: BlackLightTextStyles.bodyBold()),
+                        style: LimyeTextStyles.bodyBold()),
                   ),
                 ],
               ),

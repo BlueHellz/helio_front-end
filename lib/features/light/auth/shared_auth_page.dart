@@ -1,17 +1,17 @@
 import 'dart:developer' as developer;
 
-import 'package:blacklight_app/core/content/content_registry.dart';
+import 'package:limye_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:blacklight_app/core/ui/app_feedback.dart';
-import 'package:blacklight_app/theme/blacklight_theme.dart';
-import 'package:blacklight_app/core/brand/blacklight_brand_logo.dart';
-import 'package:blacklight_app/core/app_state.dart';
-import 'package:blacklight_app/core/illustrations/geometric_illustrations.dart';
-import 'package:blacklight_app/core/shell/web/homeowner_web_chrome.dart';
-import 'package:blacklight_app/core/providers/session_providers.dart';
-import 'package:blacklight_app/services/auth_api.dart';
+import 'package:limye_app/core/ui/app_feedback.dart';
+import 'package:limye_app/theme/limye_theme.dart';
+import 'package:limye_app/core/brand/blacklight_brand_logo.dart';
+import 'package:limye_app/core/app_state.dart';
+import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
+import 'package:limye_app/core/shell/web/homeowner_web_chrome.dart';
+import 'package:limye_app/core/providers/session_providers.dart';
+import 'package:limye_app/services/auth_api.dart';
 
 class AuthPage extends ConsumerStatefulWidget {
   final VoidCallback? onHomeTap;
@@ -99,16 +99,16 @@ class _AuthPageState extends ConsumerState<AuthPage> {
       onMyProjects: widget.onNavbarSignIn,
       child: SizedBox(
         height: MediaQuery.of(context).size.height -
-            BlackLightSpacing.navbarHeight -
-            BlackLightSpacing.footerHeight,
+            LimyeSpacing.navbarHeight -
+            LimyeSpacing.footerHeight,
         child: Row(
           children: [
             Expanded(
               child: Center(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: BlackLightSpacing.lg,
-                      vertical: BlackLightSpacing.xl),
+                      horizontal: LimyeSpacing.lg,
+                      vertical: LimyeSpacing.xl),
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 440),
                     child: _LoginForm(
@@ -127,9 +127,9 @@ class _AuthPageState extends ConsumerState<AuthPage> {
             Expanded(
               child: Container(
                 decoration: const BoxDecoration(
-                  color: BlackLightColors.surface,
+                  color: LimyeColors.surface,
                   border: Border(
-                    left: BorderSide(color: BlackLightColors.border),
+                    left: BorderSide(color: LimyeColors.border),
                   ),
                 ),
                 child: Center(
@@ -137,18 +137,18 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SunRingsIllustration(size: 380),
-                      const SizedBox(height: BlackLightSpacing.lg),
+                      const SizedBox(height: LimyeSpacing.lg),
                       Text(
                         AuthContent.splitHeroTitle,
-                        style: BlackLightTextStyles.sectionHeading(),
+                        style: LimyeTextStyles.sectionHeading(),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: BlackLightSpacing.xs),
+                      const SizedBox(height: LimyeSpacing.xs),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 40),
                         child: Text(
                           AuthContent.splitHeroBody,
-                          style: BlackLightTextStyles.body(),
+                          style: LimyeTextStyles.body(),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -187,19 +187,19 @@ class _LoginForm extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const BlackLightLogo(height: 40, maxWidth: 240),
-        const SizedBox(height: BlackLightSpacing.xl),
+        const SizedBox(height: LimyeSpacing.xl),
         Text(
           AuthContent.welcomeBack,
-          style: BlackLightTextStyles.sectionHeading(),
+          style: LimyeTextStyles.sectionHeading(),
         ),
-        const SizedBox(height: BlackLightSpacing.md),
+        const SizedBox(height: LimyeSpacing.md),
         Text(
           HomeownerDashboardContent.myProjectsPageTitle,
-          style: BlackLightTextStyles.caption(
-            color: BlackLightColors.textCaption,
+          style: LimyeTextStyles.caption(
+            color: LimyeColors.textCaption,
           ),
         ),
-        const SizedBox(height: BlackLightSpacing.lg),
+        const SizedBox(height: LimyeSpacing.lg),
         _LabeledInput(
           label: AuthContent.labelEmail,
           child: TextField(
@@ -207,11 +207,11 @@ class _LoginForm extends StatelessWidget {
             keyboardType: TextInputType.emailAddress,
             enabled: !isSubmitting,
             style:
-                BlackLightTextStyles.body(color: BlackLightColors.textPrimary),
+                LimyeTextStyles.body(color: LimyeColors.textPrimary),
             decoration: _inputDeco(AuthContent.hintEmail),
           ),
         ),
-        const SizedBox(height: BlackLightSpacing.sm),
+        const SizedBox(height: LimyeSpacing.sm),
         _LabeledInput(
           label: AuthContent.labelPassword,
           child: TextField(
@@ -219,7 +219,7 @@ class _LoginForm extends StatelessWidget {
             obscureText: obscurePassword,
             enabled: !isSubmitting,
             style:
-                BlackLightTextStyles.body(color: BlackLightColors.textPrimary),
+                LimyeTextStyles.body(color: LimyeColors.textPrimary),
             decoration: _inputDeco(AuthContent.hintPasswordObscured).copyWith(
               suffixIcon: GestureDetector(
                 onTap: isSubmitting ? null : onTogglePassword,
@@ -227,30 +227,30 @@ class _LoginForm extends StatelessWidget {
                   obscurePassword
                       ? Icons.visibility_off_outlined
                       : Icons.visibility_outlined,
-                  color: BlackLightColors.textCaption,
+                  color: LimyeColors.textCaption,
                   size: 20,
                 ),
               ),
             ),
           ),
         ),
-        const SizedBox(height: BlackLightSpacing.sm),
+        const SizedBox(height: LimyeSpacing.sm),
         Align(
           alignment: Alignment.centerRight,
           child: Text(
             AuthContent.forgotPassword,
             style:
-                BlackLightTextStyles.caption(color: BlackLightColors.accent),
+                LimyeTextStyles.caption(color: LimyeColors.accent),
           ),
         ),
-        const SizedBox(height: BlackLightSpacing.md),
+        const SizedBox(height: LimyeSpacing.md),
         SizedBox(
           width: double.infinity,
-          height: BlackLightSpacing.buttonHeight,
+          height: LimyeSpacing.buttonHeight,
           child: ElevatedButton(
             onPressed: isSubmitting ? null : () => onContinue(),
             style: ElevatedButton.styleFrom(
-              backgroundColor: BlackLightColors.accent,
+              backgroundColor: LimyeColors.accent,
               foregroundColor: Colors.white,
               elevation: 0,
               shape: const StadiumBorder(),
@@ -266,11 +266,11 @@ class _LoginForm extends StatelessWidget {
                   )
                 : Text(
                     AuthContent.tabSignIn,
-                    style: BlackLightTextStyles.bodyBold(color: Colors.white),
+                    style: LimyeTextStyles.bodyBold(color: Colors.white),
                   ),
           ),
         ),
-        const SizedBox(height: BlackLightSpacing.lg),
+        const SizedBox(height: LimyeSpacing.lg),
         Row(
           children: [
             const Expanded(child: Divider()),
@@ -278,13 +278,13 @@ class _LoginForm extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Text(
                 AuthContent.orContinueWith,
-                style: BlackLightTextStyles.caption(),
+                style: LimyeTextStyles.caption(),
               ),
             ),
             const Expanded(child: Divider()),
           ],
         ),
-        const SizedBox(height: BlackLightSpacing.md),
+        const SizedBox(height: LimyeSpacing.md),
         _SocialButton(
           label: AuthContent.oauthGoogle,
           icon: Icons.g_mobiledata_rounded,
@@ -293,7 +293,7 @@ class _LoginForm extends StatelessWidget {
               : () =>
                   AppFeedback.socialSignInStub(context, AuthContent.oauthGoogle),
         ),
-        const SizedBox(height: BlackLightSpacing.xs),
+        const SizedBox(height: LimyeSpacing.xs),
         _SocialButton(
           label: AuthContent.oauthApple,
           icon: Icons.apple,
@@ -308,23 +308,23 @@ class _LoginForm extends StatelessWidget {
   InputDecoration _inputDeco(String hint) => InputDecoration(
         hintText: hint,
         hintStyle:
-            BlackLightTextStyles.body(color: BlackLightColors.textCaption),
+            LimyeTextStyles.body(color: LimyeColors.textCaption),
         filled: true,
-        fillColor: BlackLightColors.surface,
+        fillColor: LimyeColors.surface,
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(BlackLightRadius.input),
-          borderSide: const BorderSide(color: BlackLightColors.inputBorder),
+          borderRadius: BorderRadius.circular(LimyeRadius.input),
+          borderSide: const BorderSide(color: LimyeColors.inputBorder),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(BlackLightRadius.input),
-          borderSide: const BorderSide(color: BlackLightColors.inputBorder),
+          borderRadius: BorderRadius.circular(LimyeRadius.input),
+          borderSide: const BorderSide(color: LimyeColors.inputBorder),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(BlackLightRadius.input),
+          borderRadius: BorderRadius.circular(LimyeRadius.input),
           borderSide:
-              const BorderSide(color: BlackLightColors.accent, width: 1),
+              const BorderSide(color: LimyeColors.accent, width: 1),
         ),
       );
 }
@@ -342,8 +342,8 @@ class _LabeledInput extends StatelessWidget {
       children: [
         Text(
           label.toUpperCase(),
-          style: BlackLightTextStyles.captionBold(
-            color: BlackLightColors.textCaption,
+          style: LimyeTextStyles.captionBold(
+            color: LimyeColors.textCaption,
           ),
         ),
         const SizedBox(height: 6),
@@ -368,18 +368,18 @@ class _SocialButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: BlackLightSpacing.buttonHeight,
+      height: LimyeSpacing.buttonHeight,
       child: OutlinedButton.icon(
         onPressed: onTap,
-        icon: Icon(icon, size: 20, color: BlackLightColors.accent),
+        icon: Icon(icon, size: 20, color: LimyeColors.accent),
         label: Text(
           label,
-          style: BlackLightTextStyles.bodyBold(color: BlackLightColors.accent)
+          style: LimyeTextStyles.bodyBold(color: LimyeColors.accent)
               .copyWith(fontWeight: FontWeight.w500),
         ),
         style: OutlinedButton.styleFrom(
-          foregroundColor: BlackLightColors.accent,
-          side: const BorderSide(color: BlackLightColors.accent),
+          foregroundColor: LimyeColors.accent,
+          side: const BorderSide(color: LimyeColors.accent),
           shape: const StadiumBorder(),
         ),
       ),

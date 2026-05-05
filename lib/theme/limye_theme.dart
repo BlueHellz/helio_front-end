@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 const String _fontMono = 'JetBrainsMono';
 
 // ─────────────────────────────────────────────
-// BLACK LIGHT — tokens (strict design language)
+// LIMYÈ — tokens (strict design language)
 // Sans-serif: Theme default / system (no bundled Inter/Manrope).
 // ─────────────────────────────────────────────
 
-class BlackLightColors {
-  BlackLightColors._();
+class LimyeColors {
+  LimyeColors._();
 
   static const Color background = Color(0xFFF8F9FA);
   static const Color surface = Color(0xFFFFFFFF);
@@ -40,8 +40,8 @@ class BlackLightColors {
   static const Color sidebarHoverBg = background;
 }
 
-class BlackLightSpacing {
-  BlackLightSpacing._();
+class LimyeSpacing {
+  LimyeSpacing._();
 
   static const double xs = 8;
   static const double sm = 16;
@@ -62,8 +62,8 @@ class BlackLightSpacing {
   static const double tapTarget = 48;
 }
 
-class BlackLightRadius {
-  BlackLightRadius._();
+class LimyeRadius {
+  LimyeRadius._();
 
   static const double card = 16;
   static const double input = 14;
@@ -74,11 +74,11 @@ class BlackLightRadius {
   static const double lg = 16;
 }
 
-class BlackLightTextStyles {
-  BlackLightTextStyles._();
+class LimyeTextStyles {
+  LimyeTextStyles._();
 
   /// -0.02em ≈ -0.02 × fontSize in logical pixels.
-  static TextStyle hero({Color color = BlackLightColors.textPrimary}) =>
+  static TextStyle hero({Color color = LimyeColors.textPrimary}) =>
       TextStyle(
         fontSize: 40,
         fontWeight: FontWeight.w700,
@@ -88,7 +88,7 @@ class BlackLightTextStyles {
       );
 
   static TextStyle sectionHeading(
-          {Color color = BlackLightColors.textPrimary}) =>
+          {Color color = LimyeColors.textPrimary}) =>
       TextStyle(
         fontSize: 32,
         fontWeight: FontWeight.w600,
@@ -96,7 +96,7 @@ class BlackLightTextStyles {
         color: color,
       );
 
-  static TextStyle cardHeading({Color color = BlackLightColors.textPrimary}) =>
+  static TextStyle cardHeading({Color color = LimyeColors.textPrimary}) =>
       TextStyle(
         fontSize: 24,
         fontWeight: FontWeight.w600,
@@ -104,14 +104,14 @@ class BlackLightTextStyles {
         color: color,
       );
 
-  static TextStyle body({Color color = BlackLightColors.textBody}) => TextStyle(
+  static TextStyle body({Color color = LimyeColors.textBody}) => TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w400,
         height: 1.6,
         color: color,
       );
 
-  static TextStyle bodyBold({Color color = BlackLightColors.textPrimary}) =>
+  static TextStyle bodyBold({Color color = LimyeColors.textPrimary}) =>
       TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w600,
@@ -119,7 +119,7 @@ class BlackLightTextStyles {
         color: color,
       );
 
-  static TextStyle caption({Color color = BlackLightColors.textCaption}) =>
+  static TextStyle caption({Color color = LimyeColors.textCaption}) =>
       TextStyle(
         fontSize: 13,
         fontWeight: FontWeight.w500,
@@ -127,7 +127,7 @@ class BlackLightTextStyles {
         color: color,
       );
 
-  static TextStyle captionBold({Color color = BlackLightColors.textCaption}) =>
+  static TextStyle captionBold({Color color = LimyeColors.textCaption}) =>
       TextStyle(
         fontSize: 13,
         fontWeight: FontWeight.w600,
@@ -136,7 +136,7 @@ class BlackLightTextStyles {
       );
 
   /// Numbers / metrics — 14px mono, weight 500.
-  static TextStyle data({Color color = BlackLightColors.textPrimary}) =>
+  static TextStyle data({Color color = LimyeColors.textPrimary}) =>
       TextStyle(
         fontFamily: _fontMono,
         fontSize: 14,
@@ -145,7 +145,7 @@ class BlackLightTextStyles {
         color: color,
       );
 
-  static TextStyle dataInline({Color color = BlackLightColors.textBody}) =>
+  static TextStyle dataInline({Color color = LimyeColors.textBody}) =>
       TextStyle(
         fontFamily: _fontMono,
         fontSize: 14,
@@ -154,7 +154,7 @@ class BlackLightTextStyles {
         color: color,
       );
 
-  static TextStyle dataLarge({Color color = BlackLightColors.textPrimary}) =>
+  static TextStyle dataLarge({Color color = LimyeColors.textPrimary}) =>
       TextStyle(
         fontFamily: _fontMono,
         fontSize: 24,
@@ -163,28 +163,28 @@ class BlackLightTextStyles {
         color: color,
       );
 
-  static TextStyle mobileH1({Color color = BlackLightColors.textPrimary}) =>
+  static TextStyle mobileH1({Color color = LimyeColors.textPrimary}) =>
       sectionHeading(color: color);
 
-  static TextStyle mobileH2({Color color = BlackLightColors.textPrimary}) =>
+  static TextStyle mobileH2({Color color = LimyeColors.textPrimary}) =>
       cardHeading(color: color);
 
-  static TextStyle mobileH3({Color color = BlackLightColors.textPrimary}) =>
+  static TextStyle mobileH3({Color color = LimyeColors.textPrimary}) =>
       cardHeading(color: color);
 
   static TextStyle mobileButton({Color color = Colors.white}) =>
       bodyBold(color: color);
 
-  static TextStyle mobileBody({Color color = BlackLightColors.textBody}) =>
+  static TextStyle mobileBody({Color color = LimyeColors.textBody}) =>
       body(color: color);
 
-  static TextStyle mobileLabelBold({Color color = BlackLightColors.textBody}) =>
+  static TextStyle mobileLabelBold({Color color = LimyeColors.textBody}) =>
       captionBold(color: color);
 }
 
-/// Dark palette (Black Light premium / org). Sizes match light theme.
-class BlackLightDarkColors {
-  BlackLightDarkColors._();
+/// Dark palette (LIMYÈ premium / org). Sizes match light theme.
+class LimyeDarkColors {
+  LimyeDarkColors._();
 
   static const Color background = Color(0xFF0B1E33);
   static const Color surface = Color(0xFF111F2F);
@@ -197,35 +197,35 @@ class BlackLightDarkColors {
 }
 
 /// Theme-aware tokens for shells and surfaces that must track light/dark org mode.
-class BlackLightAdaptive {
-  BlackLightAdaptive._();
+class LimyeAdaptive {
+  LimyeAdaptive._();
 
   static bool _dark(BuildContext context) =>
       Theme.of(context).brightness == Brightness.dark;
 
   static Color background(BuildContext context) => _dark(context)
-      ? BlackLightDarkColors.background
-      : BlackLightColors.background;
+      ? LimyeDarkColors.background
+      : LimyeColors.background;
 
   static Color surface(BuildContext context) => _dark(context)
-      ? BlackLightDarkColors.surface
-      : BlackLightColors.surface;
+      ? LimyeDarkColors.surface
+      : LimyeColors.surface;
 
   static Color border(BuildContext context) => _dark(context)
-      ? BlackLightDarkColors.border
-      : BlackLightColors.border;
+      ? LimyeDarkColors.border
+      : LimyeColors.border;
 
   static Color textPrimary(BuildContext context) => _dark(context)
-      ? BlackLightDarkColors.textPrimary
-      : BlackLightColors.textPrimary;
+      ? LimyeDarkColors.textPrimary
+      : LimyeColors.textPrimary;
 
   static Color textBody(BuildContext context) => _dark(context)
-      ? BlackLightDarkColors.textBody
-      : BlackLightColors.textBody;
+      ? LimyeDarkColors.textBody
+      : LimyeColors.textBody;
 
   static Color textCaption(BuildContext context) => _dark(context)
-      ? BlackLightDarkColors.textBody
-      : BlackLightColors.textCaption;
+      ? LimyeDarkColors.textBody
+      : LimyeColors.textCaption;
 
   static Color sidebarBg(BuildContext context) => surface(context);
 
@@ -234,13 +234,13 @@ class BlackLightAdaptive {
   static Color sidebarInactiveText(BuildContext context) => textBody(context);
 
   static Color sidebarHoverBg(BuildContext context) => _dark(context)
-      ? BlackLightDarkColors.background
-      : BlackLightColors.sidebarHoverBg;
+      ? LimyeDarkColors.background
+      : LimyeColors.sidebarHoverBg;
 }
 
 /// Theme tokens via `context.colors` — prefer over hardcoded hex in widgets.
-class BlackLightPalette {
-  BlackLightPalette(this._context);
+class LimyePalette {
+  LimyePalette(this._context);
   final BuildContext _context;
 
   ThemeData get _t => Theme.of(_context);
@@ -256,34 +256,34 @@ class BlackLightPalette {
   Color get error => _t.colorScheme.error;
 
   /// Semantic accents not mapped to [ColorScheme] (CRM status, chips).
-  Color get warning => BlackLightColors.amber;
+  Color get warning => LimyeColors.amber;
 
   /// Muted / secondary text (matches caption tone in light and dark themes).
   Color get onSurfaceMuted => _t.colorScheme.onSurfaceVariant;
 
   /// Secondary fill for nested cards / column bodies.
   Color get surfaceMuted => brightness == Brightness.dark
-      ? BlackLightDarkColors.surfaceMuted
-      : BlackLightColors.surfaceMuted;
+      ? LimyeDarkColors.surfaceMuted
+      : LimyeColors.surfaceMuted;
 }
 
-extension BlackLightContextPalette on BuildContext {
-  BlackLightPalette get colors => BlackLightPalette(this);
+extension LimyeContextPalette on BuildContext {
+  LimyePalette get colors => LimyePalette(this);
 }
 
-class BlackLightTheme {
-  BlackLightTheme._();
+class LimyeTheme {
+  LimyeTheme._();
 
-  static ThemeData lightTheme() => buildBlackLightTheme();
+  static ThemeData lightTheme() => buildLimyeTheme();
 
   static ThemeData darkTheme() {
-    const bg = BlackLightDarkColors.background;
-    const surface = BlackLightDarkColors.surface;
-    const borderC = BlackLightDarkColors.border;
-    const onSurf = BlackLightDarkColors.textPrimary;
-    const bodyC = BlackLightDarkColors.textBody;
+    const bg = LimyeDarkColors.background;
+    const surface = LimyeDarkColors.surface;
+    const borderC = LimyeDarkColors.border;
+    const onSurf = LimyeDarkColors.textPrimary;
+    const bodyC = LimyeDarkColors.textBody;
 
-    final baseSans = BlackLightTextStyles.body(color: bodyC);
+    final baseSans = LimyeTextStyles.body(color: bodyC);
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
@@ -291,11 +291,11 @@ class BlackLightTheme {
       canvasColor: bg,
       cardColor: surface,
       colorScheme: const ColorScheme.dark(
-        primary: BlackLightColors.accent,
+        primary: LimyeColors.accent,
         onPrimary: Colors.white,
-        secondary: BlackLightColors.green,
+        secondary: LimyeColors.green,
         onSecondary: Colors.white,
-        error: BlackLightColors.error,
+        error: LimyeColors.error,
         surface: surface,
         onSurface: onSurf,
         outline: borderC,
@@ -307,25 +307,25 @@ class BlackLightTheme {
         color: bodyC,
       ),
       textTheme: TextTheme(
-        displayLarge: BlackLightTextStyles.hero(color: onSurf),
-        displayMedium: BlackLightTextStyles.sectionHeading(color: onSurf),
-        displaySmall: BlackLightTextStyles.cardHeading(color: onSurf),
-        headlineLarge: BlackLightTextStyles.sectionHeading(color: onSurf),
-        headlineMedium: BlackLightTextStyles.sectionHeading(color: onSurf),
-        headlineSmall: BlackLightTextStyles.cardHeading(color: onSurf),
-        titleLarge: BlackLightTextStyles.cardHeading(color: onSurf),
-        titleMedium: BlackLightTextStyles.bodyBold(color: onSurf),
-        titleSmall: BlackLightTextStyles.bodyBold(color: onSurf),
+        displayLarge: LimyeTextStyles.hero(color: onSurf),
+        displayMedium: LimyeTextStyles.sectionHeading(color: onSurf),
+        displaySmall: LimyeTextStyles.cardHeading(color: onSurf),
+        headlineLarge: LimyeTextStyles.sectionHeading(color: onSurf),
+        headlineMedium: LimyeTextStyles.sectionHeading(color: onSurf),
+        headlineSmall: LimyeTextStyles.cardHeading(color: onSurf),
+        titleLarge: LimyeTextStyles.cardHeading(color: onSurf),
+        titleMedium: LimyeTextStyles.bodyBold(color: onSurf),
+        titleSmall: LimyeTextStyles.bodyBold(color: onSurf),
         bodyLarge: baseSans,
         bodyMedium: baseSans,
-        bodySmall: BlackLightTextStyles.caption(color: bodyC),
-        labelLarge: BlackLightTextStyles.bodyBold(color: onSurf),
-        labelMedium: BlackLightTextStyles.caption(color: bodyC),
-        labelSmall: BlackLightTextStyles.caption(color: bodyC),
+        bodySmall: LimyeTextStyles.caption(color: bodyC),
+        labelLarge: LimyeTextStyles.bodyBold(color: onSurf),
+        labelMedium: LimyeTextStyles.caption(color: bodyC),
+        labelSmall: LimyeTextStyles.caption(color: bodyC),
       ),
       primaryTextTheme: TextTheme(
-        bodyLarge: BlackLightTextStyles.bodyBold(color: Colors.white),
-        bodyMedium: BlackLightTextStyles.bodyBold(color: Colors.white),
+        bodyLarge: LimyeTextStyles.bodyBold(color: Colors.white),
+        bodyMedium: LimyeTextStyles.bodyBold(color: Colors.white),
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: surface,
@@ -333,7 +333,7 @@ class BlackLightTheme {
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
-        titleTextStyle: BlackLightTextStyles.cardHeading(color: onSurf),
+        titleTextStyle: LimyeTextStyles.cardHeading(color: onSurf),
         iconTheme: IconThemeData(color: bodyC),
         surfaceTintColor: Colors.transparent,
         shape: const Border(
@@ -344,43 +344,43 @@ class BlackLightTheme {
         filled: true,
         fillColor: surface,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(BlackLightRadius.input),
+          borderRadius: BorderRadius.circular(LimyeRadius.input),
           borderSide: const BorderSide(color: borderC),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(BlackLightRadius.input),
+          borderRadius: BorderRadius.circular(LimyeRadius.input),
           borderSide: const BorderSide(color: borderC),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(BlackLightRadius.input),
-          borderSide: const BorderSide(color: BlackLightColors.accent, width: 1),
+          borderRadius: BorderRadius.circular(LimyeRadius.input),
+          borderSide: const BorderSide(color: LimyeColors.accent, width: 1),
         ),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        hintStyle: BlackLightTextStyles.caption(color: bodyC),
+        hintStyle: LimyeTextStyles.caption(color: bodyC),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: BlackLightColors.accent,
+          backgroundColor: LimyeColors.accent,
           foregroundColor: Colors.white,
           elevation: 0,
           shadowColor: Colors.transparent,
-          minimumSize: const Size(64, BlackLightSpacing.buttonHeight),
+          minimumSize: const Size(64, LimyeSpacing.buttonHeight),
           padding: const EdgeInsets.symmetric(horizontal: 24),
           shape: const StadiumBorder(),
-          textStyle: BlackLightTextStyles.bodyBold(color: Colors.white),
+          textStyle: LimyeTextStyles.bodyBold(color: Colors.white),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: BlackLightColors.accent,
+          foregroundColor: LimyeColors.accent,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          side: const BorderSide(color: BlackLightColors.accent, width: 1),
-          minimumSize: const Size(64, BlackLightSpacing.buttonHeight),
+          side: const BorderSide(color: LimyeColors.accent, width: 1),
+          minimumSize: const Size(64, LimyeSpacing.buttonHeight),
           padding: const EdgeInsets.symmetric(horizontal: 24),
           shape: const StadiumBorder(),
-          textStyle: BlackLightTextStyles.bodyBold(color: BlackLightColors.accent),
+          textStyle: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
         ),
       ),
       cardTheme: CardThemeData(
@@ -388,7 +388,7 @@ class BlackLightTheme {
         elevation: 0,
         shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(BlackLightRadius.card),
+          borderRadius: BorderRadius.circular(LimyeRadius.card),
           side: const BorderSide(color: borderC, width: 1),
         ),
         margin: EdgeInsets.zero,
@@ -400,7 +400,7 @@ class BlackLightTheme {
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: surface,
-        selectedItemColor: BlackLightColors.accent,
+        selectedItemColor: LimyeColors.accent,
         unselectedItemColor: bodyC,
         elevation: 0,
         type: BottomNavigationBarType.fixed,
@@ -409,25 +409,25 @@ class BlackLightTheme {
         backgroundColor: surface,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(BlackLightRadius.card),
+          borderRadius: BorderRadius.circular(LimyeRadius.card),
           side: const BorderSide(color: borderC, width: 1),
         ),
-        titleTextStyle: BlackLightTextStyles.cardHeading(color: onSurf),
+        titleTextStyle: LimyeTextStyles.cardHeading(color: onSurf),
         contentTextStyle: baseSans,
       ),
       snackBarTheme: SnackBarThemeData(
         backgroundColor: surface,
         contentTextStyle: baseSans,
-        actionTextColor: BlackLightColors.accent,
+        actionTextColor: LimyeColors.accent,
         behavior: SnackBarBehavior.floating,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(BlackLightRadius.md),
+          borderRadius: BorderRadius.circular(LimyeRadius.md),
           side: const BorderSide(color: borderC, width: 1),
         ),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: BlackLightColors.accent,
+        backgroundColor: LimyeColors.accent,
         foregroundColor: Colors.white,
         elevation: 0,
       ),
@@ -442,113 +442,113 @@ class BlackLightTheme {
   }
 }
 
-ThemeData buildBlackLightTheme() {
-  final baseSans = BlackLightTextStyles.body();
+ThemeData buildLimyeTheme() {
+  final baseSans = LimyeTextStyles.body();
   return ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
-    scaffoldBackgroundColor: BlackLightColors.background,
+    scaffoldBackgroundColor: LimyeColors.background,
     colorScheme: const ColorScheme.light(
-      primary: BlackLightColors.accent,
+      primary: LimyeColors.accent,
       onPrimary: Colors.white,
-      secondary: BlackLightColors.green,
+      secondary: LimyeColors.green,
       onSecondary: Colors.white,
-      error: BlackLightColors.error,
-      surface: BlackLightColors.surface,
-      onSurface: BlackLightColors.textPrimary,
-      outline: BlackLightColors.border,
-      onSurfaceVariant: BlackLightColors.textCaption,
+      error: LimyeColors.error,
+      surface: LimyeColors.surface,
+      onSurface: LimyeColors.textPrimary,
+      outline: LimyeColors.border,
+      onSurfaceVariant: LimyeColors.textCaption,
     ),
     fontFamily: null,
     iconTheme: const IconThemeData(
       size: 24,
-      color: BlackLightColors.textBody,
+      color: LimyeColors.textBody,
     ),
     textTheme: TextTheme(
-      displayLarge: BlackLightTextStyles.hero(),
-      headlineLarge: BlackLightTextStyles.sectionHeading(),
-      titleLarge: BlackLightTextStyles.cardHeading(),
+      displayLarge: LimyeTextStyles.hero(),
+      headlineLarge: LimyeTextStyles.sectionHeading(),
+      titleLarge: LimyeTextStyles.cardHeading(),
       bodyLarge: baseSans,
       bodyMedium: baseSans,
-      bodySmall: BlackLightTextStyles.caption(),
-      labelLarge: BlackLightTextStyles.bodyBold(),
-      labelMedium: BlackLightTextStyles.caption(),
-      labelSmall: BlackLightTextStyles.caption(),
+      bodySmall: LimyeTextStyles.caption(),
+      labelLarge: LimyeTextStyles.bodyBold(),
+      labelMedium: LimyeTextStyles.caption(),
+      labelSmall: LimyeTextStyles.caption(),
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: BlackLightColors.surface,
+      backgroundColor: LimyeColors.surface,
       elevation: 0,
       scrolledUnderElevation: 0,
       centerTitle: true,
-      titleTextStyle: BlackLightTextStyles.cardHeading(),
-      iconTheme: const IconThemeData(color: BlackLightColors.textBody),
+      titleTextStyle: LimyeTextStyles.cardHeading(),
+      iconTheme: const IconThemeData(color: LimyeColors.textBody),
       surfaceTintColor: Colors.transparent,
       shape: const Border(
-        bottom: BorderSide(color: BlackLightColors.border, width: 1),
+        bottom: BorderSide(color: LimyeColors.border, width: 1),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: BlackLightColors.surface,
+      fillColor: LimyeColors.surface,
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(BlackLightRadius.input),
-        borderSide: const BorderSide(color: BlackLightColors.inputBorder),
+        borderRadius: BorderRadius.circular(LimyeRadius.input),
+        borderSide: const BorderSide(color: LimyeColors.inputBorder),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(BlackLightRadius.input),
-        borderSide: const BorderSide(color: BlackLightColors.inputBorder),
+        borderRadius: BorderRadius.circular(LimyeRadius.input),
+        borderSide: const BorderSide(color: LimyeColors.inputBorder),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(BlackLightRadius.input),
-        borderSide: const BorderSide(color: BlackLightColors.accent, width: 1),
+        borderRadius: BorderRadius.circular(LimyeRadius.input),
+        borderSide: const BorderSide(color: LimyeColors.accent, width: 1),
       ),
       contentPadding:
           const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      hintStyle: BlackLightTextStyles.caption(),
+      hintStyle: LimyeTextStyles.caption(),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: BlackLightColors.accent,
+        backgroundColor: LimyeColors.accent,
         foregroundColor: Colors.white,
         elevation: 0,
         shadowColor: Colors.transparent,
-        minimumSize: const Size(64, BlackLightSpacing.buttonHeight),
+        minimumSize: const Size(64, LimyeSpacing.buttonHeight),
         padding: const EdgeInsets.symmetric(horizontal: 24),
         shape: const StadiumBorder(),
-        textStyle: BlackLightTextStyles.bodyBold(color: Colors.white),
+        textStyle: LimyeTextStyles.bodyBold(color: Colors.white),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: BlackLightColors.accent,
+        foregroundColor: LimyeColors.accent,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        side: const BorderSide(color: BlackLightColors.accent, width: 1),
-        minimumSize: const Size(64, BlackLightSpacing.buttonHeight),
+        side: const BorderSide(color: LimyeColors.accent, width: 1),
+        minimumSize: const Size(64, LimyeSpacing.buttonHeight),
         padding: const EdgeInsets.symmetric(horizontal: 24),
         shape: const StadiumBorder(),
-        textStyle: BlackLightTextStyles.bodyBold(color: BlackLightColors.accent),
+        textStyle: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
       ),
     ),
     cardTheme: CardThemeData(
-      color: BlackLightColors.surface,
+      color: LimyeColors.surface,
       elevation: 0,
       shadowColor: Colors.transparent,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(BlackLightRadius.card),
-        side: const BorderSide(color: BlackLightColors.border, width: 1),
+        borderRadius: BorderRadius.circular(LimyeRadius.card),
+        side: const BorderSide(color: LimyeColors.border, width: 1),
       ),
       margin: EdgeInsets.zero,
     ),
     dividerTheme: const DividerThemeData(
-      color: BlackLightColors.border,
+      color: LimyeColors.border,
       thickness: 1,
       space: 0,
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: BlackLightColors.surface,
-      selectedItemColor: BlackLightColors.accent,
-      unselectedItemColor: BlackLightColors.textBody,
+      backgroundColor: LimyeColors.surface,
+      selectedItemColor: LimyeColors.accent,
+      unselectedItemColor: LimyeColors.textBody,
       elevation: 0,
       type: BottomNavigationBarType.fixed,
     ),

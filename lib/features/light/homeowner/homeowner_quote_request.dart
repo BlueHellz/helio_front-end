@@ -1,8 +1,8 @@
-import 'package:blacklight_app/core/content/content_registry.dart';
+import 'package:limye_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
-import 'package:blacklight_app/theme/blacklight_theme.dart';
-import 'package:blacklight_app/core/models/project.dart';
-import 'package:blacklight_app/core/widgets/status_badge.dart';
+import 'package:limye_app/theme/limye_theme.dart';
+import 'package:limye_app/core/models/project.dart';
+import 'package:limye_app/core/widgets/status_badge.dart';
 
 class HomeownerQuoteRequest extends StatefulWidget {
   final Project? project;
@@ -36,7 +36,7 @@ class _HomeownerQuoteRequestState extends State<HomeownerQuoteRequest> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(BlackLightSpacing.gutter),
+      padding: const EdgeInsets.all(LimyeSpacing.gutter),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 820),
         child: _hasSubmitted
@@ -54,31 +54,31 @@ class _HomeownerQuoteRequestState extends State<HomeownerQuoteRequest> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               const Icon(Icons.arrow_back_ios_new_rounded,
-                                  size: 14, color: BlackLightColors.textBody),
+                                  size: 14, color: LimyeColors.textBody),
                               const SizedBox(width: 4),
                               Text(HomeownerQuoteRequestContent.back,
-                                  style: BlackLightTextStyles.body(
-                                          color: BlackLightColors.textBody)
+                                  style: LimyeTextStyles.body(
+                                          color: LimyeColors.textBody)
                                       .copyWith(fontSize: 14)),
                             ],
                           ),
                         ),
                     ],
                   ),
-                  const SizedBox(height: BlackLightSpacing.md),
+                  const SizedBox(height: LimyeSpacing.md),
                   Text(HomeownerQuoteRequestContent.pageTitle,
-                      style: BlackLightTextStyles.sectionHeading()),
+                      style: LimyeTextStyles.sectionHeading()),
                   const SizedBox(height: 4),
                   Text(
                     HomeownerQuoteRequestContent.pageSubtitle,
-                    style: BlackLightTextStyles.body(),
+                    style: LimyeTextStyles.body(),
                   ),
-                  const SizedBox(height: BlackLightSpacing.lg),
+                  const SizedBox(height: LimyeSpacing.lg),
 
                   // Design summary card
                   if (widget.project != null)
                     _DesignSummaryCard(project: widget.project!),
-                  const SizedBox(height: BlackLightSpacing.md),
+                  const SizedBox(height: LimyeSpacing.md),
 
                   // Form
                   _FormCard(
@@ -88,40 +88,40 @@ class _HomeownerQuoteRequestState extends State<HomeownerQuoteRequest> {
                     onInstallerCountChanged: (v) =>
                         setState(() => _installerCount = v),
                   ),
-                  const SizedBox(height: BlackLightSpacing.md),
+                  const SizedBox(height: LimyeSpacing.md),
 
                   // Installer count selector
                   _InstallerSelector(
                     selected: _installerCount,
                     onChanged: (v) => setState(() => _installerCount = v),
                   ),
-                  const SizedBox(height: BlackLightSpacing.lg),
+                  const SizedBox(height: LimyeSpacing.lg),
 
                   // Submit
                   SizedBox(
                     width: double.infinity,
-                    height: BlackLightSpacing.buttonHeight,
+                    height: LimyeSpacing.buttonHeight,
                     child: ElevatedButton(
                       onPressed: () {
                         setState(() => _hasSubmitted = true);
                         widget.onSubmit?.call();
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: BlackLightColors.accent,
+                        backgroundColor: LimyeColors.accent,
                         foregroundColor: Colors.white,
                         elevation: 0,
                         shape: const StadiumBorder(),
                       ),
                       child: Text(HomeownerQuoteRequestContent.submitCta,
-                          style: BlackLightTextStyles.bodyBold(
+                          style: LimyeTextStyles.bodyBold(
                               color: Colors.white)),
                     ),
                   ),
-                  const SizedBox(height: BlackLightSpacing.xs),
+                  const SizedBox(height: LimyeSpacing.xs),
                   Center(
                     child: Text(
                       HomeownerQuoteRequestContent.submitFinePrint,
-                      style: BlackLightTextStyles.caption(),
+                      style: LimyeTextStyles.caption(),
                     ),
                   ),
                 ],
@@ -139,11 +139,11 @@ class _DesignSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(BlackLightSpacing.md),
+      padding: const EdgeInsets.all(LimyeSpacing.md),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
-        borderRadius: BorderRadius.circular(BlackLightRadius.card),
-        border: Border.all(color: BlackLightColors.border),
+        color: LimyeColors.surface,
+        borderRadius: BorderRadius.circular(LimyeRadius.card),
+        border: Border.all(color: LimyeColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,20 +155,20 @@ class _DesignSummaryCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(HomeownerQuoteRequestContent.yourDesign,
-                        style: BlackLightTextStyles.captionBold()
+                        style: LimyeTextStyles.captionBold()
                             .copyWith(fontSize: 10)),
                     const SizedBox(height: 2),
                     Text(project.address,
-                        style: BlackLightTextStyles.cardHeading()),
+                        style: LimyeTextStyles.cardHeading()),
                   ],
                 ),
               ),
               StatusBadge(status: project.status),
             ],
           ),
-          const SizedBox(height: BlackLightSpacing.sm),
+          const SizedBox(height: LimyeSpacing.sm),
           const Divider(),
-          const SizedBox(height: BlackLightSpacing.sm),
+          const SizedBox(height: LimyeSpacing.sm),
           Row(
             children: [
               if (project.systemSizeKw != null)
@@ -177,17 +177,17 @@ class _DesignSummaryCard extends StatelessWidget {
                   value: '${project.systemSizeKw!.toStringAsFixed(1)} kW',
                 ),
               if (project.panelCount != null) ...[
-                const SizedBox(width: BlackLightSpacing.lg),
+                const SizedBox(width: LimyeSpacing.lg),
                 _MiniStat(
                     label: HomeownerQuoteRequestContent.miniPanels,
                     value: '${project.panelCount}'),
               ],
               if (project.yearOneSavings != null) ...[
-                const SizedBox(width: BlackLightSpacing.lg),
+                const SizedBox(width: LimyeSpacing.lg),
                 _MiniStat(
                   label: HomeownerQuoteRequestContent.miniYearOneSavings,
                   value: '\$${project.yearOneSavings!.toStringAsFixed(0)}',
-                  valueColor: BlackLightColors.green,
+                  valueColor: LimyeColors.green,
                 ),
               ],
             ],
@@ -211,10 +211,10 @@ class _MiniStat extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label.toUpperCase(),
-            style: BlackLightTextStyles.captionBold().copyWith(fontSize: 10)),
+            style: LimyeTextStyles.captionBold().copyWith(fontSize: 10)),
         Text(value,
-            style: BlackLightTextStyles.data(
-                color: valueColor ?? BlackLightColors.textPrimary)),
+            style: LimyeTextStyles.data(
+                color: valueColor ?? LimyeColors.textPrimary)),
       ],
     );
   }
@@ -236,38 +236,38 @@ class _FormCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(BlackLightSpacing.md),
+      padding: const EdgeInsets.all(LimyeSpacing.md),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
-        borderRadius: BorderRadius.circular(BlackLightRadius.card),
-        border: Border.all(color: BlackLightColors.border),
+        color: LimyeColors.surface,
+        borderRadius: BorderRadius.circular(LimyeRadius.card),
+        border: Border.all(color: LimyeColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(HomeownerQuoteRequestContent.contactPreferences,
-              style: BlackLightTextStyles.cardHeading()),
-          const SizedBox(height: BlackLightSpacing.sm),
+              style: LimyeTextStyles.cardHeading()),
+          const SizedBox(height: LimyeSpacing.sm),
           const Divider(),
-          const SizedBox(height: BlackLightSpacing.md),
+          const SizedBox(height: LimyeSpacing.md),
           _LabeledField(
             label: HomeownerQuoteRequestContent.phoneOptional,
             child: TextField(
               controller: phoneCtrl,
               keyboardType: TextInputType.phone,
-              style: BlackLightTextStyles.body(
-                  color: BlackLightColors.textPrimary),
+              style: LimyeTextStyles.body(
+                  color: LimyeColors.textPrimary),
               decoration: _inputDeco(HomeownerQuoteRequestContent.phoneHint),
             ),
           ),
-          const SizedBox(height: BlackLightSpacing.sm),
+          const SizedBox(height: LimyeSpacing.sm),
           _LabeledField(
             label: HomeownerQuoteRequestContent.notesOptional,
             child: TextField(
               controller: notesCtrl,
               maxLines: 3,
-              style: BlackLightTextStyles.body(
-                  color: BlackLightColors.textPrimary),
+              style: LimyeTextStyles.body(
+                  color: LimyeColors.textPrimary),
               decoration: _inputDeco(HomeownerQuoteRequestContent.notesHint),
             ),
           ),
@@ -279,21 +279,21 @@ class _FormCard extends StatelessWidget {
   InputDecoration _inputDeco(String hint) => InputDecoration(
         hintText: hint,
         hintStyle:
-            BlackLightTextStyles.body(color: BlackLightColors.textCaption),
+            LimyeTextStyles.body(color: LimyeColors.textCaption),
         filled: true,
-        fillColor: BlackLightColors.background,
+        fillColor: LimyeColors.background,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(BlackLightRadius.input),
-          borderSide: const BorderSide(color: BlackLightColors.border),
+          borderRadius: BorderRadius.circular(LimyeRadius.input),
+          borderSide: const BorderSide(color: LimyeColors.border),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(BlackLightRadius.input),
-          borderSide: const BorderSide(color: BlackLightColors.border),
+          borderRadius: BorderRadius.circular(LimyeRadius.input),
+          borderSide: const BorderSide(color: LimyeColors.border),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(BlackLightRadius.input),
+          borderRadius: BorderRadius.circular(LimyeRadius.input),
           borderSide:
-              const BorderSide(color: BlackLightColors.accent, width: 1.5),
+              const BorderSide(color: LimyeColors.accent, width: 1.5),
         ),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -312,7 +312,7 @@ class _LabeledField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label.toUpperCase(),
-            style: BlackLightTextStyles.captionBold().copyWith(fontSize: 10)),
+            style: LimyeTextStyles.captionBold().copyWith(fontSize: 10)),
         const SizedBox(height: 6),
         child,
       ],
@@ -329,21 +329,21 @@ class _InstallerSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(BlackLightSpacing.md),
+      padding: const EdgeInsets.all(LimyeSpacing.md),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
-        borderRadius: BorderRadius.circular(BlackLightRadius.card),
-        border: Border.all(color: BlackLightColors.border),
+        color: LimyeColors.surface,
+        borderRadius: BorderRadius.circular(LimyeRadius.card),
+        border: Border.all(color: LimyeColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(HomeownerQuoteRequestContent.numberOfQuotesTitle,
-              style: BlackLightTextStyles.cardHeading()),
+              style: LimyeTextStyles.cardHeading()),
           const SizedBox(height: 4),
           Text(HomeownerQuoteRequestContent.numberOfQuotesBody,
-              style: BlackLightTextStyles.body()),
-          const SizedBox(height: BlackLightSpacing.md),
+              style: LimyeTextStyles.body()),
+          const SizedBox(height: LimyeSpacing.md),
           Row(
             children: [3, 5, 10].map((n) {
               final isSelected = selected == n;
@@ -354,13 +354,13 @@ class _InstallerSelector extends StatelessWidget {
                     margin: const EdgeInsets.only(right: 12),
                     height: 52,
                     decoration: BoxDecoration(
-                      color: BlackLightColors.surface,
+                      color: LimyeColors.surface,
                       borderRadius:
-                          BorderRadius.circular(BlackLightRadius.input),
+                          BorderRadius.circular(LimyeRadius.input),
                       border: Border.all(
                         color: isSelected
-                            ? BlackLightColors.accent
-                            : BlackLightColors.border,
+                            ? LimyeColors.accent
+                            : LimyeColors.border,
                         width: isSelected ? 1.5 : 1,
                       ),
                     ),
@@ -369,17 +369,17 @@ class _InstallerSelector extends StatelessWidget {
                       children: [
                         Text(
                           '$n',
-                          style: BlackLightTextStyles.dataLarge(
+                          style: LimyeTextStyles.dataLarge(
                             color: isSelected
-                                ? BlackLightColors.accent
-                                : BlackLightColors.textPrimary,
+                                ? LimyeColors.accent
+                                : LimyeColors.textPrimary,
                           ).copyWith(fontSize: 20),
                         ),
                         Text(HomeownerQuoteRequestContent.quotesWord,
-                            style: BlackLightTextStyles.caption(
+                            style: LimyeTextStyles.caption(
                                 color: isSelected
-                                    ? BlackLightColors.accent
-                                    : BlackLightColors.textCaption)),
+                                    ? LimyeColors.accent
+                                    : LimyeColors.textCaption)),
                       ],
                     ),
                   ),
@@ -402,42 +402,42 @@ class _SuccessState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: BlackLightSpacing.xl),
+        padding: const EdgeInsets.symmetric(vertical: LimyeSpacing.xl),
         child: Column(
           children: [
             Container(
               width: 64,
               height: 64,
               decoration: BoxDecoration(
-                color: BlackLightColors.surface,
+                color: LimyeColors.surface,
                 shape: BoxShape.circle,
-                border: Border.all(color: BlackLightColors.green),
+                border: Border.all(color: LimyeColors.green),
               ),
               child: const Icon(Icons.check_rounded,
-                  size: 32, color: BlackLightColors.green),
+                  size: 32, color: LimyeColors.green),
             ),
-            const SizedBox(height: BlackLightSpacing.md),
+            const SizedBox(height: LimyeSpacing.md),
             Text(HomeownerQuoteRequestContent.successTitle,
-                style: BlackLightTextStyles.sectionHeading()),
+                style: LimyeTextStyles.sectionHeading()),
             const SizedBox(height: 4),
             Text(
               HomeownerQuoteRequestContent.successBody,
-              style: BlackLightTextStyles.body(),
+              style: LimyeTextStyles.body(),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: BlackLightSpacing.lg),
+            const SizedBox(height: LimyeSpacing.lg),
             SizedBox(
-              height: BlackLightSpacing.buttonHeight,
+              height: LimyeSpacing.buttonHeight,
               child: OutlinedButton(
                 onPressed: onBack,
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: BlackLightColors.border),
+                  side: const BorderSide(color: LimyeColors.border),
                   shape: const StadiumBorder(),
                   padding: const EdgeInsets.symmetric(horizontal: 32),
                 ),
                 child: Text(HomeownerQuoteRequestContent.backToDashboard,
-                    style: BlackLightTextStyles.body(
-                            color: BlackLightColors.textPrimary)
+                    style: LimyeTextStyles.body(
+                            color: LimyeColors.textPrimary)
                         .copyWith(fontWeight: FontWeight.w600)),
               ),
             ),

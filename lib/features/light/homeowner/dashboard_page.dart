@@ -1,13 +1,13 @@
-import 'package:blacklight_app/core/content/content_registry.dart';
+import 'package:limye_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:blacklight_app/core/illustrations/geometric_illustrations.dart';
-import 'package:blacklight_app/core/models/project.dart';
-import 'package:blacklight_app/core/providers/session_providers.dart';
-import 'package:blacklight_app/core/widgets/project_status_badge.dart';
-import 'package:blacklight_app/services/api.dart';
-import 'package:blacklight_app/theme/blacklight_theme.dart';
+import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
+import 'package:limye_app/core/models/project.dart';
+import 'package:limye_app/core/providers/session_providers.dart';
+import 'package:limye_app/core/widgets/project_status_badge.dart';
+import 'package:limye_app/services/api.dart';
+import 'package:limye_app/theme/limye_theme.dart';
 import 'intake_page.dart';
 import 'project_detail_page.dart' as ho_detail;
 
@@ -69,7 +69,7 @@ class _HomeownerDashboardPageState extends ConsumerState<HomeownerDashboardPage>
       onRefresh: _load,
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.all(BlackLightSpacing.gutter),
+        padding: const EdgeInsets.all(LimyeSpacing.gutter),
         child: Align(
           alignment: Alignment.topLeft,
           child: ConstrainedBox(
@@ -78,20 +78,20 @@ class _HomeownerDashboardPageState extends ConsumerState<HomeownerDashboardPage>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _HeroDesignCard(onDesign: _openIntake),
-                const SizedBox(height: BlackLightSpacing.lg),
+                const SizedBox(height: LimyeSpacing.lg),
                 if (hasProjects) ...[
                   _MetricRow(),
-                  const SizedBox(height: BlackLightSpacing.lg),
+                  const SizedBox(height: LimyeSpacing.lg),
                   Text(
                     HomeownerDashboardContent.yourProjects,
-                    style: BlackLightTextStyles.sectionHeading(),
+                    style: LimyeTextStyles.sectionHeading(),
                   ),
-                  const SizedBox(height: BlackLightSpacing.sm),
+                  const SizedBox(height: LimyeSpacing.sm),
                 ],
                 if (_loading)
                   const Center(child: CircularProgressIndicator())
                 else if (_error != null)
-                  Text(_error!, style: BlackLightTextStyles.body())
+                  Text(_error!, style: LimyeTextStyles.body())
                 else if (!hasProjects)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 32),
@@ -99,7 +99,7 @@ class _HomeownerDashboardPageState extends ConsumerState<HomeownerDashboardPage>
                       child: Text(
                         HomeownerDashboardContent.emptyStateMessage,
                         textAlign: TextAlign.center,
-                        style: BlackLightTextStyles.body(),
+                        style: LimyeTextStyles.body(),
                       ),
                     ),
                   )
@@ -108,16 +108,16 @@ class _HomeownerDashboardPageState extends ConsumerState<HomeownerDashboardPage>
                     (p) => Padding(
                       padding: const EdgeInsets.only(bottom: 12),
                       child: Material(
-                        color: BlackLightColors.surface,
+                        color: LimyeColors.surface,
                         shape: RoundedRectangleBorder(
                           borderRadius:
-                              BorderRadius.circular(BlackLightRadius.card),
+                              BorderRadius.circular(LimyeRadius.card),
                           side: const BorderSide(
-                              color: BlackLightColors.border),
+                              color: LimyeColors.border),
                         ),
                         child: InkWell(
                           borderRadius:
-                              BorderRadius.circular(BlackLightRadius.card),
+                              BorderRadius.circular(LimyeRadius.card),
                           onTap: () {
                             Navigator.of(context).push<void>(
                               MaterialPageRoute<void>(
@@ -137,13 +137,13 @@ class _HomeownerDashboardPageState extends ConsumerState<HomeownerDashboardPage>
                                     children: [
                                       Text(
                                         p.address,
-                                        style: BlackLightTextStyles
+                                        style: LimyeTextStyles
                                             .cardHeading(),
                                       ),
                                       const SizedBox(height: 6),
                                       Text(
                                         p.type.label,
-                                        style: BlackLightTextStyles.caption(),
+                                        style: LimyeTextStyles.caption(),
                                       ),
                                     ],
                                   ),
@@ -153,8 +153,8 @@ class _HomeownerDashboardPageState extends ConsumerState<HomeownerDashboardPage>
                                 Text(
                                   MaterialLocalizations.of(context)
                                       .formatShortDate(p.date),
-                                  style: BlackLightTextStyles.data(
-                                    color: BlackLightColors.textCaption,
+                                  style: LimyeTextStyles.data(
+                                    color: LimyeColors.textCaption,
                                   ),
                                 ),
                               ],
@@ -183,7 +183,7 @@ class _HeroDesignCard extends StatelessWidget {
     final isWide = MediaQuery.of(context).size.width > 640;
 
     final art = ClipRRect(
-      borderRadius: BorderRadius.circular(BlackLightRadius.md),
+      borderRadius: BorderRadius.circular(LimyeRadius.md),
       child: SizedBox(
         width: isWide ? 220 : double.infinity,
         height: 140,
@@ -197,22 +197,22 @@ class _HeroDesignCard extends StatelessWidget {
       children: [
         Text(
           HomeownerDashboardContent.heroCardTitle,
-          style: BlackLightTextStyles.cardHeading(),
+          style: LimyeTextStyles.cardHeading(),
         ),
         const SizedBox(height: 8),
         Text(
           HomeownerDashboardContent.heroCardBody,
-          style: BlackLightTextStyles.body(),
+          style: LimyeTextStyles.body(),
         ),
-        const SizedBox(height: BlackLightSpacing.md),
+        const SizedBox(height: LimyeSpacing.md),
         SizedBox(
-          height: BlackLightSpacing.buttonHeight,
+          height: LimyeSpacing.buttonHeight,
           width: isWide ? null : double.infinity,
           child: ElevatedButton(
             onPressed: onDesign,
             child: Text(
               HomeownerDashboardContent.designMySystemCta,
-              style: BlackLightTextStyles.bodyBold(color: Colors.white),
+              style: LimyeTextStyles.bodyBold(color: Colors.white),
             ),
           ),
         ),
@@ -220,18 +220,18 @@ class _HeroDesignCard extends StatelessWidget {
     );
 
     return Container(
-      padding: const EdgeInsets.all(BlackLightSpacing.cardPadding),
+      padding: const EdgeInsets.all(LimyeSpacing.cardPadding),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
-        borderRadius: BorderRadius.circular(BlackLightRadius.card),
-        border: Border.all(color: BlackLightColors.border),
+        color: LimyeColors.surface,
+        borderRadius: BorderRadius.circular(LimyeRadius.card),
+        border: Border.all(color: LimyeColors.border),
       ),
       child: isWide
           ? Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 art,
-                const SizedBox(width: BlackLightSpacing.lg),
+                const SizedBox(width: LimyeSpacing.lg),
                 Expanded(child: copy),
               ],
             )
@@ -239,7 +239,7 @@ class _HeroDesignCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 art,
-                const SizedBox(height: BlackLightSpacing.md),
+                const SizedBox(height: LimyeSpacing.md),
                 copy,
               ],
             ),
@@ -271,7 +271,7 @@ class _MetricRow extends StatelessWidget {
         return Row(
           children: items
               .map((e) => Expanded(child: _MetricTile(label: e.$1, value: e.$2)))
-              .expand((w) => [w, const SizedBox(width: BlackLightSpacing.md)])
+              .expand((w) => [w, const SizedBox(width: LimyeSpacing.md)])
               .take(items.length * 2 - 1)
               .toList(),
         );
@@ -279,7 +279,7 @@ class _MetricRow extends StatelessWidget {
       return Column(
         children: items
             .map((e) => Padding(
-                  padding: const EdgeInsets.only(bottom: BlackLightSpacing.sm),
+                  padding: const EdgeInsets.only(bottom: LimyeSpacing.sm),
                   child: _MetricTile(label: e.$1, value: e.$2),
                 ))
             .toList(),
@@ -297,23 +297,23 @@ class _MetricTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(BlackLightSpacing.md),
+      padding: const EdgeInsets.all(LimyeSpacing.md),
       decoration: BoxDecoration(
-        color: BlackLightColors.surface,
-        borderRadius: BorderRadius.circular(BlackLightRadius.card),
-        border: Border.all(color: BlackLightColors.border),
+        color: LimyeColors.surface,
+        borderRadius: BorderRadius.circular(LimyeRadius.card),
+        border: Border.all(color: LimyeColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             value,
-            style: BlackLightTextStyles.dataLarge(),
+            style: LimyeTextStyles.dataLarge(),
           ),
           const SizedBox(height: 4),
           Text(
             label.toUpperCase(),
-            style: BlackLightTextStyles.captionBold().copyWith(fontSize: 10),
+            style: LimyeTextStyles.captionBold().copyWith(fontSize: 10),
           ),
         ],
       ),

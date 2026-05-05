@@ -2,25 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app_state.dart';
-import 'content/content_registry.dart';
 import 'providers/theme_provider.dart';
 import 'router.dart';
 import 'providers/session_providers.dart';
 import '../services/auth_api.dart';
-import '../theme/blacklight_theme.dart';
+import '../theme/limye_theme.dart';
 
-class BlackLightApp extends ConsumerWidget {
-  const BlackLightApp({super.key});
+class LimyeApp extends ConsumerWidget {
+  const LimyeApp({super.key, this.title = 'LIMYÈ'});
+
+  /// OS / task switcher title (see [main]).
+  final String title;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appState = ref.watch(blackLightAppStateProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: CommonContent.appName,
+      title: title,
       themeMode: blackLightThemeMode(appState),
-      theme: BlackLightTheme.lightTheme(),
-      darkTheme: BlackLightTheme.darkTheme(),
+      theme: LimyeTheme.lightTheme(),
+      darkTheme: LimyeTheme.darkTheme(),
       home: const _HydratedSessionHome(),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../theme/blacklight_theme.dart';
+import '../../theme/limye_theme.dart';
 
 class BlackLightInput extends StatelessWidget {
   final String? label;
@@ -30,8 +30,8 @@ class BlackLightInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final height = isMobile
-        ? BlackLightSpacing.inputHeightMobile
-        : BlackLightSpacing.inputHeight;
+        ? LimyeSpacing.inputHeightMobile
+        : LimyeSpacing.inputHeight;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,8 +40,8 @@ class BlackLightInput extends StatelessWidget {
         if (label != null) ...[
           Text(
             label!.toUpperCase(),
-            style: BlackLightTextStyles.captionBold(
-                color: BlackLightColors.textCaption),
+            style: LimyeTextStyles.captionBold(
+                color: LimyeColors.textCaption),
           ),
           const SizedBox(height: 6),
         ],
@@ -54,33 +54,33 @@ class BlackLightInput extends StatelessWidget {
             onChanged: onChanged,
             maxLines: maxLines,
             style: isMobile
-                ? BlackLightTextStyles.mobileBody(
-                    color: BlackLightColors.textPrimary)
-                : BlackLightTextStyles.body(
-                    color: BlackLightColors.textPrimary),
+                ? LimyeTextStyles.mobileBody(
+                    color: LimyeColors.textPrimary)
+                : LimyeTextStyles.body(
+                    color: LimyeColors.textPrimary),
             decoration: InputDecoration(
               hintText: placeholder,
               hintStyle: isMobile
-                  ? BlackLightTextStyles.mobileBody(
-                      color: BlackLightColors.textCaption)
-                  : BlackLightTextStyles.body(
-                      color: BlackLightColors.textCaption),
+                  ? LimyeTextStyles.mobileBody(
+                      color: LimyeColors.textCaption)
+                  : LimyeTextStyles.body(
+                      color: LimyeColors.textCaption),
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
               filled: true,
-              fillColor: BlackLightColors.surface,
+              fillColor: LimyeColors.surface,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(BlackLightRadius.input),
-                borderSide: const BorderSide(color: BlackLightColors.border),
+                borderRadius: BorderRadius.circular(LimyeRadius.input),
+                borderSide: const BorderSide(color: LimyeColors.border),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(BlackLightRadius.input),
-                borderSide: const BorderSide(color: BlackLightColors.border),
+                borderRadius: BorderRadius.circular(LimyeRadius.input),
+                borderSide: const BorderSide(color: LimyeColors.border),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(BlackLightRadius.input),
+                borderRadius: BorderRadius.circular(LimyeRadius.input),
                 borderSide: const BorderSide(
-                    color: BlackLightColors.accent, width: 1.5),
+                    color: LimyeColors.accent, width: 1.5),
               ),
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -111,28 +111,28 @@ class BlackLightSearchBar extends StatelessWidget {
       child: TextField(
         controller: controller,
         onChanged: onChanged,
-        style: BlackLightTextStyles.mobileBody(
-            color: BlackLightColors.textPrimary),
+        style: LimyeTextStyles.mobileBody(
+            color: LimyeColors.textPrimary),
         decoration: InputDecoration(
           hintText: placeholder,
-          hintStyle: BlackLightTextStyles.mobileBody(
-              color: BlackLightColors.textCaption),
+          hintStyle: LimyeTextStyles.mobileBody(
+              color: LimyeColors.textCaption),
           prefixIcon: const Icon(Icons.search,
-              color: BlackLightColors.textCaption, size: 20),
+              color: LimyeColors.textCaption, size: 20),
           filled: true,
-          fillColor: BlackLightColors.surface,
+          fillColor: LimyeColors.surface,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(999),
-            borderSide: const BorderSide(color: BlackLightColors.border),
+            borderSide: const BorderSide(color: LimyeColors.border),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(999),
-            borderSide: const BorderSide(color: BlackLightColors.border),
+            borderSide: const BorderSide(color: LimyeColors.border),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(999),
             borderSide:
-                const BorderSide(color: BlackLightColors.accent, width: 1.5),
+                const BorderSide(color: LimyeColors.accent, width: 1.5),
           ),
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
