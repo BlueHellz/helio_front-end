@@ -6,13 +6,13 @@
 
 #include "generated_plugin_registrant.h"
 
-#include <flutter_gl_windows/flutter_gl_windows_plugin.h>
+#include <flutter_angle/flutter_angle_plugin.h>
 #include <flutter_secure_storage_windows/flutter_secure_storage_windows_plugin.h>
 #include <url_launcher_windows/url_launcher_windows.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
-  FlutterGlWindowsPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("FlutterGlWindowsPlugin"));
+  FlutterAnglePluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("FlutterAnglePlugin"));
   FlutterSecureStorageWindowsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FlutterSecureStorageWindowsPlugin"));
   UrlLauncherWindowsRegisterWithRegistrar(
