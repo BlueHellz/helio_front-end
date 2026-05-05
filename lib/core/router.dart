@@ -13,7 +13,7 @@ import 'ui/app_feedback.dart';
 
 import 'package:limye_app/features/light/landing/landing_page.dart';
 import 'package:limye_app/features/light/auth/auth_page.dart';
-import 'package:limye_app/features/light/homeowner/dashboard_page.dart';
+import 'package:limye_app/features/light/homeowner/project_tracking_page.dart';
 import 'package:limye_app/features/light/homeowner/intake_page.dart';
 import 'package:limye_app/features/light/homeowner/chat_page.dart';
 import 'package:limye_app/features/light/homeowner/homeowner_design_result_page.dart';
@@ -193,7 +193,7 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
               ),
         ),
       4 => _WebHelpPage(),
-      _ => const HomeownerDashboardPage(),
+      _ => const ProjectTrackingPage(),
     };
 
     return wrapPremiumBlackLightShell(
@@ -298,7 +298,7 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () =>
-                    setState(() => _pub = _MobilePublic.home),
+                    setState(() => _pub = _MobilePublic.intake),
               ),
             ),
             body: const HomeownerDesignResultPage(),
@@ -362,7 +362,7 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
                 feature: FeedbackStrings.featureEmailChanges,
               ),
         ),
-      _ => const HomeownerDashboardPage(),
+      _ => const ProjectTrackingPage(),
     };
 
     return wrapPremiumBlackLightShell(

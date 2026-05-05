@@ -238,6 +238,61 @@ Project projectFromApiMap(Map<String, dynamic> j) {
     yearOneSavings: (j['yearOneSavings'] ?? j['year_one_savings']) is num
         ? ((j['yearOneSavings'] ?? j['year_one_savings']) as num).toDouble()
         : null,
+    estimatedPaybackYears: _readDouble(
+        j['estimatedPaybackYears'] ?? j['estimated_payback_years'] ?? j['payback_years']),
+    incentivesSummary: _readIncentivesSummary(j),
+  );
+}
+
+double? _readDouble(dynamic v) {
+  if (v is num) return v.toDouble();
+  return null;
+}
+
+String? _readIncentivesSummary(Map<String, dynamic> j) {
+  final s = j['incentivesSummary'] ?? j['incentives_summary'];
+  if (s is String && s.trim().isNotEmpty) return s.trim();
+  final inc = j['incentives'];
+  if (inc is List && inc.isNotEmpty) {
+    return inc.map((e) => e.toString()).join('\n');
+  }
+  return null;
+}
+
+/// Prefer nested `project` / `data` maps when the API wraps the payload.
+Project projectFromPublicDesignJson(Project base, Map<String, dynamic> root) {
+  Map<String, dynamic> src = root;
+  final nested = root['project'];
+  if (nested is Map<String, dynamic>) {
+    src = nested;
+  } else {
+    final data = root['data'];
+    if (data is Map<String, dynamic>) {
+      src = data;
+    }
+  }
+  final address = (src['address'] ?? base.address).toString();
+  final patch = <String, dynamic>{
+    ...src,
+    'address': address.isEmpty ? base.address : address,
+  };
+  final parsed = projectFromApiMap(patch);
+  return Project(
+    id: parsed.id.isNotEmpty ? parsed.id : base.id,
+    address: parsed.address.isNotEmpty ? parsed.address : base.address,
+    clientName: parsed.clientName,
+    clientEmail: parsed.clientEmail ?? base.clientEmail,
+    clientPhone: parsed.clientPhone ?? base.clientPhone,
+    status: parsed.status,
+    type: parsed.type,
+    date: parsed.date,
+    systemSizeKw: parsed.systemSizeKw ?? base.systemSizeKw,
+    panelCount: parsed.panelCount ?? base.panelCount,
+    annualProductionKwh: parsed.annualProductionKwh ?? base.annualProductionKwh,
+    yearOneSavings: parsed.yearOneSavings ?? base.yearOneSavings,
+    assignee: parsed.assignee ?? base.assignee,
+    estimatedPaybackYears: parsed.estimatedPaybackYears ?? base.estimatedPaybackYears,
+    incentivesSummary: parsed.incentivesSummary ?? base.incentivesSummary,
   );
 }
 

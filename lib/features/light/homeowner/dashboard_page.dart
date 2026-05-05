@@ -43,10 +43,10 @@ class _HomeownerDashboardPageState extends ConsumerState<HomeownerDashboardPage>
         _projects = raw.map(projectFromApiMap).toList();
         _loading = false;
       });
-    } catch (e) {
+    } catch (_) {
       if (!mounted) return;
       setState(() {
-        _error = e.toString();
+        _error = ApiErrorsContent.couldNotLoadProjects;
         _loading = false;
       });
     }
@@ -63,6 +63,9 @@ class _HomeownerDashboardPageState extends ConsumerState<HomeownerDashboardPage>
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<int>(homeownerProjectListTickProvider, (_, __) {
+      _load();
+    });
     final hasProjects = _projects.isNotEmpty;
 
     return RefreshIndicator(

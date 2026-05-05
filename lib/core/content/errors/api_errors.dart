@@ -15,4 +15,10 @@ class ApiErrorsContent {
   static const layoutSaved = 'Layout saved';
   static const projectCreated = 'Project created';
   static const couldNotSubmitPrefix = 'Could not submit: ';
+  static const couldNotGenerateDesign =
+      'Could not generate your design right now. Please try again in a moment.';
+  static const couldNotLoadProposal =
+      'Could not load your full proposal. Please try again.';
+  static const couldNotLoadProjects =
+      'Could not load your projects. Pull to refresh or try again later.';
 }

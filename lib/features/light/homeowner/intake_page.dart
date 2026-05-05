@@ -12,6 +12,7 @@ import 'package:limye_app/core/providers/session_providers.dart';
 import 'package:limye_app/features/light/homeowner/homeowner_design_result_page.dart';
 import 'package:limye_app/services/api.dart';
 import 'package:limye_app/services/mapbox_geocoding_service.dart';
+import 'package:limye_app/services/public_api.dart';
 import 'package:limye_app/theme/limye_theme.dart';
 
 class HomeownerIntakePage extends ConsumerStatefulWidget {
@@ -21,7 +22,7 @@ class HomeownerIntakePage extends ConsumerStatefulWidget {
     this.onAbandon,
   });
 
-  /// When set and user is not logged in, intake stores a local preview and calls this instead of the API.
+  /// When set (e.g. web public flow), intake calls this instead of pushing a route.
   final VoidCallback? onLocalDesignReady;
 
   /// Web public flow: back to landing without a navigator stack.
@@ -133,35 +134,36 @@ class _HomeownerIntakePageState extends ConsumerState<HomeownerIntakePage> {
         'homeowner_goal': _goal,
         'hoa_restrictions': _hoa,
       };
-      final session = ref.read(sessionProvider);
-      if (session.isLoggedIn) {
-        final api = ref.read(apiProvider);
-        await api.createProject(
-          projectCreateBody(
-            address: address,
-            projectType: 'residential',
-            customData: custom,
-            clientName: _nameCtrl.text.trim().isEmpty
-                ? null
-                : _nameCtrl.text.trim(),
-          ),
-        );
-        if (!mounted) return;
-        AppFeedback.snack(context, HomeownerIntakeContent.projectSubmittedSnack);
-        Navigator.of(context).pop();
-        return;
-      }
-
+      final body = projectCreateBody(
+        address: address,
+        projectType: 'residential',
+        customData: custom,
+        clientName: _nameCtrl.text.trim().isEmpty
+            ? null
+            : _nameCtrl.text.trim(),
+      );
+      final public = ref.read(publicLimyeApiProvider);
       final bill = double.tryParse(
         _billCtrl.text.replaceAll(RegExp(r'[^0-9.]'), ''),
       );
-      final preview = buildLocalPreviewProject(
+      final basePreview = buildLocalPreviewProject(
         address: address,
         clientName: _nameCtrl.text.trim(),
-        clientEmail: _emailCtrl.text.trim().isEmpty ? null : _emailCtrl.text.trim(),
-        clientPhone: _phoneCtrl.text.trim().isEmpty ? null : _phoneCtrl.text.trim(),
+        clientEmail: _emailCtrl.text.trim().isEmpty
+            ? null
+            : _emailCtrl.text.trim(),
+        clientPhone: _phoneCtrl.text.trim().isEmpty
+            ? null
+            : _phoneCtrl.text.trim(),
         monthlyBillUsd: bill,
       );
+      final designJson = await public.postDesign(body);
+      if (designJson.isEmpty) {
+        if (!mounted) return;
+        AppFeedback.snack(context, ApiErrorsContent.couldNotGenerateDesign);
+        return;
+      }
+      final preview = projectFromPublicDesignJson(basePreview, designJson);
       ref.read(homeownerDraftProvider.notifier).setDraft(
             previewProject: preview,
             intakeCustomData: custom,
@@ -181,10 +183,15 @@ class _HomeownerIntakePageState extends ConsumerState<HomeownerIntakePage> {
           ),
         );
       }
-    } catch (e) {
+    } on PublicApiException {
+      if (!mounted) return;
+      AppFeedback.snack(context, ApiErrorsContent.couldNotGenerateDesign);
+    } catch (_) {
       if (!mounted) return;
       AppFeedback.snack(
-          context, '${ApiErrorsContent.couldNotSubmitPrefix}$e');
+        context,
+        ApiErrorsContent.couldNotGenerateDesign,
+      );
     } finally {
       if (mounted) setState(() => _submitting = false);
     }

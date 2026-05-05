@@ -7,18 +7,24 @@ import 'package:limye_app/core/widgets/status_badge.dart';
 
 class HomeownerDesignSummary extends StatelessWidget {
   final Project? project;
+  final bool showFullProposal;
   final VoidCallback? onRequestQuote;
   final VoidCallback? onDownload;
 
   const HomeownerDesignSummary({
     super.key,
     this.project,
+    this.showFullProposal = false,
     this.onRequestQuote,
     this.onDownload,
   });
 
   @override
   Widget build(BuildContext context) {
+    final incentivesText = project?.incentivesSummary?.trim();
+    final showIncentives =
+        incentivesText != null && incentivesText.isNotEmpty;
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(LimyeSpacing.gutter),
       child: ConstrainedBox(
@@ -32,11 +38,24 @@ class HomeownerDesignSummary extends StatelessWidget {
               onDownload: onDownload,
             ),
             const SizedBox(height: LimyeSpacing.lg),
+            if (showFullProposal) ...[
+              Text(
+                HomeownerDesignSummaryContent.proposalTitle,
+                style: LimyeTextStyles.cardHeading(),
+              ),
+              const SizedBox(height: LimyeSpacing.sm),
+            ],
             _DesignCanvas(),
             const SizedBox(height: LimyeSpacing.lg),
             _SystemSpecsCard(project: project),
             const SizedBox(height: LimyeSpacing.md),
             _FinancialCard(project: project),
+            if (showIncentives) ...[
+              const SizedBox(height: LimyeSpacing.md),
+              _IncentivesCard(
+                text: incentivesText,
+              ),
+            ],
             const SizedBox(height: LimyeSpacing.md),
             _EquipmentCard(),
           ],
@@ -299,7 +318,9 @@ class _FinancialCard extends StatelessWidget {
           ),
           (
             HomeownerDesignSummaryContent.finEstPayback,
-            HomeownerDesignSummaryContent.finEstPaybackExample,
+            project?.estimatedPaybackYears != null
+                ? '${project!.estimatedPaybackYears!.toStringAsFixed(1)} years'
+                : HomeownerDesignSummaryContent.finEstPaybackExample,
             LimyeColors.textPrimary,
           ),
         ];
@@ -325,6 +346,20 @@ class _FinancialCard extends StatelessWidget {
               .toList(),
         );
       }),
+    );
+  }
+}
+
+class _IncentivesCard extends StatelessWidget {
+  const _IncentivesCard({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return _SectionCard(
+      title: HomeownerDesignSummaryContent.incentivesTitle,
+      child: Text(text, style: LimyeTextStyles.body()),
     );
   }
 }

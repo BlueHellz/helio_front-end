@@ -99,6 +99,8 @@ class Project {
   final double? annualProductionKwh;
   final double? yearOneSavings;
   final String? assignee;
+  final double? estimatedPaybackYears;
+  final String? incentivesSummary;
 
   const Project({
     required this.id,
@@ -114,6 +116,8 @@ class Project {
     this.annualProductionKwh,
     this.yearOneSavings,
     this.assignee,
+    this.estimatedPaybackYears,
+    this.incentivesSummary,
   });
 }
 

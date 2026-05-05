@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../services/api.dart';
 import '../../services/auth_api.dart';
+import '../../services/public_api.dart';
 import '../app_state.dart';
 
 const _kAccess = 'bl_access_token';
@@ -97,6 +98,15 @@ final authApiProvider = Provider<AuthApi>((ref) {
   ref.onDispose(api.dispose);
   return api;
 });
+
+final publicLimyeApiProvider = Provider<PublicLimyeApi>((ref) {
+  final api = PublicLimyeApi();
+  ref.onDispose(api.dispose);
+  return api;
+});
+
+/// Increment to prompt [HomeownerDashboardPage] / project tracking to reload projects.
+final homeownerProjectListTickProvider = StateProvider<int>((ref) => 0);
 
 class SessionNotifier extends StateNotifier<AuthSession> {
   SessionNotifier(this._ref)
