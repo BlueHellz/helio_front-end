@@ -1,0 +1,128 @@
+// Business Solutions marketing page (`/enterprise`) — installers / solar orgs.
+
+class BusinessSolutionsContent {
+  BusinessSolutionsContent._();
+
+  /// Hero illustration from Stitch; not user-facing copy.
+  static const heroIllustrationUrl =
+      'https://lh3.googleusercontent.com/aida-public/AB6AXuB2qmLj3L-J56d1mTPQDvXnzZD_I43p_KVzxeW_eTHR3ItLoh3UJNJckOdNgxkyagfICywIrMQvM6FaxPwCotZqHKz88vA81_fKsDAjThvWLLqEm64jC4-Et0t8wm2HZOjshMAHW32MCDQJQssFOQOgmOY1-ndp-mkHoxsSu1yqGegT6GLkIHNcfWEzjlCGitCRmEF9LExGiLdL4k9Jw2cgLGaVIt4XsQkn_qdr2A_vOn7xHMgvVQmRUnafwzJpPoNk6xM-YYXIdRc';
+
+  static const heroImageAccessibilityLabel =
+      'A precise, flat geometric vector illustration of a solar roof structure. '
+      'Crisp lines, minimal palette, small accent nodes suggesting data and energy flow.';
+
+  // ─── Hero ─────────────────────────────────────────────────────────────
+  static const heroTitle = 'The Future of Solar Business Is Free.';
+  static const heroSubtitle =
+      'LIMYÈ gives your company an AI-powered operating system — from design to close. '
+      'No subscription. No per-seat fees. Just growth.';
+  static const heroPrimaryCta = 'Get Started — Free';
+  static const heroSecondaryCta = 'See LIMYÈ NOIR';
+
+  // ─── Problems ─────────────────────────────────────────────────────────
+  static const problemsSectionTitle =
+      'Stop wasting resources on outdated software.';
+  static const problemsSectionSubtitle =
+      'LIMYÈ fixes the friction in your sales process.';
+  static const problemCardFixLine = 'LIMYÈ fixes this.';
+
+  static const problemPerSeatTitle =
+      'Still paying per seat for bloated software?';
+  static const problemThreeToolsTitle =
+      'Still juggling three tools to design a system?';
+  static const problemSlowProposalTitle =
+      'Still losing leads to slow proposal delivery?';
+
+  // ─── How it works ─────────────────────────────────────────────────────
+  static const howSectionTitle = 'How It Works';
+  static const howSectionSubtitle =
+      'A streamlined process from lead to closed deal.';
+
+  static const howStep1Title = '01. Design in Minutes';
+  static const howStep1Body =
+      'Generate accurate, AI-powered solar designs and proposals instantly.';
+  static const howStep2Title = '02. Close with Confidence';
+  static const howStep2Body =
+      'Present professional, customizable contracts and gather e-signatures on the spot.';
+  static const howStep3Title = '03. Scale Without Limits';
+  static const howStep3Body =
+      'Manage your entire pipeline and team without artificial software limitations.';
+
+  // ─── Features ─────────────────────────────────────────────────────────
+  static const featuresSectionTitle = 'Core Features';
+  static const featuresSectionSubtitle =
+      'Everything you need to run your solar business, integrated into one platform.';
+
+  static const featureAiDesignerTitle = 'AI Solar Designer';
+  static const featureAiDesignerBody =
+      'Automated panel placement and production modeling.';
+  static const featureCrmTitle = 'CRM & Pipeline Builder';
+  static const featureCrmBody = 'Track every lead and automate follow-ups.';
+  static const featureTrackingTitle = 'Project Tracking';
+  static const featureTrackingBody =
+      'Real-time visibility into project milestones.';
+  static const featureSavingsTitle = 'Automatic Savings Estimates';
+  static const featureSavingsBody =
+      'Instantly calculate ROI and payback periods.';
+  static const featureContractTitle = 'Contract & E-Sign';
+  static const featureContractBody =
+      'Legally binding digital signatures built-in.';
+  static const featureDroneTitle = 'Drone Roof Inspections';
+  static const featureDroneBody =
+      'Integrate drone imagery for precise measurements.';
+  static const featureFundingTitle = 'Community Funding';
+  static const featureFundingBody =
+      'Connect customers with financing seamlessly.';
+  static const featureCoachTitle = 'AI Sales Coach';
+  static const featureCoachBody = 'AI-driven feedback to improve your pitch.';
+
+  // ─── Comparison ───────────────────────────────────────────────────────
+  static const compareSectionTitle = 'Choose Your Path';
+
+  static const compareLimyeName = 'LIMYÈ';
+  static const compareLimyeTagline =
+      'The essential AI-powered platform for growing solar businesses.';
+  static const compareLimyePrice = 'Free';
+  static const compareLimyeBullet1 = 'Unlimited AI Solar Designs';
+  static const compareLimyeBullet2 = 'Basic CRM & Pipeline';
+  static const compareLimyeBullet3 = 'Standard Contract E-Sign';
+  static const compareLimyeCta = 'Get Started Free';
+
+  static const compareNoirName = 'LIMYÈ NOIR';
+  static const compareNoirTagline =
+      'Advanced capabilities for high-volume enterprise operations.';
+  static const compareNoirPrice = 'Enterprise';
+  static const compareNoirBullet1 = 'Everything in Free';
+  static const compareNoirBullet2 = 'Drone Roof Inspections API';
+  static const compareNoirBullet3 = 'AI Sales Coach Integration';
+  static const compareNoirBullet4 = 'Dedicated Account Manager';
+  static const compareNoirCta = 'Upgrade to NOIR';
+
+  // ─── Social proof ─────────────────────────────────────────────────────
+  static const testimonialsSectionTitle = 'Trusted by Industry Leaders';
+
+  static const testimonial1Quote =
+      'LIMYÈ eliminated our reliance on expensive, clunky software. The AI design '
+      'generation is incredibly accurate and saves us hours per proposal.';
+  static const testimonial1Name = 'Sarah Jenkins';
+  static const testimonial1Role = 'Director of Operations, SunPeak Energy';
+
+  static const testimonial2Quote =
+      'The ability to generate a complete pipeline overview and automatically '
+      'calculate ROI metrics has fundamentally changed how we forecast our quarterly growth.';
+  static const testimonial2Name = 'Marcus Reynolds';
+  static const testimonial2Role = 'CEO, Vertex Solar Solutions';
+
+  static const testimonial3Quote =
+      'We transitioned our entire 50-person sales team to LIMYÈ in under a week. '
+      'The interface is entirely intuitive, and the savings estimates are spot on.';
+  static const testimonial3Name = 'Elena Rostova';
+  static const testimonial3Role = 'VP of Sales, EcoGrid National';
+
+  // ─── Final CTA ────────────────────────────────────────────────────────
+  static const finalCtaTitle =
+      'Join 500+ Solar Businesses Already Growing with LIMYÈ';
+  static const finalCtaSubtitle =
+      'Free forever. No credit card. Set up in 90 seconds.';
+  static const finalCtaButton = 'Start Your Free Account';
+}

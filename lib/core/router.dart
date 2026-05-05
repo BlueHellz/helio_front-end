@@ -15,7 +15,7 @@ import 'ui/app_feedback.dart';
 import 'package:limye_app/features/light/landing/landing_page.dart';
 import 'package:limye_app/features/light/auth/auth_page.dart';
 import 'package:limye_app/features/light/enterprise/enterprise_auth_page.dart';
-import 'package:limye_app/features/light/enterprise/enterprise_sales_page.dart';
+import 'package:limye_app/features/light/enterprise/business_solutions_page.dart';
 import 'package:limye_app/features/light/homeowner/project_tracking_page.dart';
 import 'package:limye_app/features/light/homeowner/intake_page.dart';
 import 'package:limye_app/features/light/homeowner/chat_page.dart';
@@ -160,7 +160,7 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
             onEnterprise: () => _go(_WebPublicPage.enterpriseAuth),
           );
         case _WebPublicPage.enterprise:
-          return EnterpriseSalesPage(
+          return BusinessSolutionsPage(
             onHomeTap: () => _go(_WebPublicPage.landing),
             onBusinesses: () => _go(_WebPublicPage.enterprise),
             onEnterprise: () => _go(_WebPublicPage.enterpriseAuth),
@@ -427,7 +427,7 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
                 setState(() => _pub = _MobilePublic.enterpriseAuth),
           );
         case _MobilePublic.enterprise:
-          return EnterpriseSalesPage(
+          return BusinessSolutionsPage(
             onHomeTap: () => setState(() => _pub = _MobilePublic.home),
             onBusinesses: () =>
                 setState(() => _pub = _MobilePublic.enterprise),

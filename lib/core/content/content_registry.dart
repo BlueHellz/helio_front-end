@@ -12,6 +12,7 @@
 // Drone ops marketing: drone_ops/drone_ops.dart
 // Pool marketing: investor/pool_funding.dart (exported via investor/investor.dart)
 // EV hosts marketing: ev_host.dart
+// Business solutions (`/enterprise`) page copy: enterprise/business_solutions.dart
 // Whitepaper placeholder: whitepaper.dart
 // Brand logo semantic: assets.dart
 // ─────────────────────────────────────────────────────────────────────────────
@@ -22,6 +23,7 @@ export 'errors/api_errors.dart';
 export 'errors/empty_states.dart';
 export 'errors/field_validation.dart';
 export 'enterprise.dart';
+export 'enterprise/business_solutions.dart';
 export 'drone_ops/drone_ops.dart';
 export 'ev_host.dart';
 export 'homeowner/chat.dart';
