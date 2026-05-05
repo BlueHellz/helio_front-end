@@ -14,21 +14,23 @@ import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
 class PoolInfoPage extends StatelessWidget {
   final VoidCallback? onJoinWaitlist;
   final VoidCallback? onHomeTap;
-  final VoidCallback? onMyProjects;
+  final VoidCallback? onBusinesses;
+  final VoidCallback? onEnterprise;
 
   const PoolInfoPage({
     super.key,
     this.onJoinWaitlist,
     this.onHomeTap,
-    this.onMyProjects,
+    this.onBusinesses,
+    this.onEnterprise,
   });
 
   @override
   Widget build(BuildContext context) {
     return HomeownerPublicChrome(
-      activeNavIndex: 0,
       onHomeTap: onHomeTap,
-      onMyProjects: onMyProjects,
+      onBusinesses: onBusinesses ?? () {},
+      onEnterprise: onEnterprise ?? () {},
       child: Center(
         child: ConstrainedBox(
           constraints:
@@ -36,26 +38,38 @@ class PoolInfoPage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: LimyeSpacing.gutter),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(height: LimyeSpacing.xl),
-                _PoolHero(
-                  onReadWhitepaper: () => AppFeedback.whitepaperStub(context),
-                  onJoinOrWaitlist: onJoinWaitlist,
-                ),
-                const SizedBox(height: LimyeSpacing.xl),
-                const _StatsStrip(),
-                const SizedBox(height: LimyeSpacing.xl),
-                const _HowPoolsWork(),
-                const SizedBox(height: LimyeSpacing.xl),
-                _ComingSoon(onJoinWaitlist: onJoinWaitlist),
-                const SizedBox(height: LimyeSpacing.xl),
-              ],
-            ),
+            child: PoolProgramBody(onJoinWaitlist: onJoinWaitlist),
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Pool funding program content without public chrome (e.g. landing inline).
+class PoolProgramBody extends StatelessWidget {
+  const PoolProgramBody({super.key, this.onJoinWaitlist});
+
+  final VoidCallback? onJoinWaitlist;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: LimyeSpacing.xl),
+        _PoolHero(
+          onReadWhitepaper: () => AppFeedback.whitepaperStub(context),
+          onJoinOrWaitlist: onJoinWaitlist,
+        ),
+        const SizedBox(height: LimyeSpacing.xl),
+        const _StatsStrip(),
+        const SizedBox(height: LimyeSpacing.xl),
+        const _HowPoolsWork(),
+        const SizedBox(height: LimyeSpacing.xl),
+        _ComingSoon(onJoinWaitlist: onJoinWaitlist),
+        const SizedBox(height: LimyeSpacing.xl),
+      ],
     );
   }
 }

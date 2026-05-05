@@ -150,22 +150,19 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
         case _WebPublicPage.login:
           return AuthPage(
             onHomeTap: () => _go(_WebPublicPage.landing),
-            onMyProjects: () => _go(_WebPublicPage.login),
-            onForBusiness: () => _go(_WebPublicPage.enterprise),
+            onBusinesses: () => _go(_WebPublicPage.enterprise),
             onEnterprise: () => _go(_WebPublicPage.enterpriseAuth),
           );
         case _WebPublicPage.enterpriseAuth:
           return EnterpriseAuthPage(
             onHomeTap: () => _go(_WebPublicPage.landing),
-            onForBusiness: () => _go(_WebPublicPage.enterprise),
-            onMyProjects: () => _go(_WebPublicPage.login),
+            onBusinesses: () => _go(_WebPublicPage.enterprise),
             onEnterprise: () => _go(_WebPublicPage.enterpriseAuth),
           );
         case _WebPublicPage.enterprise:
           return EnterpriseSalesPage(
             onHomeTap: () => _go(_WebPublicPage.landing),
-            onForBusiness: () => _go(_WebPublicPage.enterprise),
-            onMyProjects: () => _go(_WebPublicPage.login),
+            onBusinesses: () => _go(_WebPublicPage.enterprise),
             onEnterprise: () => _go(_WebPublicPage.enterpriseAuth),
           );
         case _WebPublicPage.publicDesignChat:
@@ -212,9 +209,8 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
           return LandingPage(
             onHomeTap: () => _go(_WebPublicPage.landing),
             onGetStarted: () => _go(_WebPublicPage.publicDesignChat),
-            onOpenEnterprise: () => _go(_WebPublicPage.enterprise),
+            onBusinesses: () => _go(_WebPublicPage.enterprise),
             onEnterprise: () => _go(_WebPublicPage.enterpriseAuth),
-            onMyProjects: () => _go(_WebPublicPage.login),
           );
       }
     }
@@ -425,18 +421,16 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
         case _MobilePublic.enterpriseAuth:
           return EnterpriseAuthPage(
             onHomeTap: () => setState(() => _pub = _MobilePublic.home),
-            onForBusiness: () =>
+            onBusinesses: () =>
                 setState(() => _pub = _MobilePublic.enterprise),
-            onMyProjects: () => setState(() => _pub = _MobilePublic.login),
             onEnterprise: () =>
                 setState(() => _pub = _MobilePublic.enterpriseAuth),
           );
         case _MobilePublic.enterprise:
           return EnterpriseSalesPage(
             onHomeTap: () => setState(() => _pub = _MobilePublic.home),
-            onForBusiness: () =>
+            onBusinesses: () =>
                 setState(() => _pub = _MobilePublic.enterprise),
-            onMyProjects: () => setState(() => _pub = _MobilePublic.login),
             onEnterprise: () =>
                 setState(() => _pub = _MobilePublic.enterpriseAuth),
           );
@@ -510,7 +504,7 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
                     onPressed: () =>
                         setState(() => _pub = _MobilePublic.enterprise),
                     child: Text(
-                      NavigationContent.preAuthForBusiness,
+                      NavigationContent.navBusinesses,
                       style: LimyeTextStyles.bodyBold(),
                     ),
                   ),

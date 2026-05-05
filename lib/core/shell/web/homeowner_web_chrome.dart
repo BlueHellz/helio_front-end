@@ -10,19 +10,15 @@ class HomeownerPublicChrome extends StatelessWidget {
   const HomeownerPublicChrome({
     super.key,
     required this.child,
-    this.activeNavIndex = 0,
     this.onHomeTap,
-    this.onMyProjects,
-    this.onForBusiness,
-    this.onEnterprise,
+    required this.onBusinesses,
+    required this.onEnterprise,
   });
 
   final Widget child;
-  final int activeNavIndex;
   final VoidCallback? onHomeTap;
-  final VoidCallback? onMyProjects;
-  final VoidCallback? onForBusiness;
-  final VoidCallback? onEnterprise;
+  final VoidCallback onBusinesses;
+  final VoidCallback onEnterprise;
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +28,8 @@ class HomeownerPublicChrome extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _PublicNavbar(
-            activeIndex: activeNavIndex,
             onHomeTap: onHomeTap,
-            onMyProjects: onMyProjects,
-            onForBusiness: onForBusiness,
+            onBusinesses: onBusinesses,
             onEnterprise: onEnterprise,
           ),
           Expanded(
@@ -57,27 +51,23 @@ class HomeownerPublicChrome extends StatelessWidget {
 
 class _PublicNavbar extends StatelessWidget {
   const _PublicNavbar({
-    required this.activeIndex,
     this.onHomeTap,
-    this.onMyProjects,
-    this.onForBusiness,
-    this.onEnterprise,
+    required this.onBusinesses,
+    required this.onEnterprise,
   });
 
-  final int activeIndex;
   final VoidCallback? onHomeTap;
-  final VoidCallback? onMyProjects;
-  final VoidCallback? onForBusiness;
-  final VoidCallback? onEnterprise;
+  final VoidCallback onBusinesses;
+  final VoidCallback onEnterprise;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: LimyeSpacing.navbarHeight,
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+      decoration: const BoxDecoration(
+        color: LimyeColors.surface,
         border: Border(
-          bottom: BorderSide(color: Theme.of(context).colorScheme.outline),
+          bottom: BorderSide(color: LimyeColors.border),
         ),
       ),
       child: Center(
@@ -99,29 +89,17 @@ class _PublicNavbar extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                _NavLink(
-                  label: NavigationContent.preAuthHomeowners,
-                  isActive: activeIndex == 0,
-                  onTap: onHomeTap,
+                _PublicNavPill(
+                  label: NavigationContent.navBusinesses,
+                  primary: false,
+                  onTap: onBusinesses,
                 ),
-                if (onForBusiness != null) ...[
-                  const SizedBox(width: 24),
-                  _NavLink(
-                    label: NavigationContent.preAuthForBusiness,
-                    isActive: activeIndex == 1,
-                    onTap: onForBusiness,
-                  ),
-                ],
-                const SizedBox(width: 24),
-                _NavLink(
-                  label: NavigationContent.preAuthMyProjects,
-                  isActive: activeIndex == 2,
-                  onTap: onMyProjects,
+                const SizedBox(width: LimyeSpacing.sm),
+                _PublicNavPill(
+                  label: NavigationContent.preAuthEnterprise,
+                  primary: true,
+                  onTap: onEnterprise,
                 ),
-                if (onEnterprise != null) ...[
-                  const SizedBox(width: LimyeSpacing.sm),
-                  _EnterpriseNavPill(onTap: onEnterprise),
-                ],
               ],
             ),
           ),
@@ -131,80 +109,60 @@ class _PublicNavbar extends StatelessWidget {
   }
 }
 
-class _EnterpriseNavPill extends StatelessWidget {
-  const _EnterpriseNavPill({this.onTap});
-
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: onTap == null
-          ? SystemMouseCursors.basic
-          : SystemMouseCursors.click,
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(LimyeRadius.chip),
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: LimyeSpacing.md,
-              vertical: LimyeSpacing.xs,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(LimyeRadius.chip),
-              border: Border.all(color: LimyeColors.accent, width: 1.5),
-            ),
-            child: Text(
-              NavigationContent.preAuthEnterprise,
-              style: LimyeTextStyles.captionBold(color: LimyeColors.accent)
-                  .copyWith(letterSpacing: 0.7, fontSize: 11),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _NavLink extends StatelessWidget {
-  const _NavLink({
+class _PublicNavPill extends StatefulWidget {
+  const _PublicNavPill({
     required this.label,
-    this.isActive = false,
-    this.onTap,
+    required this.primary,
+    required this.onTap,
   });
 
   final String label;
-  final bool isActive;
-  final VoidCallback? onTap;
+  final bool primary;
+  final VoidCallback onTap;
+
+  @override
+  State<_PublicNavPill> createState() => _PublicNavPillState();
+}
+
+class _PublicNavPillState extends State<_PublicNavPill> {
+  bool _hover = false;
 
   @override
   Widget build(BuildContext context) {
+    final borderW = _hover ? 2.0 : 1.5;
+    final accentBorder =
+        Border.all(color: LimyeColors.accent, width: borderW);
     return MouseRegion(
-      cursor: onTap == null
-          ? SystemMouseCursors.basic
-          : SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _hover = true),
+      onExit: (_) => setState(() => _hover = false),
+      cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          height: LimyeSpacing.navbarHeight,
-          alignment: Alignment.center,
-          decoration: isActive
-              ? const BoxDecoration(
-                  border: Border(
-                    bottom:
-                        BorderSide(color: LimyeColors.accent, width: 2),
-                  ),
-                )
-              : null,
-          child: Text(
-            label,
-            style: LimyeTextStyles.body(
-              color: isActive
-                  ? LimyeColors.accent
-                  : LimyeColors.textBody,
-            ).copyWith(fontWeight: FontWeight.w500, fontSize: 14),
+        onTap: widget.onTap,
+        child: AnimatedScale(
+          scale: _hover ? 1.02 : 1.0,
+          duration: const Duration(milliseconds: 160),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 160),
+            height: LimyeSpacing.inputHeightMobile,
+            padding: const EdgeInsets.symmetric(horizontal: LimyeSpacing.md),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: widget.primary ? LimyeColors.accent : Colors.transparent,
+              borderRadius: BorderRadius.circular(LimyeSpacing.inputHeightMobile / 2),
+              border: widget.primary
+                  ? Border.all(
+                      color: _hover ? LimyeColors.accent : LimyeColors.accent,
+                      width: borderW,
+                    )
+                  : accentBorder,
+            ),
+            child: Text(
+              widget.label,
+              style: LimyeTextStyles.captionBold(
+                color:
+                    widget.primary ? Colors.white : LimyeColors.accent,
+              ).copyWith(letterSpacing: 0.6, fontSize: 12),
+            ),
           ),
         ),
       ),

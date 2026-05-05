@@ -23,6 +23,8 @@ class NavigationContent {
   static const preAuthHomeowners = 'Homeowners';
   static const preAuthForBusiness = 'For Business';
   static const preAuthMyProjects = 'My Projects';
+  /// Public navbar — business sales funnel.
+  static const navBusinesses = 'BUSINESSES';
   static const preAuthEnterprise = 'ENTERPRISE';
 
   static const shellSignOut = 'Sign Out';

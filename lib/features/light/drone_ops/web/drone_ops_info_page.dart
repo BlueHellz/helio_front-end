@@ -9,25 +9,58 @@ import 'package:limye_app/core/shell/web/homeowner_web_chrome.dart';
 // All data lives in form controllers; submit is a UI state change only.
 // ─────────────────────────────────────────────
 
-class DroneOpsInfoPage extends StatefulWidget {
+/// Marketing and application UI for the drone program (no public chrome).
+class DroneOpsProgramBody extends StatefulWidget {
+  const DroneOpsProgramBody({
+    super.key,
+    this.onLaunchTerminal,
+  });
+
   /// Called when an applicant submits and the demo flow should treat them
   /// as a drone operator (role auto-applied — no role chooser anywhere).
   final VoidCallback? onLaunchTerminal;
-  final VoidCallback? onHomeTap;
-  final VoidCallback? onMyProjects;
 
+  @override
+  State<DroneOpsProgramBody> createState() => _DroneOpsProgramBodyState();
+}
+
+/// Full-page drone ops info with shared public chrome (legacy entrypoint).
+class DroneOpsInfoPage extends StatelessWidget {
   const DroneOpsInfoPage({
     super.key,
     this.onLaunchTerminal,
     this.onHomeTap,
-    this.onMyProjects,
+    this.onBusinesses,
+    this.onEnterprise,
   });
 
+  final VoidCallback? onLaunchTerminal;
+  final VoidCallback? onHomeTap;
+  final VoidCallback? onBusinesses;
+  final VoidCallback? onEnterprise;
+
   @override
-  State<DroneOpsInfoPage> createState() => _DroneOpsInfoPageState();
+  Widget build(BuildContext context) {
+    return HomeownerPublicChrome(
+      onHomeTap: onHomeTap,
+      onBusinesses: onBusinesses ?? () {},
+      onEnterprise: onEnterprise ?? () {},
+      child: Center(
+        child: ConstrainedBox(
+          constraints:
+              const BoxConstraints(maxWidth: LimyeSpacing.containerMax),
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: LimyeSpacing.gutter),
+            child: DroneOpsProgramBody(onLaunchTerminal: onLaunchTerminal),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
-class _DroneOpsInfoPageState extends State<DroneOpsInfoPage> {
+class _DroneOpsProgramBodyState extends State<DroneOpsProgramBody> {
   final _fullNameCtrl = TextEditingController();
   final _emailCtrl = TextEditingController();
   final _droneModelCtrl = TextEditingController();
@@ -51,44 +84,29 @@ class _DroneOpsInfoPageState extends State<DroneOpsInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return HomeownerPublicChrome(
-      activeNavIndex: 1,
-      onHomeTap: widget.onHomeTap,
-      onMyProjects: widget.onMyProjects,
-      child: Center(
-        child: ConstrainedBox(
-          constraints:
-              const BoxConstraints(maxWidth: LimyeSpacing.containerMax),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: LimyeSpacing.gutter),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(height: LimyeSpacing.xl),
-                const _Hero(),
-                const SizedBox(height: LimyeSpacing.xl),
-                const _Benefits(),
-                const SizedBox(height: LimyeSpacing.xl),
-                const _Process(),
-                const SizedBox(height: LimyeSpacing.xl),
-                const _Requirements(),
-                const SizedBox(height: LimyeSpacing.xl),
-                _ApplicationSection(
-                  fullNameCtrl: _fullNameCtrl,
-                  emailCtrl: _emailCtrl,
-                  droneModelCtrl: _droneModelCtrl,
-                  zipCtrl: _zipCtrl,
-                  submitted: _submitted,
-                  onSubmit: _handleSubmit,
-                  onLaunchTerminal: widget.onLaunchTerminal,
-                ),
-                const SizedBox(height: LimyeSpacing.xl),
-              ],
-            ),
-          ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: LimyeSpacing.xl),
+        const _Hero(),
+        const SizedBox(height: LimyeSpacing.xl),
+        const _Benefits(),
+        const SizedBox(height: LimyeSpacing.xl),
+        const _Process(),
+        const SizedBox(height: LimyeSpacing.xl),
+        const _Requirements(),
+        const SizedBox(height: LimyeSpacing.xl),
+        _ApplicationSection(
+          fullNameCtrl: _fullNameCtrl,
+          emailCtrl: _emailCtrl,
+          droneModelCtrl: _droneModelCtrl,
+          zipCtrl: _zipCtrl,
+          submitted: _submitted,
+          onSubmit: _handleSubmit,
+          onLaunchTerminal: widget.onLaunchTerminal,
         ),
-      ),
+        const SizedBox(height: LimyeSpacing.xl),
+      ],
     );
   }
 }

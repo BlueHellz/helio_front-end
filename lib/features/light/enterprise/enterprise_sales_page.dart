@@ -9,24 +9,20 @@ class EnterpriseSalesPage extends StatelessWidget {
   const EnterpriseSalesPage({
     super.key,
     this.onHomeTap,
-    this.onForBusiness,
-    this.onMyProjects,
+    this.onBusinesses,
     this.onEnterprise,
   });
 
   final VoidCallback? onHomeTap;
-  final VoidCallback? onForBusiness;
-  final VoidCallback? onMyProjects;
+  final VoidCallback? onBusinesses;
   final VoidCallback? onEnterprise;
 
   @override
   Widget build(BuildContext context) {
     return HomeownerPublicChrome(
-      activeNavIndex: 1,
       onHomeTap: onHomeTap,
-      onForBusiness: onForBusiness ?? onHomeTap,
-      onMyProjects: onMyProjects,
-      onEnterprise: onEnterprise,
+      onBusinesses: onBusinesses ?? () {},
+      onEnterprise: onEnterprise ?? () {},
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: LimyeSpacing.gutter),
         child: Align(

@@ -10,23 +10,25 @@ import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
 // ─────────────────────────────────────────────
 
 class EvInfoPage extends StatelessWidget {
-  final VoidCallback? onApplyAsHost;
-  final VoidCallback? onHomeTap;
-  final VoidCallback? onMyProjects;
-
   const EvInfoPage({
     super.key,
     this.onApplyAsHost,
     this.onHomeTap,
-    this.onMyProjects,
+    this.onBusinesses,
+    this.onEnterprise,
   });
+
+  final VoidCallback? onApplyAsHost;
+  final VoidCallback? onHomeTap;
+  final VoidCallback? onBusinesses;
+  final VoidCallback? onEnterprise;
 
   @override
   Widget build(BuildContext context) {
     return HomeownerPublicChrome(
-      activeNavIndex: 0,
       onHomeTap: onHomeTap,
-      onMyProjects: onMyProjects,
+      onBusinesses: onBusinesses ?? () {},
+      onEnterprise: onEnterprise ?? () {},
       child: Center(
         child: ConstrainedBox(
           constraints:
@@ -34,33 +36,45 @@ class EvInfoPage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: LimyeSpacing.gutter),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(height: LimyeSpacing.xl),
-                Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 560),
-                    child: const IsometricEvCarChargerIllustration(
-                      width: 400,
-                      height: 200,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: LimyeSpacing.lg),
-                _EvHero(onApplyAsHost: onApplyAsHost),
-                const SizedBox(height: LimyeSpacing.xl),
-                const _EvWhy(),
-                const SizedBox(height: LimyeSpacing.lg),
-                _EvNetworkSection(),
-                const SizedBox(height: LimyeSpacing.xl),
-                _EvCta(onApplyAsHost: onApplyAsHost),
-                const SizedBox(height: LimyeSpacing.xl),
-              ],
-            ),
+            child: EvProgramBody(onApplyAsHost: onApplyAsHost),
           ),
         ),
       ),
+    );
+  }
+}
+
+/// EV host program content without public chrome (e.g. landing inline).
+class EvProgramBody extends StatelessWidget {
+  const EvProgramBody({super.key, this.onApplyAsHost});
+
+  final VoidCallback? onApplyAsHost;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: LimyeSpacing.xl),
+        Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 560),
+            child: const IsometricEvCarChargerIllustration(
+              width: 400,
+              height: 200,
+            ),
+          ),
+        ),
+        const SizedBox(height: LimyeSpacing.lg),
+        _EvHero(onApplyAsHost: onApplyAsHost),
+        const SizedBox(height: LimyeSpacing.xl),
+        const _EvWhy(),
+        const SizedBox(height: LimyeSpacing.lg),
+        _EvNetworkSection(),
+        const SizedBox(height: LimyeSpacing.xl),
+        _EvCta(onApplyAsHost: onApplyAsHost),
+        const SizedBox(height: LimyeSpacing.xl),
+      ],
     );
   }
 }

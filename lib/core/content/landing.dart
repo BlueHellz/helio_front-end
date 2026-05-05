@@ -57,9 +57,10 @@ class LandingContent {
   static const step1Title = '01  Enter your address';
   static const step1Body =
       'Our AI analyzes satellite imagery of your roof. Instant and accurate.';
-  static const step2Title = '02  Answer a few questions';
+  static const step2Title = '02  Chat with the AI';
   static const step2Body =
-      'Monthly bill, energy goals. Takes under two minutes.';
+      'Monthly bill, energy goals—guided in a focused conversation. '
+      'Takes under two minutes.';
   static const step3Title = '03  Get your design';
   static const step3Body =
       'A complete system design with specs, savings, and installer quotes. All free.';

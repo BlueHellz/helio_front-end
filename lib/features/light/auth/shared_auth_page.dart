@@ -17,14 +17,12 @@ class AuthPage extends ConsumerStatefulWidget {
   const AuthPage({
     super.key,
     this.onHomeTap,
-    this.onMyProjects,
-    this.onForBusiness,
+    this.onBusinesses,
     this.onEnterprise,
   });
 
   final VoidCallback? onHomeTap;
-  final VoidCallback? onMyProjects;
-  final VoidCallback? onForBusiness;
+  final VoidCallback? onBusinesses;
   final VoidCallback? onEnterprise;
 
   @override
@@ -97,11 +95,9 @@ class _AuthPageState extends ConsumerState<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return HomeownerPublicChrome(
-      activeNavIndex: 2,
       onHomeTap: widget.onHomeTap,
-      onMyProjects: widget.onMyProjects,
-      onForBusiness: widget.onForBusiness,
-      onEnterprise: widget.onEnterprise,
+      onBusinesses: widget.onBusinesses ?? () {},
+      onEnterprise: widget.onEnterprise ?? () {},
       child: SizedBox(
         height: MediaQuery.of(context).size.height -
             LimyeSpacing.navbarHeight -

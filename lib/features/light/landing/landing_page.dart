@@ -5,125 +5,181 @@ import 'package:limye_app/core/ui/app_feedback.dart';
 import 'package:limye_app/theme/limye_theme.dart';
 import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
 import 'package:limye_app/core/shell/web/homeowner_web_chrome.dart';
+import 'package:limye_app/features/light/landing/landing_inline_program.dart';
+import 'package:limye_app/features/light/landing/landing_program_expanded.dart';
 
-class LandingPage extends StatelessWidget {
+class LandingPage extends StatefulWidget {
   final VoidCallback? onGetStarted;
   final VoidCallback? onHomeTap;
-  final VoidCallback? onOpenEnterprise;
+  final VoidCallback? onBusinesses;
   final VoidCallback? onEnterprise;
-  final VoidCallback? onMyProjects;
 
   const LandingPage({
     super.key,
     this.onGetStarted,
     this.onHomeTap,
-    this.onMyProjects,
-    this.onOpenEnterprise,
+    this.onBusinesses,
     this.onEnterprise,
   });
 
   @override
+  State<LandingPage> createState() => _LandingPageState();
+}
+
+class _LandingPageState extends State<LandingPage> {
+  LandingInlineProgram? _program;
+
+  void _exitProgram() {
+    setState(() => _program = null);
+  }
+
+  void _handleHomeTap() {
+    _exitProgram();
+    widget.onHomeTap?.call();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return HomeownerPublicChrome(
-      activeNavIndex: 0,
-      onHomeTap: onHomeTap,
-      onMyProjects: onMyProjects,
-      onForBusiness: onOpenEnterprise,
-      onEnterprise: onEnterprise,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Hero — constrained to max width, centered
-          _Constrained(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: LimyeSpacing.gutter),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
-                  _HeroSection(onGetStarted: onGetStarted),
-                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
-                ],
+      onHomeTap: _handleHomeTap,
+      onBusinesses: widget.onBusinesses ?? () {},
+      onEnterprise: widget.onEnterprise ?? () {},
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 280),
+        switchInCurve: Curves.easeOut,
+        switchOutCurve: Curves.easeIn,
+        transitionBuilder: (child, animation) {
+          return FadeTransition(opacity: animation, child: child);
+        },
+        child: _program == null
+            ? KeyedSubtree(
+                key: const ValueKey<String>('landing-main'),
+                child: _MainLandingColumn(
+                  onGetStarted: widget.onGetStarted,
+                  onSelectProgram: (LandingInlineProgram p) {
+                    setState(() => _program = p);
+                  },
+                  onNavigateBusinesses: widget.onBusinesses,
+                ),
+              )
+            : KeyedSubtree(
+                key: ValueKey<String>('landing-program-$_program'),
+                child: LandingProgramExpanded(
+                  program: _program!,
+                  onBack: _exitProgram,
+                ),
               ),
-            ),
-          ),
-
-          // Trust strip — full bleed
-          const _TrustStrip(),
-
-          // How it works — constrained
-          _Constrained(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: LimyeSpacing.gutter),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
-                  _HowItWorks(),
-                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
-                  _FeaturesDeepDive(),
-                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
-                  const _SocialProofSection(),
-                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
-                ],
-              ),
-            ),
-          ),
-
-          // Pillars — three programs (drone ops / pool / EV)
-          _Constrained(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: LimyeSpacing.gutter),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
-                  _PillarsSection(onOpenEnterprise: onOpenEnterprise),
-                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
-                ],
-              ),
-            ),
-          ),
-
-          // For business — full bleed
-          _ForBusinessSection(onNavigateEnterprise: onOpenEnterprise),
-
-          // In-product mockups
-          _Constrained(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: LimyeSpacing.gutter),
-              child: const Column(
-                children: [
-                  SizedBox(height: LimyeSpacing.sectionPaddingVertical),
-                  _SeeLightInActionSection(),
-                  SizedBox(height: LimyeSpacing.sectionPaddingVertical),
-                ],
-              ),
-            ),
-          ),
-
-          // Wallet — constrained, centered
-          _Constrained(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: LimyeSpacing.gutter),
-              child: Column(
-                children: [
-                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
-                  const _WalletSection(),
-                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
-                  _FinalCtaSection(onStart: onGetStarted),
-                  const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
-                ],
-              ),
-            ),
-          ),
-        ],
       ),
+    );
+  }
+}
+
+class _MainLandingColumn extends StatelessWidget {
+  final VoidCallback? onGetStarted;
+  final void Function(LandingInlineProgram) onSelectProgram;
+  final VoidCallback? onNavigateBusinesses;
+
+  const _MainLandingColumn({
+    required this.onSelectProgram,
+    this.onGetStarted,
+    this.onNavigateBusinesses,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // Hero — constrained to max width, centered
+        _Constrained(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: LimyeSpacing.gutter),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                _HeroSection(onGetStarted: onGetStarted),
+                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+              ],
+            ),
+          ),
+        ),
+
+        // Trust strip — full bleed
+        const _TrustStrip(),
+
+        // How it works — constrained
+        _Constrained(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: LimyeSpacing.gutter),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                _HowItWorks(),
+                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                _FeaturesDeepDive(),
+                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                const _SocialProofSection(),
+                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+              ],
+            ),
+          ),
+        ),
+
+        // Pillars — three programs (drone ops / pool / EV)
+        _Constrained(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: LimyeSpacing.gutter),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                _PillarsSection(onSelectProgram: onSelectProgram),
+                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+              ],
+            ),
+          ),
+        ),
+
+        // For business — full bleed
+        _ForBusinessSection(onNavigateEnterprise: onNavigateBusinesses),
+
+        // In-product mockups
+        _Constrained(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: LimyeSpacing.gutter),
+            child: const Column(
+              children: [
+                SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                _SeeLightInActionSection(),
+                SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+              ],
+            ),
+          ),
+        ),
+
+        // Wallet — constrained, centered
+        _Constrained(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: LimyeSpacing.gutter),
+            child: Column(
+              children: [
+                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                const _WalletSection(),
+                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                _FinalCtaSection(onStart: onGetStarted),
+                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -132,9 +188,9 @@ class LandingPage extends StatelessWidget {
 // PILLARS — Drone Ops · Solar Pool · EV Charging
 // ─────────────────────────────────────────────
 class _PillarsSection extends StatelessWidget {
-  final VoidCallback? onOpenEnterprise;
+  final void Function(LandingInlineProgram) onSelectProgram;
 
-  const _PillarsSection({this.onOpenEnterprise});
+  const _PillarsSection({required this.onSelectProgram});
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +202,7 @@ class _PillarsSection extends StatelessWidget {
             LandingContent.pillarDroneBody,
         icon: Icons.flight_takeoff_outlined,
         cta: LandingContent.pillarDroneCta,
-        onTap: onOpenEnterprise,
+        onTap: () => onSelectProgram(LandingInlineProgram.drone),
       ),
       _PillarCardData(
         eyebrow: LandingContent.pillarPoolEyebrow,
@@ -155,7 +211,7 @@ class _PillarsSection extends StatelessWidget {
             LandingContent.pillarPoolBody,
         icon: Icons.savings_outlined,
         cta: LandingContent.pillarPoolCta,
-        onTap: onOpenEnterprise,
+        onTap: () => onSelectProgram(LandingInlineProgram.pool),
       ),
       _PillarCardData(
         eyebrow: LandingContent.pillarEvEyebrow,
@@ -164,7 +220,7 @@ class _PillarsSection extends StatelessWidget {
             LandingContent.pillarEvBody,
         icon: Icons.ev_station_outlined,
         cta: LandingContent.pillarEvCta,
-        onTap: onOpenEnterprise,
+        onTap: () => onSelectProgram(LandingInlineProgram.ev),
       ),
     ];
 
@@ -760,7 +816,7 @@ class _HowItWorksStepLeading extends StatelessWidget {
     switch (stepIndex) {
       case 0:
         return Icon(
-          Icons.add_home_work_outlined,
+          Icons.add_home_work_rounded,
           size: 22,
           color: LimyeColors.accent,
         );
@@ -774,7 +830,7 @@ class _HowItWorksStepLeading extends StatelessWidget {
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Icon(
-                  Icons.chat_bubble_outline,
+                  Icons.chat_bubble_rounded,
                   size: 22,
                   color: LimyeColors.accent,
                 ),
@@ -783,7 +839,7 @@ class _HowItWorksStepLeading extends StatelessWidget {
                 right: -2,
                 top: -4,
                 child: Icon(
-                  Icons.auto_awesome,
+                  Icons.auto_awesome_rounded,
                   size: 12,
                   color: LimyeColors.textBody,
                 ),
@@ -799,7 +855,7 @@ class _HowItWorksStepLeading extends StatelessWidget {
             clipBehavior: Clip.none,
             children: [
               const Icon(
-                Icons.description_outlined,
+                Icons.description_rounded,
                 size: 22,
                 color: LimyeColors.accent,
               ),
@@ -807,7 +863,7 @@ class _HowItWorksStepLeading extends StatelessWidget {
                 right: -4,
                 bottom: -2,
                 child: Icon(
-                  Icons.check_circle_outline,
+                  Icons.check_circle_rounded,
                   size: 14,
                   color: LimyeColors.accent,
                 ),
