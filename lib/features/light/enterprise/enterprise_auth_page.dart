@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:limye_app/core/app_state.dart';
 import 'package:limye_app/core/brand/blacklight_brand_logo.dart';
 import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
 import 'package:limye_app/core/providers/session_providers.dart';
 import 'package:limye_app/core/shell/web/homeowner_web_chrome.dart';
 import 'package:limye_app/core/ui/app_feedback.dart';
@@ -311,7 +310,28 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SunRingsIllustration(size: 380),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: LimyeSpacing.gutter,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(LimyeRadius.card),
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxHeight: 360),
+                            child: Image.asset(
+                              EnterpriseContent.authHeroIllustrationAsset,
+                              fit: BoxFit.contain,
+                              semanticLabel: EnterpriseContent
+                                  .authHeroIllustrationAccessibilityLabel,
+                              errorBuilder: (_, __, ___) => Icon(
+                                Icons.solar_power_rounded,
+                                size: 96,
+                                color: LimyeColors.accent.withValues(alpha: 0.4),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                       const SizedBox(height: LimyeSpacing.lg),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 40),

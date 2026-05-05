@@ -3,13 +3,11 @@
 class BusinessSolutionsContent {
   BusinessSolutionsContent._();
 
-  /// Hero illustration from Stitch; not user-facing copy.
-  static const heroIllustrationUrl =
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuB2qmLj3L-J56d1mTPQDvXnzZD_I43p_KVzxeW_eTHR3ItLoh3UJNJckOdNgxkyagfICywIrMQvM6FaxPwCotZqHKz88vA81_fKsDAjThvWLLqEm64jC4-Et0t8wm2HZOjshMAHW32MCDQJQssFOQOgmOY1-ndp-mkHoxsSu1yqGegT6GLkIHNcfWEzjlCGitCRmEF9LExGiLdL4k9Jw2cgLGaVIt4XsQkn_qdr2A_vOn7xHMgvVQmRUnafwzJpPoNk6xM-YYXIdRc';
+  /// Bundled hero art; paths are stable asset keys, not user-facing copy.
+  static const heroIllustrationAsset = 'assets/images/business_hero.jpg';
 
   static const heroImageAccessibilityLabel =
-      'A precise, flat geometric vector illustration of a solar roof structure. '
-      'Crisp lines, minimal palette, small accent nodes suggesting data and energy flow.';
+      'Isometric illustration of a professional crew installing solar panels on a suburban home.';
 
   // ─── Hero ─────────────────────────────────────────────────────────────
   static const heroTitle = 'The Future of Solar Business Is Free.';

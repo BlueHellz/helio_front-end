@@ -108,8 +108,8 @@ class _HeroArea extends StatelessWidget {
       borderRadius: BorderRadius.circular(LimyeRadius.card),
       child: AspectRatio(
         aspectRatio: 16 / 9,
-        child: Image.network(
-          BusinessSolutionsContent.heroIllustrationUrl,
+        child: Image.asset(
+          BusinessSolutionsContent.heroIllustrationAsset,
           fit: BoxFit.cover,
           semanticLabel: BusinessSolutionsContent.heroImageAccessibilityLabel,
           errorBuilder: (_, __, ___) => ColoredBox(
@@ -120,18 +120,6 @@ class _HeroArea extends StatelessWidget {
               color: context.colors.onSurfaceMuted,
             ),
           ),
-          loadingBuilder: (c, child, loadingProgress) {
-            if (loadingProgress == null) return child;
-            return ColoredBox(
-              color: context.colors.surfaceMuted,
-              child: Center(
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: context.colors.primary,
-                ),
-              ),
-            );
-          },
         ),
       ),
     );

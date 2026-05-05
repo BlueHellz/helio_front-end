@@ -87,4 +87,9 @@ class EnterpriseContent {
 
   static const labelCompanyOrOrg = 'Company or organization';
   static const hintCompanyOrOrg = 'e.g. Helio Solar Co.';
+
+  /// Enterprise auth split-panel art.
+  static const authHeroIllustrationAsset = 'assets/images/enterprise_auth.jpg';
+  static const authHeroIllustrationAccessibilityLabel =
+      'Isometric illustration of installers placing solar panels on a house with a service van nearby.';
 }

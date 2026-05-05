@@ -26,6 +26,8 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/business_hero.jpg
+    - assets/images/enterprise_auth.jpg
     # Local developer file (gitignored): copy from assets/env.json.example
     - assets/env.json
     - assets/env.json.example
