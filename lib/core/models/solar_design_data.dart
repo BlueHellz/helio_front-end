@@ -301,10 +301,16 @@ class SolarDesignViewState {
   const SolarDesignViewState({
     this.data,
     this.hasBackendError = false,
+    this.intakeAddress,
+    this.intakeOwnerName,
   });
 
   final SolarDesignData? data;
   final bool hasBackendError;
+
+  /// Guided intake fields for anonymous `/estimate` requests.
+  final String? intakeAddress;
+  final String? intakeOwnerName;
 }
 
 /// Latest interactive edit snapshot (financials + panel list).

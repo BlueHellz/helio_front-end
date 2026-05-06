@@ -29,6 +29,7 @@ export 'ev_host.dart';
 export 'homeowner/chat.dart';
 export 'homeowner/ai_chat.dart';
 export 'homeowner/dashboard.dart';
+export 'homeowner/design_estimate_chat.dart';
 export 'homeowner/interactive_canvas.dart';
 export 'homeowner/design_summary.dart';
 export 'homeowner/intake.dart';

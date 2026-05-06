@@ -7,14 +7,10 @@ import 'package:limye_app/core/content/content_registry.dart';
 import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
 import 'package:limye_app/core/models/solar_design_data.dart';
 import 'package:limye_app/core/providers/solar_design_provider.dart';
+import 'package:limye_app/core/solar/solar_design_calculator.dart';
 import 'package:limye_app/theme/limye_theme.dart';
 
 const double _kCanvasPx = 4000;
-const double _kPanelKw = 0.4;
-const double _kCostPerKwUsd = 2500;
-const double _kElectricityRateUsdPerKwh = 0.17;
-const double _kAnnualDegradation = 0.005;
-const double _kFederalItcFraction = 0.30;
 
 Matrix4 _isometricMatrix() {
   return Matrix4.identity()
@@ -28,42 +24,6 @@ Size _panelFootprint(CanvasSolarPanel p) {
   return p.portrait
       ? const Size(shortEdge, longEdge)
       : const Size(longEdge, shortEdge);
-}
-
-RecalculatedFinancials _recalculateFinancials({
-  required List<CanvasSolarPanel> panels,
-  required List<RoofSegmentData> segments,
-}) {
-  final segById = {for (final s in segments) s.id: s};
-  final n = panels.length;
-  final systemKw = n * _kPanelKw;
-  final totalCost = systemKw * _kCostPerKwUsd;
-  var annualKwh = 0.0;
-  for (final p in panels) {
-    final seg = segById[p.roofSegmentId];
-    if (seg == null) continue;
-    annualKwh += _kPanelKw * seg.annualSunshineKwhPerKw;
-  }
-  var savings25 = 0.0;
-  for (var y = 0; y < 25; y++) {
-    savings25 +=
-        annualKwh * math.pow(1 - _kAnnualDegradation, y) * _kElectricityRateUsdPerKwh;
-  }
-  final itc = totalCost * _kFederalItcFraction;
-  final netCost = totalCost - itc;
-  final y1 = annualKwh * _kElectricityRateUsdPerKwh;
-  final payback = y1 > 1e-6 ? netCost / y1 : double.nan;
-  return RecalculatedFinancials(
-    panelCount: n,
-    systemSizeKw: systemKw,
-    annualProductionKwh: annualKwh,
-    savings25YearUsd: savings25,
-    paybackYears: payback,
-    totalSystemCostUsd: totalCost,
-    incentives: [
-      SolarIncentiveLine(amountUsd: itc),
-    ],
-  );
 }
 
 Color _orientationFill(double score, BuildContext context) {
@@ -126,13 +86,8 @@ String _formatThousands(num n) {
   return buf.toString();
 }
 
-bool _liveMatches(InteractiveDesignLiveState? live, SolarDesignData data) {
-  if (live == null) return false;
-  final cfg = data.activeConfig;
-  if (cfg == null) return false;
-  return live.configId == cfg.id &&
-      live.activeConfigIndex == data.activeConfigIndex;
-}
+bool _liveMatches(InteractiveDesignLiveState? live, SolarDesignData data) =>
+    liveDesignStateMatchesCanvas(live, data);
 
 Rect _roofBounds(List<RoofSegmentData> segments) {
   if (segments.isEmpty) {
@@ -236,7 +191,7 @@ class _DesignDisplayWidgetState extends ConsumerState<DesignDisplayWidget> {
     }
 
     final panels = _panelsForMetrics(data, live);
-    final financials = _recalculateFinancials(
+    final financials = recalculateSolarFinancials(
       panels: panels,
       segments: data.roofSegments,
     );

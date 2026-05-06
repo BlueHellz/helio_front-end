@@ -3,11 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:limye_app/core/content/content_registry.dart';
 import 'package:limye_app/core/models/solar_design_data.dart';
+import 'package:limye_app/core/providers/ai_design_estimate_provider.dart';
 import 'package:limye_app/core/providers/solar_design_provider.dart';
 import 'package:limye_app/core/ui/app_feedback.dart';
-import 'package:limye_app/features/light/homeowner/widgets/design_display.dart';
+import 'package:limye_app/features/light/homeowner/widgets/ai_chat_design_rail.dart';
 import 'package:limye_app/features/light/homeowner/widgets/guided_form_modal.dart';
 import 'package:limye_app/features/light/homeowner/widgets/interactive_design_canvas.dart';
+import 'package:limye_app/features/light/homeowner/widgets/solar_estimate_summary_view.dart';
 import 'package:limye_app/theme/limye_theme.dart';
 
 const double _splitBreakpointWidth = 960;
@@ -146,6 +148,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
   @override
   void dispose() {
     if (widget.designFlowMode) {
+      ref.read(aiDesignEstimateProvider.notifier).reset();
       ref.read(designProvider.notifier).clear();
     }
     _scrollCtrl.dispose();
@@ -278,12 +281,83 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
         ),
       );
     });
+    ref.read(designProvider.notifier).setIntakeContext(
+          address: payload.address,
+          ownerName: payload.ownerName,
+        );
     _maybeSeedInteractiveDesignCanvas();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollCtrl.hasClients) {
         _scrollCtrl.jumpTo(_scrollCtrl.position.maxScrollExtent);
       }
     });
+  }
+
+  Future<void> _onMobileRequestEstimate() async {
+    final d = ref.read(designProvider);
+    final addr = (d.intakeAddress ?? '').trim();
+    if (addr.isEmpty ||
+        d.data == null ||
+        d.data!.roofSegments.isEmpty) {
+      if (!mounted) return;
+      AppFeedback.snack(
+        context,
+        DesignEstimateChatContent.needAddressFirst,
+      );
+      return;
+    }
+    FocusScope.of(context).unfocus();
+    final ok =
+        await ref.read(aiDesignEstimateProvider.notifier).requestEstimate();
+    if (!mounted) return;
+    if (!ok) {
+      AppFeedback.snack(
+        context,
+        DesignEstimateChatContent.loadFailedFriendly,
+      );
+      return;
+    }
+    final pres = ref.read(aiDesignEstimateProvider).presentation;
+    if (!mounted || pres == null) return;
+
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      useSafeArea: true,
+      builder: (sheetCtx) {
+        return DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.92,
+          minChildSize: 0.45,
+          maxChildSize: 0.98,
+          builder: (scrollContext, scrollCtrl) {
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                color: Theme.of(scrollContext).colorScheme.surface,
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(LimyeRadius.card),
+                ),
+                border: Border.all(
+                  color: scrollContext.colors.outline,
+                  width: 1,
+                ),
+              ),
+              child: SingleChildScrollView(
+                controller: scrollCtrl,
+                padding: EdgeInsets.fromLTRB(
+                  LimyeSpacing.md,
+                  LimyeSpacing.md,
+                  LimyeSpacing.md,
+                  MediaQuery.paddingOf(scrollContext).bottom + LimyeSpacing.md,
+                ),
+                child: SolarEstimateSummaryView(presentation: pres),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   void _openVisualizationSheet() {
@@ -330,6 +404,14 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    final designVs = ref.watch(designProvider);
+    final estimateLoading =
+        ref.watch(aiDesignEstimateProvider.select((s) => s.loading));
+    final mobileEstimateReady = widget.designFlowMode &&
+        (designVs.intakeAddress ?? '').trim().isNotEmpty &&
+        designVs.data != null &&
+        designVs.data!.roofSegments.isNotEmpty;
+
     if (_split) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -352,7 +434,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
           ),
           Expanded(
             flex: 3,
-            child: DesignDisplayWidget(),
+            child: const AiChatDesignRail(),
           ),
         ],
       );
@@ -383,6 +465,9 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
                 sending: _sending,
                 onAttach: () => AppFeedback.comingSoon(context),
                 onGuidedForm: widget.onFallbackToForm ?? _openGuidedForm,
+                onRequestEstimate: _onMobileRequestEstimate,
+                estimateLoading: estimateLoading,
+                estimateEnabled: mobileEstimateReady,
               )
             else
               Padding(
@@ -1110,6 +1195,9 @@ class _MobileComposerBar extends StatelessWidget {
     required this.sending,
     required this.onAttach,
     required this.onGuidedForm,
+    required this.onRequestEstimate,
+    required this.estimateLoading,
+    required this.estimateEnabled,
   });
 
   final TextEditingController controller;
@@ -1118,6 +1206,9 @@ class _MobileComposerBar extends StatelessWidget {
   final bool sending;
   final VoidCallback onAttach;
   final VoidCallback onGuidedForm;
+  final VoidCallback onRequestEstimate;
+  final bool estimateLoading;
+  final bool estimateEnabled;
 
   @override
   Widget build(BuildContext context) {
@@ -1207,6 +1298,50 @@ class _MobileComposerBar extends StatelessWidget {
                 ),
               ],
             ),
+            const SizedBox(height: LimyeSpacing.sm),
+            Builder(builder: (context) {
+              Widget btn = SizedBox(
+                width: double.infinity,
+                height: LimyeSpacing.buttonHeight,
+                child: FilledButton(
+                  onPressed: estimateLoading || !estimateEnabled
+                      ? null
+                      : onRequestEstimate,
+                  style: FilledButton.styleFrom(
+                    elevation: 0,
+                    backgroundColor: LimyeColors.accent,
+                    foregroundColor: LimyeColors.surface,
+                    disabledBackgroundColor:
+                        LimyeColors.surfaceMuted.withValues(alpha: 0.9),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(LimyeRadius.sm),
+                    ),
+                  ),
+                  child: estimateLoading
+                      ? SizedBox(
+                          width: LimyeSpacing.md,
+                          height: LimyeSpacing.md,
+                          child: const CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: LimyeColors.surface,
+                          ),
+                        )
+                      : Text(
+                          DesignEstimateChatContent.requestEstimateCta,
+                          style: LimyeTextStyles.bodyBold(
+                            color: LimyeColors.surface,
+                          ),
+                        ),
+                ),
+              );
+              if (!estimateEnabled) {
+                btn = Tooltip(
+                  message: DesignEstimateChatContent.needAddressFirst,
+                  child: btn,
+                );
+              }
+              return btn;
+            }),
             TextButton(
               onPressed: onGuidedForm,
               child: Text(
