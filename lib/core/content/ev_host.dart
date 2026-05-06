@@ -7,7 +7,7 @@ class EvHostContent {
   static const heroBody =
       'KOO-YOH helps homeowners and businesses host an EV charger '
       'at their property. Drivers find you through the network; you earn '
-      'HLIO every time a vehicle plugs in.';
+      'GUEY every time a vehicle plugs in.';
   static const applyCta = 'Apply as host';
   static const applicationsOpenLine = 'Applications open · Free to list';
   static const earnSectionEyebrow = 'EARN PER PLUG-IN';
@@ -17,7 +17,7 @@ class EvHostContent {
 
   static const whyCard1Title = 'Earn passively';
   static const whyCard1Body =
-      'Set your own pricing. Get paid in HLIO every time a driver charges at your station.';
+      'Set your own pricing. Get paid in GUEY every time a driver charges at your station.';
 
   static const whyCard2Title = 'Power local mobility';
   static const whyCard2Body =
@@ -35,7 +35,7 @@ class EvHostContent {
   static const networkSectionTitle = 'How the network fits together';
   static const networkSectionLead =
       'Hosts list certified chargers; drivers discover spots through the same '
-      'app they use to plan routes and energy spend. Settlement happens in HLIO, '
+      'app they use to plan routes and energy spend. Settlement happens in GUEY, '
       'with optional conversion paths where regulations allow.';
   static const networkBullet1 =
       'Dynamic pricing: off-peak discounts and surge windows you control.';

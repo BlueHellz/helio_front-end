@@ -15,7 +15,7 @@ class BusinessSolutionsContent {
       'KOO-YOH gives your company an AI-powered operating system — from design to close. '
       'No subscription. No per-seat fees. Just growth.';
   static const heroPrimaryCta = 'Get Started — Free';
-  static const heroSecondaryCta = 'See KOO-YOH NOIR';
+  static const heroSecondaryCta = 'See XEÍTI';
 
   // ─── Problems ─────────────────────────────────────────────────────────
   static const problemsSectionTitle =
@@ -77,7 +77,7 @@ class BusinessSolutionsContent {
   // ─── Comparison ───────────────────────────────────────────────────────
   static const compareSectionTitle = 'Choose Your Path';
 
-  static const compareKooyohName = 'KOO-YOH';
+  static const compareKooyohName = 'KOOYOH';
   static const compareKooyohTagline =
       'The essential AI-powered platform for growing solar businesses.';
   static const compareKooyohPrice = 'Free';
@@ -86,15 +86,15 @@ class BusinessSolutionsContent {
   static const compareKooyohBullet3 = 'Standard Contract E-Sign';
   static const compareKooyohCta = 'Get Started Free';
 
-  static const compareNoirName = 'KOO-YOH NOIR';
-  static const compareNoirTagline =
+  static const compareXeitiName = 'XEÍTI';
+  static const compareXeitiTagline =
       'Advanced capabilities for high-volume enterprise operations.';
-  static const compareNoirPrice = 'Enterprise';
-  static const compareNoirBullet1 = 'Everything in Free';
-  static const compareNoirBullet2 = 'Drone Roof Inspections API';
-  static const compareNoirBullet3 = 'AI Sales Coach Integration';
-  static const compareNoirBullet4 = 'Dedicated Account Manager';
-  static const compareNoirCta = 'Upgrade to NOIR';
+  static const compareXeitiPrice = 'Enterprise';
+  static const compareXeitiBullet1 = 'Everything in Free';
+  static const compareXeitiBullet2 = 'Drone Roof Inspections API';
+  static const compareXeitiBullet3 = 'AI Sales Coach Integration';
+  static const compareXeitiBullet4 = 'Dedicated Account Manager';
+  static const compareXeitiCta = 'Upgrade to XEÍTI';
 
   // ─── Social proof ─────────────────────────────────────────────────────
   static const testimonialsSectionTitle = 'Trusted by Industry Leaders';

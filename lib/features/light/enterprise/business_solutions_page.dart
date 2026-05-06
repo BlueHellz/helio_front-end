@@ -762,19 +762,19 @@ class _ComparisonSection extends StatelessWidget {
                 ctaLabel: BusinessSolutionsContent.compareKooyohCta,
                 onCta: onEnterprise,
               );
-              final noir = _PricingCard(
+              final xeiti = _PricingCard(
                 fillBottom: wide,
-                name: BusinessSolutionsContent.compareNoirName,
-                tagline: BusinessSolutionsContent.compareNoirTagline,
-                priceLabel: BusinessSolutionsContent.compareNoirPrice,
+                name: BusinessSolutionsContent.compareXeitiName,
+                tagline: BusinessSolutionsContent.compareXeitiTagline,
+                priceLabel: BusinessSolutionsContent.compareXeitiPrice,
                 bullets: const [
-                  BusinessSolutionsContent.compareNoirBullet1,
-                  BusinessSolutionsContent.compareNoirBullet2,
-                  BusinessSolutionsContent.compareNoirBullet3,
-                  BusinessSolutionsContent.compareNoirBullet4,
+                  BusinessSolutionsContent.compareXeitiBullet1,
+                  BusinessSolutionsContent.compareXeitiBullet2,
+                  BusinessSolutionsContent.compareXeitiBullet3,
+                  BusinessSolutionsContent.compareXeitiBullet4,
                 ],
                 primary: false,
-                ctaLabel: BusinessSolutionsContent.compareNoirCta,
+                ctaLabel: BusinessSolutionsContent.compareXeitiCta,
                 onCta: onEnterprise,
               );
               if (wide) {
@@ -784,7 +784,7 @@ class _ComparisonSection extends StatelessWidget {
                     children: [
                       Expanded(child: free),
                       SizedBox(width: KooyohSpacing.gutter),
-                      Expanded(child: noir),
+                      Expanded(child: xeiti),
                     ],
                   ),
                 );
@@ -794,7 +794,7 @@ class _ComparisonSection extends StatelessWidget {
                 children: [
                   free,
                   SizedBox(height: KooyohSpacing.gutter),
-                  noir,
+                  xeiti,
                 ],
               );
             },

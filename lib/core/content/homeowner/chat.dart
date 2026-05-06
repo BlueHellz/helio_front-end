@@ -23,7 +23,7 @@ class HomeownerChatContent {
       'Message the assistant. No account needed to explore your design.';
 
   static const placeholderSystemMessage =
-      'Welcome to KOO-YOH NOIR. When design automation is enabled, your assistant will appear here.';
+      'Welcome to XEÍTI. When design automation is enabled, your assistant will appear here.';
   static const placeholderAiMessage =
       'For now, this chat is a visual placeholder. Messages are not sent to a model.';
   static const composerDisabledHint =

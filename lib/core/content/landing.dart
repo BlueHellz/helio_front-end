@@ -6,25 +6,25 @@ class LandingContent {
   static const programsHeadline = 'Three programs. One network.';
   static const programsSubcopy =
       'KOO-YOH is more than rooftop design — it\'s a unified '
-      'energy network powered by Helio Coin.';
+      'energy network powered by Guey Coin.';
 
   // Pillar cards
   static const pillarDroneEyebrow = 'DRONE OPS';
   static const pillarDroneTitle = 'Fly. Earn. Power solar.';
   static const pillarDroneBody =
-      'Become a certified drone operator and earn HLIO for every roof inspection.';
+      'Become a certified drone operator and earn GUEY for every roof inspection.';
   static const pillarDroneCta = 'Open program';
 
   static const pillarPoolEyebrow = 'COMMUNITY SOLAR';
   static const pillarPoolTitle = 'Own a piece of solar.';
   static const pillarPoolBody =
-      'Stake HLIO into verified pools and earn a share of clean energy revenue.';
+      'Stake GUEY into verified pools and earn a share of clean energy revenue.';
   static const pillarPoolCta = 'Explore pools';
 
   static const pillarEvEyebrow = 'EV CHARGING';
   static const pillarEvTitle = 'Host. Plug. Earn.';
   static const pillarEvBody =
-      'Turn your driveway into an EV stop and get paid in HLIO every plug-in.';
+      'Turn your driveway into an EV stop and get paid in GUEY every plug-in.';
   static const pillarEvCta = 'Apply as host';
 
   // Hero
@@ -75,7 +75,7 @@ class LandingContent {
       'The installer and enterprise portal includes CRM, project tracking, and AI design tools. Sign in to explore — full onboarding connects when the backend is live.';
 
   // In-product mockups
-  static const seeKooyohInActionTitle = 'See KOO-YOH NOIR in Action';
+  static const seeKooyohInActionTitle = 'See XEÍTI in Action';
   static const seeKooyohInActionSubtitle =
       'Geometric previews of real workflows — chat-first design for homeowners '
       'and operations control for your team.';
@@ -99,12 +99,12 @@ class LandingContent {
       'Exports are structured for AHJ review — equipment schedules, conductor sizing notes, and roof diagrams aligned to NEC checkpoints.';
   static const featurePoolTitle = 'Free Forever';
   static const featurePoolBody =
-      'Core design tools stay free. HLIO rewards honest uploads, drone verification, and community pools that keep pricing transparent.';
+      'Core design tools stay free. GUEY rewards honest uploads, drone verification, and community pools that keep pricing transparent.';
 
   // Social proof
   static const socialProofHeadline = 'Join 500+ solar businesses';
   static const testimonial1Quote =
-      'KOO-YOH NOIR saved us 20 hours a week on designs.';
+      'XEÍTI saved us 20 hours a week on designs.';
   static const testimonial1Attribution = '— Alex, SolarPro Installers';
   static const testimonial2Quote =
       'Permit pack quality cut our resubmits in half.';

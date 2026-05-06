@@ -2,12 +2,12 @@ import 'package:kooyoh_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
 import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 
-/// Account + HLIO wallet (homeowner), replacing org settings hub.
+/// Account + GUEY wallet (homeowner), replacing org settings hub.
 class HomeownerWalletPage extends StatelessWidget {
   const HomeownerWalletPage({
     super.key,
     required this.userName,
-    this.hlioBalance = 0.0,
+    this.gueyBalance = 0.0,
     this.walletAddress,
     this.onConnectWallet,
     this.onSignOut,
@@ -16,7 +16,7 @@ class HomeownerWalletPage extends StatelessWidget {
   });
 
   final String userName;
-  final double hlioBalance;
+  final double gueyBalance;
   final String? walletAddress;
   final VoidCallback? onConnectWallet;
   final VoidCallback? onSignOut;
@@ -66,15 +66,15 @@ class HomeownerWalletPage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(WalletContent.hlioBalanceLabel,
+                      Text(WalletContent.gueyBalanceLabel,
                           style: KooyohTextStyles.caption(color: variant)),
                       const SizedBox(width: 8),
                       Text(
-                        hlioBalance.toStringAsFixed(2),
+                        gueyBalance.toStringAsFixed(2),
                         style: KooyohTextStyles.dataLarge(color: c.onSurface),
                       ),
                       const SizedBox(width: 6),
-                      Text(WalletContent.hlioTicker,
+                      Text(WalletContent.gueyTicker,
                           style: KooyohTextStyles.body(color: variant)),
                     ],
                   ),

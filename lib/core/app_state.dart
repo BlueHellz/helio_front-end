@@ -5,7 +5,7 @@ import 'models/project.dart';
 import 'models/chat_message.dart';
 
 // ─────────────────────────────────────────────
-// BLACK LIGHT — UI/UX state shell.
+// Premium (XEÍTI) shell — UI/UX app state.
 // Holds only the in-memory state required for navigation and form state.
 // All real data (users, projects, transactions, leads, wallets, etc.)
 // will come from the backend layer when wired.
@@ -25,7 +25,7 @@ class BlackLightAppState extends ChangeNotifier {
   String _companyName = '';
 
   // Wallet (filled by wallet provider on connect)
-  double _hlioBalance = 0.0;
+  double _gueyBalance = 0.0;
   String? _walletAddress;
 
   // Navigation indices (UI-only)
@@ -41,7 +41,7 @@ class BlackLightAppState extends ChangeNotifier {
   bool get isAuthenticated => _isAuthenticated;
   String get userName => _userName;
   String get companyName => _companyName;
-  double get hlioBalance => _hlioBalance;
+  double get gueyBalance => _gueyBalance;
   String? get walletAddress => _walletAddress;
   int get webSidebarIndex => _webSidebarIndex;
   int get mobileNavIndex => _mobileNavIndex;
@@ -69,7 +69,7 @@ class BlackLightAppState extends ChangeNotifier {
     _isAuthenticated = false;
     _userName = '';
     _companyName = '';
-    _hlioBalance = 0.0;
+    _gueyBalance = 0.0;
     _walletAddress = null;
     _projects.clear();
     _chatMessages.clear();

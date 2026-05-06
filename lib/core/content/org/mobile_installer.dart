@@ -30,5 +30,5 @@ class OrgMobileInstallerContent {
   static const addLead = 'Add Lead';
   static const kwSuffix = ' kW';
   static const settingsTitle = 'Settings';
-  static const hlioConnectedLine = 'Connected';
+  static const installerWalletConnectedLine = 'Connected';
 }

@@ -1,4 +1,4 @@
-# CORS and allowed origins (Black Light)
+# CORS and allowed origins (KOOYOH)
 
 **Context:** The Flutter app ships as a **web build on Vercel** and may run **locally** for development (`flutter run -d web-server` or `flutter run -d chrome`). The **FastAPI** service on **Render** must return appropriate **`Access-Control-*`** headers for browser calls from those origins.
 
@@ -6,7 +6,7 @@
 
 - Production traffic will come from your Vercel deployment URL, for example:
   - `https://<vercel-app>.vercel.app`
-  - Custom domain, e.g. `https://app.blacklight.example` (replace with your real host)
+  - Custom domain, e.g. `https://app.kooyoh.example` (replace with your real host)
 
 **Backend action:** Set `CORS_ORIGINS` (or equivalent) on Render to **include the exact Vercel origin** (scheme + host + port if non-default). Browsers do not treat `https://a.vercel.app` and `https://b.vercel.app` as the same origin.
 

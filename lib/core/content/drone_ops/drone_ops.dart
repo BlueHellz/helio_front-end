@@ -6,19 +6,19 @@ class DroneOpsContent {
   static const heroTitle = 'Fly. Earn. Power Solar.';
   static const heroBody =
       'Become a certified KOO-YOH drone operator and earn '
-      'Helio Coin (HLIO) for every roof inspection. High-precision '
+      'Guey Coin (GUEY) for every roof inspection. High-precision '
       'flights. Verifiable data. Meaningful rewards.';
   static const applyNow = 'Apply Now';
   static const activeRecruitment = 'ACTIVE RECRUITMENT';
   static const telemetryChip = 'TELEMETRY_SYNC';
-  static const hlioRewardChip = 'HLIO_REWARD_ACTIVE';
+  static const gueyRewardChip = 'GUEY_REWARD_ACTIVE';
 
   static const benefit1Title = 'Flexible Schedule';
   static const benefit1Body =
       'Claim missions in your area based on your availability. Operate on your terms, any day of the week.';
   static const benefit2Title = 'Competitive Pay';
   static const benefit2Body =
-      'Earn HLIO tokens upon successful data upload. Transparent pricing per square foot inspected.';
+      'Earn GUEY tokens upon successful data upload. Transparent pricing per square foot inspected.';
   static const benefit3Title = 'No Experience Needed';
   static const benefit3Body =
       'We provide certification and flight path automation tools. You provide the hardware.';
@@ -40,7 +40,7 @@ class DroneOpsContent {
   static const processStep3Num = '03';
   static const processStep3Title = 'Start Earning';
   static const processStep3Body =
-      'Access the mission board, execute flights, and earn HLIO.';
+      'Access the mission board, execute flights, and earn GUEY.';
 
   static const systemRequirementsTitle = 'System Requirements';
   static const systemRequirementsSubtitle =
@@ -97,7 +97,7 @@ class DroneOpsContent {
   static const missionQueueTitle = 'Mission queue';
   static const operatingArea = 'OPERATING AREA';
   static const acceptMission = 'Accept mission';
-  static const missionPayoutSuffix = ' HLIO';
+  static const missionPayoutSuffix = ' GUEY';
 
   static const captureNoMission = 'NO ACTIVE MISSION';
   static const captureMissionPrefix = 'MISSION · ';
@@ -108,16 +108,16 @@ class DroneOpsContent {
 
   static const earningsMilestonesTitle = 'Payout milestones';
   static const earningsMilestonesSubtitle =
-      'How HLIO is released for each completed roof inspection.';
+      'How GUEY is released for each completed roof inspection.';
   static const earningsRecentTitle = 'Recent transactions';
   static const earningsSeeAll = 'See all';
   static const earningsFeatureFullList = 'Full transaction list';
   static const totalBalance = 'TOTAL BALANCE';
-  static const hlioTicker = 'HLIO';
+  static const gueyTicker = 'GUEY';
   static const withdraw = 'Withdraw';
   static const send = 'Send';
-  static const featureWithdrawals = 'HLIO withdrawals';
-  static const featureSendingHlio = 'Sending HLIO';
+  static const featureWithdrawals = 'GUEY withdrawals';
+  static const featureSendingGuey = 'Sending GUEY';
 
   static const milestone1Title = 'Scan completed';
   static const milestone1Body = 'Telemetry data uploaded and validated.';

@@ -1,12 +1,12 @@
 openapi: 3.0.3
 info:
-  title: Black Light API
+  title: KOOYOH Platform API
   description: |
     Minimal contract aligned with Dart models in `lib/core/models/` and session in `lib/core/app_state.dart`.
     Property names use **camelCase** to match JSON serialization from Flutter.
   version: 0.1.0
 servers:
-  - url: https://helio-back-end.onrender.com
+  - url: https://kooyoh-api.onrender.com
     description: Production (matches KooyohConfig.apiBaseUrl in lib/config.dart)
   - url: http://localhost:8000
     description: Local FastAPI
@@ -391,7 +391,7 @@ components:
 
     Me:
       type: object
-      required: [isAuthenticated, role, userName, companyName, hlioBalance]
+      required: [isAuthenticated, role, userName, companyName, gueyBalance]
       properties:
         isAuthenticated:
           type: boolean
@@ -401,7 +401,7 @@ components:
           type: string
         companyName:
           type: string
-        hlioBalance:
+        gueyBalance:
           type: number
           format: double
         walletAddress:

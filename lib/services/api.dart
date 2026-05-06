@@ -8,7 +8,7 @@ import '../core/models/project.dart';
 typedef AuthHeadersBuilder = Map<String, String> Function();
 typedef TokenRefreshFn = Future<bool> Function();
 
-/// HTTP client for the Helio backend. All paths use the `/api/v1` prefix.
+/// HTTP client for the KOOYOH backend. All paths use the `/api/v1` prefix.
 class ApiException implements Exception {
   ApiException(this.statusCode, this.body);
   final int statusCode;

@@ -2,8 +2,8 @@
 // Wallet chip, balance labels, and connect-wallet flows.
 
 class WalletContent {
-  static const hlioBalanceLabel = 'HLIO Balance';
-  static const hlioTicker = 'HLIO';
+  static const gueyBalanceLabel = 'GUEY Balance';
+  static const gueyTicker = 'GUEY';
   static const demoBalanceAmount = '0.00';
   static const connectWallet = 'Connect Wallet';
   static const connectShort = 'Connect';

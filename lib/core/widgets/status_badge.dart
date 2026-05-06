@@ -49,7 +49,7 @@ class WalletChip extends StatelessWidget {
               size: 14, color: variant),
           const SizedBox(width: 6),
           Text(
-            '${balance.toStringAsFixed(2)} HLIO',
+            '${balance.toStringAsFixed(2)} GUEY',
             style: KooyohTextStyles.dataInline(color: c.onSurface),
           ),
         ],

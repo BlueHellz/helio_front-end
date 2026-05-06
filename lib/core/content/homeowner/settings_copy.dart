@@ -3,7 +3,7 @@
 
 class HomeownerSettingsContent {
   static const pageTitle = 'Account & wallet';
-  static const pageSubtitle = 'Your profile and HLIO balance.';
+  static const pageSubtitle = 'Your profile and GUEY balance.';
   static const sectionProfile = 'Profile';
   static const sectionWallet = 'Wallet';
   static const sectionSession = 'Session';

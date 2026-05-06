@@ -278,7 +278,7 @@ class HomeownerAuthenticatedChrome extends StatelessWidget {
     required this.child,
     required this.activeIndex,
     this.userName = '',
-    this.hlioBalance = 0.0,
+    this.gueyBalance = 0.0,
     this.onNavTap,
     this.onSignOut,
   });
@@ -286,7 +286,7 @@ class HomeownerAuthenticatedChrome extends StatelessWidget {
   final Widget child;
   final int activeIndex;
   final String userName;
-  final double hlioBalance;
+  final double gueyBalance;
   final ValueChanged<int>? onNavTap;
   final VoidCallback? onSignOut;
 
@@ -299,7 +299,7 @@ class HomeownerAuthenticatedChrome extends StatelessWidget {
           _Sidebar(
             activeIndex: activeIndex,
             userName: userName,
-            hlioBalance: hlioBalance,
+            gueyBalance: gueyBalance,
             onNavTap: onNavTap,
             onSignOut: onSignOut,
           ),
@@ -322,14 +322,14 @@ class _Sidebar extends StatelessWidget {
   const _Sidebar({
     required this.activeIndex,
     required this.userName,
-    required this.hlioBalance,
+    required this.gueyBalance,
     this.onNavTap,
     this.onSignOut,
   });
 
   final int activeIndex;
   final String userName;
-  final double hlioBalance;
+  final double gueyBalance;
   final ValueChanged<int>? onNavTap;
   final VoidCallback? onSignOut;
 
@@ -397,10 +397,10 @@ class _Sidebar extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (hlioBalance > 0) ...[
+                if (gueyBalance > 0) ...[
                   const SizedBox(height: 8),
                   Text(
-                    '${WalletContent.hlioTicker} ${hlioBalance.toStringAsFixed(2)}',
+                    '${WalletContent.gueyTicker} ${gueyBalance.toStringAsFixed(2)}',
                     style: KooyohTextStyles.caption(
                         color: KooyohAdaptive.textCaption(context)),
                   ),

@@ -43,20 +43,20 @@ class EnterpriseContent {
       'Permits, install milestones, and funder touchpoints in one surface—'
       'without exporting screenshots to close a loop.';
 
-  static const salesPlansTitle = 'KOO-YOH Free and KOO-YOH NOIR';
+  static const salesPlansTitle = 'KOOYOH and XEÍTI';
   static const salesPlansSubtitle =
       'Most teams outgrow spreadsheets long before they outgrow our free tier. '
-      'NOIR is for orgs that treat solar as infrastructure, not a side channel.';
-  static const salesPlanFreeName = 'KOO-YOH Free';
+      'XEÍTI is for orgs that treat solar as infrastructure, not a side channel.';
+  static const salesPlanFreeName = 'KOOYOH';
   static const salesPlanFreeBullet1 = 'Core CRM and project records';
   static const salesPlanFreeBullet2 = 'AI-assisted residential design flows';
   static const salesPlanFreeBullet3 = 'Standard reporting and homeowner handoff';
-  static const salesPlanNoirName = 'KOO-YOH NOIR (upcoming)';
-  static const salesPlanNoirBullet1 = 'Advanced automation and branded proposals';
-  static const salesPlanNoirBullet2 = 'Priority routing for funding partners';
-  static const salesPlanNoirBullet3 = 'Deeper API access and org-wide policies';
-  static const salesPlanNoirFootnote =
-      'NOIR is rolling out in controlled releases—early partners shape the roadmap.';
+  static const salesPlanXeitiName = 'XEÍTI (upcoming)';
+  static const salesPlanXeitiBullet1 = 'Advanced automation and branded proposals';
+  static const salesPlanXeitiBullet2 = 'Priority routing for funding partners';
+  static const salesPlanXeitiBullet3 = 'Deeper API access and org-wide policies';
+  static const salesPlanXeitiFootnote =
+      'XEÍTI is rolling out in controlled releases—early partners shape the roadmap.';
 
   static const salesTestimonialsTitle = 'What teams tell us';
   static const salesTestimonial1Quote =
@@ -86,7 +86,7 @@ class EnterpriseContent {
   static const orgPortalSignOut = 'Sign out';
 
   static const labelCompanyOrOrg = 'Company or organization';
-  static const hintCompanyOrOrg = 'e.g. Helio Solar Co.';
+  static const hintCompanyOrOrg = 'e.g. Guey Solar Co.';
 
   /// Enterprise auth split-panel art.
   static const authHeroIllustrationAsset = 'assets/images/enterprise_auth.jpg';
