@@ -18,7 +18,7 @@ class AiChatDesignEmailSaveNotifier extends StateNotifier<bool> {
 
     final designVs = ref.read(designProvider);
     final data = designVs.data;
-    final address = (designVs.intakeAddress ?? '').trim();
+    final address = (designVs.intakeMailingAddressOneLine ?? '').trim();
     if (data == null || address.isEmpty || data.roofSegments.isEmpty) {
       return false;
     }

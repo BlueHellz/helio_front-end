@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:limye_app/core/content/content_registry.dart';
+import 'package:limye_app/core/data/us_state_postal_codes.dart';
 import 'package:limye_app/core/ui/app_feedback.dart';
 import 'package:limye_app/theme/limye_theme.dart';
 
@@ -13,7 +14,10 @@ class GuidedIntakePayload {
     required this.ownerName,
     this.email,
     this.phone,
-    required this.address,
+    required this.streetAddress,
+    required this.city,
+    required this.stateCode,
+    required this.zip,
     required this.monthlyBillDollars,
     required this.monthlyUsageKwh,
     required this.roofAgeLabel,
@@ -25,7 +29,10 @@ class GuidedIntakePayload {
   final String ownerName;
   final String? email;
   final String? phone;
-  final String address;
+  final String streetAddress;
+  final String city;
+  final String stateCode;
+  final String zip;
   final double monthlyBillDollars;
   final double monthlyUsageKwh;
   final String roofAgeLabel;
@@ -34,6 +41,10 @@ class GuidedIntakePayload {
   /// True = Maximum Savings goal; false = Maximum Energy Offset.
   final bool maximizeSavings;
   final bool hasHoaRestrictions;
+
+  /// Single line for API `address` (e.g. `123 Main St, Austin, TX 78701`).
+  String get mailingAddressOneLine =>
+      '${streetAddress.trim()}, ${city.trim()}, ${stateCode.trim()} ${zip.trim()}';
 
   String toChatSummary() {
     final goal = maximizeSavings
@@ -53,9 +64,10 @@ class GuidedIntakePayload {
       buffer.writeln('${AiChatContent.modalPhoneLabel}: ${phone!.trim()}');
     }
     buffer
-      ..writeln(
-        '${AiChatContent.modalAddressLabel}: $address',
-      )
+      ..writeln('${AiChatContent.modalAddressLabel}: $streetAddress')
+      ..writeln('${AiChatContent.modalCityLabel}: $city')
+      ..writeln('${AiChatContent.modalStateLabel}: $stateCode')
+      ..writeln('${AiChatContent.modalZipLabel}: $zip')
       ..writeln(
         '${AiChatContent.modalBillLabel}: '
         '${monthlyBillDollars.toStringAsFixed(0)}',
@@ -213,11 +225,14 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
   final _emailCtrl = TextEditingController();
   final _phoneCtrl = TextEditingController();
   final _addressCtrl = TextEditingController();
+  final _cityCtrl = TextEditingController();
+  final _zipCtrl = TextEditingController();
   final _billCtrl = TextEditingController();
   final _kwhCtrl = TextEditingController();
 
   String? _roofAgeValue;
   String? _panelValue;
+  String? _stateCode;
   bool _maximizeSavings = true;
   bool? _hoaRestrictions;
 
@@ -229,6 +244,8 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
     _emailCtrl.dispose();
     _phoneCtrl.dispose();
     _addressCtrl.dispose();
+    _cityCtrl.dispose();
+    _zipCtrl.dispose();
     _billCtrl.dispose();
     _kwhCtrl.dispose();
     super.dispose();
@@ -272,6 +289,8 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
     final email = _emailCtrl.text.trim();
     final phone = _phoneCtrl.text.trim();
     final address = _addressCtrl.text.trim();
+    final city = _cityCtrl.text.trim();
+    final zipRaw = _zipCtrl.text.trim();
     final billRaw = _billCtrl.text.trim();
     final kwhRaw = _kwhCtrl.text.trim();
 
@@ -288,16 +307,23 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
 
     final nameOk = name.isNotEmpty;
     final addrOk = address.isNotEmpty;
+    final cityOk = city.isNotEmpty;
+    final stateOk = (_stateCode?.isNotEmpty ?? false);
+    final zipOk = RegExp(r'^\d{5}$').hasMatch(zipRaw);
     final billOk = billRaw.isNotEmpty && bill != null;
     final kwhOk = kwhRaw.isNotEmpty && kwh != null;
     final roofOk = (_roofAgeValue?.isNotEmpty ?? false);
     final panelOk = (_panelValue?.isNotEmpty ?? false);
     final hoaOk = _hoaRestrictions != null;
 
+    final addrExtrasOk =
+        !addrOk || (cityOk && stateOk && zipOk);
+
     setState(() => _attemptedSubmit = true);
 
     if (!(nameOk &&
         addrOk &&
+        addrExtrasOk &&
         billOk &&
         kwhOk &&
         roofOk &&
@@ -310,12 +336,16 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
     final roofLabel = _roofAgeValue!;
     final panelLabel = _panelValue!;
     final hoaFlag = _hoaRestrictions!;
+    final st = _stateCode!;
 
     final payload = GuidedIntakePayload(
       ownerName: name,
       email: email.isEmpty ? null : email,
       phone: phone.isEmpty ? null : phone,
-      address: address,
+      streetAddress: address,
+      city: city,
+      stateCode: st,
+      zip: zipRaw,
       monthlyBillDollars: bill,
       monthlyUsageKwh: kwh,
       roofAgeLabel: roofLabel,
@@ -327,6 +357,15 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
     Navigator.of(context).pop();
     widget.onSubmitted?.call(payload);
     _refocusComposer();
+  }
+
+  String? _zipError(String zipRaw, bool addrOk) {
+    if (!_attemptedSubmit || !addrOk) return null;
+    if (zipRaw.isEmpty) return AiChatContent.modalErrorRequired;
+    if (!RegExp(r'^\d{5}$').hasMatch(zipRaw)) {
+      return AiChatContent.modalErrorInvalidZip;
+    }
+    return null;
   }
 
   String? _requiredError(bool ok) {
@@ -358,6 +397,9 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
 
     final nameOk = _nameCtrl.text.trim().isNotEmpty;
     final addrOk = _addressCtrl.text.trim().isNotEmpty;
+    final cityOk = _cityCtrl.text.trim().isNotEmpty;
+    final stateOk = (_stateCode?.isNotEmpty ?? false);
+    final zipRaw = _zipCtrl.text.trim();
     final roofOk = (_roofAgeValue?.isNotEmpty ?? false);
     final panelOk = (_panelValue?.isNotEmpty ?? false);
     final hoaOk = _hoaRestrictions != null;
@@ -437,6 +479,45 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
               context,
               errorText: _requiredError(addrOk),
               onChanged: (_) => setState(() {}),
+            ),
+            SizedBox(height: LimyeSpacing.sm),
+            _textField(
+              context,
+              label: AiChatContent.modalCityLabel,
+              controller: _cityCtrl,
+              hint: AiChatContent.modalCityHint,
+              errorText: addrOk && _attemptedSubmit && !cityOk
+                  ? AiChatContent.modalErrorRequired
+                  : null,
+              keyboard: TextInputType.text,
+              onChanged: (_) => setState(() {}),
+            ),
+            SizedBox(height: LimyeSpacing.sm),
+            _dropdownField(
+              context,
+              label: AiChatContent.modalStateLabel,
+              value: _stateCode,
+              items: kUsStatePostalCodes,
+              errorText: addrOk &&
+                      _attemptedSubmit &&
+                      !stateOk
+                  ? AiChatContent.modalErrorSelectDropdown
+                  : null,
+              onChanged: (v) => setState(() => _stateCode = v),
+            ),
+            SizedBox(height: LimyeSpacing.sm),
+            _textField(
+              context,
+              label: AiChatContent.modalZipLabel,
+              controller: _zipCtrl,
+              hint: AiChatContent.modalZipHint,
+              errorText: _zipError(zipRaw, addrOk),
+              keyboard: TextInputType.number,
+              onChanged: (_) => setState(() {}),
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(5),
+              ],
             ),
             SizedBox(height: LimyeSpacing.sm),
             _textField(

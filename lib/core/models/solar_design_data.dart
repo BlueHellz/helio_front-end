@@ -155,7 +155,10 @@ class SolarDesignViewState {
   const SolarDesignViewState({
     this.data,
     this.hasBackendError = false,
-    this.intakeAddress,
+    this.intakeStreetLine,
+    this.intakeCity,
+    this.intakeState,
+    this.intakeZip,
     this.intakeOwnerName,
     this.intakeEmail,
   });
@@ -163,10 +166,48 @@ class SolarDesignViewState {
   final SolarDesignData? data;
   final bool hasBackendError;
 
+  /// Street line (building number and street).
+  final String? intakeStreetLine;
+
+  /// City segment of the mailing address.
+  final String? intakeCity;
+
+  /// U.S. state postal abbreviation (e.g. TX).
+  final String? intakeState;
+
+  /// Five-digit ZIP.
+  final String? intakeZip;
+
   /// Guided intake fields for anonymous `/estimate` requests.
-  final String? intakeAddress;
   final String? intakeOwnerName;
   final String? intakeEmail;
+
+  /// One line for API payloads: `123 Main St, Austin, TX 78701` when complete.
+  String? get intakeMailingAddressOneLine {
+    final street = (intakeStreetLine ?? '').trim();
+    final city = (intakeCity ?? '').trim();
+    final st = (intakeState ?? '').trim();
+    final zip = (intakeZip ?? '').trim();
+    if (street.isEmpty && city.isEmpty && st.isEmpty && zip.isEmpty) {
+      return null;
+    }
+    if (street.isNotEmpty &&
+        city.isNotEmpty &&
+        st.isNotEmpty &&
+        zip.isNotEmpty) {
+      return '$street, $city, $st $zip';
+    }
+    final parts = <String>[
+      if (street.isNotEmpty) street,
+      if (city.isNotEmpty) city,
+      if (st.isNotEmpty) st,
+      if (zip.isNotEmpty) zip,
+    ];
+    return parts.isEmpty ? null : parts.join(', ');
+  }
+
+  /// Header subtitle: formatted mailing line or null when nothing captured yet.
+  String? get intakeFormattedDisplay => intakeMailingAddressOneLine;
 }
 
 /// Latest interactive edit snapshot (financials + panel list).

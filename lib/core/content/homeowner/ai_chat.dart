@@ -62,8 +62,13 @@ class AiChatContent {
   static const modalTitle = quickIntakeFormButtonLabel;
   static const modalOwnerNameLabel = "Home Owner's Name";
   static const modalOwnerNameHint = 'Jane Doe';
-  static const modalAddressLabel = 'Address for the system';
-  static const modalAddressHint = 'Street, City, ST';
+  static const modalAddressLabel = 'Street address';
+  static const modalAddressHint = '123 Main Street';
+  static const modalCityLabel = 'City';
+  static const modalCityHint = 'Austin';
+  static const modalStateLabel = 'State';
+  static const modalZipLabel = 'ZIP code';
+  static const modalZipHint = '78701';
   static const modalBillLabel = 'Average Monthly Electric Bill (\$)';
   static const modalBillHint = 'e.g. 150';
   static const modalUsageKwhLabel = 'Monthly Usage (kWh)';
@@ -98,10 +103,15 @@ class AiChatContent {
   static const modalErrorSelectDropdown = 'Please select an option.';
   static const modalErrorHoa =
       'Please indicate whether HOA restrictions apply.';
+  static const modalErrorInvalidZip =
+      'Enter a valid 5-digit ZIP code.';
 
   /// Shown after a successful guided form submit (fills chat timeline).
   static const aiReplyAfterGuidedForm =
       'Thank you—I captured your intake and refreshed the preview with those details.';
+
+  /// Composer send control.
+  static const sendButtonLabel = 'Send';
 
   // Accessibility / semantics
   static const sendMessageHint = 'Send message';

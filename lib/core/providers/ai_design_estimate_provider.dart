@@ -160,7 +160,7 @@ class AiDesignEstimateNotifier extends StateNotifier<AiDesignEstimateState> {
     final designVs = _ref.read(designProvider);
     final data = designVs.data;
 
-    final address = (designVs.intakeAddress ?? '').trim();
+    final address = (designVs.intakeMailingAddressOneLine ?? '').trim();
     if (data == null || data.roofSegments.isEmpty || address.isEmpty) {
       return false;
     }

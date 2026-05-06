@@ -13,7 +13,7 @@ Future<void> runAiChatSaveDesignEmailFlow({
   required WidgetRef ref,
 }) async {
   final designVs = ref.read(designProvider);
-  final address = (designVs.intakeAddress ?? '').trim();
+  final address = (designVs.intakeMailingAddressOneLine ?? '').trim();
   final data = designVs.data;
   if (address.isEmpty ||
       data == null ||

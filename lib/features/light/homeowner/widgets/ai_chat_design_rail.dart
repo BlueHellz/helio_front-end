@@ -24,7 +24,7 @@ class AiChatDesignRail extends ConsumerWidget {
     final saveSending = ref.watch(aiChatDesignEmailSaveProvider);
 
     final hasAddress =
-        (designVs.intakeAddress ?? '').trim().isNotEmpty;
+        (designVs.intakeMailingAddressOneLine ?? '').trim().isNotEmpty;
     final designReady =
         designVs.data != null && designVs.data!.roofSegments.isNotEmpty;
     final estimateEnabled = hasAddress && designReady;
