@@ -183,19 +183,9 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
               leading: BackButton(
                 onPressed: () => _go(_WebPublicPage.landing),
               ),
-              actions: [
-                TextButton(
-                  onPressed: () => _go(_WebPublicPage.intake),
-                  child: Text(
-                    HomeownerChatContent.fallbackToFormLabel,
-                    style: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
-                  ),
-                ),
-              ],
             ),
             body: AiChatPage(
               designFlowMode: true,
-              onFallbackToForm: () => _go(_WebPublicPage.intake),
               onOpenHomeownerLogin: () => _go(_WebPublicPage.login),
               onOpenHomeownerSignup: () => _go(_WebPublicPage.signup),
             ),
@@ -474,21 +464,9 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
                 onPressed: () =>
                     setState(() => _pub = _MobilePublic.home),
               ),
-              actions: [
-                TextButton(
-                  onPressed: () =>
-                      setState(() => _pub = _MobilePublic.intake),
-                  child: Text(
-                    HomeownerChatContent.fallbackToFormLabel,
-                    style: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
-                  ),
-                ),
-              ],
             ),
             body: AiChatPage(
               designFlowMode: true,
-              onFallbackToForm: () =>
-                  setState(() => _pub = _MobilePublic.intake),
               onOpenHomeownerLogin: () => setState(() {
                 _loginReturnTarget = _MobilePublic.designChat;
                 _pub = _MobilePublic.login;

@@ -13,7 +13,9 @@ class AiChatContent {
   /// Composer
   static const inputPlaceholderDesktop = 'Ask about savings or panels...';
   static const inputPlaceholderMobile = 'Type your message...';
-  static const preferGuidedFormCta = 'Prefer a quick guided form?';
+
+  /// Composer pill — opens guided intake modal (single entry point).
+  static const quickIntakeFormButtonLabel = 'Quick Intake Form';
 
   // Seeded conversation — desktop (split view)
   static const seedAiWelcomeDesktop =
@@ -63,7 +65,7 @@ class AiChatContent {
   static const vizLegendUnused = 'Unused';
 
   // Guided form modal
-  static const modalTitle = 'Quick Intake Form';
+  static const modalTitle = quickIntakeFormButtonLabel;
   static const modalOwnerNameLabel = "Home Owner's Name";
   static const modalOwnerNameHint = 'Jane Doe';
   static const modalAddressLabel = 'Address for the system';
@@ -88,7 +90,7 @@ class AiChatContent {
   static const modalPanel200 = '200A';
   static const modalPanel400 = '400A';
   static const modalPanelUnknown = 'Unknown';
-  static const modalGoalSectionLabel = 'Goal for going solar';
+  static const modalGoalSectionLabel = 'Primary Goal';
   static const modalGoalSavingsTitle = 'Maximum Savings';
   static const modalGoalOffsetTitle = 'Maximum Energy Offset';
   static const modalHoaSectionLabel = 'HOA Restrictions';

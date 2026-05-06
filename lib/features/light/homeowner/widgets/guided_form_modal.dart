@@ -88,31 +88,34 @@ Future<void> showGuidedFormDialog(
     barrierColor: Colors.transparent,
     builder: (dialogContext) {
       final size = MediaQuery.sizeOf(dialogContext);
-      return Dialog(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        insetPadding: EdgeInsets.zero,
-        shadowColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        child: SizedBox(
-          width: size.width,
-          height: size.height,
-          child: _GuidedFormBlurOverlay(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: LimyeSpacing.gutter,
-                ),
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxWidth: LimyeSpacing.guidedFormModalMaxWidth,
-                    ),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: _GuidedFormSurface(
-                        composerFocus: composerFocus,
-                        onSubmitted: onSubmitted,
+      return PopScope(
+        canPop: false,
+        child: Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          insetPadding: EdgeInsets.zero,
+          shadowColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
+          child: SizedBox(
+            width: size.width,
+            height: size.height,
+            child: _GuidedFormBlurOverlay(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: LimyeSpacing.gutter,
+                  ),
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        maxWidth: LimyeSpacing.guidedFormModalMaxWidth,
+                      ),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: _GuidedFormSurface(
+                          composerFocus: composerFocus,
+                          onSubmitted: onSubmitted,
+                        ),
                       ),
                     ),
                   ),
@@ -160,14 +163,14 @@ class _GuidedFormSurface extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).colorScheme.surface,
+      color: LimyeColors.surface,
       clipBehavior: Clip.antiAlias,
       elevation: 0,
       shadowColor: Colors.transparent,
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
-        side: const BorderSide(color: LimyeColors.outline, width: 1),
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: LimyeColors.outline, width: 1),
       ),
       child: _GuidedFormBody(
         composerFocus: composerFocus,
@@ -677,47 +680,43 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _labeledTop(
-          context,
-          label: AiChatContent.modalAddressLabel,
-          trailing: Tooltip(
-            message: AiChatContent.modalLocateMeHint,
-            child: IconButton(
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints(
-                minWidth: LimyeSpacing.tapTarget,
-                minHeight: LimyeSpacing.tapTarget,
+        Text(
+          AiChatContent.modalAddressLabel,
+          style: LimyeTextStyles.caption(
+            color: context.colors.onSurfaceMuted,
+          ).copyWith(fontWeight: FontWeight.w600),
+        ),
+        SizedBox(height: LimyeSpacing.xs / 2),
+        SizedBox(
+          height: LimyeSpacing.inputHeight,
+          child: TextField(
+            controller: _addressCtrl,
+            onChanged: onChanged,
+            keyboardType: TextInputType.streetAddress,
+            style: LimyeTextStyles.body(color: context.colors.onSurface),
+            decoration: InputDecoration(
+              hintText: AiChatContent.modalAddressHint,
+              filled: true,
+              fillColor: _fieldFill(context),
+              border:
+                  hasErr ? _errorBorder(context) : _neutralBorder(context),
+              enabledBorder:
+                  hasErr ? _errorBorder(context) : _neutralBorder(context),
+              focusedBorder:
+                  hasErr ? _errorBorder(context) : _focusedBorder(context),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: LimyeSpacing.sm,
               ),
-              icon: Icon(
-                Icons.my_location_rounded,
-                size: 20,
-                color: context.colors.primary,
-              ),
-              onPressed: () => AppFeedback.comingSoon(
-                context,
-                feature: AiChatContent.modalLocateMeHint,
-              ),
-            ),
-          ),
-          child: SizedBox(
-            height: LimyeSpacing.inputHeight,
-            child: TextField(
-              controller: _addressCtrl,
-              onChanged: onChanged,
-              keyboardType: TextInputType.streetAddress,
-              style: LimyeTextStyles.body(color: context.colors.onSurface),
-              decoration: InputDecoration(
-                hintText: AiChatContent.modalAddressHint,
-                filled: true,
-                fillColor: _fieldFill(context),
-                border:
-                    hasErr ? _errorBorder(context) : _neutralBorder(context),
-                enabledBorder:
-                    hasErr ? _errorBorder(context) : _neutralBorder(context),
-                focusedBorder:
-                    hasErr ? _errorBorder(context) : _focusedBorder(context),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: LimyeSpacing.sm,
+              suffixIcon: IconButton(
+                tooltip: AiChatContent.modalLocateMeHint,
+                icon: Icon(
+                  Icons.my_location_rounded,
+                  size: 20,
+                  color: context.colors.primary,
+                ),
+                onPressed: () => AppFeedback.comingSoon(
+                  context,
+                  feature: AiChatContent.modalLocateMeHint,
                 ),
               ),
             ),

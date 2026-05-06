@@ -18,10 +18,9 @@ class HomeownerChatContent {
       'of your usage—tell me in a sentence. Otherwise say “continue” and we will proceed.';
   static const aiReplyContinue =
       'Noted. Keep going: roof age, main panel size, or anything else about your home '
-      'helps tighten the design. When you are ready for a structured form, use the link below.';
+      'helps tighten the design.';
   static const composerHint =
       'Message the assistant. No account needed to explore your design.';
-  static const fallbackToFormLabel = 'Prefer the structured form instead';
 
   static const placeholderSystemMessage =
       'Welcome to LIMYÈ NOIR. When design automation is enabled, your assistant will appear here.';

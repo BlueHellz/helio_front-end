@@ -51,13 +51,11 @@ class AiChatPage extends ConsumerStatefulWidget {
   const AiChatPage({
     super.key,
     this.designFlowMode = false,
-    this.onFallbackToForm,
     this.onOpenHomeownerLogin,
     this.onOpenHomeownerSignup,
   });
 
   final bool designFlowMode;
-  final VoidCallback? onFallbackToForm;
   final VoidCallback? onOpenHomeownerLogin;
   final VoidCallback? onOpenHomeownerSignup;
 
@@ -452,7 +450,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
               showTyping: _showTyping,
               sending: _sending,
               onSend: _send,
-              onGuidedForm: widget.onFallbackToForm ?? _openGuidedForm,
+              onGuidedForm: _openGuidedForm,
               onMore: _onMore,
             ),
           ),
@@ -494,7 +492,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
                 onSend: _send,
                 sending: _sending,
                 onAttach: () => AppFeedback.comingSoon(context),
-                onGuidedForm: widget.onFallbackToForm ?? _openGuidedForm,
+                onGuidedForm: _openGuidedForm,
                 onRequestEstimate: _onMobileRequestEstimate,
                 estimateLoading: estimateLoading,
                 estimateEnabled: mobileEstimateReady,
@@ -1125,6 +1123,53 @@ class _TypingIndicatorState extends State<_TypingIndicator>
   }
 }
 
+/// Secondary outline pill — opens guided intake from the AI chat composer.
+class _QuickIntakePillButton extends StatelessWidget {
+  const _QuickIntakePillButton({required this.onTap});
+
+  final VoidCallback onTap;
+
+  static const double _height = 48;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: AiChatContent.quickIntakeFormButtonLabel,
+      child: Material(
+        color: Colors.transparent,
+        elevation: 0,
+        shadowColor: Colors.transparent,
+        shape: StadiumBorder(
+          side: BorderSide(color: LimyeColors.accent, width: 1),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              minHeight: _height,
+              maxHeight: _height,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: LimyeSpacing.sm),
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  AiChatContent.quickIntakeFormButtonLabel,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _DesktopComposer extends StatelessWidget {
   const _DesktopComposer({
     required this.controller,
@@ -1142,6 +1187,7 @@ class _DesktopComposer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const rowHeight = 48.0;
     return Container(
       padding: const EdgeInsets.all(LimyeSpacing.md),
       decoration: BoxDecoration(
@@ -1150,71 +1196,58 @@ class _DesktopComposer extends StatelessWidget {
           top: BorderSide(color: context.colors.outline, width: 1),
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            height: LimyeSpacing.inputHeight,
-            child: Stack(
-              alignment: Alignment.centerRight,
-              children: [
-                TextField(
-                  controller: controller,
-                  focusNode: focusNode,
-                  onSubmitted: (_) => onSend(),
-                  textInputAction: TextInputAction.send,
-                  style: LimyeTextStyles.body(color: context.colors.onSurface),
-                  decoration: InputDecoration(
-                    hintText: AiChatContent.inputPlaceholderDesktop,
-                    filled: true,
-                    fillColor: Theme.of(context).brightness == Brightness.dark
-                        ? LimyeDarkColors.background
-                        : LimyeColors.background,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(LimyeRadius.input),
-                      borderSide: BorderSide.none,
-                    ),
-                    contentPadding: const EdgeInsets.only(
-                      left: LimyeSpacing.md,
-                      right: 52,
-                    ),
+          Expanded(
+            child: SizedBox(
+              height: rowHeight,
+              child: TextField(
+                controller: controller,
+                focusNode: focusNode,
+                onSubmitted: (_) => onSend(),
+                textInputAction: TextInputAction.send,
+                style: LimyeTextStyles.body(color: context.colors.onSurface),
+                decoration: InputDecoration(
+                  hintText: AiChatContent.inputPlaceholderDesktop,
+                  filled: true,
+                  fillColor: Theme.of(context).brightness == Brightness.dark
+                      ? LimyeDarkColors.background
+                      : LimyeColors.background,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(LimyeRadius.input),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: LimyeSpacing.md,
+                    vertical: LimyeSpacing.xs,
                   ),
                 ),
-                Positioned(
-                  right: 4,
-                  child: Material(
-                    color: context.colors.primary,
-                    elevation: 0,
-                    shape: const CircleBorder(),
-                    clipBehavior: Clip.antiAlias,
-                    child: InkWell(
-                      onTap: sending ? null : onSend,
-                      child: SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: Icon(
-                          Icons.arrow_upward_rounded,
-                          color: context.colors.onPrimary,
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
-          const SizedBox(height: LimyeSpacing.sm),
-          Center(
-            child: TextButton(
-              onPressed: onGuidedForm,
-              child: Text(
-                AiChatContent.preferGuidedFormCta,
-                style: LimyeTextStyles.body(
-                  color: context.colors.onSurfaceMuted,
-                ).copyWith(
-                  decoration: TextDecoration.underline,
-                  decorationColor: context.colors.primary,
+          const SizedBox(width: LimyeSpacing.sm),
+          Flexible(
+            flex: 0,
+            fit: FlexFit.loose,
+            child: _QuickIntakePillButton(onTap: onGuidedForm),
+          ),
+          const SizedBox(width: LimyeSpacing.sm),
+          Material(
+            color: context.colors.primary,
+            elevation: 0,
+            shadowColor: Colors.transparent,
+            shape: const CircleBorder(),
+            clipBehavior: Clip.antiAlias,
+            child: InkWell(
+              onTap: sending ? null : onSend,
+              child: SizedBox(
+                width: rowHeight,
+                height: rowHeight,
+                child: Icon(
+                  Icons.arrow_upward_rounded,
+                  color: context.colors.onPrimary,
+                  size: 20,
                 ),
               ),
             ),
@@ -1276,6 +1309,7 @@ class _MobileComposerBar extends StatelessWidget {
                 Material(
                   color: context.colors.surface,
                   elevation: 0,
+                  shadowColor: Colors.transparent,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(999),
                     side: BorderSide(color: context.colors.outline, width: 1),
@@ -1285,7 +1319,7 @@ class _MobileComposerBar extends StatelessWidget {
                     onTap: onAttach,
                     child: SizedBox(
                       width: LimyeSpacing.tapTarget,
-                      height: LimyeSpacing.inputHeight,
+                      height: LimyeSpacing.tapTarget,
                       child: Icon(
                         Icons.add_rounded,
                         color: context.colors.onSurfaceMuted,
@@ -1296,7 +1330,7 @@ class _MobileComposerBar extends StatelessWidget {
                 const SizedBox(width: LimyeSpacing.sm),
                 Expanded(
                   child: SizedBox(
-                    height: LimyeSpacing.inputHeight,
+                    height: LimyeSpacing.tapTarget,
                     child: TextField(
                       controller: controller,
                       focusNode: focusNode,
@@ -1324,16 +1358,23 @@ class _MobileComposerBar extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: LimyeSpacing.sm),
+                Flexible(
+                  flex: 0,
+                  fit: FlexFit.loose,
+                  child: _QuickIntakePillButton(onTap: onGuidedForm),
+                ),
+                const SizedBox(width: LimyeSpacing.sm),
                 Material(
                   color: context.colors.primary,
                   elevation: 0,
+                  shadowColor: Colors.transparent,
                   shape: const CircleBorder(),
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
                     onTap: sending ? null : onSend,
                     child: SizedBox(
-                      width: LimyeSpacing.inputHeight,
-                      height: LimyeSpacing.inputHeight,
+                      width: LimyeSpacing.tapTarget,
+                      height: LimyeSpacing.tapTarget,
                       child: Icon(
                         Icons.send_rounded,
                         color: context.colors.onPrimary,
@@ -1436,15 +1477,6 @@ class _MobileComposerBar extends StatelessWidget {
               const SizedBox(height: LimyeSpacing.sm),
               SolarPathNextStepsCtaCard(onTap: onSolarPathNextSteps!),
             ],
-            TextButton(
-              onPressed: onGuidedForm,
-              child: Text(
-                AiChatContent.preferGuidedFormCta,
-                style: LimyeTextStyles.caption(
-                  color: context.colors.primary,
-                ),
-              ),
-            ),
           ],
         ),
       ),
