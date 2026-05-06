@@ -11,8 +11,7 @@ class AiChatContent {
   static const headerAddressDemo = '1248 Oakwood Ave, Austin, TX';
 
   /// Composer
-  static const inputPlaceholderDesktop =
-      'Ask about savings or panels...';
+  static const inputPlaceholderDesktop = 'Ask about savings or panels...';
   static const inputPlaceholderMobile = 'Type your message...';
   static const preferGuidedFormCta = 'Prefer a quick guided form?';
 
@@ -65,24 +64,48 @@ class AiChatContent {
 
   // Guided form modal
   static const modalTitle = 'Quick Intake Form';
-  static const modalAddressLabel = 'Address';
-  static const modalBillLabel = 'Average Monthly Bill (\$)';
+  static const modalOwnerNameLabel = "Home Owner's Name";
+  static const modalOwnerNameHint = 'Jane Doe';
+  static const modalAddressLabel = 'Address for the system';
+  static const modalAddressHint = 'Street, City, ST';
+  static const modalBillLabel = 'Average Monthly Electric Bill (\$)';
   static const modalBillHint = 'e.g. 150';
-  static const modalNameLabel = 'Name';
-  static const modalNameHint = 'Jane Doe';
-  static const modalEmailLabel = 'Email';
+  static const modalUsageKwhLabel = 'Monthly Usage (kWh)';
+  static const modalUsageKwhHint = 'e.g. 850';
+  static const modalEmailLabel = 'Email Address';
   static const modalEmailHint = 'jane@example.com';
-  static const modalPhoneLabel = 'Phone';
+  static const modalPhoneLabel = 'Phone Number';
   static const modalPhoneHint = '(555) 000-0000';
-  static const modalRoofAgeLabel = 'Roof age (years)';
-  static const modalRoofAgeHint = 'e.g. 8';
-  static const modalPanelAmpsLabel = 'Main panel (amps)';
-  static const modalPanelAmpsHint = 'e.g. 200';
-  static const modalGoalSectionLabel = 'Primary Goal';
+  static const modalRoofAgeLabel = 'Roof Age';
+  static const modalPanelAmpsLabel = 'Main Electrical Panel Amperage';
+  static const modalSelectHint = 'Select';
+  static const modalRoofAge05 = '0–5 years';
+  static const modalRoofAge510 = '5–10 years';
+  static const modalRoofAge1015 = '10–15 years';
+  static const modalRoofAge15Plus = '15+ years';
+  static const modalPanel100 = '100A';
+  static const modalPanel150 = '150A';
+  static const modalPanel200 = '200A';
+  static const modalPanel400 = '400A';
+  static const modalPanelUnknown = 'Unknown';
+  static const modalGoalSectionLabel = 'Goal for going solar';
   static const modalGoalSavingsTitle = 'Maximum Savings';
-  static const modalGoalOffsetTitle = 'Maximum Offset';
-  static const modalHoaLabel = 'Property is in an HOA';
+  static const modalGoalOffsetTitle = 'Maximum Energy Offset';
+  static const modalHoaSectionLabel = 'HOA Restrictions';
+  static const modalHoaYes = 'Yes';
+  static const modalHoaNo = 'No';
+  static const modalLocateMeHint = 'Use my approximate location';
   static const modalSubmitCta = 'Generate My Design';
+  static const modalErrorRequired = 'This field is required.';
+  static const modalErrorInvalidNumber = 'Enter a valid number.';
+  static const modalErrorInvalidEmail = 'Enter a valid email address.';
+  static const modalErrorSelectDropdown = 'Please select an option.';
+  static const modalErrorHoa =
+      'Please indicate whether HOA restrictions apply.';
+
+  /// Shown after a successful guided form submit (fills chat timeline).
+  static const aiReplyAfterGuidedForm =
+      'Thank you—I captured your intake and refreshed the preview with those details.';
 
   // Accessibility / semantics
   static const sendMessageHint = 'Send message';

@@ -56,6 +56,7 @@ class AiChatPage extends ConsumerStatefulWidget {
 class _AiChatPageState extends ConsumerState<AiChatPage> {
   final _scrollCtrl = ScrollController();
   final _composerCtrl = TextEditingController();
+  final _composerFocus = FocusNode();
   final List<_ChatEntry> _messages = [];
   int _userTurnCount = 0;
   bool _sending = false;
@@ -142,6 +143,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
   void dispose() {
     _scrollCtrl.dispose();
     _composerCtrl.dispose();
+    _composerFocus.dispose();
     super.dispose();
   }
 
@@ -193,10 +195,35 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
   void _openGuidedForm() {
     showGuidedFormDialog(
       context,
-      onGenerate: () {
-        setState(() => _vizReady = true);
-      },
+      composerFocus: _composerFocus,
+      onSubmitted: _applyGuidedIntake,
     );
+  }
+
+  void _applyGuidedIntake(GuidedIntakePayload payload) {
+    setState(() {
+      _vizReady = true;
+      final ts = DateTime.now().millisecondsSinceEpoch;
+      _messages.add(
+        _ChatEntry(
+          id: 'u_guided_$ts',
+          role: _BubbleRole.user,
+          text: payload.toChatSummary(),
+        ),
+      );
+      _messages.add(
+        _ChatEntry(
+          id: 'ai_guided_$ts',
+          role: _BubbleRole.ai,
+          text: AiChatContent.aiReplyAfterGuidedForm,
+        ),
+      );
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollCtrl.hasClients) {
+        _scrollCtrl.jumpTo(_scrollCtrl.position.maxScrollExtent);
+      }
+    });
   }
 
   void _openVisualizationSheet() {
@@ -254,12 +281,12 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
               split: true,
               scrollCtrl: _scrollCtrl,
               composerCtrl: _composerCtrl,
+              composerFocus: _composerFocus,
               messages: _messages,
               showTyping: _showTyping,
               sending: _sending,
               onSend: _send,
-              onGuidedForm:
-                  widget.onFallbackToForm ?? _openGuidedForm,
+              onGuidedForm: widget.onFallbackToForm ?? _openGuidedForm,
               onMore: _onMore,
             ),
           ),
@@ -291,11 +318,11 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
             if (widget.designFlowMode)
               _MobileComposerBar(
                 controller: _composerCtrl,
+                focusNode: _composerFocus,
                 onSend: _send,
                 sending: _sending,
                 onAttach: () => AppFeedback.comingSoon(context),
-                onGuidedForm:
-                    widget.onFallbackToForm ?? _openGuidedForm,
+                onGuidedForm: widget.onFallbackToForm ?? _openGuidedForm,
               )
             else
               Padding(
@@ -425,6 +452,7 @@ class _ChatPanel extends StatelessWidget {
     required this.split,
     required this.scrollCtrl,
     required this.composerCtrl,
+    required this.composerFocus,
     required this.messages,
     required this.showTyping,
     required this.sending,
@@ -437,6 +465,7 @@ class _ChatPanel extends StatelessWidget {
   final bool split;
   final ScrollController scrollCtrl;
   final TextEditingController composerCtrl;
+  final FocusNode composerFocus;
   final List<_ChatEntry> messages;
   final bool showTyping;
   final bool sending;
@@ -468,6 +497,7 @@ class _ChatPanel extends StatelessWidget {
           if (designFlowMode)
             _DesktopComposer(
               controller: composerCtrl,
+              focusNode: composerFocus,
               onSend: onSend,
               sending: sending,
               onGuidedForm: onGuidedForm,
@@ -626,7 +656,8 @@ class _MessageBubble extends StatelessWidget {
                   padding: const EdgeInsets.all(LimyeSpacing.sm),
                   decoration: BoxDecoration(
                     color: context.colors.primary,
-                    borderRadius: BorderRadius.circular(LimyeRadius.md).copyWith(
+                    borderRadius:
+                        BorderRadius.circular(LimyeRadius.md).copyWith(
                       topRight: const Radius.circular(4),
                     ),
                     border: Border.all(
@@ -888,7 +919,8 @@ class _TypingIndicatorState extends State<_TypingIndicator>
                 mainAxisSize: MainAxisSize.min,
                 children: List.generate(3, (i) {
                   final v = ((_c.value + i * 0.2) % 1.0);
-                  final o = 0.35 + 0.65 * (1 - (v - 0.5).abs() * 2).clamp(0.0, 1.0);
+                  final o =
+                      0.35 + 0.65 * (1 - (v - 0.5).abs() * 2).clamp(0.0, 1.0);
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 3),
                     child: Container(
@@ -913,12 +945,14 @@ class _TypingIndicatorState extends State<_TypingIndicator>
 class _DesktopComposer extends StatelessWidget {
   const _DesktopComposer({
     required this.controller,
+    required this.focusNode,
     required this.onSend,
     required this.sending,
     required this.onGuidedForm,
   });
 
   final TextEditingController controller;
+  final FocusNode focusNode;
   final VoidCallback onSend;
   final bool sending;
   final VoidCallback onGuidedForm;
@@ -943,6 +977,7 @@ class _DesktopComposer extends StatelessWidget {
               children: [
                 TextField(
                   controller: controller,
+                  focusNode: focusNode,
                   onSubmitted: (_) => onSend(),
                   textInputAction: TextInputAction.send,
                   style: LimyeTextStyles.body(color: context.colors.onSurface),
@@ -1010,6 +1045,7 @@ class _DesktopComposer extends StatelessWidget {
 class _MobileComposerBar extends StatelessWidget {
   const _MobileComposerBar({
     required this.controller,
+    required this.focusNode,
     required this.onSend,
     required this.sending,
     required this.onAttach,
@@ -1017,6 +1053,7 @@ class _MobileComposerBar extends StatelessWidget {
   });
 
   final TextEditingController controller;
+  final FocusNode focusNode;
   final VoidCallback onSend;
   final bool sending;
   final VoidCallback onAttach;
@@ -1065,6 +1102,7 @@ class _MobileComposerBar extends StatelessWidget {
                     height: LimyeSpacing.inputHeight,
                     child: TextField(
                       controller: controller,
+                      focusNode: focusNode,
                       onSubmitted: (_) => onSend(),
                       textInputAction: TextInputAction.send,
                       style: LimyeTextStyles.body(

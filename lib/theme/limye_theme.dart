@@ -64,6 +64,9 @@ class LimyeSpacing {
   static const double inputHeight = 52;
   static const double inputHeightMobile = 48;
   static const double tapTarget = 48;
+
+  /// Homeowner AI guided intake modal max width (desktop).
+  static const double guidedFormModalMaxWidth = 550;
 }
 
 class LimyeRadius {
