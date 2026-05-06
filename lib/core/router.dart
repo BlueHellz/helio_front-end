@@ -50,7 +50,6 @@ enum _WebPublicPage {
   publicDesignChat,
   login,
   signup,
-  intake,
   designSummary,
 }
 
@@ -75,7 +74,13 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!kIsWeb) return;
-      final mapped = _pageForBrowserPath(readAppPath());
+      final raw = readAppPath();
+      final path = raw.split('?').first;
+      if (path == '/intake') {
+        pushAppPath('/design-chat');
+      }
+      final mapped =
+          _pageForBrowserPath(path == '/intake' ? '/design-chat' : path);
       if (mounted) setState(() => _public = mapped);
     });
   }
@@ -87,7 +92,6 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
     if (path == '/design-chat') return _WebPublicPage.publicDesignChat;
     if (path == '/my-projects') return _WebPublicPage.login;
     if (path == '/create-account') return _WebPublicPage.signup;
-    if (path == '/intake') return _WebPublicPage.intake;
     if (path == '/design-summary') return _WebPublicPage.designSummary;
     return _WebPublicPage.landing;
   }
@@ -106,8 +110,6 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
         return '/my-projects';
       case _WebPublicPage.signup:
         return '/create-account';
-      case _WebPublicPage.intake:
-        return '/intake';
       case _WebPublicPage.designSummary:
         return '/design-summary';
     }
@@ -190,20 +192,12 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
               onOpenHomeownerSignup: () => _go(_WebPublicPage.signup),
             ),
           );
-        case _WebPublicPage.intake:
-          return HomeownerIntakePage(
-            onLocalDesignReady: () {
-              setState(() => _public = _WebPublicPage.designSummary);
-              if (kIsWeb) pushAppPath('/design-summary');
-            },
-            onAbandon: () => _go(_WebPublicPage.landing),
-          );
         case _WebPublicPage.designSummary:
           return Scaffold(
             appBar: AppBar(
               title: Text(HomeownerDesignSummaryContent.title),
               leading: BackButton(
-                onPressed: () => _go(_WebPublicPage.intake),
+                onPressed: () => _go(_WebPublicPage.publicDesignChat),
               ),
             ),
             body: const HomeownerDesignResultPage(),
@@ -373,7 +367,6 @@ enum _MobilePublic {
   designChat,
   enterprise,
   enterpriseAuth,
-  intake,
   designSummary,
   login,
   signup,
@@ -477,11 +470,6 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
               }),
             ),
           );
-        case _MobilePublic.intake:
-          return HomeownerIntakePage(
-            onLocalDesignReady: () =>
-                setState(() => _pub = _MobilePublic.designSummary),
-          );
         case _MobilePublic.designSummary:
           return Scaffold(
             appBar: AppBar(
@@ -489,7 +477,7 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () =>
-                    setState(() => _pub = _MobilePublic.intake),
+                    setState(() => _pub = _MobilePublic.designChat),
               ),
             ),
             body: const HomeownerDesignResultPage(),
