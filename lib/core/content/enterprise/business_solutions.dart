@@ -12,17 +12,17 @@ class BusinessSolutionsContent {
   // ─── Hero ─────────────────────────────────────────────────────────────
   static const heroTitle = 'The Future of Solar Business Is Free.';
   static const heroSubtitle =
-      'LIMYÈ gives your company an AI-powered operating system — from design to close. '
+      'KOO-YOH gives your company an AI-powered operating system — from design to close. '
       'No subscription. No per-seat fees. Just growth.';
   static const heroPrimaryCta = 'Get Started — Free';
-  static const heroSecondaryCta = 'See LIMYÈ NOIR';
+  static const heroSecondaryCta = 'See KOO-YOH NOIR';
 
   // ─── Problems ─────────────────────────────────────────────────────────
   static const problemsSectionTitle =
       'Stop wasting resources on outdated software.';
   static const problemsSectionSubtitle =
-      'LIMYÈ fixes the friction in your sales process.';
-  static const problemCardFixLine = 'LIMYÈ fixes this.';
+      'KOO-YOH fixes the friction in your sales process.';
+  static const problemCardFixLine = 'KOO-YOH fixes this.';
 
   static const problemPerSeatTitle =
       'Still paying per seat for bloated software?';
@@ -77,16 +77,16 @@ class BusinessSolutionsContent {
   // ─── Comparison ───────────────────────────────────────────────────────
   static const compareSectionTitle = 'Choose Your Path';
 
-  static const compareLimyeName = 'LIMYÈ';
-  static const compareLimyeTagline =
+  static const compareKooyohName = 'KOO-YOH';
+  static const compareKooyohTagline =
       'The essential AI-powered platform for growing solar businesses.';
-  static const compareLimyePrice = 'Free';
-  static const compareLimyeBullet1 = 'Unlimited AI Solar Designs';
-  static const compareLimyeBullet2 = 'Basic CRM & Pipeline';
-  static const compareLimyeBullet3 = 'Standard Contract E-Sign';
-  static const compareLimyeCta = 'Get Started Free';
+  static const compareKooyohPrice = 'Free';
+  static const compareKooyohBullet1 = 'Unlimited AI Solar Designs';
+  static const compareKooyohBullet2 = 'Basic CRM & Pipeline';
+  static const compareKooyohBullet3 = 'Standard Contract E-Sign';
+  static const compareKooyohCta = 'Get Started Free';
 
-  static const compareNoirName = 'LIMYÈ NOIR';
+  static const compareNoirName = 'KOO-YOH NOIR';
   static const compareNoirTagline =
       'Advanced capabilities for high-volume enterprise operations.';
   static const compareNoirPrice = 'Enterprise';
@@ -100,7 +100,7 @@ class BusinessSolutionsContent {
   static const testimonialsSectionTitle = 'Trusted by Industry Leaders';
 
   static const testimonial1Quote =
-      'LIMYÈ eliminated our reliance on expensive, clunky software. The AI design '
+      'KOO-YOH eliminated our reliance on expensive, clunky software. The AI design '
       'generation is incredibly accurate and saves us hours per proposal.';
   static const testimonial1Name = 'Sarah Jenkins';
   static const testimonial1Role = 'Director of Operations, SunPeak Energy';
@@ -112,14 +112,14 @@ class BusinessSolutionsContent {
   static const testimonial2Role = 'CEO, Vertex Solar Solutions';
 
   static const testimonial3Quote =
-      'We transitioned our entire 50-person sales team to LIMYÈ in under a week. '
+      'We transitioned our entire 50-person sales team to KOO-YOH in under a week. '
       'The interface is entirely intuitive, and the savings estimates are spot on.';
   static const testimonial3Name = 'Elena Rostova';
   static const testimonial3Role = 'VP of Sales, EcoGrid National';
 
   // ─── Final CTA ────────────────────────────────────────────────────────
   static const finalCtaTitle =
-      'Join 500+ Solar Businesses Already Growing with LIMYÈ';
+      'Join 500+ Solar Businesses Already Growing with KOO-YOH';
   static const finalCtaSubtitle =
       'Free forever. No credit card. Set up in 90 seconds.';
   static const finalCtaButton = 'Start Your Free Account';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../theme/limye_theme.dart';
+import '../../theme/kooyoh_theme.dart';
 
 class BlackLightPrimaryButton extends StatelessWidget {
   final String label;
@@ -14,7 +14,7 @@ class BlackLightPrimaryButton extends StatelessWidget {
     this.onPressed,
     this.icon,
     this.width,
-    this.height = LimyeSpacing.buttonHeight,
+    this.height = KooyohSpacing.buttonHeight,
   });
 
   @override
@@ -25,7 +25,7 @@ class BlackLightPrimaryButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: LimyeColors.accent,
+          backgroundColor: KooyohColors.accent,
           foregroundColor: Colors.white,
           elevation: 0,
           shadowColor: Colors.transparent,
@@ -42,7 +42,7 @@ class BlackLightPrimaryButton extends StatelessWidget {
             ],
             Text(
               label,
-              style: LimyeTextStyles.bodyBold(color: Colors.white),
+              style: KooyohTextStyles.bodyBold(color: Colors.white),
             ),
           ],
         ),
@@ -64,7 +64,7 @@ class BlackLightSecondaryButton extends StatelessWidget {
     this.onPressed,
     this.icon,
     this.width,
-    this.height = LimyeSpacing.buttonHeight,
+    this.height = KooyohSpacing.buttonHeight,
   });
 
   @override
@@ -75,9 +75,9 @@ class BlackLightSecondaryButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
-          foregroundColor: LimyeColors.textPrimary,
+          foregroundColor: KooyohColors.textPrimary,
           elevation: 0,
-          side: const BorderSide(color: LimyeColors.border),
+          side: const BorderSide(color: KooyohColors.border),
           shape: const StadiumBorder(),
           padding: const EdgeInsets.symmetric(horizontal: 24),
         ),
@@ -86,13 +86,13 @@ class BlackLightSecondaryButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (icon != null) ...[
-              Icon(icon, size: 20, color: LimyeColors.textBody),
+              Icon(icon, size: 20, color: KooyohColors.textBody),
               const SizedBox(width: 8),
             ],
             Text(
               label,
-              style: LimyeTextStyles.bodyBold(
-                  color: LimyeColors.textPrimary),
+              style: KooyohTextStyles.bodyBold(
+                  color: KooyohColors.textPrimary),
             ),
           ],
         ),
@@ -117,11 +117,11 @@ class BlackLightMobilePrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: LimyeSpacing.buttonHeight,
+      height: KooyohSpacing.buttonHeight,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: LimyeColors.accent,
+          backgroundColor: KooyohColors.accent,
           foregroundColor: Colors.white,
           elevation: 0,
           shadowColor: Colors.transparent,
@@ -134,7 +134,7 @@ class BlackLightMobilePrimaryButton extends StatelessWidget {
               Icon(icon, size: 20),
               const SizedBox(width: 8),
             ],
-            Text(label, style: LimyeTextStyles.mobileButton()),
+            Text(label, style: KooyohTextStyles.mobileButton()),
           ],
         ),
       ),

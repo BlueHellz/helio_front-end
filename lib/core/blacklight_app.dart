@@ -6,10 +6,10 @@ import 'providers/theme_provider.dart';
 import 'router.dart';
 import 'providers/session_providers.dart';
 import '../services/auth_api.dart';
-import '../theme/limye_theme.dart';
+import '../theme/kooyoh_theme.dart';
 
-class LimyeApp extends ConsumerWidget {
-  const LimyeApp({super.key, this.title = 'LIMYÈ'});
+class KooyohApp extends ConsumerWidget {
+  const KooyohApp({super.key, this.title = 'KOO-YOH'});
 
   /// OS / task switcher title (see [main]).
   final String title;
@@ -21,8 +21,8 @@ class LimyeApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       title: title,
       themeMode: blackLightThemeMode(appState),
-      theme: LimyeTheme.lightTheme(),
-      darkTheme: LimyeTheme.darkTheme(),
+      theme: KooyohTheme.lightTheme(),
+      darkTheme: KooyohTheme.darkTheme(),
       home: const _HydratedSessionHome(),
     );
   }

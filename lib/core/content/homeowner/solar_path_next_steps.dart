@@ -21,7 +21,7 @@ class SolarPathNextStepsContent {
 
   static const accountExplanation =
       "To track your project, communicate with your installer, and manage "
-      "documents, you'll need a free LIMYÈ account. It takes 30 seconds.";
+      "documents, you'll need a free KOO-YOH account. It takes 30 seconds.";
 
   static const createFreeAccount = 'Create My Free Account';
   static const alreadyHaveAccount = 'I already have an account';

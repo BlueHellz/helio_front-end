@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:limye_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
 
-import '../theme/limye_theme.dart';
+import '../theme/kooyoh_theme.dart';
 
 enum DynamicFieldType {
   text,
@@ -91,14 +91,14 @@ class _DynamicFormState extends State<DynamicForm> {
           if (f.type != DynamicFieldType.toggle || widget.readOnly) ...[
             Text(
               f.label + (f.required ? CommonContent.requiredFieldSuffix : ''),
-              style: LimyeTextStyles.caption(
-                color: LimyeColors.textBody,
+              style: KooyohTextStyles.caption(
+                color: KooyohColors.textBody,
               ),
             ),
             const SizedBox(height: 6),
           ],
           _buildField(f),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
         ],
       ],
     );
@@ -147,7 +147,7 @@ class _DynamicFormState extends State<DynamicForm> {
             for (final o in opts)
               DropdownMenuItem<String>(
                 value: o,
-                child: Text(o, style: LimyeTextStyles.body()),
+                child: Text(o, style: KooyohTextStyles.body()),
               ),
           ],
           onChanged: (v) => _set(f.name, v),
@@ -186,7 +186,7 @@ class _DynamicFormState extends State<DynamicForm> {
       case DynamicFieldType.toggle:
         return SwitchListTile.adaptive(
           contentPadding: EdgeInsets.zero,
-          title: Text(f.label, style: LimyeTextStyles.body()),
+          title: Text(f.label, style: KooyohTextStyles.body()),
           value: _local[f.name] == true,
           onChanged: (v) => _set(f.name, v),
         );
@@ -221,13 +221,13 @@ class _DynamicFormState extends State<DynamicForm> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: LimyeColors.surface,
-        borderRadius: BorderRadius.circular(LimyeRadius.input),
-        border: Border.all(color: LimyeColors.border),
+        color: KooyohColors.surface,
+        borderRadius: BorderRadius.circular(KooyohRadius.input),
+        border: Border.all(color: KooyohColors.border),
       ),
       child: Text(
         text,
-        style: LimyeTextStyles.data(color: LimyeColors.textPrimary),
+        style: KooyohTextStyles.data(color: KooyohColors.textPrimary),
       ),
     );
   }
@@ -256,7 +256,7 @@ class _DatePickerRow extends StatelessWidget {
         value == null
             ? CommonContent.selectDate
             : MaterialLocalizations.of(context).formatMediumDate(value!),
-        style: LimyeTextStyles.body(),
+        style: KooyohTextStyles.body(),
       ),
     );
   }

@@ -14,12 +14,12 @@ class PublicApiException implements Exception {
   String toString() => 'PublicApiException($statusCode)';
 }
 
-class PublicLimyeApi {
-  PublicLimyeApi({
+class PublicKooyohApi {
+  PublicKooyohApi({
     http.Client? client,
     String? baseUrl,
   })  : _client = client ?? http.Client(),
-        _base = baseUrl ?? BlackLightConfig.apiBaseUrl;
+        _base = baseUrl ?? KooyohConfig.apiBaseUrl;
 
   final http.Client _client;
   final String _base;

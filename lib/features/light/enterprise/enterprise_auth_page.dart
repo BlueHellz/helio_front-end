@@ -3,14 +3,14 @@ import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:limye_app/core/app_state.dart';
-import 'package:limye_app/core/brand/blacklight_brand_logo.dart';
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/providers/session_providers.dart';
-import 'package:limye_app/core/shell/web/homeowner_web_chrome.dart';
-import 'package:limye_app/core/ui/app_feedback.dart';
-import 'package:limye_app/services/auth_api.dart';
-import 'package:limye_app/theme/limye_theme.dart';
+import 'package:kooyoh_app/core/app_state.dart';
+import 'package:kooyoh_app/core/brand/blacklight_brand_logo.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/providers/session_providers.dart';
+import 'package:kooyoh_app/core/shell/web/homeowner_web_chrome.dart';
+import 'package:kooyoh_app/core/ui/app_feedback.dart';
+import 'package:kooyoh_app/services/auth_api.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 
 /// Solar org login / sign-up only (installer role preset).
 class EnterpriseAuthPage extends ConsumerStatefulWidget {
@@ -135,16 +135,16 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
       onEnterprise: widget.onEnterprise ?? () {},
       child: SizedBox(
         height: MediaQuery.of(context).size.height -
-            LimyeSpacing.navbarHeight -
-            LimyeSpacing.footerHeight,
+            KooyohSpacing.navbarHeight -
+            KooyohSpacing.footerHeight,
         child: Row(
           children: [
             Expanded(
               child: Center(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: LimyeSpacing.lg,
-                    vertical: LimyeSpacing.xl,
+                    horizontal: KooyohSpacing.lg,
+                    vertical: KooyohSpacing.xl,
                   ),
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 440),
@@ -152,33 +152,33 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const BlackLightLogo(height: 40, maxWidth: 240),
-                        const SizedBox(height: LimyeSpacing.lg),
+                        const SizedBox(height: KooyohSpacing.lg),
                         Text(
                           EnterpriseContent.accessTitle,
-                          style: LimyeTextStyles.sectionHeading(),
+                          style: KooyohTextStyles.sectionHeading(),
                         ),
-                        const SizedBox(height: LimyeSpacing.sm),
+                        const SizedBox(height: KooyohSpacing.sm),
                         Text(
                           EnterpriseContent.accessSubtitle,
-                          style: LimyeTextStyles.body(
-                            color: LimyeColors.textCaption,
+                          style: KooyohTextStyles.body(
+                            color: KooyohColors.textCaption,
                           ),
                         ),
-                        const SizedBox(height: LimyeSpacing.lg),
+                        const SizedBox(height: KooyohSpacing.lg),
                         SegmentedButton<bool>(
                           segments: [
                             ButtonSegment<bool>(
                               value: true,
                               label: Text(
                                 EnterpriseContent.createTab,
-                                style: LimyeTextStyles.caption(),
+                                style: KooyohTextStyles.caption(),
                               ),
                             ),
                             ButtonSegment<bool>(
                               value: false,
                               label: Text(
                                 EnterpriseContent.signInTab,
-                                style: LimyeTextStyles.caption(),
+                                style: KooyohTextStyles.caption(),
                               ),
                             ),
                           ],
@@ -189,7 +189,7 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
                                   setState(() => _signupMode = s.first);
                                 },
                         ),
-                        const SizedBox(height: LimyeSpacing.lg),
+                        const SizedBox(height: KooyohSpacing.lg),
                         if (_signupMode) ...[
                           TextField(
                             controller: _nameCtrl,
@@ -199,7 +199,7 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
                               hintText: AuthContent.hintYourName,
                             ),
                           ),
-                          const SizedBox(height: LimyeSpacing.sm),
+                          const SizedBox(height: KooyohSpacing.sm),
                           TextField(
                             controller: _companyCtrl,
                             enabled: !_submitting,
@@ -208,7 +208,7 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
                               hintText: EnterpriseContent.hintCompanyOrOrg,
                             ),
                           ),
-                          const SizedBox(height: LimyeSpacing.sm),
+                          const SizedBox(height: KooyohSpacing.sm),
                         ],
                         TextField(
                           controller: _emailCtrl,
@@ -219,7 +219,7 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
                             hintText: AuthContent.hintEmail,
                           ),
                         ),
-                        const SizedBox(height: LimyeSpacing.sm),
+                        const SizedBox(height: KooyohSpacing.sm),
                         TextField(
                           controller: _passwordCtrl,
                           enabled: !_submitting,
@@ -236,19 +236,19 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
                                 _obscurePassword
                                     ? Icons.visibility_off_outlined
                                     : Icons.visibility_outlined,
-                                color: LimyeColors.textCaption,
+                                color: KooyohColors.textCaption,
                                 size: 20,
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(height: LimyeSpacing.lg),
+                        const SizedBox(height: KooyohSpacing.lg),
                         SizedBox(
-                          height: LimyeSpacing.buttonHeight,
+                          height: KooyohSpacing.buttonHeight,
                           child: ElevatedButton(
                             onPressed: _submitting ? null : _submit,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: LimyeColors.accent,
+                              backgroundColor: KooyohColors.accent,
                               foregroundColor: Colors.white,
                               elevation: 0,
                               shape: const StadiumBorder(),
@@ -266,13 +266,13 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
                                     _signupMode
                                         ? EnterpriseContent.createTab
                                         : EnterpriseContent.signInTab,
-                                    style: LimyeTextStyles.bodyBold(
+                                    style: KooyohTextStyles.bodyBold(
                                       color: Colors.white,
                                     ),
                                   ),
                           ),
                         ),
-                        const SizedBox(height: LimyeSpacing.md),
+                        const SizedBox(height: KooyohSpacing.md),
                         OutlinedButton.icon(
                           onPressed: _submitting
                               ? null
@@ -284,11 +284,11 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
                               const Icon(Icons.g_mobiledata_rounded, size: 20),
                           label: Text(
                             AuthContent.oauthGoogle,
-                            style: LimyeTextStyles.bodyBold(),
+                            style: KooyohTextStyles.bodyBold(),
                           ),
                           style: OutlinedButton.styleFrom(
-                            foregroundColor: LimyeColors.accent,
-                            side: const BorderSide(color: LimyeColors.accent),
+                            foregroundColor: KooyohColors.accent,
+                            side: const BorderSide(color: KooyohColors.accent),
                             shape: const StadiumBorder(),
                           ),
                         ),
@@ -301,8 +301,8 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
             Expanded(
               child: Container(
                 decoration: const BoxDecoration(
-                  color: LimyeColors.surface,
-                  border: Border(left: BorderSide(color: LimyeColors.border)),
+                  color: KooyohColors.surface,
+                  border: Border(left: BorderSide(color: KooyohColors.border)),
                 ),
                 child: Center(
                   child: Column(
@@ -310,7 +310,7 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: LimyeSpacing.gutter,
+                          horizontal: KooyohSpacing.gutter,
                         ),
                         child: AspectRatio(
                           aspectRatio: 16 / 9,
@@ -326,9 +326,9 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
                                   height: 120,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: LimyeColors.accent.withOpacity(0.06),
+                                    color: KooyohColors.accent.withOpacity(0.06),
                                     border: Border.all(
-                                      color: LimyeColors.accent.withOpacity(
+                                      color: KooyohColors.accent.withOpacity(
                                         0.12,
                                       ),
                                       width: 1,
@@ -342,7 +342,7 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
                                   child: Container(
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                        color: LimyeColors.outline,
+                                        color: KooyohColors.outline,
                                         width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(16),
@@ -358,7 +358,7 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
                                           child: Icon(
                                             Icons.solar_power_rounded,
                                             size: 96,
-                                            color: LimyeColors.accent
+                                            color: KooyohColors.accent
                                                 .withOpacity(0.4),
                                           ),
                                         ),
@@ -371,21 +371,21 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: LimyeSpacing.lg),
+                      const SizedBox(height: KooyohSpacing.lg),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 40),
                         child: Text(
                           AuthContent.splitHeroTitle,
-                          style: LimyeTextStyles.sectionHeading(),
+                          style: KooyohTextStyles.sectionHeading(),
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      const SizedBox(height: LimyeSpacing.xs),
+                      const SizedBox(height: KooyohSpacing.xs),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 40),
                         child: Text(
                           AuthContent.splitHeroBody,
-                          style: LimyeTextStyles.body(),
+                          style: KooyohTextStyles.body(),
                           textAlign: TextAlign.center,
                         ),
                       ),

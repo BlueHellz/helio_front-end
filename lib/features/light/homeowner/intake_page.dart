@@ -1,19 +1,19 @@
 import 'dart:async';
 
-import 'package:limye_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:limye_app/features/light/homeowner/local_design_estimate.dart';
-import 'package:limye_app/core/secrets/app_secrets.dart';
-import 'package:limye_app/core/ui/app_feedback.dart';
-import 'package:limye_app/core/providers/homeowner_draft_provider.dart';
-import 'package:limye_app/core/providers/session_providers.dart';
-import 'package:limye_app/features/light/homeowner/homeowner_design_result_page.dart';
-import 'package:limye_app/services/api.dart';
-import 'package:limye_app/services/mapbox_geocoding_service.dart';
-import 'package:limye_app/services/public_api.dart';
-import 'package:limye_app/theme/limye_theme.dart';
+import 'package:kooyoh_app/features/light/homeowner/local_design_estimate.dart';
+import 'package:kooyoh_app/core/secrets/app_secrets.dart';
+import 'package:kooyoh_app/core/ui/app_feedback.dart';
+import 'package:kooyoh_app/core/providers/homeowner_draft_provider.dart';
+import 'package:kooyoh_app/core/providers/session_providers.dart';
+import 'package:kooyoh_app/features/light/homeowner/homeowner_design_result_page.dart';
+import 'package:kooyoh_app/services/api.dart';
+import 'package:kooyoh_app/services/mapbox_geocoding_service.dart';
+import 'package:kooyoh_app/services/public_api.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 
 class HomeownerIntakePage extends ConsumerStatefulWidget {
   const HomeownerIntakePage({
@@ -142,7 +142,7 @@ class _HomeownerIntakePageState extends ConsumerState<HomeownerIntakePage> {
             ? null
             : _nameCtrl.text.trim(),
       );
-      final public = ref.read(publicLimyeApiProvider);
+      final public = ref.read(publicKooyohApiProvider);
       final bill = double.tryParse(
         _billCtrl.text.replaceAll(RegExp(r'[^0-9.]'), ''),
       );
@@ -200,7 +200,7 @@ class _HomeownerIntakePageState extends ConsumerState<HomeownerIntakePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: LimyeColors.background,
+      backgroundColor: KooyohColors.background,
       appBar: AppBar(
         title: Text(HomeownerIntakeContent.appBarTitle),
         leading: widget.onAbandon != null
@@ -208,7 +208,7 @@ class _HomeownerIntakePageState extends ConsumerState<HomeownerIntakePage> {
             : null,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(LimyeSpacing.gutter),
+        padding: const EdgeInsets.all(KooyohSpacing.gutter),
         child: Align(
           alignment: Alignment.topCenter,
           child: ConstrainedBox(
@@ -219,10 +219,10 @@ class _HomeownerIntakePageState extends ConsumerState<HomeownerIntakePage> {
                 if (_geo == null)
                   Text(
                     HomeownerIntakeContent.mapboxSetupHint,
-                    style: LimyeTextStyles.caption(),
+                    style: KooyohTextStyles.caption(),
                   ),
                 Text(HomeownerIntakeContent.addressLabel,
-                    style: LimyeTextStyles.caption()),
+                    style: KooyohTextStyles.caption()),
                 const SizedBox(height: 6),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -237,12 +237,12 @@ class _HomeownerIntakePageState extends ConsumerState<HomeownerIntakePage> {
                     ),
                     if (_showSuggestions)
                       Material(
-                        color: LimyeColors.surface,
+                        color: KooyohColors.surface,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
-                            LimyeRadius.input,
+                            KooyohRadius.input,
                           ),
-                          side: const BorderSide(color: LimyeColors.border),
+                          side: const BorderSide(color: KooyohColors.border),
                         ),
                         child: ListView.separated(
                           shrinkWrap: true,
@@ -255,7 +255,7 @@ class _HomeownerIntakePageState extends ConsumerState<HomeownerIntakePage> {
                               dense: true,
                               title: Text(
                                 s.placeName,
-                                style: LimyeTextStyles.body(),
+                                style: KooyohTextStyles.body(),
                               ),
                               onTap: () {
                                 _addressCtrl.text = s.placeName;
@@ -271,10 +271,10 @@ class _HomeownerIntakePageState extends ConsumerState<HomeownerIntakePage> {
                       ),
                   ],
                 ),
-                const SizedBox(height: LimyeSpacing.sm),
+                const SizedBox(height: KooyohSpacing.sm),
                 Text(
                   HomeownerIntakeContent.monthlyBillLabel,
-                  style: LimyeTextStyles.caption(),
+                  style: KooyohTextStyles.caption(),
                 ),
                 const SizedBox(height: 6),
                 TextField(
@@ -285,35 +285,35 @@ class _HomeownerIntakePageState extends ConsumerState<HomeownerIntakePage> {
                     prefixText: HomeownerIntakeContent.monthlyBillPrefix,
                   ),
                 ),
-                const SizedBox(height: LimyeSpacing.sm),
+                const SizedBox(height: KooyohSpacing.sm),
                 Text(HomeownerIntakeContent.homeownerNameLabel,
-                    style: LimyeTextStyles.caption()),
+                    style: KooyohTextStyles.caption()),
                 const SizedBox(height: 6),
                 TextField(
                   controller: _nameCtrl,
                   decoration: const InputDecoration(),
                 ),
-                const SizedBox(height: LimyeSpacing.sm),
+                const SizedBox(height: KooyohSpacing.sm),
                 Text(HomeownerIntakeContent.emailLabel,
-                    style: LimyeTextStyles.caption()),
+                    style: KooyohTextStyles.caption()),
                 const SizedBox(height: 6),
                 TextField(
                   controller: _emailCtrl,
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(),
                 ),
-                const SizedBox(height: LimyeSpacing.sm),
+                const SizedBox(height: KooyohSpacing.sm),
                 Text(HomeownerIntakeContent.phoneLabel,
-                    style: LimyeTextStyles.caption()),
+                    style: KooyohTextStyles.caption()),
                 const SizedBox(height: 6),
                 TextField(
                   controller: _phoneCtrl,
                   keyboardType: TextInputType.phone,
                   decoration: const InputDecoration(),
                 ),
-                const SizedBox(height: LimyeSpacing.sm),
+                const SizedBox(height: KooyohSpacing.sm),
                 Text(HomeownerIntakeContent.roofAgeLabel,
-                    style: LimyeTextStyles.caption()),
+                    style: KooyohTextStyles.caption()),
                 const SizedBox(height: 6),
                 DropdownButtonFormField<String>(
                   value: _roofAge,
@@ -321,16 +321,16 @@ class _HomeownerIntakePageState extends ConsumerState<HomeownerIntakePage> {
                     for (final o in _roofOptions)
                       DropdownMenuItem(
                         value: o,
-                        child: Text(o, style: LimyeTextStyles.body()),
+                        child: Text(o, style: KooyohTextStyles.body()),
                       ),
                   ],
                   onChanged: (v) => setState(() => _roofAge = v ?? _roofAge),
                   decoration: const InputDecoration(),
                 ),
-                const SizedBox(height: LimyeSpacing.sm),
+                const SizedBox(height: KooyohSpacing.sm),
                 Text(
                   HomeownerIntakeContent.panelAmpsLabel,
-                  style: LimyeTextStyles.caption(),
+                  style: KooyohTextStyles.caption(),
                 ),
                 const SizedBox(height: 6),
                 DropdownButtonFormField<String>(
@@ -339,30 +339,30 @@ class _HomeownerIntakePageState extends ConsumerState<HomeownerIntakePage> {
                     for (final o in _ampOptions)
                       DropdownMenuItem(
                         value: o,
-                        child: Text(o, style: LimyeTextStyles.body()),
+                        child: Text(o, style: KooyohTextStyles.body()),
                       ),
                   ],
                   onChanged: (v) => setState(() => _panelAmps = v ?? _panelAmps),
                   decoration: const InputDecoration(),
                 ),
-                const SizedBox(height: LimyeSpacing.sm),
+                const SizedBox(height: KooyohSpacing.sm),
                 Text(HomeownerIntakeContent.goalLabel,
-                    style: LimyeTextStyles.caption()),
+                    style: KooyohTextStyles.caption()),
                 const SizedBox(height: 6),
                 ..._goalTiles(),
-                const SizedBox(height: LimyeSpacing.sm),
+                const SizedBox(height: KooyohSpacing.sm),
                 SwitchListTile.adaptive(
                   contentPadding: EdgeInsets.zero,
                   title: Text(
                     HomeownerIntakeContent.hoaLabel,
-                    style: LimyeTextStyles.body(),
+                    style: KooyohTextStyles.body(),
                   ),
                   value: _hoa,
                   onChanged: (v) => setState(() => _hoa = v),
                 ),
-                const SizedBox(height: LimyeSpacing.md),
+                const SizedBox(height: KooyohSpacing.md),
                 SizedBox(
-                  height: LimyeSpacing.buttonHeight,
+                  height: KooyohSpacing.buttonHeight,
                   child: ElevatedButton(
                     onPressed: _submitting ? null : _submit,
                     child: _submitting
@@ -387,7 +387,7 @@ class _HomeownerIntakePageState extends ConsumerState<HomeownerIntakePage> {
       return RadioListTile<String>(
         value: value,
         groupValue: _goal,
-        title: Text(label, style: LimyeTextStyles.body()),
+        title: Text(label, style: KooyohTextStyles.body()),
         onChanged: (v) => setState(() => _goal = v ?? _goal),
       );
     }

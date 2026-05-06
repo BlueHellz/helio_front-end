@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/models/project.dart';
-import 'package:limye_app/core/models/solar_design_data.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/models/project.dart';
+import 'package:kooyoh_app/core/models/solar_design_data.dart';
 
 /// DC module size assumption (aligned with interactive canvas preview).
 const double kSolarPanelKw = 0.4;

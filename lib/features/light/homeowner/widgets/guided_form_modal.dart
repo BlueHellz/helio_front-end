@@ -3,10 +3,10 @@ import 'dart:ui' show ImageFilter;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/data/us_state_postal_codes.dart';
-import 'package:limye_app/core/ui/app_feedback.dart';
-import 'package:limye_app/theme/limye_theme.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/data/us_state_postal_codes.dart';
+import 'package:kooyoh_app/core/ui/app_feedback.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 
 /// Parsed guided intake submission for the homeowner AI chat.
 class GuidedIntakePayload {
@@ -115,12 +115,12 @@ Future<void> showGuidedFormDialog(
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: LimyeSpacing.gutter,
+                    horizontal: KooyohSpacing.gutter,
                   ),
                   child: Center(
                     child: ConstrainedBox(
                       constraints: const BoxConstraints(
-                        maxWidth: LimyeSpacing.guidedFormModalMaxWidth,
+                        maxWidth: KooyohSpacing.guidedFormModalMaxWidth,
                       ),
                       child: SizedBox(
                         width: double.infinity,
@@ -175,14 +175,14 @@ class _GuidedFormSurface extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: LimyeColors.surface,
+      color: KooyohColors.surface,
       clipBehavior: Clip.antiAlias,
       elevation: 0,
       shadowColor: Colors.transparent,
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: LimyeColors.outline, width: 1),
+        side: BorderSide(color: KooyohColors.outline, width: 1),
       ),
       child: _GuidedFormBody(
         composerFocus: composerFocus,
@@ -267,20 +267,20 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
   Color _fieldFill(BuildContext context) =>
       Theme.of(context).brightness == Brightness.dark
           ? Theme.of(context).colorScheme.surface
-          : LimyeColors.background;
+          : KooyohColors.background;
 
   InputBorder _neutralBorder(BuildContext context) => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(LimyeRadius.input),
+        borderRadius: BorderRadius.circular(KooyohRadius.input),
         borderSide: BorderSide.none,
       );
 
   InputBorder _focusedBorder(BuildContext context) => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(LimyeRadius.input),
+        borderRadius: BorderRadius.circular(KooyohRadius.input),
         borderSide: BorderSide(color: context.colors.primary, width: 1),
       );
 
   InputBorder _errorBorder(BuildContext context) => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(LimyeRadius.input),
+        borderRadius: BorderRadius.circular(KooyohRadius.input),
         borderSide: BorderSide(color: context.colors.error, width: 1),
       );
 
@@ -405,7 +405,7 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
     final hoaOk = _hoaRestrictions != null;
 
     return Padding(
-      padding: EdgeInsets.all(LimyeSpacing.sm + LimyeSpacing.sm),
+      padding: EdgeInsets.all(KooyohSpacing.sm + KooyohSpacing.sm),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -417,14 +417,14 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
                 Expanded(
                   child: Text(
                     AiChatContent.modalTitle,
-                    style: LimyeTextStyles.cardHeading(
+                    style: KooyohTextStyles.cardHeading(
                       color: context.colors.onSurface,
                     ),
                   ),
                 ),
                 SizedBox(
-                  width: LimyeSpacing.inputHeightMobile,
-                  height: LimyeSpacing.inputHeightMobile,
+                  width: KooyohSpacing.inputHeightMobile,
+                  height: KooyohSpacing.inputHeightMobile,
                   child: Material(
                     color: Colors.transparent,
                     shape: const CircleBorder(),
@@ -442,7 +442,7 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
                 ),
               ],
             ),
-            SizedBox(height: LimyeSpacing.md),
+            SizedBox(height: KooyohSpacing.md),
             _textField(
               context,
               label: AiChatContent.modalOwnerNameLabel,
@@ -452,7 +452,7 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
               keyboard: TextInputType.name,
               onChanged: (_) => setState(() {}),
             ),
-            SizedBox(height: LimyeSpacing.sm),
+            SizedBox(height: KooyohSpacing.sm),
             _textField(
               context,
               label: AiChatContent.modalEmailLabel,
@@ -462,7 +462,7 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
               keyboard: TextInputType.emailAddress,
               onChanged: (_) => setState(() {}),
             ),
-            SizedBox(height: LimyeSpacing.sm),
+            SizedBox(height: KooyohSpacing.sm),
             _textField(
               context,
               label: AiChatContent.modalPhoneLabel,
@@ -474,13 +474,13 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9+\-()\s]')),
               ],
             ),
-            SizedBox(height: LimyeSpacing.sm),
+            SizedBox(height: KooyohSpacing.sm),
             _addressField(
               context,
               errorText: _requiredError(addrOk),
               onChanged: (_) => setState(() {}),
             ),
-            SizedBox(height: LimyeSpacing.sm),
+            SizedBox(height: KooyohSpacing.sm),
             _textField(
               context,
               label: AiChatContent.modalCityLabel,
@@ -492,7 +492,7 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
               keyboard: TextInputType.text,
               onChanged: (_) => setState(() {}),
             ),
-            SizedBox(height: LimyeSpacing.sm),
+            SizedBox(height: KooyohSpacing.sm),
             _dropdownField(
               context,
               label: AiChatContent.modalStateLabel,
@@ -505,7 +505,7 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
                   : null,
               onChanged: (v) => setState(() => _stateCode = v),
             ),
-            SizedBox(height: LimyeSpacing.sm),
+            SizedBox(height: KooyohSpacing.sm),
             _textField(
               context,
               label: AiChatContent.modalZipLabel,
@@ -519,7 +519,7 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
                 LengthLimitingTextInputFormatter(5),
               ],
             ),
-            SizedBox(height: LimyeSpacing.sm),
+            SizedBox(height: KooyohSpacing.sm),
             _textField(
               context,
               label: AiChatContent.modalBillLabel,
@@ -532,7 +532,7 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
               ],
             ),
-            SizedBox(height: LimyeSpacing.sm),
+            SizedBox(height: KooyohSpacing.sm),
             _textField(
               context,
               label: AiChatContent.modalUsageKwhLabel,
@@ -545,7 +545,7 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
               ],
             ),
-            SizedBox(height: LimyeSpacing.sm),
+            SizedBox(height: KooyohSpacing.sm),
             _dropdownField(
               context,
               label: AiChatContent.modalRoofAgeLabel,
@@ -556,7 +556,7 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
                   : AiChatContent.modalErrorSelectDropdown,
               onChanged: (v) => setState(() => _roofAgeValue = v),
             ),
-            SizedBox(height: LimyeSpacing.sm),
+            SizedBox(height: KooyohSpacing.sm),
             _dropdownField(
               context,
               label: AiChatContent.modalPanelAmpsLabel,
@@ -567,14 +567,14 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
                   : AiChatContent.modalErrorSelectDropdown,
               onChanged: (v) => setState(() => _panelValue = v),
             ),
-            SizedBox(height: LimyeSpacing.md),
+            SizedBox(height: KooyohSpacing.md),
             Text(
               AiChatContent.modalGoalSectionLabel,
-              style: LimyeTextStyles.caption(
+              style: KooyohTextStyles.caption(
                 color: context.colors.onSurfaceMuted,
               ).copyWith(fontWeight: FontWeight.w600),
             ),
-            SizedBox(height: LimyeSpacing.sm),
+            SizedBox(height: KooyohSpacing.sm),
             Row(
               children: [
                 Expanded(
@@ -585,7 +585,7 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
                     onTap: () => setState(() => _maximizeSavings = true),
                   ),
                 ),
-                SizedBox(width: LimyeSpacing.sm),
+                SizedBox(width: KooyohSpacing.sm),
                 Expanded(
                   child: _GoalCard(
                     selected: !_maximizeSavings,
@@ -596,14 +596,14 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
                 ),
               ],
             ),
-            SizedBox(height: LimyeSpacing.md),
+            SizedBox(height: KooyohSpacing.md),
             Text(
               AiChatContent.modalHoaSectionLabel,
-              style: LimyeTextStyles.caption(
+              style: KooyohTextStyles.caption(
                 color: context.colors.onSurfaceMuted,
               ).copyWith(fontWeight: FontWeight.w600),
             ),
-            SizedBox(height: LimyeSpacing.sm),
+            SizedBox(height: KooyohSpacing.sm),
             Row(
               children: [
                 Expanded(
@@ -613,7 +613,7 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
                     onTap: () => setState(() => _hoaRestrictions = true),
                   ),
                 ),
-                SizedBox(width: LimyeSpacing.sm),
+                SizedBox(width: KooyohSpacing.sm),
                 Expanded(
                   child: _HoaChoiceChip(
                     label: AiChatContent.modalHoaNo,
@@ -624,17 +624,17 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
               ],
             ),
             if (_attemptedSubmit && !hoaOk) ...[
-              SizedBox(height: LimyeSpacing.xs / 2),
+              SizedBox(height: KooyohSpacing.xs / 2),
               Text(
                 AiChatContent.modalErrorHoa,
-                style: LimyeTextStyles.caption(color: context.colors.error),
+                style: KooyohTextStyles.caption(color: context.colors.error),
               ),
             ],
-            SizedBox(height: LimyeSpacing.md),
+            SizedBox(height: KooyohSpacing.md),
             Divider(color: context.colors.outline, height: 1),
-            SizedBox(height: LimyeSpacing.sm),
+            SizedBox(height: KooyohSpacing.sm),
             SizedBox(
-              height: LimyeSpacing.buttonHeight,
+              height: KooyohSpacing.buttonHeight,
               width: double.infinity,
               child: FilledButton(
                 onPressed: _submit,
@@ -651,11 +651,11 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
                   children: [
                     Text(
                       AiChatContent.modalSubmitCta,
-                      style: LimyeTextStyles.bodyBold(
+                      style: KooyohTextStyles.bodyBold(
                         color: context.colors.onPrimary,
                       ),
                     ),
-                    SizedBox(width: LimyeSpacing.xs),
+                    SizedBox(width: KooyohSpacing.xs),
                     Icon(
                       Icons.arrow_forward_rounded,
                       size: 18,
@@ -685,7 +685,7 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
             Expanded(
               child: Text(
                 label,
-                style: LimyeTextStyles.caption(
+                style: KooyohTextStyles.caption(
                   color: context.colors.onSurfaceMuted,
                 ).copyWith(fontWeight: FontWeight.w600),
               ),
@@ -693,7 +693,7 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
             if (trailing != null) trailing,
           ],
         ),
-        SizedBox(height: LimyeSpacing.xs / 2),
+        SizedBox(height: KooyohSpacing.xs / 2),
         child,
       ],
     );
@@ -717,13 +717,13 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
           context,
           label: label,
           child: SizedBox(
-            height: LimyeSpacing.inputHeight,
+            height: KooyohSpacing.inputHeight,
             child: TextField(
               controller: controller,
               keyboardType: keyboard,
               onChanged: onChanged,
               inputFormatters: inputFormatters,
-              style: LimyeTextStyles.body(color: context.colors.onSurface),
+              style: KooyohTextStyles.body(color: context.colors.onSurface),
               decoration: InputDecoration(
                 hintText: hint,
                 filled: true,
@@ -735,17 +735,17 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
                 focusedBorder:
                     hasErr ? _errorBorder(context) : _focusedBorder(context),
                 contentPadding: const EdgeInsets.symmetric(
-                  horizontal: LimyeSpacing.sm,
+                  horizontal: KooyohSpacing.sm,
                 ),
               ),
             ),
           ),
         ),
         if (hasErr) ...[
-          SizedBox(height: LimyeSpacing.xs / 2),
+          SizedBox(height: KooyohSpacing.xs / 2),
           Text(
             errorText,
-            style: LimyeTextStyles.caption(color: context.colors.error),
+            style: KooyohTextStyles.caption(color: context.colors.error),
           ),
         ],
       ],
@@ -763,18 +763,18 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
       children: [
         Text(
           AiChatContent.modalAddressLabel,
-          style: LimyeTextStyles.caption(
+          style: KooyohTextStyles.caption(
             color: context.colors.onSurfaceMuted,
           ).copyWith(fontWeight: FontWeight.w600),
         ),
-        SizedBox(height: LimyeSpacing.xs / 2),
+        SizedBox(height: KooyohSpacing.xs / 2),
         SizedBox(
-          height: LimyeSpacing.inputHeight,
+          height: KooyohSpacing.inputHeight,
           child: TextField(
             controller: _addressCtrl,
             onChanged: onChanged,
             keyboardType: TextInputType.streetAddress,
-            style: LimyeTextStyles.body(color: context.colors.onSurface),
+            style: KooyohTextStyles.body(color: context.colors.onSurface),
             decoration: InputDecoration(
               hintText: AiChatContent.modalAddressHint,
               filled: true,
@@ -786,7 +786,7 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
               focusedBorder:
                   hasErr ? _errorBorder(context) : _focusedBorder(context),
               contentPadding: const EdgeInsets.symmetric(
-                horizontal: LimyeSpacing.sm,
+                horizontal: KooyohSpacing.sm,
               ),
               suffixIcon: IconButton(
                 tooltip: AiChatContent.modalLocateMeHint,
@@ -804,10 +804,10 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
           ),
         ),
         if (hasErr) ...[
-          SizedBox(height: LimyeSpacing.xs / 2),
+          SizedBox(height: KooyohSpacing.xs / 2),
           Text(
             errorText,
-            style: LimyeTextStyles.caption(color: context.colors.error),
+            style: KooyohTextStyles.caption(color: context.colors.error),
           ),
         ],
       ],
@@ -828,11 +828,11 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
       children: [
         Text(
           label,
-          style: LimyeTextStyles.caption(
+          style: KooyohTextStyles.caption(
             color: context.colors.onSurfaceMuted,
           ).copyWith(fontWeight: FontWeight.w600),
         ),
-        SizedBox(height: LimyeSpacing.xs / 2),
+        SizedBox(height: KooyohSpacing.xs / 2),
         DropdownButtonHideUnderline(
           child: DropdownButtonFormField<String>(
             value: value != null && items.contains(value) ? value : null,
@@ -846,7 +846,7 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
               focusedBorder:
                   hasErr ? _errorBorder(context) : _focusedBorder(context),
               contentPadding: const EdgeInsets.symmetric(
-                horizontal: LimyeSpacing.sm,
+                horizontal: KooyohSpacing.sm,
                 vertical: 0,
               ),
             ),
@@ -859,10 +859,10 @@ class _GuidedFormBodyState extends State<_GuidedFormBody> {
           ),
         ),
         if (hasErr) ...[
-          SizedBox(height: LimyeSpacing.xs / 2),
+          SizedBox(height: KooyohSpacing.xs / 2),
           Text(
             errorText,
-            style: LimyeTextStyles.caption(color: context.colors.error),
+            style: KooyohTextStyles.caption(color: context.colors.error),
           ),
         ],
       ],
@@ -889,15 +889,15 @@ class _GoalCard extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(LimyeRadius.input),
+        borderRadius: BorderRadius.circular(KooyohRadius.input),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 150),
-          padding: const EdgeInsets.all(LimyeSpacing.sm),
+          padding: const EdgeInsets.all(KooyohSpacing.sm),
           decoration: BoxDecoration(
             color: selected
-                ? LimyeAdaptive.background(context)
+                ? KooyohAdaptive.background(context)
                 : Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(LimyeRadius.input),
+            borderRadius: BorderRadius.circular(KooyohRadius.input),
             border: Border.all(
               color: selected ? context.colors.primary : context.colors.outline,
               width: 1,
@@ -913,10 +913,10 @@ class _GoalCard extends StatelessWidget {
                     : context.colors.onSurfaceMuted,
                 size: 24,
               ),
-              SizedBox(height: LimyeSpacing.xs),
+              SizedBox(height: KooyohSpacing.xs),
               Text(
                 title,
-                style: LimyeTextStyles.captionBold(
+                style: KooyohTextStyles.captionBold(
                   color: selected
                       ? context.colors.onSurface
                       : context.colors.onSurfaceMuted,
@@ -947,22 +947,22 @@ class _HoaChoiceChip extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(LimyeRadius.input),
+        borderRadius: BorderRadius.circular(KooyohRadius.input),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 150),
-          height: LimyeSpacing.inputHeight,
+          height: KooyohSpacing.inputHeight,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(LimyeRadius.input),
+            borderRadius: BorderRadius.circular(KooyohRadius.input),
             border: Border.all(
               color: selected ? context.colors.primary : context.colors.outline,
               width: 1,
             ),
-            color: selected ? LimyeAdaptive.background(context) : null,
+            color: selected ? KooyohAdaptive.background(context) : null,
           ),
           child: Text(
             label,
-            style: LimyeTextStyles.bodyBold(
+            style: KooyohTextStyles.bodyBold(
               color: selected
                   ? context.colors.onSurface
                   : context.colors.onSurfaceMuted,

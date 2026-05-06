@@ -16,7 +16,7 @@ class OrgMobileInstallerContent {
   static const phoneHint = '(555) 000-0000';
   static const installationAddress = 'Installation Address';
   static const addressHint = '123 Main St, City, State';
-  static const chatTitle = 'LIMYÈ AI';
+  static const chatTitle = 'KOO-YOH AI';
   static const viewFullDesign = 'View Full Design';
   static const startDesignTitle = 'Start your design';
   static const startDesignBodyMobile =

@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:limye_app/core/providers/session_providers.dart';
-import 'package:limye_app/core/providers/solar_design_provider.dart';
-import 'package:limye_app/core/solar/solar_design_calculator.dart';
-import 'package:limye_app/services/api.dart';
-import 'package:limye_app/services/public_api.dart';
+import 'package:kooyoh_app/core/providers/session_providers.dart';
+import 'package:kooyoh_app/core/providers/solar_design_provider.dart';
+import 'package:kooyoh_app/core/solar/solar_design_calculator.dart';
+import 'package:kooyoh_app/services/api.dart';
+import 'package:kooyoh_app/services/public_api.dart';
 
 /// POST `/design/save-email` for anonymous AI-chat delivery.
 class AiChatDesignEmailSaveNotifier extends StateNotifier<bool> {
@@ -49,7 +49,7 @@ class AiChatDesignEmailSaveNotifier extends StateNotifier<bool> {
         ),
       };
 
-      final public = ref.read(publicLimyeApiProvider);
+      final public = ref.read(publicKooyohApiProvider);
       await public.postSaveDesignEmail(body);
       return true;
     } on PublicApiException {

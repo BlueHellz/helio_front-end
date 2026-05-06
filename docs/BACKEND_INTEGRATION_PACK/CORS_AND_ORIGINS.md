@@ -27,7 +27,7 @@ Wildcards: **`http://localhost:*`** is **not** valid in the CORS `Access-Control
 ## Render ↔ Vercel
 
 - **Vercel** only hosts the static Flutter web bundle; it does not run your API.
-- **Render** hosts FastAPI. The Flutter app’s `BlackLightConfig.apiBaseUrl` (or env-based URL) should point to your **Render** HTTPS URL.
+- **Render** hosts FastAPI. The Flutter app’s `KooyohConfig.apiBaseUrl` (or env-based URL) should point to your **Render** HTTPS URL.
 - **HTTPS:** Production API should use **https://** on Render; match `CORS` to **https** Vercel origins only.
 
 ## Preflight and credentials

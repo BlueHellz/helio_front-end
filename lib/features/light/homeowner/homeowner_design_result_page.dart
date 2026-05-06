@@ -1,13 +1,13 @@
-import 'package:limye_app/core/app_state.dart';
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/providers/homeowner_draft_provider.dart';
-import 'package:limye_app/core/providers/session_providers.dart';
-import 'package:limye_app/core/ui/app_feedback.dart';
-import 'package:limye_app/features/light/homeowner/homeowner_design_summary.dart';
-import 'package:limye_app/services/api.dart';
-import 'package:limye_app/services/auth_api.dart';
-import 'package:limye_app/services/public_api.dart';
-import 'package:limye_app/theme/limye_theme.dart';
+import 'package:kooyoh_app/core/app_state.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/providers/homeowner_draft_provider.dart';
+import 'package:kooyoh_app/core/providers/session_providers.dart';
+import 'package:kooyoh_app/core/ui/app_feedback.dart';
+import 'package:kooyoh_app/features/light/homeowner/homeowner_design_summary.dart';
+import 'package:kooyoh_app/services/api.dart';
+import 'package:kooyoh_app/services/auth_api.dart';
+import 'package:kooyoh_app/services/public_api.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -37,7 +37,7 @@ class _HomeownerDesignResultPageState
             ? null
             : draft.previewProject.clientName,
       );
-      final public = ref.read(publicLimyeApiProvider);
+      final public = ref.read(publicKooyohApiProvider);
       final json = await public.postEstimate(body);
       if (json.isEmpty) {
         if (mounted) {
@@ -172,11 +172,11 @@ class _HomeownerDesignResultPageState
     if (draft == null) {
       return Center(
         child: Padding(
-          padding: const EdgeInsets.all(LimyeSpacing.gutter),
+          padding: const EdgeInsets.all(KooyohSpacing.gutter),
           child: Text(
             HomeownerDashboardContent.emptyStateMessage,
             textAlign: TextAlign.center,
-            style: LimyeTextStyles.body(),
+            style: KooyohTextStyles.body(),
           ),
         ),
       );
@@ -193,10 +193,10 @@ class _HomeownerDesignResultPageState
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(
-            LimyeSpacing.gutter,
+            KooyohSpacing.gutter,
             0,
-            LimyeSpacing.gutter,
-            LimyeSpacing.gutter,
+            KooyohSpacing.gutter,
+            KooyohSpacing.gutter,
           ),
           child: Center(
             child: ConstrainedBox(
@@ -205,7 +205,7 @@ class _HomeownerDesignResultPageState
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SizedBox(
-                    height: LimyeSpacing.buttonHeight,
+                    height: KooyohSpacing.buttonHeight,
                     child: FilledButton(
                       onPressed:
                           _loadingEstimate ? null : () => _onGetEstimate(),
@@ -221,18 +221,18 @@ class _HomeownerDesignResultPageState
                           : Text(
                               HomeownerDesignSummaryContent.getEstimateProposal,
                               style:
-                                  LimyeTextStyles.bodyBold(color: Colors.white),
+                                  KooyohTextStyles.bodyBold(color: Colors.white),
                             ),
                     ),
                   ),
-                  const SizedBox(height: LimyeSpacing.sm),
+                  const SizedBox(height: KooyohSpacing.sm),
                   SizedBox(
-                    height: LimyeSpacing.buttonHeight,
+                    height: KooyohSpacing.buttonHeight,
                     child: OutlinedButton(
                       onPressed: _loadingEstimate ? null : () => _onGetFunding(),
                       child: Text(
                         HomeownerDesignSummaryContent.getFundingInstaller,
-                        style: LimyeTextStyles.bodyBold(),
+                        style: KooyohTextStyles.bodyBold(),
                       ),
                     ),
                   ),
@@ -361,7 +361,7 @@ class _FundingAuthDialogState extends ConsumerState<_FundingAuthDialog> {
     return AlertDialog(
       title: Text(
         HomeownerDesignSummaryContent.fundingDialogTitle,
-        style: LimyeTextStyles.cardHeading(),
+        style: KooyohTextStyles.cardHeading(),
       ),
       content: SingleChildScrollView(
         child: Column(
@@ -370,23 +370,23 @@ class _FundingAuthDialogState extends ConsumerState<_FundingAuthDialog> {
           children: [
             Text(
               HomeownerDesignSummaryContent.fundingDialogBody,
-              style: LimyeTextStyles.body(),
+              style: KooyohTextStyles.body(),
             ),
-            const SizedBox(height: LimyeSpacing.md),
+            const SizedBox(height: KooyohSpacing.md),
             SegmentedButton<bool>(
               segments: [
                 ButtonSegment<bool>(
                   value: true,
                   label: Text(
                     AuthContent.tabCreateAccount,
-                    style: LimyeTextStyles.caption(),
+                    style: KooyohTextStyles.caption(),
                   ),
                 ),
                 ButtonSegment<bool>(
                   value: false,
                   label: Text(
                     AuthContent.tabSignIn,
-                    style: LimyeTextStyles.caption(),
+                    style: KooyohTextStyles.caption(),
                   ),
                 ),
               ],
@@ -397,7 +397,7 @@ class _FundingAuthDialogState extends ConsumerState<_FundingAuthDialog> {
                       setState(() => _signupMode = s.first);
                     },
             ),
-            const SizedBox(height: LimyeSpacing.md),
+            const SizedBox(height: KooyohSpacing.md),
             if (_signupMode) ...[
               TextField(
                 controller: _nameCtrl,
@@ -407,7 +407,7 @@ class _FundingAuthDialogState extends ConsumerState<_FundingAuthDialog> {
                   hintText: AuthContent.hintYourName,
                 ),
               ),
-              const SizedBox(height: LimyeSpacing.sm),
+              const SizedBox(height: KooyohSpacing.sm),
             ],
             TextField(
               controller: _emailCtrl,
@@ -418,7 +418,7 @@ class _FundingAuthDialogState extends ConsumerState<_FundingAuthDialog> {
                 hintText: AuthContent.hintEmail,
               ),
             ),
-            const SizedBox(height: LimyeSpacing.sm),
+            const SizedBox(height: KooyohSpacing.sm),
             TextField(
               controller: _passwordCtrl,
               enabled: !_submitting,
@@ -428,9 +428,9 @@ class _FundingAuthDialogState extends ConsumerState<_FundingAuthDialog> {
                 hintText: AuthContent.hintPasswordObscured,
               ),
             ),
-            const SizedBox(height: LimyeSpacing.md),
+            const SizedBox(height: KooyohSpacing.md),
             SizedBox(
-              height: LimyeSpacing.buttonHeight,
+              height: KooyohSpacing.buttonHeight,
               child: OutlinedButton.icon(
                 onPressed: _submitting
                     ? null
@@ -441,7 +441,7 @@ class _FundingAuthDialogState extends ConsumerState<_FundingAuthDialog> {
                 icon: const Icon(Icons.g_mobiledata_rounded, size: 20),
                 label: Text(
                   HomeownerDesignSummaryContent.fundingUseGoogle,
-                  style: LimyeTextStyles.bodyBold(),
+                  style: KooyohTextStyles.bodyBold(),
                 ),
               ),
             ),
@@ -468,7 +468,7 @@ class _FundingAuthDialogState extends ConsumerState<_FundingAuthDialog> {
                   _signupMode
                       ? HomeownerDesignSummaryContent.fundingDialogSubmitSignup
                       : HomeownerDesignSummaryContent.fundingDialogSubmitSignin,
-                  style: LimyeTextStyles.bodyBold(color: Colors.white),
+                  style: KooyohTextStyles.bodyBold(color: Colors.white),
                 ),
         ),
       ],

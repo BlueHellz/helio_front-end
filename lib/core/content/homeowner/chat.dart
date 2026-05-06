@@ -4,11 +4,11 @@
 
 class HomeownerChatContent {
   static const pageTitle = 'Messages';
-  static const pageTitleDesign = 'Design with LIMYÈ AI';
+  static const pageTitleDesign = 'Design with KOO-YOH AI';
 
   /// Auth-free design assistant entry (replaces legacy placeholder stack).
   static const welcomeSystemDesign =
-      'Welcome. I am your LIMYÈ design assistant. Share your home address '
+      'Welcome. I am your KOO-YOH design assistant. Share your home address '
       'to begin—we will walk through your bill and goals conversationally.';
   static const aiReplyAfterAddress =
       'Thanks—I have that address. What is your typical monthly electricity bill in US dollars? '
@@ -23,14 +23,14 @@ class HomeownerChatContent {
       'Message the assistant. No account needed to explore your design.';
 
   static const placeholderSystemMessage =
-      'Welcome to LIMYÈ NOIR. When design automation is enabled, your assistant will appear here.';
+      'Welcome to KOO-YOH NOIR. When design automation is enabled, your assistant will appear here.';
   static const placeholderAiMessage =
       'For now, this chat is a visual placeholder. Messages are not sent to a model.';
   static const composerDisabledHint =
       'Composer disabled until the assistant is connected.';
 
   // Design studio (split layout)
-  static const designAiTitle = 'LIMYÈ AI';
+  static const designAiTitle = 'KOO-YOH AI';
   static const designLiveChip = 'Live';
   static const designInputPlaceholder = 'Type a message...';
   static const designPreviewTitle = 'Design Preview';

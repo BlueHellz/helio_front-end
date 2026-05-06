@@ -1,6 +1,6 @@
-# limye_app
+# kooyoh_app
 
-LIMYÈ — Flutter client for the homeowner and public web experience.
+KOO-YOH — Flutter client for the homeowner and public web experience.
 
 ## Getting Started
 

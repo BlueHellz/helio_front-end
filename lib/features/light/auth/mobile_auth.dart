@@ -1,16 +1,16 @@
 import 'dart:developer' as developer;
 
-import 'package:limye_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:limye_app/core/ui/app_feedback.dart';
-import 'package:limye_app/theme/limye_theme.dart';
-import 'package:limye_app/core/brand/blacklight_brand_logo.dart';
-import 'package:limye_app/core/app_state.dart';
-import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
-import 'package:limye_app/core/providers/session_providers.dart';
-import 'package:limye_app/services/auth_api.dart';
+import 'package:kooyoh_app/core/ui/app_feedback.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
+import 'package:kooyoh_app/core/brand/blacklight_brand_logo.dart';
+import 'package:kooyoh_app/core/app_state.dart';
+import 'package:kooyoh_app/core/illustrations/geometric_illustrations.dart';
+import 'package:kooyoh_app/core/providers/session_providers.dart';
+import 'package:kooyoh_app/services/auth_api.dart';
 
 class MobileAuth extends ConsumerStatefulWidget {
   const MobileAuth({
@@ -125,7 +125,7 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: LimyeColors.background,
+      backgroundColor: KooyohColors.background,
       appBar: AppBar(
         leading: widget.onBack != null
             ? IconButton(
@@ -137,26 +137,26 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(LimyeSpacing.md),
+          padding: const EdgeInsets.all(KooyohSpacing.md),
           child: Column(
             children: [
-              const SizedBox(height: LimyeSpacing.md),
+              const SizedBox(height: KooyohSpacing.md),
               const BlackLightLogo(height: 48, maxWidth: 300),
-              const SizedBox(height: LimyeSpacing.lg),
+              const SizedBox(height: KooyohSpacing.lg),
               const SunRingsIllustration(size: 160),
               const SizedBox(height: 6),
               Text(
                 AuthContent.platformTagline,
-                style: LimyeTextStyles.mobileBody(
-                    color: LimyeColors.textCaption),
+                style: KooyohTextStyles.mobileBody(
+                    color: KooyohColors.textCaption),
               ),
-              const SizedBox(height: LimyeSpacing.xl),
+              const SizedBox(height: KooyohSpacing.xl),
               Container(
-                padding: const EdgeInsets.all(LimyeSpacing.cardPadding),
+                padding: const EdgeInsets.all(KooyohSpacing.cardPadding),
                 decoration: BoxDecoration(
-                  color: LimyeColors.surface,
-                  borderRadius: BorderRadius.circular(LimyeRadius.card),
-                  border: Border.all(color: LimyeColors.border),
+                  color: KooyohColors.surface,
+                  borderRadius: BorderRadius.circular(KooyohRadius.card),
+                  border: Border.all(color: KooyohColors.border),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,14 +167,14 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
                           value: false,
                           label: Text(
                             AuthContent.tabSignIn,
-                            style: LimyeTextStyles.caption(),
+                            style: KooyohTextStyles.caption(),
                           ),
                         ),
                         ButtonSegment<bool>(
                           value: true,
                           label: Text(
                             AuthContent.tabCreateAccount,
-                            style: LimyeTextStyles.caption(),
+                            style: KooyohTextStyles.caption(),
                           ),
                         ),
                       ],
@@ -184,63 +184,63 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
                           : (s) =>
                               setState(() => _signupMode = s.first),
                     ),
-                    const SizedBox(height: LimyeSpacing.md),
+                    const SizedBox(height: KooyohSpacing.md),
                     Text(
                       _signupMode
                           ? AuthContent.createYourAccount
                           : AuthContent.welcomeBack,
-                      style: LimyeTextStyles.mobileH2(),
+                      style: KooyohTextStyles.mobileH2(),
                     ),
-                    const SizedBox(height: LimyeSpacing.md),
+                    const SizedBox(height: KooyohSpacing.md),
                     if (_signupMode) ...[
                       Text(
                         AuthContent.labelFullName.toUpperCase(),
-                        style: LimyeTextStyles.mobileLabelBold(),
+                        style: KooyohTextStyles.mobileLabelBold(),
                       ),
                       const SizedBox(height: 6),
                       SizedBox(
-                        height: LimyeSpacing.inputHeightMobile,
+                        height: KooyohSpacing.inputHeightMobile,
                         child: TextField(
                           controller: _nameCtrl,
                           enabled: !_submitting,
-                          style: LimyeTextStyles.mobileBody(
-                              color: LimyeColors.textPrimary),
+                          style: KooyohTextStyles.mobileBody(
+                              color: KooyohColors.textPrimary),
                           decoration:
                               _inputDeco(AuthContent.hintYourName),
                         ),
                       ),
-                      const SizedBox(height: LimyeSpacing.sm),
+                      const SizedBox(height: KooyohSpacing.sm),
                     ],
                     Text(
                       AuthContent.mobileLabelEmail.toUpperCase(),
-                      style: LimyeTextStyles.mobileLabelBold(),
+                      style: KooyohTextStyles.mobileLabelBold(),
                     ),
                     const SizedBox(height: 6),
                     SizedBox(
-                      height: LimyeSpacing.inputHeightMobile,
+                      height: KooyohSpacing.inputHeightMobile,
                       child: TextField(
                         controller: _emailCtrl,
                         keyboardType: TextInputType.emailAddress,
                         enabled: !_submitting,
-                        style: LimyeTextStyles.mobileBody(
-                            color: LimyeColors.textPrimary),
+                        style: KooyohTextStyles.mobileBody(
+                            color: KooyohColors.textPrimary),
                         decoration: _inputDeco(AuthContent.hintEmail),
                       ),
                     ),
-                    const SizedBox(height: LimyeSpacing.sm),
+                    const SizedBox(height: KooyohSpacing.sm),
                     Text(
                       AuthContent.passwordFieldCaption,
-                      style: LimyeTextStyles.mobileLabelBold(),
+                      style: KooyohTextStyles.mobileLabelBold(),
                     ),
                     const SizedBox(height: 6),
                     SizedBox(
-                      height: LimyeSpacing.inputHeightMobile,
+                      height: KooyohSpacing.inputHeightMobile,
                       child: TextField(
                         controller: _passwordCtrl,
                         obscureText: _obscurePassword,
                         enabled: !_submitting,
-                        style: LimyeTextStyles.mobileBody(
-                            color: LimyeColors.textPrimary),
+                        style: KooyohTextStyles.mobileBody(
+                            color: KooyohColors.textPrimary),
                         decoration:
                             _inputDeco(AuthContent.hintPasswordObscured).copyWith(
                           suffixIcon: GestureDetector(
@@ -253,22 +253,22 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
                               _obscurePassword
                                   ? Icons.visibility_off_outlined
                                   : Icons.visibility_outlined,
-                              color: LimyeColors.textCaption,
+                              color: KooyohColors.textCaption,
                               size: 18,
                             ),
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: LimyeSpacing.md),
+                    const SizedBox(height: KooyohSpacing.md),
                     SizedBox(
                       width: double.infinity,
-                      height: LimyeSpacing.buttonHeight,
+                      height: KooyohSpacing.buttonHeight,
                       child: ElevatedButton(
                         onPressed: _submitting ? null : _submit,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: LimyeColors.accent,
-                          foregroundColor: LimyeColors.surface,
+                          backgroundColor: KooyohColors.accent,
+                          foregroundColor: KooyohColors.surface,
                           elevation: 0,
                           shape: const StadiumBorder(),
                         ),
@@ -278,15 +278,15 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
                                 width: 22,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2,
-                                  color: LimyeColors.surface,
+                                  color: KooyohColors.surface,
                                 ),
                               )
                             : Text(
                                 _signupMode
                                     ? AuthContent.mobileButtonCreateAccount
                                     : AuthContent.mobileTabSignIn,
-                                style: LimyeTextStyles.mobileButton(
-                                  color: LimyeColors.surface,
+                                style: KooyohTextStyles.mobileButton(
+                                  color: KooyohColors.surface,
                                 ),
                               ),
                       ),
@@ -294,7 +294,7 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
                   ],
                 ),
               ),
-              const SizedBox(height: LimyeSpacing.md),
+              const SizedBox(height: KooyohSpacing.md),
               Row(
                 children: [
                   const Expanded(child: Divider()),
@@ -302,17 +302,17 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Text(
                       AuthContent.dividerOr,
-                      style: LimyeTextStyles.mobileBody(
-                          color: LimyeColors.textCaption),
+                      style: KooyohTextStyles.mobileBody(
+                          color: KooyohColors.textCaption),
                     ),
                   ),
                   const Expanded(child: Divider()),
                 ],
               ),
-              const SizedBox(height: LimyeSpacing.md),
+              const SizedBox(height: KooyohSpacing.md),
               SizedBox(
                 width: double.infinity,
-                height: LimyeSpacing.buttonHeight,
+                height: KooyohSpacing.buttonHeight,
                 child: OutlinedButton.icon(
                   onPressed: _submitting
                       ? null
@@ -322,10 +322,10 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
                   label: Text(AuthContent.mobileContinueGoogle),
                 ),
               ),
-              const SizedBox(height: LimyeSpacing.xs),
+              const SizedBox(height: KooyohSpacing.xs),
               SizedBox(
                 width: double.infinity,
-                height: LimyeSpacing.buttonHeight,
+                height: KooyohSpacing.buttonHeight,
                 child: OutlinedButton.icon(
                   onPressed: _submitting
                       ? null
@@ -335,11 +335,11 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
                   label: Text(AuthContent.mobileContinueApple),
                 ),
               ),
-              const SizedBox(height: LimyeSpacing.xl),
+              const SizedBox(height: KooyohSpacing.xl),
               Text(
                 AuthContent.mobileLegalFooterShort,
-                style: LimyeTextStyles.mobileBody(
-                        color: LimyeColors.textCaption)
+                style: KooyohTextStyles.mobileBody(
+                        color: KooyohColors.textCaption)
                     .copyWith(fontSize: 11),
               ),
             ],
@@ -351,24 +351,24 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
 
   InputDecoration _inputDeco(String hint) => InputDecoration(
         hintText: hint,
-        hintStyle: LimyeTextStyles.mobileBody(
-            color: LimyeColors.textCaption),
+        hintStyle: KooyohTextStyles.mobileBody(
+            color: KooyohColors.textCaption),
         filled: true,
-        fillColor: LimyeColors.surface,
+        fillColor: KooyohColors.surface,
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(LimyeRadius.inputMobile),
-          borderSide: const BorderSide(color: LimyeColors.inputBorder),
+          borderRadius: BorderRadius.circular(KooyohRadius.inputMobile),
+          borderSide: const BorderSide(color: KooyohColors.inputBorder),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(LimyeRadius.inputMobile),
-          borderSide: const BorderSide(color: LimyeColors.inputBorder),
+          borderRadius: BorderRadius.circular(KooyohRadius.inputMobile),
+          borderSide: const BorderSide(color: KooyohColors.inputBorder),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(LimyeRadius.inputMobile),
+          borderRadius: BorderRadius.circular(KooyohRadius.inputMobile),
           borderSide:
-              const BorderSide(color: LimyeColors.accent, width: 1),
+              const BorderSide(color: KooyohColors.accent, width: 1),
         ),
       );
 }

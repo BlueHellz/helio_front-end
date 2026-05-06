@@ -27,7 +27,7 @@ class BlackLightApi {
   })  : _readHeaders = readHeaders,
         _tryRefresh = tryRefresh,
         _client = client ?? http.Client(),
-        _base = baseUrl ?? BlackLightConfig.apiBaseUrl;
+        _base = baseUrl ?? KooyohConfig.apiBaseUrl;
 
   final http.Client _client;
   final String _base;

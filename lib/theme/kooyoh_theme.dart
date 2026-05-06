@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 const String _fontMono = 'JetBrainsMono';
 
 // ─────────────────────────────────────────────
-// LIMYÈ — tokens (strict design language)
+// KOO-YOH — tokens (strict design language)
 // Sans-serif: Theme default / system (no bundled Inter/Manrope).
 // ─────────────────────────────────────────────
 
-class LimyeColors {
-  LimyeColors._();
+class KooyohColors {
+  KooyohColors._();
 
   static const Color background = Color(0xFFF8F9FA);
   static const Color surface = Color(0xFFFFFFFF);
@@ -44,8 +44,8 @@ class LimyeColors {
   static const Color sidebarHoverBg = background;
 }
 
-class LimyeSpacing {
-  LimyeSpacing._();
+class KooyohSpacing {
+  KooyohSpacing._();
 
   static const double xs = 8;
   static const double sm = 16;
@@ -72,8 +72,8 @@ class LimyeSpacing {
   static const double guidedFormModalMaxWidth = 550;
 }
 
-class LimyeRadius {
-  LimyeRadius._();
+class KooyohRadius {
+  KooyohRadius._();
 
   static const double card = 16;
   static const double input = 14;
@@ -84,11 +84,11 @@ class LimyeRadius {
   static const double lg = 16;
 }
 
-class LimyeTextStyles {
-  LimyeTextStyles._();
+class KooyohTextStyles {
+  KooyohTextStyles._();
 
   /// -0.02em ≈ -0.02 × fontSize in logical pixels.
-  static TextStyle hero({Color color = LimyeColors.textPrimary}) => TextStyle(
+  static TextStyle hero({Color color = KooyohColors.textPrimary}) => TextStyle(
         fontSize: 40,
         fontWeight: FontWeight.w700,
         letterSpacing: -0.8,
@@ -96,7 +96,7 @@ class LimyeTextStyles {
         color: color,
       );
 
-  static TextStyle sectionHeading({Color color = LimyeColors.textPrimary}) =>
+  static TextStyle sectionHeading({Color color = KooyohColors.textPrimary}) =>
       TextStyle(
         fontSize: 32,
         fontWeight: FontWeight.w600,
@@ -104,7 +104,7 @@ class LimyeTextStyles {
         color: color,
       );
 
-  static TextStyle cardHeading({Color color = LimyeColors.textPrimary}) =>
+  static TextStyle cardHeading({Color color = KooyohColors.textPrimary}) =>
       TextStyle(
         fontSize: 24,
         fontWeight: FontWeight.w600,
@@ -112,14 +112,14 @@ class LimyeTextStyles {
         color: color,
       );
 
-  static TextStyle body({Color color = LimyeColors.textBody}) => TextStyle(
+  static TextStyle body({Color color = KooyohColors.textBody}) => TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w400,
         height: 1.6,
         color: color,
       );
 
-  static TextStyle bodyBold({Color color = LimyeColors.textPrimary}) =>
+  static TextStyle bodyBold({Color color = KooyohColors.textPrimary}) =>
       TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w600,
@@ -127,7 +127,7 @@ class LimyeTextStyles {
         color: color,
       );
 
-  static TextStyle caption({Color color = LimyeColors.textCaption}) =>
+  static TextStyle caption({Color color = KooyohColors.textCaption}) =>
       TextStyle(
         fontSize: 13,
         fontWeight: FontWeight.w500,
@@ -135,7 +135,7 @@ class LimyeTextStyles {
         color: color,
       );
 
-  static TextStyle captionBold({Color color = LimyeColors.textCaption}) =>
+  static TextStyle captionBold({Color color = KooyohColors.textCaption}) =>
       TextStyle(
         fontSize: 13,
         fontWeight: FontWeight.w600,
@@ -144,7 +144,7 @@ class LimyeTextStyles {
       );
 
   /// Numbers / metrics — 14px mono, weight 500.
-  static TextStyle data({Color color = LimyeColors.textPrimary}) => TextStyle(
+  static TextStyle data({Color color = KooyohColors.textPrimary}) => TextStyle(
         fontFamily: _fontMono,
         fontSize: 14,
         fontWeight: FontWeight.w500,
@@ -152,7 +152,7 @@ class LimyeTextStyles {
         color: color,
       );
 
-  static TextStyle dataInline({Color color = LimyeColors.textBody}) =>
+  static TextStyle dataInline({Color color = KooyohColors.textBody}) =>
       TextStyle(
         fontFamily: _fontMono,
         fontSize: 14,
@@ -161,7 +161,7 @@ class LimyeTextStyles {
         color: color,
       );
 
-  static TextStyle dataLarge({Color color = LimyeColors.textPrimary}) =>
+  static TextStyle dataLarge({Color color = KooyohColors.textPrimary}) =>
       TextStyle(
         fontFamily: _fontMono,
         fontSize: 24,
@@ -170,28 +170,28 @@ class LimyeTextStyles {
         color: color,
       );
 
-  static TextStyle mobileH1({Color color = LimyeColors.textPrimary}) =>
+  static TextStyle mobileH1({Color color = KooyohColors.textPrimary}) =>
       sectionHeading(color: color);
 
-  static TextStyle mobileH2({Color color = LimyeColors.textPrimary}) =>
+  static TextStyle mobileH2({Color color = KooyohColors.textPrimary}) =>
       cardHeading(color: color);
 
-  static TextStyle mobileH3({Color color = LimyeColors.textPrimary}) =>
+  static TextStyle mobileH3({Color color = KooyohColors.textPrimary}) =>
       cardHeading(color: color);
 
   static TextStyle mobileButton({Color color = Colors.white}) =>
       bodyBold(color: color);
 
-  static TextStyle mobileBody({Color color = LimyeColors.textBody}) =>
+  static TextStyle mobileBody({Color color = KooyohColors.textBody}) =>
       body(color: color);
 
-  static TextStyle mobileLabelBold({Color color = LimyeColors.textBody}) =>
+  static TextStyle mobileLabelBold({Color color = KooyohColors.textBody}) =>
       captionBold(color: color);
 }
 
-/// Dark palette (LIMYÈ premium / org). Sizes match light theme.
-class LimyeDarkColors {
-  LimyeDarkColors._();
+/// Dark palette (KOO-YOH premium / org). Sizes match light theme.
+class KooyohDarkColors {
+  KooyohDarkColors._();
 
   static const Color background = Color(0xFF0B1E33);
   static const Color surface = Color(0xFF111F2F);
@@ -204,29 +204,29 @@ class LimyeDarkColors {
 }
 
 /// Theme-aware tokens for shells and surfaces that must track light/dark org mode.
-class LimyeAdaptive {
-  LimyeAdaptive._();
+class KooyohAdaptive {
+  KooyohAdaptive._();
 
   static bool _dark(BuildContext context) =>
       Theme.of(context).brightness == Brightness.dark;
 
   static Color background(BuildContext context) =>
-      _dark(context) ? LimyeDarkColors.background : LimyeColors.background;
+      _dark(context) ? KooyohDarkColors.background : KooyohColors.background;
 
   static Color surface(BuildContext context) =>
-      _dark(context) ? LimyeDarkColors.surface : LimyeColors.surface;
+      _dark(context) ? KooyohDarkColors.surface : KooyohColors.surface;
 
   static Color border(BuildContext context) =>
-      _dark(context) ? LimyeDarkColors.border : LimyeColors.border;
+      _dark(context) ? KooyohDarkColors.border : KooyohColors.border;
 
   static Color textPrimary(BuildContext context) =>
-      _dark(context) ? LimyeDarkColors.textPrimary : LimyeColors.textPrimary;
+      _dark(context) ? KooyohDarkColors.textPrimary : KooyohColors.textPrimary;
 
   static Color textBody(BuildContext context) =>
-      _dark(context) ? LimyeDarkColors.textBody : LimyeColors.textBody;
+      _dark(context) ? KooyohDarkColors.textBody : KooyohColors.textBody;
 
   static Color textCaption(BuildContext context) =>
-      _dark(context) ? LimyeDarkColors.textBody : LimyeColors.textCaption;
+      _dark(context) ? KooyohDarkColors.textBody : KooyohColors.textCaption;
 
   static Color sidebarBg(BuildContext context) => surface(context);
 
@@ -235,12 +235,12 @@ class LimyeAdaptive {
   static Color sidebarInactiveText(BuildContext context) => textBody(context);
 
   static Color sidebarHoverBg(BuildContext context) =>
-      _dark(context) ? LimyeDarkColors.background : LimyeColors.sidebarHoverBg;
+      _dark(context) ? KooyohDarkColors.background : KooyohColors.sidebarHoverBg;
 }
 
 /// Theme tokens via `context.colors` — prefer over hardcoded hex in widgets.
-class LimyePalette {
-  LimyePalette(this._context);
+class KooyohPalette {
+  KooyohPalette(this._context);
   final BuildContext _context;
 
   ThemeData get _t => Theme.of(_context);
@@ -256,34 +256,34 @@ class LimyePalette {
   Color get error => _t.colorScheme.error;
 
   /// Semantic accents not mapped to [ColorScheme] (CRM status, chips).
-  Color get warning => LimyeColors.amber;
+  Color get warning => KooyohColors.amber;
 
   /// Muted / secondary text (matches caption tone in light and dark themes).
   Color get onSurfaceMuted => _t.colorScheme.onSurfaceVariant;
 
   /// Secondary fill for nested cards / column bodies.
   Color get surfaceMuted => brightness == Brightness.dark
-      ? LimyeDarkColors.surfaceMuted
-      : LimyeColors.surfaceMuted;
+      ? KooyohDarkColors.surfaceMuted
+      : KooyohColors.surfaceMuted;
 }
 
-extension LimyeContextPalette on BuildContext {
-  LimyePalette get colors => LimyePalette(this);
+extension KooyohContextPalette on BuildContext {
+  KooyohPalette get colors => KooyohPalette(this);
 }
 
-class LimyeTheme {
-  LimyeTheme._();
+class KooyohTheme {
+  KooyohTheme._();
 
-  static ThemeData lightTheme() => buildLimyeTheme();
+  static ThemeData lightTheme() => buildKooyohTheme();
 
   static ThemeData darkTheme() {
-    const bg = LimyeDarkColors.background;
-    const surface = LimyeDarkColors.surface;
-    const borderC = LimyeDarkColors.border;
-    const onSurf = LimyeDarkColors.textPrimary;
-    const bodyC = LimyeDarkColors.textBody;
+    const bg = KooyohDarkColors.background;
+    const surface = KooyohDarkColors.surface;
+    const borderC = KooyohDarkColors.border;
+    const onSurf = KooyohDarkColors.textPrimary;
+    const bodyC = KooyohDarkColors.textBody;
 
-    final baseSans = LimyeTextStyles.body(color: bodyC);
+    final baseSans = KooyohTextStyles.body(color: bodyC);
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
@@ -291,11 +291,11 @@ class LimyeTheme {
       canvasColor: bg,
       cardColor: surface,
       colorScheme: const ColorScheme.dark(
-        primary: LimyeColors.accent,
+        primary: KooyohColors.accent,
         onPrimary: Colors.white,
-        secondary: LimyeColors.green,
+        secondary: KooyohColors.green,
         onSecondary: Colors.white,
-        error: LimyeColors.error,
+        error: KooyohColors.error,
         surface: surface,
         onSurface: onSurf,
         outline: borderC,
@@ -307,25 +307,25 @@ class LimyeTheme {
         color: bodyC,
       ),
       textTheme: TextTheme(
-        displayLarge: LimyeTextStyles.hero(color: onSurf),
-        displayMedium: LimyeTextStyles.sectionHeading(color: onSurf),
-        displaySmall: LimyeTextStyles.cardHeading(color: onSurf),
-        headlineLarge: LimyeTextStyles.sectionHeading(color: onSurf),
-        headlineMedium: LimyeTextStyles.sectionHeading(color: onSurf),
-        headlineSmall: LimyeTextStyles.cardHeading(color: onSurf),
-        titleLarge: LimyeTextStyles.cardHeading(color: onSurf),
-        titleMedium: LimyeTextStyles.bodyBold(color: onSurf),
-        titleSmall: LimyeTextStyles.bodyBold(color: onSurf),
+        displayLarge: KooyohTextStyles.hero(color: onSurf),
+        displayMedium: KooyohTextStyles.sectionHeading(color: onSurf),
+        displaySmall: KooyohTextStyles.cardHeading(color: onSurf),
+        headlineLarge: KooyohTextStyles.sectionHeading(color: onSurf),
+        headlineMedium: KooyohTextStyles.sectionHeading(color: onSurf),
+        headlineSmall: KooyohTextStyles.cardHeading(color: onSurf),
+        titleLarge: KooyohTextStyles.cardHeading(color: onSurf),
+        titleMedium: KooyohTextStyles.bodyBold(color: onSurf),
+        titleSmall: KooyohTextStyles.bodyBold(color: onSurf),
         bodyLarge: baseSans,
         bodyMedium: baseSans,
-        bodySmall: LimyeTextStyles.caption(color: bodyC),
-        labelLarge: LimyeTextStyles.bodyBold(color: onSurf),
-        labelMedium: LimyeTextStyles.caption(color: bodyC),
-        labelSmall: LimyeTextStyles.caption(color: bodyC),
+        bodySmall: KooyohTextStyles.caption(color: bodyC),
+        labelLarge: KooyohTextStyles.bodyBold(color: onSurf),
+        labelMedium: KooyohTextStyles.caption(color: bodyC),
+        labelSmall: KooyohTextStyles.caption(color: bodyC),
       ),
       primaryTextTheme: TextTheme(
-        bodyLarge: LimyeTextStyles.bodyBold(color: Colors.white),
-        bodyMedium: LimyeTextStyles.bodyBold(color: Colors.white),
+        bodyLarge: KooyohTextStyles.bodyBold(color: Colors.white),
+        bodyMedium: KooyohTextStyles.bodyBold(color: Colors.white),
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: surface,
@@ -333,7 +333,7 @@ class LimyeTheme {
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
-        titleTextStyle: LimyeTextStyles.cardHeading(color: onSurf),
+        titleTextStyle: KooyohTextStyles.cardHeading(color: onSurf),
         iconTheme: IconThemeData(color: bodyC),
         surfaceTintColor: Colors.transparent,
         shape: const Border(
@@ -344,43 +344,43 @@ class LimyeTheme {
         filled: true,
         fillColor: surface,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(LimyeRadius.input),
+          borderRadius: BorderRadius.circular(KooyohRadius.input),
           borderSide: const BorderSide(color: borderC),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(LimyeRadius.input),
+          borderRadius: BorderRadius.circular(KooyohRadius.input),
           borderSide: const BorderSide(color: borderC),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(LimyeRadius.input),
-          borderSide: const BorderSide(color: LimyeColors.accent, width: 1),
+          borderRadius: BorderRadius.circular(KooyohRadius.input),
+          borderSide: const BorderSide(color: KooyohColors.accent, width: 1),
         ),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        hintStyle: LimyeTextStyles.caption(color: bodyC),
+        hintStyle: KooyohTextStyles.caption(color: bodyC),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: LimyeColors.accent,
+          backgroundColor: KooyohColors.accent,
           foregroundColor: Colors.white,
           elevation: 0,
           shadowColor: Colors.transparent,
-          minimumSize: const Size(64, LimyeSpacing.buttonHeight),
+          minimumSize: const Size(64, KooyohSpacing.buttonHeight),
           padding: const EdgeInsets.symmetric(horizontal: 24),
           shape: const StadiumBorder(),
-          textStyle: LimyeTextStyles.bodyBold(color: Colors.white),
+          textStyle: KooyohTextStyles.bodyBold(color: Colors.white),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: LimyeColors.accent,
+          foregroundColor: KooyohColors.accent,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          side: const BorderSide(color: LimyeColors.accent, width: 1),
-          minimumSize: const Size(64, LimyeSpacing.buttonHeight),
+          side: const BorderSide(color: KooyohColors.accent, width: 1),
+          minimumSize: const Size(64, KooyohSpacing.buttonHeight),
           padding: const EdgeInsets.symmetric(horizontal: 24),
           shape: const StadiumBorder(),
-          textStyle: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
+          textStyle: KooyohTextStyles.bodyBold(color: KooyohColors.accent),
         ),
       ),
       cardTheme: CardThemeData(
@@ -388,7 +388,7 @@ class LimyeTheme {
         elevation: 0,
         shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(LimyeRadius.card),
+          borderRadius: BorderRadius.circular(KooyohRadius.card),
           side: const BorderSide(color: borderC, width: 1),
         ),
         margin: EdgeInsets.zero,
@@ -400,7 +400,7 @@ class LimyeTheme {
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: surface,
-        selectedItemColor: LimyeColors.accent,
+        selectedItemColor: KooyohColors.accent,
         unselectedItemColor: bodyC,
         elevation: 0,
         type: BottomNavigationBarType.fixed,
@@ -409,25 +409,25 @@ class LimyeTheme {
         backgroundColor: surface,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(LimyeRadius.card),
+          borderRadius: BorderRadius.circular(KooyohRadius.card),
           side: const BorderSide(color: borderC, width: 1),
         ),
-        titleTextStyle: LimyeTextStyles.cardHeading(color: onSurf),
+        titleTextStyle: KooyohTextStyles.cardHeading(color: onSurf),
         contentTextStyle: baseSans,
       ),
       snackBarTheme: SnackBarThemeData(
         backgroundColor: surface,
         contentTextStyle: baseSans,
-        actionTextColor: LimyeColors.accent,
+        actionTextColor: KooyohColors.accent,
         behavior: SnackBarBehavior.floating,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(LimyeRadius.md),
+          borderRadius: BorderRadius.circular(KooyohRadius.md),
           side: const BorderSide(color: borderC, width: 1),
         ),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: LimyeColors.accent,
+        backgroundColor: KooyohColors.accent,
         foregroundColor: Colors.white,
         elevation: 0,
       ),
@@ -442,112 +442,112 @@ class LimyeTheme {
   }
 }
 
-ThemeData buildLimyeTheme() {
-  final baseSans = LimyeTextStyles.body();
+ThemeData buildKooyohTheme() {
+  final baseSans = KooyohTextStyles.body();
   return ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
-    scaffoldBackgroundColor: LimyeColors.background,
+    scaffoldBackgroundColor: KooyohColors.background,
     colorScheme: const ColorScheme.light(
-      primary: LimyeColors.accent,
+      primary: KooyohColors.accent,
       onPrimary: Colors.white,
-      secondary: LimyeColors.green,
+      secondary: KooyohColors.green,
       onSecondary: Colors.white,
-      error: LimyeColors.error,
-      surface: LimyeColors.surface,
-      onSurface: LimyeColors.textPrimary,
-      outline: LimyeColors.border,
-      onSurfaceVariant: LimyeColors.textCaption,
+      error: KooyohColors.error,
+      surface: KooyohColors.surface,
+      onSurface: KooyohColors.textPrimary,
+      outline: KooyohColors.border,
+      onSurfaceVariant: KooyohColors.textCaption,
     ),
     fontFamily: null,
     iconTheme: const IconThemeData(
       size: 24,
-      color: LimyeColors.textBody,
+      color: KooyohColors.textBody,
     ),
     textTheme: TextTheme(
-      displayLarge: LimyeTextStyles.hero(),
-      headlineLarge: LimyeTextStyles.sectionHeading(),
-      titleLarge: LimyeTextStyles.cardHeading(),
+      displayLarge: KooyohTextStyles.hero(),
+      headlineLarge: KooyohTextStyles.sectionHeading(),
+      titleLarge: KooyohTextStyles.cardHeading(),
       bodyLarge: baseSans,
       bodyMedium: baseSans,
-      bodySmall: LimyeTextStyles.caption(),
-      labelLarge: LimyeTextStyles.bodyBold(),
-      labelMedium: LimyeTextStyles.caption(),
-      labelSmall: LimyeTextStyles.caption(),
+      bodySmall: KooyohTextStyles.caption(),
+      labelLarge: KooyohTextStyles.bodyBold(),
+      labelMedium: KooyohTextStyles.caption(),
+      labelSmall: KooyohTextStyles.caption(),
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: LimyeColors.surface,
+      backgroundColor: KooyohColors.surface,
       elevation: 0,
       scrolledUnderElevation: 0,
       centerTitle: true,
-      titleTextStyle: LimyeTextStyles.cardHeading(),
-      iconTheme: const IconThemeData(color: LimyeColors.textBody),
+      titleTextStyle: KooyohTextStyles.cardHeading(),
+      iconTheme: const IconThemeData(color: KooyohColors.textBody),
       surfaceTintColor: Colors.transparent,
       shape: const Border(
-        bottom: BorderSide(color: LimyeColors.border, width: 1),
+        bottom: BorderSide(color: KooyohColors.border, width: 1),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: LimyeColors.surface,
+      fillColor: KooyohColors.surface,
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(LimyeRadius.input),
-        borderSide: const BorderSide(color: LimyeColors.inputBorder),
+        borderRadius: BorderRadius.circular(KooyohRadius.input),
+        borderSide: const BorderSide(color: KooyohColors.inputBorder),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(LimyeRadius.input),
-        borderSide: const BorderSide(color: LimyeColors.inputBorder),
+        borderRadius: BorderRadius.circular(KooyohRadius.input),
+        borderSide: const BorderSide(color: KooyohColors.inputBorder),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(LimyeRadius.input),
-        borderSide: const BorderSide(color: LimyeColors.accent, width: 1),
+        borderRadius: BorderRadius.circular(KooyohRadius.input),
+        borderSide: const BorderSide(color: KooyohColors.accent, width: 1),
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      hintStyle: LimyeTextStyles.caption(),
+      hintStyle: KooyohTextStyles.caption(),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: LimyeColors.accent,
+        backgroundColor: KooyohColors.accent,
         foregroundColor: Colors.white,
         elevation: 0,
         shadowColor: Colors.transparent,
-        minimumSize: const Size(64, LimyeSpacing.buttonHeight),
+        minimumSize: const Size(64, KooyohSpacing.buttonHeight),
         padding: const EdgeInsets.symmetric(horizontal: 24),
         shape: const StadiumBorder(),
-        textStyle: LimyeTextStyles.bodyBold(color: Colors.white),
+        textStyle: KooyohTextStyles.bodyBold(color: Colors.white),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: LimyeColors.accent,
+        foregroundColor: KooyohColors.accent,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        side: const BorderSide(color: LimyeColors.accent, width: 1),
-        minimumSize: const Size(64, LimyeSpacing.buttonHeight),
+        side: const BorderSide(color: KooyohColors.accent, width: 1),
+        minimumSize: const Size(64, KooyohSpacing.buttonHeight),
         padding: const EdgeInsets.symmetric(horizontal: 24),
         shape: const StadiumBorder(),
-        textStyle: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
+        textStyle: KooyohTextStyles.bodyBold(color: KooyohColors.accent),
       ),
     ),
     cardTheme: CardThemeData(
-      color: LimyeColors.surface,
+      color: KooyohColors.surface,
       elevation: 0,
       shadowColor: Colors.transparent,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
-        side: const BorderSide(color: LimyeColors.border, width: 1),
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
+        side: const BorderSide(color: KooyohColors.border, width: 1),
       ),
       margin: EdgeInsets.zero,
     ),
     dividerTheme: const DividerThemeData(
-      color: LimyeColors.border,
+      color: KooyohColors.border,
       thickness: 1,
       space: 0,
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: LimyeColors.surface,
-      selectedItemColor: LimyeColors.accent,
-      unselectedItemColor: LimyeColors.textBody,
+      backgroundColor: KooyohColors.surface,
+      selectedItemColor: KooyohColors.accent,
+      unselectedItemColor: KooyohColors.textBody,
       elevation: 0,
       type: BottomNavigationBarType.fixed,
     ),

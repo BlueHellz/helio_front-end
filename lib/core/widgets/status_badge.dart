@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../theme/limye_theme.dart';
+import '../../theme/kooyoh_theme.dart';
 import '../models/project.dart';
 
 class StatusBadge extends StatelessWidget {
@@ -19,7 +19,7 @@ class StatusBadge extends StatelessWidget {
       ),
       child: Text(
         status.label.toUpperCase(),
-        style: LimyeTextStyles.captionBold(color: fg),
+        style: KooyohTextStyles.captionBold(color: fg),
       ),
     );
   }
@@ -50,7 +50,7 @@ class WalletChip extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             '${balance.toStringAsFixed(2)} HLIO',
-            style: LimyeTextStyles.dataInline(color: c.onSurface),
+            style: KooyohTextStyles.dataInline(color: c.onSurface),
           ),
         ],
       ),
@@ -85,7 +85,7 @@ class BlackLightChip extends StatelessWidget {
       child: Center(
         child: Text(
           label,
-          style: LimyeTextStyles.caption(
+          style: KooyohTextStyles.caption(
             color: textColor ?? variant,
           ),
         ),

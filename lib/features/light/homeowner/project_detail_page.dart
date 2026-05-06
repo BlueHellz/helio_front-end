@@ -1,13 +1,13 @@
-import 'package:limye_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:limye_app/core/dynamic_form.dart';
-import 'package:limye_app/core/models/project.dart';
-import 'package:limye_app/core/providers/session_providers.dart';
-import 'package:limye_app/core/widgets/project_status_badge.dart';
-import 'package:limye_app/services/api.dart';
-import 'package:limye_app/theme/limye_theme.dart';
+import 'package:kooyoh_app/core/dynamic_form.dart';
+import 'package:kooyoh_app/core/models/project.dart';
+import 'package:kooyoh_app/core/providers/session_providers.dart';
+import 'package:kooyoh_app/core/widgets/project_status_badge.dart';
+import 'package:kooyoh_app/services/api.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 
 class HomeownerProjectDetailPage extends ConsumerStatefulWidget {
   const HomeownerProjectDetailPage({super.key, required this.projectId});
@@ -84,7 +84,7 @@ class _HomeownerProjectDetailPageState
             title: Text(HomeownerProjectDetailContent.appBarFallbackTitle)),
         body: Center(
           child: Text(_error ?? HomeownerProjectDetailContent.notFound,
-              style: LimyeTextStyles.body()),
+              style: KooyohTextStyles.body()),
         ),
       );
     }
@@ -94,10 +94,10 @@ class _HomeownerProjectDetailPageState
     final customMap = custom?.cast<String, dynamic>();
 
     return Scaffold(
-      backgroundColor: LimyeColors.background,
+      backgroundColor: KooyohColors.background,
       appBar: AppBar(title: Text(p.address)),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(LimyeSpacing.gutter),
+        padding: const EdgeInsets.all(KooyohSpacing.gutter),
         child: Align(
           alignment: Alignment.topLeft,
           child: ConstrainedBox(
@@ -111,21 +111,21 @@ class _HomeownerProjectDetailPageState
                     const SizedBox(width: 12),
                     Text(
                       p.type.label,
-                      style: LimyeTextStyles.caption(),
+                      style: KooyohTextStyles.caption(),
                     ),
                   ],
                 ),
-                const SizedBox(height: LimyeSpacing.md),
+                const SizedBox(height: KooyohSpacing.md),
                 Text(HomeownerProjectDetailContent.systemOverviewTitle,
-                    style: LimyeTextStyles.cardHeading()),
+                    style: KooyohTextStyles.cardHeading()),
                 const SizedBox(height: 8),
                 Text(
                   HomeownerProjectDetailContent.systemOverviewBody,
-                  style: LimyeTextStyles.body(),
+                  style: KooyohTextStyles.body(),
                 ),
-                const SizedBox(height: LimyeSpacing.lg),
+                const SizedBox(height: KooyohSpacing.lg),
                 Text(HomeownerProjectDetailContent.yourDetailsTitle,
-                    style: LimyeTextStyles.cardHeading()),
+                    style: KooyohTextStyles.cardHeading()),
                 const SizedBox(height: 12),
                 DynamicForm(
                   fields: _fieldsFromCustom(customMap),

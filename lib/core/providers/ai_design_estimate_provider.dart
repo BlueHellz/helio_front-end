@@ -1,15 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/models/project.dart';
-import 'package:limye_app/core/models/solar_estimate_presentation.dart';
-import 'package:limye_app/core/models/solar_design_data.dart';
-import 'package:limye_app/core/providers/session_providers.dart';
-import 'package:limye_app/core/providers/solar_design_provider.dart';
-import 'package:limye_app/core/solar/solar_design_calculator.dart';
-import 'package:limye_app/services/api.dart';
-import 'package:limye_app/services/public_api.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/models/project.dart';
+import 'package:kooyoh_app/core/models/solar_estimate_presentation.dart';
+import 'package:kooyoh_app/core/models/solar_design_data.dart';
+import 'package:kooyoh_app/core/providers/session_providers.dart';
+import 'package:kooyoh_app/core/providers/solar_design_provider.dart';
+import 'package:kooyoh_app/core/solar/solar_design_calculator.dart';
+import 'package:kooyoh_app/services/api.dart';
+import 'package:kooyoh_app/services/public_api.dart';
 
 double? _readUsd(Map<String, dynamic> m, List<String> keys) {
   for (final k in keys) {
@@ -202,7 +202,7 @@ class AiDesignEstimateNotifier extends StateNotifier<AiDesignEstimateState> {
         clientName: owner.isEmpty ? null : owner,
       );
 
-      final public = _ref.read(publicLimyeApiProvider);
+      final public = _ref.read(publicKooyohApiProvider);
       final json = await public.postEstimate(body);
       if (json.isEmpty) {
         state = state.copyWith(loading: false, showError: true);

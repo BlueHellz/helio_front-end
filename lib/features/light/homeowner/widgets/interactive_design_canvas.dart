@@ -3,11 +3,11 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
-import 'package:limye_app/core/models/solar_design_data.dart';
-import 'package:limye_app/core/providers/solar_design_provider.dart';
-import 'package:limye_app/theme/limye_theme.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/illustrations/geometric_illustrations.dart';
+import 'package:kooyoh_app/core/models/solar_design_data.dart';
+import 'package:kooyoh_app/core/providers/solar_design_provider.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 
 const double _kCanvasPx = 4000;
 const double _kDotSpacing = 24;
@@ -19,10 +19,10 @@ const double _kElectricityRateUsdPerKwh = 0.17;
 const double _kAnnualDegradation = 0.005;
 const double _kFederalItcFraction = 0.30;
 
-/// Panel footprint in canvas pixels (from [LimyeSpacing] tokens).
+/// Panel footprint in canvas pixels (from [KooyohSpacing] tokens).
 Size _panelFootprint(CanvasSolarPanel p) {
-  const shortEdge = LimyeSpacing.sm + LimyeSpacing.xs * 2;
-  const longEdge = LimyeSpacing.sm * 5 + LimyeSpacing.xs;
+  const shortEdge = KooyohSpacing.sm + KooyohSpacing.xs * 2;
+  const longEdge = KooyohSpacing.sm * 5 + KooyohSpacing.xs;
   return p.portrait
       ? const Size(shortEdge, longEdge)
       : const Size(longEdge, shortEdge);
@@ -119,11 +119,11 @@ Offset _constrainPanelCenter(
 Color _orientationFill(double score, BuildContext context) {
   Color base;
   if (score >= 0.9) {
-    base = LimyeColors.green;
+    base = KooyohColors.green;
   } else if (score >= 0.7) {
-    base = LimyeColors.accent;
+    base = KooyohColors.accent;
   } else if (score >= 0.5) {
-    base = LimyeColors.amber;
+    base = KooyohColors.amber;
   } else {
     base = context.colors.outline;
   }
@@ -131,10 +131,10 @@ Color _orientationFill(double score, BuildContext context) {
 }
 
 Color _orientationBorder(double score) {
-  if (score >= 0.9) return LimyeColors.green.withValues(alpha: 0.95);
-  if (score >= 0.7) return LimyeColors.accent.withValues(alpha: 0.9);
-  if (score >= 0.5) return LimyeColors.amber.withValues(alpha: 0.9);
-  return LimyeColors.border;
+  if (score >= 0.9) return KooyohColors.green.withValues(alpha: 0.95);
+  if (score >= 0.7) return KooyohColors.accent.withValues(alpha: 0.9);
+  if (score >= 0.5) return KooyohColors.amber.withValues(alpha: 0.9);
+  return KooyohColors.border;
 }
 
 List<_PreparedRoofSegment> _roofLayers(
@@ -319,12 +319,12 @@ class _InteractiveDesignCanvasState extends ConsumerState<InteractiveDesignCanva
         maxY = math.max(maxY, o.dy);
       }
     }
-    return Rect.fromLTRB(minX, minY, maxX, maxY).inflate(LimyeSpacing.md);
+    return Rect.fromLTRB(minX, minY, maxX, maxY).inflate(KooyohSpacing.md);
   }
 
   void _fitToScreen(Size viewport) {
     final b = _roofBounds();
-    final margin = LimyeSpacing.lg.toDouble();
+    final margin = KooyohSpacing.lg.toDouble();
     final contentW = b.width + margin;
     final contentH = b.height + margin;
     final sx = viewport.width / contentW;
@@ -379,7 +379,7 @@ class _InteractiveDesignCanvasState extends ConsumerState<InteractiveDesignCanva
 
     final position = RelativeRect.fromLTRB(
       tapGlobal.dx.clamp(inset.left, size.width - 1),
-      tapGlobal.dy.clamp(inset.top + LimyeSpacing.tapTarget, size.height - 1),
+      tapGlobal.dy.clamp(inset.top + KooyohSpacing.tapTarget, size.height - 1),
       (size.width - tapGlobal.dx).clamp(1, double.infinity),
       (size.height - tapGlobal.dy).clamp(1, double.infinity),
     );
@@ -389,22 +389,22 @@ class _InteractiveDesignCanvasState extends ConsumerState<InteractiveDesignCanva
       position: position,
       color: Theme.of(context).colorScheme.surface,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(LimyeRadius.md),
-        side: const BorderSide(color: LimyeColors.border, width: 1),
+        borderRadius: BorderRadius.circular(KooyohRadius.md),
+        side: const BorderSide(color: KooyohColors.border, width: 1),
       ),
       items: [
         PopupMenuItem<String>(
           value: 'delete',
           child: Text(
             InteractiveCanvasContent.contextDelete,
-            style: LimyeTextStyles.body(color: LimyeColors.error),
+            style: KooyohTextStyles.body(color: KooyohColors.error),
           ),
         ),
         PopupMenuItem<String>(
           value: 'rotate',
           child: Text(
             InteractiveCanvasContent.contextRotate,
-            style: LimyeTextStyles.body(color: Theme.of(context).colorScheme.onSurface),
+            style: KooyohTextStyles.body(color: Theme.of(context).colorScheme.onSurface),
           ),
         ),
       ],
@@ -449,7 +449,7 @@ class _InteractiveDesignCanvasState extends ConsumerState<InteractiveDesignCanva
       return Center(
         child: Padding(
           padding: EdgeInsets.all(
-            widget.compact ? LimyeSpacing.md : LimyeSpacing.xl,
+            widget.compact ? KooyohSpacing.md : KooyohSpacing.xl,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -459,12 +459,12 @@ class _InteractiveDesignCanvasState extends ConsumerState<InteractiveDesignCanva
               ),
               SizedBox(
                 height:
-                    widget.compact ? LimyeSpacing.sm : LimyeSpacing.md,
+                    widget.compact ? KooyohSpacing.sm : KooyohSpacing.md,
               ),
               Text(
                 InteractiveCanvasContent.waitingBody,
                 textAlign: TextAlign.center,
-                style: LimyeTextStyles.body(
+                style: KooyohTextStyles.body(
                   color: context.colors.onSurfaceMuted,
                 ),
               ),
@@ -481,13 +481,13 @@ class _InteractiveDesignCanvasState extends ConsumerState<InteractiveDesignCanva
     return LayoutBuilder(
       builder: (context, constraints) {
         final viewport = Size(constraints.maxWidth, constraints.maxHeight);
-        final pad = widget.compact ? LimyeSpacing.sm : LimyeSpacing.md;
+        final pad = widget.compact ? KooyohSpacing.sm : KooyohSpacing.md;
 
         return Stack(
           clipBehavior: Clip.hardEdge,
           children: [
             ColoredBox(
-              color: LimyeColors.background,
+              color: KooyohColors.background,
               child: InteractiveViewer(
                 transformationController: _transformation,
                 panEnabled: !_draggingPanel,
@@ -510,9 +510,9 @@ class _InteractiveDesignCanvasState extends ConsumerState<InteractiveDesignCanva
                           size: const Size.square(_kCanvasPx),
                           painter: _DotGridPainter(
                             spacing: _kDotSpacing,
-                            dotColor: LimyeColors.border
+                            dotColor: KooyohColors.border
                                 .withValues(alpha: 0.45),
-                            background: LimyeColors.background,
+                            background: KooyohColors.background,
                           ),
                         ),
                         IgnorePointer(
@@ -568,34 +568,34 @@ class _InteractiveDesignCanvasState extends ConsumerState<InteractiveDesignCanva
             ),
             Positioned(
               left: pad,
-              bottom: pad + (widget.compact ? 52 : LimyeSpacing.sm + LimyeSpacing.buttonHeight),
+              bottom: pad + (widget.compact ? 52 : KooyohSpacing.sm + KooyohSpacing.buttonHeight),
               child: _OrientationLegend(compact: widget.compact),
             ),
             if (_placementMode)
               Positioned(
                 top:
                     pad +
-                    (widget.compact ? 96 : LimyeSpacing.tapTarget + LimyeSpacing.sm),
+                    (widget.compact ? 96 : KooyohSpacing.tapTarget + KooyohSpacing.sm),
                 left: 0,
                 right: 0,
                 child: Center(
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: LimyeSpacing.sm,
-                      vertical: LimyeSpacing.xs,
+                      horizontal: KooyohSpacing.sm,
+                      vertical: KooyohSpacing.xs,
                     ),
                     decoration: BoxDecoration(
-                      color: LimyeColors.surface,
-                      borderRadius: BorderRadius.circular(LimyeRadius.card),
+                      color: KooyohColors.surface,
+                      borderRadius: BorderRadius.circular(KooyohRadius.card),
                       border: Border.all(
-                        color: LimyeColors.accent.withValues(alpha: 0.42),
+                        color: KooyohColors.accent.withValues(alpha: 0.42),
                         width: 1,
                       ),
                     ),
                     child: Text(
                       InteractiveCanvasContent.placementModeHint,
-                      style: LimyeTextStyles.caption(
-                        color: LimyeColors.textBody,
+                      style: KooyohTextStyles.caption(
+                        color: KooyohColors.textBody,
                       ),
                     ),
                   ),
@@ -609,14 +609,14 @@ class _InteractiveDesignCanvasState extends ConsumerState<InteractiveDesignCanva
                 children: [
                   if (_placementMode)
                     Padding(
-                      padding: const EdgeInsets.only(right: LimyeSpacing.sm),
+                      padding: const EdgeInsets.only(right: KooyohSpacing.sm),
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(
-                          minHeight: LimyeSpacing.buttonHeight,
+                          minHeight: KooyohSpacing.buttonHeight,
                         ),
                         child: Material(
-                          color: LimyeColors.surface,
-                          borderRadius: BorderRadius.circular(LimyeRadius.sm),
+                          color: KooyohColors.surface,
+                          borderRadius: BorderRadius.circular(KooyohRadius.sm),
                           child: InkWell(
                             onTap: () {
                               setState(() {
@@ -624,16 +624,16 @@ class _InteractiveDesignCanvasState extends ConsumerState<InteractiveDesignCanva
                               });
                             },
                             borderRadius:
-                                BorderRadius.circular(LimyeRadius.sm),
+                                BorderRadius.circular(KooyohRadius.sm),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
-                                horizontal: LimyeSpacing.md,
+                                horizontal: KooyohSpacing.md,
                               ),
                               child: Center(
                                 child: Text(
                                   InteractiveCanvasContent.placementExit,
-                                  style: LimyeTextStyles.bodyBold(
-                                    color: LimyeColors.accent,
+                                  style: KooyohTextStyles.bodyBold(
+                                    color: KooyohColors.accent,
                                   ),
                                 ),
                               ),
@@ -650,11 +650,11 @@ class _InteractiveDesignCanvasState extends ConsumerState<InteractiveDesignCanva
                       });
                     },
                     elevation: 0,
-                    backgroundColor: LimyeColors.accent,
-                    foregroundColor: LimyeColors.surface,
+                    backgroundColor: KooyohColors.accent,
+                    foregroundColor: KooyohColors.surface,
                     child: Icon(
                       _placementMode ? Icons.close : Icons.add,
-                      color: LimyeColors.surface,
+                      color: KooyohColors.surface,
                     ),
                   ),
                 ],
@@ -678,12 +678,12 @@ class _InteractiveDesignCanvasState extends ConsumerState<InteractiveDesignCanva
           width: fp.width,
           height: fp.height,
           decoration: BoxDecoration(
-            color: LimyeColors.accent.withValues(alpha: 0.92),
-            borderRadius: BorderRadius.circular(LimyeRadius.sm / 3),
+            color: KooyohColors.accent.withValues(alpha: 0.92),
+            borderRadius: BorderRadius.circular(KooyohRadius.sm / 3),
             border: Border.all(
               color:
-                  isSelected ? LimyeColors.green : LimyeColors.surface,
-              width: isSelected ? LimyeSpacing.xs / 8 + 2 : 1,
+                  isSelected ? KooyohColors.green : KooyohColors.surface,
+              width: isSelected ? KooyohSpacing.xs / 8 + 2 : 1,
             ),
           ),
         ),
@@ -738,18 +738,18 @@ class _MessageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(LimyeSpacing.lg),
+        padding: const EdgeInsets.all(KooyohSpacing.lg),
         child: Container(
-          padding: const EdgeInsets.all(LimyeSpacing.md),
+          padding: const EdgeInsets.all(KooyohSpacing.md),
           decoration: BoxDecoration(
-            color: LimyeColors.surface,
-            borderRadius: BorderRadius.circular(LimyeRadius.card),
-            border: Border.all(color: LimyeColors.border, width: 1),
+            color: KooyohColors.surface,
+            borderRadius: BorderRadius.circular(KooyohRadius.card),
+            border: Border.all(color: KooyohColors.border, width: 1),
           ),
           child: Text(
             text,
             textAlign: TextAlign.center,
-            style: LimyeTextStyles.body(color: context.colors.onSurfaceMuted),
+            style: KooyohTextStyles.body(color: context.colors.onSurfaceMuted),
           ),
         ),
       ),
@@ -774,13 +774,13 @@ class _Toolbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pad = compact ? LimyeSpacing.xs : LimyeSpacing.sm;
+    final pad = compact ? KooyohSpacing.xs : KooyohSpacing.sm;
     return Container(
       padding: EdgeInsets.all(pad),
       decoration: BoxDecoration(
-        color: LimyeColors.surface,
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
-        border: Border.all(color: LimyeColors.border, width: 1),
+        color: KooyohColors.surface,
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
+        border: Border.all(color: KooyohColors.border, width: 1),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -835,24 +835,24 @@ class _ToolButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: LimyeColors.surface,
+      color: KooyohColors.surface,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(LimyeRadius.sm),
+        borderRadius: BorderRadius.circular(KooyohRadius.sm),
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: compact ? LimyeSpacing.xs : LimyeSpacing.sm,
-            vertical: LimyeSpacing.xs,
+            horizontal: compact ? KooyohSpacing.xs : KooyohSpacing.sm,
+            vertical: KooyohSpacing.xs,
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, size: compact ? 18 : 20, color: LimyeColors.accent),
+              Icon(icon, size: compact ? 18 : 20, color: KooyohColors.accent),
               if (!compact) ...[
-                const SizedBox(width: LimyeSpacing.xs),
+                const SizedBox(width: KooyohSpacing.xs),
                 Text(
                   label,
-                  style: LimyeTextStyles.caption(color: LimyeColors.textBody),
+                  style: KooyohTextStyles.caption(color: KooyohColors.textBody),
                 ),
               ],
             ],
@@ -879,14 +879,14 @@ class _FinancialsOverlay extends StatelessWidget {
     Color? valueColor,
   }) {
     return Padding(
-      padding: EdgeInsets.only(bottom: divider ? LimyeSpacing.sm : 0),
+      padding: EdgeInsets.only(bottom: divider ? KooyohSpacing.sm : 0),
       child: Container(
-        padding: EdgeInsets.only(bottom: divider ? LimyeSpacing.sm : 0),
+        padding: EdgeInsets.only(bottom: divider ? KooyohSpacing.sm : 0),
         decoration: divider
             ? BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
-                    color: LimyeColors.border.withValues(alpha: 0.85),
+                    color: KooyohColors.border.withValues(alpha: 0.85),
                   ),
                 ),
               )
@@ -898,13 +898,13 @@ class _FinancialsOverlay extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: LimyeTextStyles.caption(color: LimyeColors.textCaption),
+                style: KooyohTextStyles.caption(color: KooyohColors.textCaption),
               ),
             ),
             Text(
               displayValue,
-              style: LimyeTextStyles.data(
-                color: valueColor ?? LimyeColors.textPrimary,
+              style: KooyohTextStyles.data(
+                color: valueColor ?? KooyohColors.textPrimary,
               ).copyWith(fontWeight: FontWeight.w600),
             ),
           ],
@@ -915,7 +915,7 @@ class _FinancialsOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pad = compact ? LimyeSpacing.sm : LimyeSpacing.md;
+    final pad = compact ? KooyohSpacing.sm : KooyohSpacing.md;
     final payback = financials.paybackYears.isFinite
         ? financials.paybackYears.toStringAsFixed(1)
         : InteractiveCanvasContent.paybackUnavailable;
@@ -928,12 +928,12 @@ class _FinancialsOverlay extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(pad),
         decoration: BoxDecoration(
-          color: LimyeColors.surface,
-          borderRadius: BorderRadius.circular(LimyeRadius.card),
-          border: Border.all(color: LimyeColors.border, width: 1),
+          color: KooyohColors.surface,
+          borderRadius: BorderRadius.circular(KooyohRadius.card),
+          border: Border.all(color: KooyohColors.border, width: 1),
           boxShadow: [
             BoxShadow(
-              color: LimyeColors.textPrimary.withValues(alpha: 0.06),
+              color: KooyohColors.textPrimary.withValues(alpha: 0.06),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -962,7 +962,7 @@ class _FinancialsOverlay extends StatelessWidget {
               InteractiveCanvasContent.metricSavings25,
               '${'\$'}$sav',
               divider: true,
-              valueColor: LimyeColors.green,
+              valueColor: KooyohColors.green,
             ),
             _row(
               InteractiveCanvasContent.metricPayback,
@@ -975,15 +975,15 @@ class _FinancialsOverlay extends StatelessWidget {
               divider: true,
             ),
             Padding(
-              padding: const EdgeInsets.only(top: LimyeSpacing.sm),
+              padding: const EdgeInsets.only(top: KooyohSpacing.sm),
               child: Text(
                 InteractiveCanvasContent.metricIncentivesHeading,
-                style: LimyeTextStyles.captionBold(color: LimyeColors.textBody),
+                style: KooyohTextStyles.captionBold(color: KooyohColors.textBody),
               ),
             ),
             for (final line in financials.incentives) ...[
               Padding(
-                padding: const EdgeInsets.only(top: LimyeSpacing.xs),
+                padding: const EdgeInsets.only(top: KooyohSpacing.xs),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -991,14 +991,14 @@ class _FinancialsOverlay extends StatelessWidget {
                       child: Text(
                         line.label ??
                             InteractiveCanvasContent.incentiveFederalItc,
-                        style: LimyeTextStyles.caption(
+                        style: KooyohTextStyles.caption(
                           color: context.colors.onSurfaceMuted,
                         ),
                       ),
                     ),
                     Text(
                       '${'\$'}${_formatThousands(line.amountUsd.round())}',
-                      style: LimyeTextStyles.data(color: LimyeColors.green),
+                      style: KooyohTextStyles.data(color: KooyohColors.green),
                     ),
                   ],
                 ),
@@ -1024,19 +1024,19 @@ class _OrientationLegend extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: LimyeSpacing.sm,
-          height: LimyeSpacing.sm,
+          width: KooyohSpacing.sm,
+          height: KooyohSpacing.sm,
           decoration: BoxDecoration(
             color: fill.withValues(alpha: 0.7),
             borderRadius: BorderRadius.circular(2),
-            border: Border.all(color: LimyeColors.border, width: 1),
+            border: Border.all(color: KooyohColors.border, width: 1),
           ),
         ),
-        SizedBox(width: compact ? LimyeSpacing.xs / 2 : LimyeSpacing.xs),
+        SizedBox(width: compact ? KooyohSpacing.xs / 2 : KooyohSpacing.xs),
         Text(
           label,
-          style: LimyeTextStyles.caption(
-            color: LimyeColors.textCaption,
+          style: KooyohTextStyles.caption(
+            color: KooyohColors.textCaption,
           ).copyWith(fontSize: compact ? 11 : 12),
         ),
       ],
@@ -1045,22 +1045,22 @@ class _OrientationLegend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pad = compact ? LimyeSpacing.sm : LimyeSpacing.md;
+    final pad = compact ? KooyohSpacing.sm : KooyohSpacing.md;
     return Container(
       padding: EdgeInsets.all(pad),
       decoration: BoxDecoration(
-        color: LimyeColors.surface,
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
-        border: Border.all(color: LimyeColors.border, width: 1),
+        color: KooyohColors.surface,
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
+        border: Border.all(color: KooyohColors.border, width: 1),
       ),
       child: Wrap(
-        spacing: compact ? LimyeSpacing.sm : LimyeSpacing.md,
-        runSpacing: LimyeSpacing.xs,
+        spacing: compact ? KooyohSpacing.sm : KooyohSpacing.md,
+        runSpacing: KooyohSpacing.xs,
         children: [
-          _chip(fill: LimyeColors.green, label: InteractiveCanvasContent.legendTierExcellent),
-          _chip(fill: LimyeColors.accent, label: InteractiveCanvasContent.legendTierGood),
-          _chip(fill: LimyeColors.amber, label: InteractiveCanvasContent.legendTierFair),
-          _chip(fill: LimyeColors.surfaceMuted, label: InteractiveCanvasContent.legendTierLow),
+          _chip(fill: KooyohColors.green, label: InteractiveCanvasContent.legendTierExcellent),
+          _chip(fill: KooyohColors.accent, label: InteractiveCanvasContent.legendTierGood),
+          _chip(fill: KooyohColors.amber, label: InteractiveCanvasContent.legendTierFair),
+          _chip(fill: KooyohColors.surfaceMuted, label: InteractiveCanvasContent.legendTierLow),
         ],
       ),
     );
@@ -1084,7 +1084,7 @@ class _DotGridPainter extends CustomPainter {
     final paint = Paint()..color = dotColor;
     for (double y = spacing; y < size.height; y += spacing) {
       for (double x = spacing; x < size.width; x += spacing) {
-        canvas.drawCircle(Offset(x, y), LimyeSpacing.xs / 16 + 1, paint);
+        canvas.drawCircle(Offset(x, y), KooyohSpacing.xs / 16 + 1, paint);
       }
     }
   }
@@ -1110,7 +1110,7 @@ class _RoofSegmentsPainter extends CustomPainter {
         Paint()
           ..color = layer.strokeColor
           ..style = PaintingStyle.stroke
-          ..strokeWidth = LimyeSpacing.xs / 12 + 1,
+          ..strokeWidth = KooyohSpacing.xs / 12 + 1,
       );
     }
   }

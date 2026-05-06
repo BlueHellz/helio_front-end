@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:limye_app/core/models/solar_design_data.dart';
+import 'package:kooyoh_app/core/models/solar_design_data.dart';
 
 /// Source data for [InteractiveDesignCanvas]; null [SolarDesignViewState.data] means waiting / not loaded yet.
 class SolarDesignNotifier extends StateNotifier<SolarDesignViewState> {

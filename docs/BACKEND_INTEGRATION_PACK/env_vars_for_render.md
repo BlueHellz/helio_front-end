@@ -19,7 +19,7 @@
 | `HLIO_` * (optional) | App-specific token mint, treasury — **if** you add them | `coin_service.py` |
 | `INTERNAL_API_KEY` (optional) | Service-to-service auth | Webhooks, cron, Edge → Render |
 
-**Flutter / client:** The app reads **`BlackLightConfig.apiBaseUrl`**, which currently resolves to **`https://helio-back-end.onrender.com`**. For flexibility, you can later move the **API base URL** to `--dart-define` or a small env on Vercel build — not part of Render’s server env, but the **Vercel** app must be built to call the **Render** API URL you deploy.
+**Flutter / client:** The app reads **`KooyohConfig.apiBaseUrl`**, which currently resolves to **`https://helio-back-end.onrender.com`**. For flexibility, you can later move the **API base URL** to `--dart-define` or a small env on Vercel build — not part of Render’s server env, but the **Vercel** app must be built to call the **Render** API URL you deploy.
 
 **Security reminders**
 

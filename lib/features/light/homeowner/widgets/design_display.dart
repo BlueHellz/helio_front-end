@@ -3,12 +3,12 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
-import 'package:limye_app/core/models/solar_design_data.dart';
-import 'package:limye_app/core/providers/solar_design_provider.dart';
-import 'package:limye_app/core/solar/solar_design_calculator.dart';
-import 'package:limye_app/theme/limye_theme.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/illustrations/geometric_illustrations.dart';
+import 'package:kooyoh_app/core/models/solar_design_data.dart';
+import 'package:kooyoh_app/core/providers/solar_design_provider.dart';
+import 'package:kooyoh_app/core/solar/solar_design_calculator.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 
 const double _kCanvasPx = 4400;
 
@@ -19,8 +19,8 @@ Matrix4 _isometricMatrix() {
 }
 
 Size _panelFootprint(CanvasSolarPanel p) {
-  const shortEdge = LimyeSpacing.sm + LimyeSpacing.xs * 2;
-  const longEdge = LimyeSpacing.sm * 5 + LimyeSpacing.xs;
+  const shortEdge = KooyohSpacing.sm + KooyohSpacing.xs * 2;
+  const longEdge = KooyohSpacing.sm * 5 + KooyohSpacing.xs;
   return p.portrait
       ? const Size(shortEdge, longEdge)
       : const Size(longEdge, shortEdge);
@@ -29,11 +29,11 @@ Size _panelFootprint(CanvasSolarPanel p) {
 Color _orientationFill(double score, BuildContext context) {
   Color base;
   if (score >= 0.9) {
-    base = LimyeColors.green;
+    base = KooyohColors.green;
   } else if (score >= 0.7) {
-    base = LimyeColors.accent;
+    base = KooyohColors.accent;
   } else if (score >= 0.5) {
-    base = LimyeColors.amber;
+    base = KooyohColors.amber;
   } else {
     base = context.colors.outline;
   }
@@ -41,10 +41,10 @@ Color _orientationFill(double score, BuildContext context) {
 }
 
 Color _orientationBorder(double score) {
-  if (score >= 0.9) return LimyeColors.green.withValues(alpha: 0.95);
-  if (score >= 0.7) return LimyeColors.accent.withValues(alpha: 0.9);
-  if (score >= 0.5) return LimyeColors.amber.withValues(alpha: 0.9);
-  return LimyeColors.border;
+  if (score >= 0.9) return KooyohColors.green.withValues(alpha: 0.95);
+  if (score >= 0.7) return KooyohColors.accent.withValues(alpha: 0.9);
+  if (score >= 0.5) return KooyohColors.amber.withValues(alpha: 0.9);
+  return KooyohColors.border;
 }
 
 List<_PreparedRoofSegment> _roofLayers(
@@ -105,11 +105,11 @@ Rect _roofBounds(List<RoofSegmentData> segments) {
       maxY = math.max(maxY, o.dy);
     }
   }
-  return Rect.fromLTRB(minX, minY, maxX, maxY).inflate(LimyeSpacing.md);
+  return Rect.fromLTRB(minX, minY, maxX, maxY).inflate(KooyohSpacing.md);
 }
 
 void _fitToScreen(Rect roofBounds, Size viewport, TransformationController tc) {
-  final margin = LimyeSpacing.xl.toDouble();
+  final margin = KooyohSpacing.xl.toDouble();
   final contentW = roofBounds.width + margin;
   final contentH = roofBounds.height + margin;
   final sx = viewport.width / contentW;
@@ -166,16 +166,16 @@ class _DesignDisplayWidgetState extends ConsumerState<DesignDisplayWidget> {
       _lastFitDesignRef = null;
       return Center(
         child: Padding(
-          padding: const EdgeInsets.all(LimyeSpacing.xl),
+          padding: const EdgeInsets.all(KooyohSpacing.xl),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SunRingsIllustration(size: 300),
-              const SizedBox(height: LimyeSpacing.md),
+              const SizedBox(height: KooyohSpacing.md),
               Text(
                 InteractiveCanvasContent.waitingBody,
                 textAlign: TextAlign.center,
-                style: LimyeTextStyles.body(
+                style: KooyohTextStyles.body(
                   color: context.colors.onSurfaceMuted,
                 ),
               ),
@@ -219,7 +219,7 @@ class _DesignDisplayWidgetState extends ConsumerState<DesignDisplayWidget> {
           });
         }
 
-        final pad = LimyeSpacing.cardGap;
+        final pad = KooyohSpacing.cardGap;
         final roofLayers =
             _roofLayers(data.roofSegments, context);
 
@@ -227,7 +227,7 @@ class _DesignDisplayWidgetState extends ConsumerState<DesignDisplayWidget> {
           clipBehavior: Clip.hardEdge,
           children: [
             ColoredBox(
-              color: LimyeColors.background,
+              color: KooyohColors.background,
               child: InteractiveViewer(
                 transformationController: _transformation,
                 panEnabled: true,
@@ -249,10 +249,10 @@ class _DesignDisplayWidgetState extends ConsumerState<DesignDisplayWidget> {
                         CustomPaint(
                           size: const Size.square(_kCanvasPx),
                           painter: _DesignDotGridPainter(
-                            spacing: LimyeSpacing.md,
-                            dotColor: LimyeColors.border
+                            spacing: KooyohSpacing.md,
+                            dotColor: KooyohColors.border
                                 .withValues(alpha: 0.45),
-                            background: LimyeColors.background,
+                            background: KooyohColors.background,
                           ),
                         ),
                         CustomPaint(
@@ -303,15 +303,15 @@ class _DesignMetricsCard extends StatelessWidget {
 
   Widget _row(String label, String value, {required bool divider}) {
     return Padding(
-      padding: EdgeInsets.only(bottom: divider ? LimyeSpacing.cardGap : 0),
+      padding: EdgeInsets.only(bottom: divider ? KooyohSpacing.cardGap : 0),
       child: Container(
         padding:
-            EdgeInsets.only(bottom: divider ? LimyeSpacing.cardGap : 0),
+            EdgeInsets.only(bottom: divider ? KooyohSpacing.cardGap : 0),
         decoration: divider
             ? BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
-                    color: LimyeColors.border.withValues(alpha: 0.85),
+                    color: KooyohColors.border.withValues(alpha: 0.85),
                   ),
                 ),
               )
@@ -323,12 +323,12 @@ class _DesignMetricsCard extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: LimyeTextStyles.caption(color: LimyeColors.textCaption),
+                style: KooyohTextStyles.caption(color: KooyohColors.textCaption),
               ),
             ),
             Text(
               value,
-              style: LimyeTextStyles.data(color: LimyeColors.textPrimary)
+              style: KooyohTextStyles.data(color: KooyohColors.textPrimary)
                   .copyWith(fontWeight: FontWeight.w600),
             ),
           ],
@@ -342,11 +342,11 @@ class _DesignMetricsCard extends StatelessWidget {
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 220),
       child: Container(
-        padding: const EdgeInsets.all(LimyeSpacing.cardPadding),
+        padding: const EdgeInsets.all(KooyohSpacing.cardPadding),
         decoration: BoxDecoration(
-          color: LimyeColors.surface,
-          borderRadius: BorderRadius.circular(LimyeRadius.md),
-          border: Border.all(color: LimyeColors.border, width: 1),
+          color: KooyohColors.surface,
+          borderRadius: BorderRadius.circular(KooyohRadius.md),
+          border: Border.all(color: KooyohColors.border, width: 1),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -380,25 +380,25 @@ class _OrientationLegendDisplay extends StatelessWidget {
   Widget _chip(Color fill, String label, {required bool addGapBelow}) {
     return Padding(
       padding: EdgeInsets.only(
-        bottom: addGapBelow ? LimyeSpacing.cardGap : 0,
+        bottom: addGapBelow ? KooyohSpacing.cardGap : 0,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: LimyeSpacing.sm,
-            height: LimyeSpacing.sm,
+            width: KooyohSpacing.sm,
+            height: KooyohSpacing.sm,
             decoration: BoxDecoration(
               color: fill.withValues(alpha: 0.7),
-              borderRadius: BorderRadius.circular(LimyeRadius.sm / 4),
-              border: Border.all(color: LimyeColors.border, width: 1),
+              borderRadius: BorderRadius.circular(KooyohRadius.sm / 4),
+              border: Border.all(color: KooyohColors.border, width: 1),
             ),
           ),
-          const SizedBox(width: LimyeSpacing.xs),
+          const SizedBox(width: KooyohSpacing.xs),
           Expanded(
             child: Text(
               label,
-              style: LimyeTextStyles.caption(color: LimyeColors.textCaption),
+              style: KooyohTextStyles.caption(color: KooyohColors.textCaption),
             ),
           ),
         ],
@@ -411,21 +411,21 @@ class _OrientationLegendDisplay extends StatelessWidget {
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 260),
       child: Container(
-        padding: const EdgeInsets.all(LimyeSpacing.cardPadding),
+        padding: const EdgeInsets.all(KooyohSpacing.cardPadding),
         decoration: BoxDecoration(
-          color: LimyeColors.surface,
-          borderRadius: BorderRadius.circular(LimyeRadius.md),
-          border: Border.all(color: LimyeColors.border, width: 1),
+          color: KooyohColors.surface,
+          borderRadius: BorderRadius.circular(KooyohRadius.md),
+          border: Border.all(color: KooyohColors.border, width: 1),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            _chip(LimyeColors.green, InteractiveCanvasContent.designDisplayLegendGreen,
+            _chip(KooyohColors.green, InteractiveCanvasContent.designDisplayLegendGreen,
                 addGapBelow: true),
-            _chip(LimyeColors.accent, InteractiveCanvasContent.designDisplayLegendBlue,
+            _chip(KooyohColors.accent, InteractiveCanvasContent.designDisplayLegendBlue,
                 addGapBelow: true),
-            _chip(LimyeColors.amber, InteractiveCanvasContent.designDisplayLegendAmber,
+            _chip(KooyohColors.amber, InteractiveCanvasContent.designDisplayLegendAmber,
                 addGapBelow: true),
             _chip(
               context.colors.outline,
@@ -456,7 +456,7 @@ class _DesignDotGridPainter extends CustomPainter {
     final paint = Paint()..color = dotColor;
     for (double y = spacing; y < size.height; y += spacing) {
       for (double x = spacing; x < size.width; x += spacing) {
-        canvas.drawCircle(Offset(x, y), LimyeSpacing.xs / 16 + 1, paint);
+        canvas.drawCircle(Offset(x, y), KooyohSpacing.xs / 16 + 1, paint);
       }
     }
   }
@@ -475,7 +475,7 @@ class _RoofSegmentsDisplayPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final strokeWidth = LimyeSpacing.xs / 16 + 1;
+    final strokeWidth = KooyohSpacing.xs / 16 + 1;
     for (final layer in layers) {
       canvas.drawPath(layer.path, Paint()..color = layer.fillColor);
       canvas.drawPath(
@@ -500,13 +500,13 @@ class _PanelMarkersPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final fillPaint = Paint()..color = LimyeColors.accent.withValues(alpha: 0.92);
+    final fillPaint = Paint()..color = KooyohColors.accent.withValues(alpha: 0.92);
     final borderPaint = Paint()
-      ..color = LimyeColors.surface
+      ..color = KooyohColors.surface
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
 
-    final r = LimyeRadius.sm / 3;
+    final r = KooyohRadius.sm / 3;
 
     for (final p in panels) {
       final fp = _panelFootprint(p);
@@ -536,19 +536,19 @@ class _DesignMessageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(LimyeSpacing.lg),
+        padding: const EdgeInsets.all(KooyohSpacing.lg),
         child: Container(
-          padding: const EdgeInsets.all(LimyeSpacing.md),
+          padding: const EdgeInsets.all(KooyohSpacing.md),
           decoration: BoxDecoration(
-            color: LimyeColors.surface,
-            borderRadius: BorderRadius.circular(LimyeRadius.card),
-            border: Border.all(color: LimyeColors.border, width: 1),
+            color: KooyohColors.surface,
+            borderRadius: BorderRadius.circular(KooyohRadius.card),
+            border: Border.all(color: KooyohColors.border, width: 1),
           ),
           child: Text(
             text,
             textAlign: TextAlign.center,
             style:
-                LimyeTextStyles.body(color: context.colors.onSurfaceMuted),
+                KooyohTextStyles.body(color: context.colors.onSurfaceMuted),
           ),
         ),
       ),

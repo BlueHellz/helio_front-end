@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:limye_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
 
 class PoolExplorerPage extends StatelessWidget {
   const PoolExplorerPage({super.key});

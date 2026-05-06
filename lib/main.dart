@@ -5,5 +5,5 @@ import 'core/blacklight_app.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const ProviderScope(child: LimyeApp(title: 'LIMYÈ')));
+  runApp(const ProviderScope(child: KooyohApp(title: 'KOO-YOH')));
 }

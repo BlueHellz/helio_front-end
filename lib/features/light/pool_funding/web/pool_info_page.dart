@@ -1,12 +1,12 @@
-import 'package:limye_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
-import 'package:limye_app/core/ui/app_feedback.dart';
-import 'package:limye_app/theme/limye_theme.dart';
-import 'package:limye_app/core/shell/web/homeowner_web_chrome.dart';
-import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
+import 'package:kooyoh_app/core/ui/app_feedback.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
+import 'package:kooyoh_app/core/shell/web/homeowner_web_chrome.dart';
+import 'package:kooyoh_app/core/illustrations/geometric_illustrations.dart';
 
 // ─────────────────────────────────────────────
-// LIMYÈ — Community Solar (SolarPool) info page
+// KOO-YOH — Community Solar (SolarPool) info page
 // Public landing — what it is, how it works, why it matters.
 // No mock pool data; real pool list will arrive from backend later.
 // ─────────────────────────────────────────────
@@ -34,10 +34,10 @@ class PoolInfoPage extends StatelessWidget {
       child: Center(
         child: ConstrainedBox(
           constraints:
-              const BoxConstraints(maxWidth: LimyeSpacing.containerMax),
+              const BoxConstraints(maxWidth: KooyohSpacing.containerMax),
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: LimyeSpacing.gutter),
+                horizontal: KooyohSpacing.gutter),
             child: PoolProgramBody(onJoinWaitlist: onJoinWaitlist),
           ),
         ),
@@ -57,18 +57,18 @@ class PoolProgramBody extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: LimyeSpacing.xl),
+        const SizedBox(height: KooyohSpacing.xl),
         _PoolHero(
           onReadWhitepaper: () => AppFeedback.whitepaperStub(context),
           onJoinOrWaitlist: onJoinWaitlist,
         ),
-        const SizedBox(height: LimyeSpacing.xl),
+        const SizedBox(height: KooyohSpacing.xl),
         const _StatsStrip(),
-        const SizedBox(height: LimyeSpacing.xl),
+        const SizedBox(height: KooyohSpacing.xl),
         const _HowPoolsWork(),
-        const SizedBox(height: LimyeSpacing.xl),
+        const SizedBox(height: KooyohSpacing.xl),
         _ComingSoon(onJoinWaitlist: onJoinWaitlist),
-        const SizedBox(height: LimyeSpacing.xl),
+        const SizedBox(height: KooyohSpacing.xl),
       ],
     );
   }
@@ -94,49 +94,49 @@ class _PoolHero extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _Eyebrow(label: PoolFundingContent.heroEyebrow),
-          const SizedBox(height: LimyeSpacing.md),
+          const SizedBox(height: KooyohSpacing.md),
           Text(
               '${PoolFundingContent.heroTitleLine1}\n${PoolFundingContent.heroTitleLine2}',
-              style: LimyeTextStyles.hero()),
-          const SizedBox(height: LimyeSpacing.md),
+              style: KooyohTextStyles.hero()),
+          const SizedBox(height: KooyohSpacing.md),
           Text(
             PoolFundingContent.heroBody,
-            style: LimyeTextStyles.body(),
+            style: KooyohTextStyles.body(),
           ),
-          const SizedBox(height: LimyeSpacing.md),
+          const SizedBox(height: KooyohSpacing.md),
           Wrap(
-            spacing: LimyeSpacing.sm,
-            runSpacing: LimyeSpacing.xs,
+            spacing: KooyohSpacing.sm,
+            runSpacing: KooyohSpacing.xs,
             children: [
               SizedBox(
-                height: LimyeSpacing.buttonHeight,
+                height: KooyohSpacing.buttonHeight,
                 child: OutlinedButton(
                   onPressed: onReadWhitepaper,
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: LimyeColors.textPrimary,
+                    foregroundColor: KooyohColors.textPrimary,
                     side:
-                        const BorderSide(color: LimyeColors.border),
+                        const BorderSide(color: KooyohColors.border),
                     shape: const StadiumBorder(),
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                   ),
                   child: Text(PoolFundingContent.readWhitepaper,
-                      style: LimyeTextStyles.bodyBold(
-                          color: LimyeColors.textPrimary)),
+                      style: KooyohTextStyles.bodyBold(
+                          color: KooyohColors.textPrimary)),
                 ),
               ),
               SizedBox(
-                height: LimyeSpacing.buttonHeight,
+                height: KooyohSpacing.buttonHeight,
                 child: ElevatedButton(
                   onPressed: onJoinOrWaitlist,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: LimyeColors.accent,
+                    backgroundColor: KooyohColors.accent,
                     foregroundColor: Colors.white,
                     elevation: 0,
                     shape: const StadiumBorder(),
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                   ),
                   child: Text(PoolFundingContent.joinWaitlist,
-                      style: LimyeTextStyles.bodyBold(color: Colors.white)),
+                      style: KooyohTextStyles.bodyBold(color: Colors.white)),
                 ),
               ),
             ],
@@ -148,9 +148,9 @@ class _PoolHero extends StatelessWidget {
         aspectRatio: 1.05,
         child: Container(
           decoration: BoxDecoration(
-            color: LimyeColors.surface,
-            border: Border.all(color: LimyeColors.border),
-            borderRadius: BorderRadius.circular(LimyeRadius.card),
+            color: KooyohColors.surface,
+            border: Border.all(color: KooyohColors.border),
+            borderRadius: BorderRadius.circular(KooyohRadius.card),
           ),
           child: const _PoolVisual(),
         ),
@@ -161,7 +161,7 @@ class _PoolHero extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(flex: 55, child: left),
-            const SizedBox(width: LimyeSpacing.xl),
+            const SizedBox(width: KooyohSpacing.xl),
             Expanded(flex: 45, child: visual),
           ],
         );
@@ -171,7 +171,7 @@ class _PoolHero extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           left,
-          const SizedBox(height: LimyeSpacing.lg),
+          const SizedBox(height: KooyohSpacing.lg),
           visual,
         ],
       );
@@ -189,13 +189,13 @@ class _Eyebrow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
-        color: LimyeColors.surface,
-        border: Border.all(color: LimyeColors.border),
+        color: KooyohColors.surface,
+        border: Border.all(color: KooyohColors.border),
         borderRadius: BorderRadius.circular(999),
       ),
       child: Text(label,
-          style: LimyeTextStyles.captionBold(
-              color: LimyeColors.textBody)),
+          style: KooyohTextStyles.captionBold(
+              color: KooyohColors.textBody)),
     );
   }
 }
@@ -206,7 +206,7 @@ class _PoolVisual extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(LimyeRadius.card),
+      borderRadius: BorderRadius.circular(KooyohRadius.card),
       child: Stack(
         children: [
           Positioned.fill(child: CustomPaint(painter: _PoolMeshPainter())),
@@ -217,13 +217,13 @@ class _PoolVisual extends StatelessWidget {
               padding:
                   const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
-                color: LimyeColors.surface,
-                border: Border.all(color: LimyeColors.border),
+                color: KooyohColors.surface,
+                border: Border.all(color: KooyohColors.border),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(PoolFundingContent.livePreviewEyebrow,
-                  style: LimyeTextStyles.captionBold(
-                      color: LimyeColors.textBody)),
+                  style: KooyohTextStyles.captionBold(
+                      color: KooyohColors.textBody)),
             ),
           ),
           Center(
@@ -231,16 +231,16 @@ class _PoolVisual extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(PoolFundingContent.totalPooledLabel,
-                    style: LimyeTextStyles.captionBold(
-                        color: LimyeColors.textBody)),
+                    style: KooyohTextStyles.captionBold(
+                        color: KooyohColors.textBody)),
                 const SizedBox(height: 6),
                 Text(CommonContent.emDash,
-                    style: LimyeTextStyles.hero()
+                    style: KooyohTextStyles.hero()
                         .copyWith(fontSize: 48, height: 1.0)),
                 const SizedBox(height: 2),
                 Text(PoolFundingContent.hlioTicker,
-                    style: LimyeTextStyles.body(
-                        color: LimyeColors.textBody)),
+                    style: KooyohTextStyles.body(
+                        color: KooyohColors.textBody)),
               ],
             ),
           ),
@@ -254,7 +254,7 @@ class _PoolMeshPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = LimyeColors.border
+      ..color = KooyohColors.border
       ..strokeWidth = 1.0
       ..style = PaintingStyle.stroke;
     const step = 28.0;
@@ -266,7 +266,7 @@ class _PoolMeshPainter extends CustomPainter {
     }
     // Diagonals
     final diag = Paint()
-      ..color = LimyeColors.accent
+      ..color = KooyohColors.accent
       ..strokeWidth = 1.0
       ..style = PaintingStyle.stroke;
     canvas.drawLine(
@@ -295,12 +295,12 @@ class _StatsStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-          horizontal: LimyeSpacing.lg,
-          vertical: LimyeSpacing.md),
+          horizontal: KooyohSpacing.lg,
+          vertical: KooyohSpacing.md),
       decoration: BoxDecoration(
-        color: LimyeColors.surface,
-        border: Border.all(color: LimyeColors.border),
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
+        color: KooyohColors.surface,
+        border: Border.all(color: KooyohColors.border),
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
       ),
       child: LayoutBuilder(builder: (context, c) {
         final isWide = c.hasBoundedWidth && c.maxWidth > 720;
@@ -318,7 +318,7 @@ class _StatsStrip extends StatelessWidget {
                         height: 36,
                         child: VerticalDivider(width: 1),
                       ),
-                      const SizedBox(width: LimyeSpacing.md),
+                      const SizedBox(width: KooyohSpacing.md),
                     ],
                     Expanded(child: children[i]),
                   ],
@@ -330,7 +330,7 @@ class _StatsStrip extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: children
-              .expand((w) => [w, const SizedBox(height: LimyeSpacing.sm)])
+              .expand((w) => [w, const SizedBox(height: KooyohSpacing.sm)])
               .take(children.length * 2 - 1)
               .toList(),
         );
@@ -351,10 +351,10 @@ class _StatItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label.toUpperCase(),
-            style: LimyeTextStyles.captionBold(
-                color: LimyeColors.textBody)),
+            style: KooyohTextStyles.captionBold(
+                color: KooyohColors.textBody)),
         const SizedBox(height: 4),
-        Text(value, style: LimyeTextStyles.cardHeading()),
+        Text(value, style: KooyohTextStyles.cardHeading()),
       ],
     );
   }
@@ -390,11 +390,11 @@ class _HowPoolsWork extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(PoolFundingContent.howTitle,
-            style: LimyeTextStyles.sectionHeading()),
-        const SizedBox(height: LimyeSpacing.xs),
+            style: KooyohTextStyles.sectionHeading()),
+        const SizedBox(height: KooyohSpacing.xs),
         Text(PoolFundingContent.howSubtitle,
-            style: LimyeTextStyles.body()),
-        const SizedBox(height: LimyeSpacing.lg),
+            style: KooyohTextStyles.body()),
+        const SizedBox(height: KooyohSpacing.lg),
         Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 400),
@@ -404,7 +404,7 @@ class _HowPoolsWork extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: LimyeSpacing.lg),
+        const SizedBox(height: KooyohSpacing.lg),
         LayoutBuilder(builder: (context, c) {
           final isWide = c.hasBoundedWidth && c.maxWidth > 760;
           if (isWide) {
@@ -415,7 +415,7 @@ class _HowPoolsWork extends StatelessWidget {
                       child: _PoolStepCard(
                           icon: s.$1, title: s.$2, body: s.$3)))
                   .expand((w) =>
-                      [w, const SizedBox(width: LimyeSpacing.gutter)])
+                      [w, const SizedBox(width: KooyohSpacing.gutter)])
                   .take(_steps.length * 2 - 1)
                   .toList(),
             );
@@ -424,7 +424,7 @@ class _HowPoolsWork extends StatelessWidget {
             children: _steps
                 .map((s) =>
                     _PoolStepCard(icon: s.$1, title: s.$2, body: s.$3))
-                .expand((w) => [w, const SizedBox(height: LimyeSpacing.md)])
+                .expand((w) => [w, const SizedBox(height: KooyohSpacing.md)])
                 .take(_steps.length * 2 - 1)
                 .toList(),
           );
@@ -445,11 +445,11 @@ class _PoolStepCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(LimyeSpacing.md),
+      padding: const EdgeInsets.all(KooyohSpacing.md),
       decoration: BoxDecoration(
-        color: LimyeColors.surface,
-        border: Border.all(color: LimyeColors.border),
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
+        color: KooyohColors.surface,
+        border: Border.all(color: KooyohColors.border),
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -458,15 +458,15 @@ class _PoolStepCard extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: LimyeColors.surface,
+              color: KooyohColors.surface,
               borderRadius: BorderRadius.circular(999),
             ),
-            child: Icon(icon, size: 20, color: LimyeColors.accent),
+            child: Icon(icon, size: 20, color: KooyohColors.accent),
           ),
-          const SizedBox(height: LimyeSpacing.md),
-          Text(title, style: LimyeTextStyles.cardHeading()),
+          const SizedBox(height: KooyohSpacing.md),
+          Text(title, style: KooyohTextStyles.cardHeading()),
           const SizedBox(height: 6),
-          Text(body, style: LimyeTextStyles.body()),
+          Text(body, style: KooyohTextStyles.body()),
         ],
       ),
     );
@@ -484,11 +484,11 @@ class _ComingSoon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(LimyeSpacing.lg),
+      padding: const EdgeInsets.all(KooyohSpacing.lg),
       decoration: BoxDecoration(
-        color: LimyeColors.surface,
-        border: Border.all(color: LimyeColors.border),
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
+        color: KooyohColors.surface,
+        border: Border.all(color: KooyohColors.border),
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
       ),
       child: LayoutBuilder(builder: (context, c) {
         final isWide = c.hasBoundedWidth && c.maxWidth > 760;
@@ -496,18 +496,18 @@ class _ComingSoon extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(PoolFundingContent.activePoolsTitle,
-                style: LimyeTextStyles.sectionHeading()),
-            const SizedBox(height: LimyeSpacing.xs),
+                style: KooyohTextStyles.sectionHeading()),
+            const SizedBox(height: KooyohSpacing.xs),
             Text(
                 PoolFundingContent.activePoolsBody,
-                style: LimyeTextStyles.body()),
-            const SizedBox(height: LimyeSpacing.md),
+                style: KooyohTextStyles.body()),
+            const SizedBox(height: KooyohSpacing.md),
             Text(
               PoolFundingContent.samplePoolsHint,
-              style: LimyeTextStyles.caption(
-                  color: LimyeColors.textBody),
+              style: KooyohTextStyles.caption(
+                  color: KooyohColors.textBody),
             ),
-            const SizedBox(height: LimyeSpacing.md),
+            const SizedBox(height: KooyohSpacing.md),
             LayoutBuilder(builder: (ctx, bx) {
               final wide = bx.hasBoundedWidth && bx.maxWidth > 520;
               final c1 = _SamplePoolCard(
@@ -527,7 +527,7 @@ class _ComingSoon extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(child: c1),
-                    const SizedBox(width: LimyeSpacing.md),
+                    const SizedBox(width: KooyohSpacing.md),
                     Expanded(child: c2),
                   ],
                 );
@@ -536,7 +536,7 @@ class _ComingSoon extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   c1,
-                  const SizedBox(height: LimyeSpacing.md),
+                  const SizedBox(height: KooyohSpacing.md),
                   c2,
                 ],
               );
@@ -544,18 +544,18 @@ class _ComingSoon extends StatelessWidget {
           ],
         );
         final right = SizedBox(
-          height: LimyeSpacing.buttonHeight,
+          height: KooyohSpacing.buttonHeight,
           child: ElevatedButton(
             onPressed: onJoinWaitlist,
             style: ElevatedButton.styleFrom(
-              backgroundColor: LimyeColors.accent,
+              backgroundColor: KooyohColors.accent,
               foregroundColor: Colors.white,
               elevation: 0,
               shape: const StadiumBorder(),
               padding: const EdgeInsets.symmetric(horizontal: 28),
             ),
             child: Text(PoolFundingContent.notifyMe,
-                style: LimyeTextStyles.bodyBold(color: Colors.white)),
+                style: KooyohTextStyles.bodyBold(color: Colors.white)),
           ),
         );
 
@@ -564,7 +564,7 @@ class _ComingSoon extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(child: left),
-              const SizedBox(width: LimyeSpacing.xl),
+              const SizedBox(width: KooyohSpacing.xl),
               right,
             ],
           );
@@ -573,7 +573,7 @@ class _ComingSoon extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             left,
-            const SizedBox(height: LimyeSpacing.md),
+            const SizedBox(height: KooyohSpacing.md),
             right,
           ],
         );
@@ -598,27 +598,27 @@ class _SamplePoolCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(LimyeSpacing.md),
+      padding: const EdgeInsets.all(KooyohSpacing.md),
       decoration: BoxDecoration(
-        color: LimyeColors.background,
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
-        border: Border.all(color: LimyeColors.border),
+        color: KooyohColors.background,
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
+        border: Border.all(color: KooyohColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: LimyeTextStyles.cardHeading()),
+          Text(title, style: KooyohTextStyles.cardHeading()),
           const SizedBox(height: 4),
-          Text(meta, style: LimyeTextStyles.caption()),
-          const SizedBox(height: LimyeSpacing.sm),
+          Text(meta, style: KooyohTextStyles.caption()),
+          const SizedBox(height: KooyohSpacing.sm),
           Row(
             children: [
               Text(
                 statLabel.toUpperCase(),
-                style: LimyeTextStyles.captionBold().copyWith(fontSize: 10),
+                style: KooyohTextStyles.captionBold().copyWith(fontSize: 10),
               ),
               const SizedBox(width: 8),
-              Text(statValue, style: LimyeTextStyles.data()),
+              Text(statValue, style: KooyohTextStyles.data()),
             ],
           ),
         ],

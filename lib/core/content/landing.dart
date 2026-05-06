@@ -5,7 +5,7 @@ class LandingContent {
   // Pillars section header
   static const programsHeadline = 'Three programs. One network.';
   static const programsSubcopy =
-      'LIMYÈ is more than rooftop design — it\'s a unified '
+      'KOO-YOH is more than rooftop design — it\'s a unified '
       'energy network powered by Helio Coin.';
 
   // Pillar cards
@@ -30,7 +30,7 @@ class LandingContent {
   // Hero
   static const heroTitle = 'Your roof, designed for solar. Free.';
   static const heroBody =
-      'LIMYÈ uses AI to design a complete solar system for your home. '
+      'KOO-YOH uses AI to design a complete solar system for your home. '
       'Enter your address, answer a few questions, and get a permit-ready '
       'plan. No sales call. No pressure. No catch.';
   static const heroAddressLabel = 'ADDRESS';
@@ -40,7 +40,7 @@ class LandingContent {
   static const heroStatLabel = 'Systems designed this month';
   static const heroStatValue = '2,847';
   static const trustedByLine = 'Trusted by solar professionals';
-  static const trustedPlaceholder1 = 'LIMYÈ Solar Co.';
+  static const trustedPlaceholder1 = 'KOO-YOH Solar Co.';
   static const trustedPlaceholder2 = 'SunPeak Installers';
   static const trustedPlaceholder3 = 'GridWise Energy';
   static const trustedPlaceholder4 = 'BrightLine PV';
@@ -66,17 +66,17 @@ class LandingContent {
       'A complete system design with specs, savings, and installer quotes. All free.';
 
   // For business
-  static const forBusinessTitle = 'LIMYÈ for solar businesses';
+  static const forBusinessTitle = 'KOO-YOH for solar businesses';
   static const forBusinessBody =
       'Design systems, manage projects, and close more jobs — all in one free platform.';
   static const forBusinessLearnMore = 'Learn more';
-  static const forBusinessDialogTitle = 'LIMYÈ for businesses';
+  static const forBusinessDialogTitle = 'KOO-YOH for businesses';
   static const forBusinessDialogMessage =
       'The installer and enterprise portal includes CRM, project tracking, and AI design tools. Sign in to explore — full onboarding connects when the backend is live.';
 
   // In-product mockups
-  static const seeLimyeInActionTitle = 'See LIMYÈ NOIR in Action';
-  static const seeLimyeInActionSubtitle =
+  static const seeKooyohInActionTitle = 'See KOO-YOH NOIR in Action';
+  static const seeKooyohInActionSubtitle =
       'Geometric previews of real workflows — chat-first design for homeowners '
       'and operations control for your team.';
   static const mockupHomeownerCaption = 'Homeowner · AI design chat';
@@ -86,11 +86,11 @@ class LandingContent {
   static const featuresSectionTitle = 'Built for accuracy and speed';
   static const featureAiTitle = 'AI-Powered Design';
   static const featureAiBody =
-      'Chat naturally about shading, usage, and goals. LIMYÈ turns the conversation into a validated system layout you can quote from.';
+      'Chat naturally about shading, usage, and goals. KOO-YOH turns the conversation into a validated system layout you can quote from.';
   static const featureAiLink = 'Learn more';
   static const featureAiDialogTitle = 'AI-Powered Design';
   static const featureAiDialogBody =
-      'LIMYÈ guides homeowners through a structured chat so every '
+      'KOO-YOH guides homeowners through a structured chat so every '
       'constraint is captured before the layout engine runs — fewer revisions, '
       'faster sign-off.';
 
@@ -104,7 +104,7 @@ class LandingContent {
   // Social proof
   static const socialProofHeadline = 'Join 500+ solar businesses';
   static const testimonial1Quote =
-      'LIMYÈ NOIR saved us 20 hours a week on designs.';
+      'KOO-YOH NOIR saved us 20 hours a week on designs.';
   static const testimonial1Attribution = '— Alex, SolarPro Installers';
   static const testimonial2Quote =
       'Permit pack quality cut our resubmits in half.';

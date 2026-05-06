@@ -2,8 +2,8 @@
 // Cross-cutting short UI copy: loading, chips, and generic labels.
 
 class CommonContent {
-  static const appName = 'LIMYÈ';
-  static const brandWordmark = 'LIMYÈ';
+  static const appName = 'KOO-YOH';
+  static const brandWordmark = 'KOO-YOH';
 
   static const loadingIndicatorLabel = '';
 

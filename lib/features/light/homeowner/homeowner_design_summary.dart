@@ -1,9 +1,9 @@
-import 'package:limye_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
-import 'package:limye_app/theme/limye_theme.dart';
-import 'package:limye_app/core/models/project.dart';
-import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
-import 'package:limye_app/core/widgets/status_badge.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
+import 'package:kooyoh_app/core/models/project.dart';
+import 'package:kooyoh_app/core/illustrations/geometric_illustrations.dart';
+import 'package:kooyoh_app/core/widgets/status_badge.dart';
 
 class HomeownerDesignSummary extends StatelessWidget {
   final Project? project;
@@ -26,7 +26,7 @@ class HomeownerDesignSummary extends StatelessWidget {
         incentivesText != null && incentivesText.isNotEmpty;
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(LimyeSpacing.gutter),
+      padding: const EdgeInsets.all(KooyohSpacing.gutter),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 1040),
         child: Column(
@@ -37,26 +37,26 @@ class HomeownerDesignSummary extends StatelessWidget {
               onRequestQuote: onRequestQuote,
               onDownload: onDownload,
             ),
-            const SizedBox(height: LimyeSpacing.lg),
+            const SizedBox(height: KooyohSpacing.lg),
             if (showFullProposal) ...[
               Text(
                 HomeownerDesignSummaryContent.proposalTitle,
-                style: LimyeTextStyles.cardHeading(),
+                style: KooyohTextStyles.cardHeading(),
               ),
-              const SizedBox(height: LimyeSpacing.sm),
+              const SizedBox(height: KooyohSpacing.sm),
             ],
             _DesignCanvas(),
-            const SizedBox(height: LimyeSpacing.lg),
+            const SizedBox(height: KooyohSpacing.lg),
             _SystemSpecsCard(project: project),
-            const SizedBox(height: LimyeSpacing.md),
+            const SizedBox(height: KooyohSpacing.md),
             _FinancialCard(project: project),
             if (showIncentives) ...[
-              const SizedBox(height: LimyeSpacing.md),
+              const SizedBox(height: KooyohSpacing.md),
               _IncentivesCard(
                 text: incentivesText,
               ),
             ],
-            const SizedBox(height: LimyeSpacing.md),
+            const SizedBox(height: KooyohSpacing.md),
             _EquipmentCard(),
           ],
         ),
@@ -81,17 +81,17 @@ class _SummaryHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(HomeownerDesignSummaryContent.title,
-                  style: LimyeTextStyles.sectionHeading()),
+                  style: KooyohTextStyles.sectionHeading()),
               if (project != null) ...[
                 const SizedBox(height: 4),
                 Row(
                   children: [
                     const Icon(Icons.location_on_outlined,
-                        size: 14, color: LimyeColors.textCaption),
+                        size: 14, color: KooyohColors.textCaption),
                     const SizedBox(width: 4),
                     Text(project!.address,
-                        style: LimyeTextStyles.body(
-                            color: LimyeColors.textBody)),
+                        style: KooyohTextStyles.body(
+                            color: KooyohColors.textBody)),
                     const SizedBox(width: 12),
                     StatusBadge(status: project!.status),
                   ],
@@ -110,18 +110,18 @@ class _SummaryHeader extends StatelessWidget {
               ),
             const SizedBox(width: 12),
             SizedBox(
-              height: LimyeSpacing.buttonHeight,
+              height: KooyohSpacing.buttonHeight,
               child: ElevatedButton(
                 onPressed: onRequestQuote,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: LimyeColors.accent,
+                  backgroundColor: KooyohColors.accent,
                   foregroundColor: Colors.white,
                   elevation: 0,
                   shape: const StadiumBorder(),
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                 ),
                 child: Text(HomeownerDesignSummaryContent.requestQuotes,
-                    style: LimyeTextStyles.bodyBold(color: Colors.white)),
+                    style: KooyohTextStyles.bodyBold(color: Colors.white)),
               ),
             ),
           ],
@@ -141,17 +141,17 @@ class _ActionBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: LimyeSpacing.buttonHeight,
+      height: KooyohSpacing.buttonHeight,
       child: OutlinedButton.icon(
         onPressed: onTap,
         icon: Icon(icon, size: 16),
         label: Text(label,
             style:
-                LimyeTextStyles.body(color: LimyeColors.textPrimary)
+                KooyohTextStyles.body(color: KooyohColors.textPrimary)
                     .copyWith(fontWeight: FontWeight.w500, fontSize: 14)),
         style: OutlinedButton.styleFrom(
-          foregroundColor: LimyeColors.textPrimary,
-          side: const BorderSide(color: LimyeColors.border),
+          foregroundColor: KooyohColors.textPrimary,
+          side: const BorderSide(color: KooyohColors.border),
           shape: const StadiumBorder(),
           padding: const EdgeInsets.symmetric(horizontal: 20),
         ),
@@ -167,9 +167,9 @@ class _DesignCanvas extends StatelessWidget {
       width: double.infinity,
       height: 340,
       decoration: BoxDecoration(
-        color: LimyeColors.surface,
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
-        border: Border.all(color: LimyeColors.border),
+        color: KooyohColors.surface,
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
+        border: Border.all(color: KooyohColors.border),
       ),
       child: Stack(
         children: [
@@ -180,18 +180,18 @@ class _DesignCanvas extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
-                color: LimyeColors.surface,
+                color: KooyohColors.surface,
                 borderRadius: BorderRadius.circular(999),
-                border: Border.all(color: LimyeColors.border),
+                border: Border.all(color: KooyohColors.border),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Icon(Icons.architecture,
-                      size: 12, color: LimyeColors.textCaption),
+                      size: 12, color: KooyohColors.textCaption),
                   const SizedBox(width: 4),
                   Text(HomeownerDesignSummaryContent.rooftopView,
-                      style: LimyeTextStyles.caption()
+                      style: KooyohTextStyles.caption()
                           .copyWith(fontSize: 11)),
                 ],
               ),
@@ -203,10 +203,10 @@ class _DesignCanvas extends StatelessWidget {
             child: Wrap(
               spacing: 8,
               children: [
-                _LegendChip(color: LimyeColors.green, label: HomeownerDesignSummaryContent.legendActive),
+                _LegendChip(color: KooyohColors.green, label: HomeownerDesignSummaryContent.legendActive),
                 _LegendChip(
-                    color: LimyeColors.accent, label: HomeownerDesignSummaryContent.legendPartial),
-                _LegendChip(color: LimyeColors.border, label: HomeownerDesignSummaryContent.legendUnused),
+                    color: KooyohColors.accent, label: HomeownerDesignSummaryContent.legendPartial),
+                _LegendChip(color: KooyohColors.border, label: HomeownerDesignSummaryContent.legendUnused),
               ],
             ),
           ),
@@ -227,9 +227,9 @@ class _LegendChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: LimyeColors.surface,
+        color: KooyohColors.surface,
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: LimyeColors.border),
+        border: Border.all(color: KooyohColors.border),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -240,7 +240,7 @@ class _LegendChip extends StatelessWidget {
               decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
           const SizedBox(width: 5),
           Text(label,
-              style: LimyeTextStyles.caption().copyWith(fontSize: 10)),
+              style: KooyohTextStyles.caption().copyWith(fontSize: 10)),
         ],
       ),
     );
@@ -275,12 +275,12 @@ class _SystemSpecsCard extends StatelessWidget {
           (HomeownerDesignSummaryContent.specSystemType, project?.type.label ?? CommonContent.emDash),
         ];
         return Wrap(
-          spacing: LimyeSpacing.md,
-          runSpacing: LimyeSpacing.md,
+          spacing: KooyohSpacing.md,
+          runSpacing: KooyohSpacing.md,
           children: specs
               .map((s) => SizedBox(
                     width: (constraints.maxWidth -
-                            LimyeSpacing.md * (colCount - 1)) /
+                            KooyohSpacing.md * (colCount - 1)) /
                         colCount,
                     child: _SpecItem(label: s.$1, value: s.$2),
                   ))
@@ -307,21 +307,21 @@ class _FinancialCard extends StatelessWidget {
             project?.yearOneSavings != null
                 ? '\$${project!.yearOneSavings!.toStringAsFixed(0)}'
                 : CommonContent.emDash,
-            LimyeColors.green
+            KooyohColors.green
           ),
           (
             HomeownerDesignSummaryContent.fin25YearSavings,
             project?.yearOneSavings != null
                 ? '\$${(project!.yearOneSavings! * 25 * 1.02).toStringAsFixed(0)}'
                 : CommonContent.emDash,
-            LimyeColors.green
+            KooyohColors.green
           ),
           (
             HomeownerDesignSummaryContent.finEstPayback,
             project?.estimatedPaybackYears != null
                 ? '${project!.estimatedPaybackYears!.toStringAsFixed(1)} years'
                 : HomeownerDesignSummaryContent.finEstPaybackExample,
-            LimyeColors.textPrimary,
+            KooyohColors.textPrimary,
           ),
         ];
         return Row(
@@ -338,9 +338,9 @@ class _FinancialCard extends StatelessWidget {
                       Container(
                         width: 1,
                         height: 48,
-                        color: LimyeColors.border,
+                        color: KooyohColors.border,
                         margin: const EdgeInsets.symmetric(
-                            horizontal: LimyeSpacing.md),
+                            horizontal: KooyohSpacing.md),
                       ),
                   ])
               .toList(),
@@ -359,7 +359,7 @@ class _IncentivesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _SectionCard(
       title: HomeownerDesignSummaryContent.incentivesTitle,
-      child: Text(text, style: LimyeTextStyles.body()),
+      child: Text(text, style: KooyohTextStyles.body()),
     );
   }
 }
@@ -376,13 +376,13 @@ class _EquipmentCard extends StatelessWidget {
             category: HomeownerDesignSummaryContent.equipPanelsCategory,
             detail: HomeownerDesignSummaryContent.equipPanelsDetail,
           ),
-          const Divider(height: LimyeSpacing.md),
+          const Divider(height: KooyohSpacing.md),
           _EquipmentRow(
             icon: Icons.electrical_services_outlined,
             category: HomeownerDesignSummaryContent.equipInverterCategory,
             detail: HomeownerDesignSummaryContent.equipInverterDetail,
           ),
-          const Divider(height: LimyeSpacing.md),
+          const Divider(height: KooyohSpacing.md),
           _EquipmentRow(
             icon: Icons.monitor_outlined,
             category: HomeownerDesignSummaryContent.equipMonitoringCategory,
@@ -413,11 +413,11 @@ class _EquipmentRow extends StatelessWidget {
           width: 36,
           height: 36,
           decoration: BoxDecoration(
-            color: LimyeColors.surface,
-            borderRadius: BorderRadius.circular(LimyeRadius.sm),
-            border: Border.all(color: LimyeColors.border),
+            color: KooyohColors.surface,
+            borderRadius: BorderRadius.circular(KooyohRadius.sm),
+            border: Border.all(color: KooyohColors.border),
           ),
-          child: Icon(icon, size: 18, color: LimyeColors.textBody),
+          child: Icon(icon, size: 18, color: KooyohColors.textBody),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -425,10 +425,10 @@ class _EquipmentRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(category,
-                  style: LimyeTextStyles.body(
-                          color: LimyeColors.textPrimary)
+                  style: KooyohTextStyles.body(
+                          color: KooyohColors.textPrimary)
                       .copyWith(fontWeight: FontWeight.w600, fontSize: 14)),
-              Text(detail, style: LimyeTextStyles.caption()),
+              Text(detail, style: KooyohTextStyles.caption()),
             ],
           ),
         ),
@@ -447,19 +447,19 @@ class _SectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(LimyeSpacing.md),
+      padding: const EdgeInsets.all(KooyohSpacing.md),
       decoration: BoxDecoration(
-        color: LimyeColors.surface,
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
-        border: Border.all(color: LimyeColors.border),
+        color: KooyohColors.surface,
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
+        border: Border.all(color: KooyohColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: LimyeTextStyles.cardHeading()),
-          const SizedBox(height: LimyeSpacing.sm),
+          Text(title, style: KooyohTextStyles.cardHeading()),
+          const SizedBox(height: KooyohSpacing.sm),
           const Divider(),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           child,
         ],
       ),
@@ -480,11 +480,11 @@ class _SpecItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label.toUpperCase(),
-            style: LimyeTextStyles.captionBold().copyWith(fontSize: 10)),
+            style: KooyohTextStyles.captionBold().copyWith(fontSize: 10)),
         const SizedBox(height: 4),
         Text(value,
-            style: LimyeTextStyles.dataLarge(
-                    color: valueColor ?? LimyeColors.textPrimary)
+            style: KooyohTextStyles.dataLarge(
+                    color: valueColor ?? KooyohColors.textPrimary)
                 .copyWith(fontSize: 18)),
       ],
     );

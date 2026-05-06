@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/models/solar_estimate_presentation.dart';
-import 'package:limye_app/theme/limye_theme.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/models/solar_estimate_presentation.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 
 /// Scrollable anonymous estimate breakdown (premium, border-only surfaces).
 class SolarEstimateSummaryView extends StatelessWidget {
@@ -32,31 +32,31 @@ class SolarEstimateSummaryView extends StatelessWidget {
 
     Widget sectionTitle(String title) {
       return Padding(
-        padding: const EdgeInsets.only(bottom: LimyeSpacing.sm),
+        padding: const EdgeInsets.only(bottom: KooyohSpacing.sm),
         child: Text(
           title,
-          style: LimyeTextStyles.bodyBold(color: context.colors.onSurface),
+          style: KooyohTextStyles.bodyBold(color: context.colors.onSurface),
         ),
       );
     }
 
     Widget metricRow(String label, String value) {
       return Padding(
-        padding: const EdgeInsets.only(bottom: LimyeSpacing.xs),
+        padding: const EdgeInsets.only(bottom: KooyohSpacing.xs),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: Text(
                 label,
-                style: LimyeTextStyles.caption(
+                style: KooyohTextStyles.caption(
                   color: context.colors.onSurfaceMuted,
                 ),
               ),
             ),
             Text(
               value,
-              style: LimyeTextStyles.data(color: context.colors.onSurface),
+              style: KooyohTextStyles.data(color: context.colors.onSurface),
             ),
           ],
         ),
@@ -70,10 +70,10 @@ class SolarEstimateSummaryView extends StatelessWidget {
     Widget cardWrap({required Widget child}) {
       return Container(
         width: double.infinity,
-        padding: const EdgeInsets.all(LimyeSpacing.md),
+        padding: const EdgeInsets.all(KooyohSpacing.md),
         decoration: BoxDecoration(
           color: context.colors.surface,
-          borderRadius: BorderRadius.circular(LimyeRadius.md),
+          borderRadius: BorderRadius.circular(KooyohRadius.md),
           border: Border.all(color: outline, width: 1),
         ),
         child: child,
@@ -94,11 +94,11 @@ class SolarEstimateSummaryView extends StatelessWidget {
           children: [
             Text(
               DesignEstimateChatContent.yourSolarEstimateTitle,
-              style: LimyeTextStyles.cardHeading(
+              style: KooyohTextStyles.cardHeading(
                 color: context.colors.onSurface,
               ),
             ),
-            SizedBox(height: LimyeSpacing.sm + LimyeSpacing.xs / 4),
+            SizedBox(height: KooyohSpacing.sm + KooyohSpacing.xs / 4),
             sectionTitle(DesignEstimateChatContent.designSummarySection),
             cardWrap(
               child: Column(
@@ -119,7 +119,7 @@ class SolarEstimateSummaryView extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: LimyeSpacing.md),
+            SizedBox(height: KooyohSpacing.md),
             sectionTitle(DesignEstimateChatContent.costBreakdownTitle),
             cardWrap(
               child: Column(
@@ -127,7 +127,7 @@ class SolarEstimateSummaryView extends StatelessWidget {
                 children: [
                   moneyRow(DesignEstimateChatContent.totalSystemCost,
                       p.totalSystemCostUsd),
-                  const SizedBox(height: LimyeSpacing.xs),
+                  const SizedBox(height: KooyohSpacing.xs),
                   moneyRow(DesignEstimateChatContent.equipmentCost,
                       p.equipmentCostUsd),
                   moneyRow(
@@ -137,7 +137,7 @@ class SolarEstimateSummaryView extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: LimyeSpacing.md),
+            SizedBox(height: KooyohSpacing.md),
             sectionTitle(DesignEstimateChatContent.savingsSection),
             cardWrap(
               child: Column(
@@ -149,7 +149,7 @@ class SolarEstimateSummaryView extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: LimyeSpacing.md),
+            SizedBox(height: KooyohSpacing.md),
             sectionTitle(DesignEstimateChatContent.incentivesSection),
             cardWrap(
               child: Column(
@@ -159,20 +159,20 @@ class SolarEstimateSummaryView extends StatelessWidget {
                     InteractiveCanvasContent.incentiveFederalItc,
                     p.federalItcUsd,
                   ),
-                  SizedBox(height: LimyeSpacing.sm),
+                  SizedBox(height: KooyohSpacing.sm),
                   Text(
                     p.stateLocalNote,
-                    style: LimyeTextStyles.caption(
+                    style: KooyohTextStyles.caption(
                       color: context.colors.onSurfaceMuted,
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: LimyeSpacing.md + LimyeSpacing.xs / 2),
+            SizedBox(height: KooyohSpacing.md + KooyohSpacing.xs / 2),
             Text(
               DesignEstimateChatContent.disclaimer,
-              style: LimyeTextStyles.caption(
+              style: KooyohTextStyles.caption(
                 color: context.colors.onSurfaceMuted,
               ),
             ),

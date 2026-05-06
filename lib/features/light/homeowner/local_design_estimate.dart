@@ -1,5 +1,5 @@
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/models/project.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/models/project.dart';
 
 /// Lightweight sizing/savings estimate for anonymous preview (no API).
 Project buildLocalPreviewProject({

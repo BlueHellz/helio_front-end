@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/models/solar_design_data.dart';
-import 'package:limye_app/core/solar/solar_design_calculator.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/models/solar_design_data.dart';
+import 'package:kooyoh_app/core/solar/solar_design_calculator.dart';
 
 double? _readDouble(dynamic v) {
   if (v is num) return v.toDouble();

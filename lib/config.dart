@@ -1,4 +1,4 @@
-class BlackLightConfig {
+class KooyohConfig {
   /// When true, matches backend `BYPASS_AUTH`: missing API role defaults to installer/org routing.
   /// Set to `false` in production together with backend bypass off.
   static const bool bypassMode = false;
@@ -13,11 +13,12 @@ class BlackLightConfig {
         58,
         47,
         47,
-        108,
-        105,
-        109,
+        107,
+        111,
+        111,
         121,
-        101,
+        111,
+        104,
         45,
         97,
         112,

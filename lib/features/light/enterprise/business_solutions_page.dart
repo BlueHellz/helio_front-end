@@ -2,9 +2,9 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/shell/web/homeowner_web_chrome.dart';
-import 'package:limye_app/theme/limye_theme.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/shell/web/homeowner_web_chrome.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 
 /// Business Solutions marketing (`/enterprise`): Stitch body only — no extra chrome.
 class BusinessSolutionsPage extends StatefulWidget {
@@ -77,13 +77,13 @@ class _PageSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: LimyeSpacing.gutter,
-        vertical: LimyeSpacing.sectionPaddingVertical,
+        horizontal: KooyohSpacing.gutter,
+        vertical: KooyohSpacing.sectionPaddingVertical,
       ),
       child: Center(
         child: ConstrainedBox(
           constraints:
-              const BoxConstraints(maxWidth: LimyeSpacing.containerMax),
+              const BoxConstraints(maxWidth: KooyohSpacing.containerMax),
           child: child,
         ),
       ),
@@ -120,10 +120,10 @@ class _HeroArea extends StatelessWidget {
                   width: desiredWidth,
                   height: desiredHeight,
                   decoration: BoxDecoration(
-                    color: LimyeColors.accent.withOpacity(0.08),
+                    color: KooyohColors.accent.withOpacity(0.08),
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: LimyeColors.accent.withOpacity(0.15),
+                      color: KooyohColors.accent.withOpacity(0.15),
                       width: 1,
                     ),
                   ),
@@ -135,7 +135,7 @@ class _HeroArea extends StatelessWidget {
                   width: desiredWidth,
                   height: desiredHeight,
                   decoration: BoxDecoration(
-                    border: Border.all(color: LimyeColors.outline, width: 1),
+                    border: Border.all(color: KooyohColors.outline, width: 1),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Image.asset(
@@ -165,34 +165,34 @@ class _HeroArea extends StatelessWidget {
       children: [
         Text(
           BusinessSolutionsContent.heroTitle,
-          style: LimyeTextStyles.hero(color: context.colors.onSurface),
+          style: KooyohTextStyles.hero(color: context.colors.onSurface),
         ),
-        const SizedBox(height: LimyeSpacing.sm),
+        const SizedBox(height: KooyohSpacing.sm),
         Text(
           BusinessSolutionsContent.heroSubtitle,
-          style: LimyeTextStyles.body(color: context.colors.onSurface),
+          style: KooyohTextStyles.body(color: context.colors.onSurface),
         ),
-        const SizedBox(height: LimyeSpacing.md),
+        const SizedBox(height: KooyohSpacing.md),
         Wrap(
-          spacing: LimyeSpacing.sm,
-          runSpacing: LimyeSpacing.sm,
+          spacing: KooyohSpacing.sm,
+          runSpacing: KooyohSpacing.sm,
           children: [
             FilledButton(
               onPressed: onPrimaryCta,
               style: FilledButton.styleFrom(
                 backgroundColor: context.colors.primary,
                 foregroundColor: context.colors.onPrimary,
-                minimumSize: const Size(LimyeSpacing.tapTarget, 48),
+                minimumSize: const Size(KooyohSpacing.tapTarget, 48),
                 padding:
-                    const EdgeInsets.symmetric(horizontal: LimyeSpacing.md),
+                    const EdgeInsets.symmetric(horizontal: KooyohSpacing.md),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(LimyeRadius.md),
+                  borderRadius: BorderRadius.circular(KooyohRadius.md),
                 ),
               ),
               child: Text(
                 BusinessSolutionsContent.heroPrimaryCta,
                 style:
-                    LimyeTextStyles.bodyBold(color: context.colors.onPrimary),
+                    KooyohTextStyles.bodyBold(color: context.colors.onPrimary),
               ),
             ),
             FilledButton(
@@ -201,17 +201,17 @@ class _HeroArea extends StatelessWidget {
                 backgroundColor: context.colors.surfaceMuted,
                 foregroundColor: context.colors.onSurface,
                 elevation: 0,
-                minimumSize: const Size(LimyeSpacing.tapTarget, 48),
+                minimumSize: const Size(KooyohSpacing.tapTarget, 48),
                 padding:
-                    const EdgeInsets.symmetric(horizontal: LimyeSpacing.md),
+                    const EdgeInsets.symmetric(horizontal: KooyohSpacing.md),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(LimyeRadius.md),
+                  borderRadius: BorderRadius.circular(KooyohRadius.md),
                 ),
               ),
               child: Text(
                 BusinessSolutionsContent.heroSecondaryCta,
                 style:
-                    LimyeTextStyles.bodyBold(color: context.colors.onSurface),
+                    KooyohTextStyles.bodyBold(color: context.colors.onSurface),
               ),
             ),
           ],
@@ -231,7 +231,7 @@ class _HeroArea extends StatelessWidget {
                   flex: 52,
                   child: image,
                 ),
-                const SizedBox(width: LimyeSpacing.lg),
+                const SizedBox(width: KooyohSpacing.lg),
                 Expanded(
                   flex: 48,
                   child: copy,
@@ -243,7 +243,7 @@ class _HeroArea extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               image,
-              const SizedBox(height: LimyeSpacing.lg),
+              const SizedBox(height: KooyohSpacing.lg),
               copy,
             ],
           );
@@ -283,20 +283,20 @@ class _ProblemSection extends StatelessWidget {
           Text(
             BusinessSolutionsContent.problemsSectionTitle,
             textAlign: TextAlign.center,
-            style: LimyeTextStyles.sectionHeading(
+            style: KooyohTextStyles.sectionHeading(
               color: context.colors.onSurface,
             ),
           ),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           Text(
             BusinessSolutionsContent.problemsSectionSubtitle,
             textAlign: TextAlign.center,
-            style: LimyeTextStyles.body(color: context.colors.onSurface),
+            style: KooyohTextStyles.body(color: context.colors.onSurface),
           ),
-          const SizedBox(height: LimyeSpacing.xl),
+          const SizedBox(height: KooyohSpacing.xl),
           LayoutBuilder(
             builder: (context, constraints) {
-              final gap = LimyeSpacing.cardGap;
+              final gap = KooyohSpacing.cardGap;
               final w = constraints.maxWidth;
               final rowOfThree = w >= _kSectionCardMaxWidth * 3 + gap * 2;
               List<Widget> tiles(bool stretch) => [
@@ -380,20 +380,20 @@ class _HowItWorksSection extends StatelessWidget {
           Text(
             BusinessSolutionsContent.howSectionTitle,
             textAlign: TextAlign.center,
-            style: LimyeTextStyles.sectionHeading(
+            style: KooyohTextStyles.sectionHeading(
               color: context.colors.onSurface,
             ),
           ),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           Text(
             BusinessSolutionsContent.howSectionSubtitle,
             textAlign: TextAlign.center,
-            style: LimyeTextStyles.body(color: context.colors.onSurface),
+            style: KooyohTextStyles.body(color: context.colors.onSurface),
           ),
-          const SizedBox(height: LimyeSpacing.xl),
+          const SizedBox(height: KooyohSpacing.xl),
           LayoutBuilder(
             builder: (context, constraints) {
-              final gap = LimyeSpacing.cardGap;
+              final gap = KooyohSpacing.cardGap;
               final w = constraints.maxWidth;
               final rowOfThree = w >= _kSectionCardMaxWidth * 3 + gap * 2;
               List<Widget> tiles(bool stretch) => [
@@ -501,7 +501,7 @@ class _FeaturesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gap = LimyeSpacing.cardGap;
+    final gap = KooyohSpacing.cardGap;
     final items = _items;
 
     return _PageSection(
@@ -511,17 +511,17 @@ class _FeaturesSection extends StatelessWidget {
           Text(
             BusinessSolutionsContent.featuresSectionTitle,
             textAlign: TextAlign.center,
-            style: LimyeTextStyles.sectionHeading(
+            style: KooyohTextStyles.sectionHeading(
               color: context.colors.onSurface,
             ),
           ),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           Text(
             BusinessSolutionsContent.featuresSectionSubtitle,
             textAlign: TextAlign.center,
-            style: LimyeTextStyles.body(color: context.colors.onSurface),
+            style: KooyohTextStyles.body(color: context.colors.onSurface),
           ),
-          const SizedBox(height: LimyeSpacing.xl),
+          const SizedBox(height: KooyohSpacing.xl),
           LayoutBuilder(
             builder: (context, c) {
               final twoCol = c.maxWidth > 720;
@@ -594,12 +594,12 @@ class _SmallInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: LimyeSpacing.cardPadding,
-        vertical: LimyeSpacing.cardPadding,
+        horizontal: KooyohSpacing.cardPadding,
+        vertical: KooyohSpacing.cardPadding,
       ),
       decoration: BoxDecoration(
         color: context.colors.surface,
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
         border: Border.all(color: context.colors.outline, width: 1),
       ),
       child: Column(
@@ -607,15 +607,15 @@ class _SmallInfoCard extends StatelessWidget {
         mainAxisSize: stretchInColumn ? MainAxisSize.max : MainAxisSize.min,
         children: [
           Icon(icon, size: 24, color: context.colors.onSurface),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           Text(
             title,
-            style: LimyeTextStyles.bodyBold(color: context.colors.onSurface),
+            style: KooyohTextStyles.bodyBold(color: context.colors.onSurface),
           ),
-          const SizedBox(height: LimyeSpacing.xs / 2),
+          const SizedBox(height: KooyohSpacing.xs / 2),
           Text(
             caption,
-            style: LimyeTextStyles.caption(
+            style: KooyohTextStyles.caption(
               color: context.colors.onSurfaceMuted,
             ),
           ),
@@ -662,7 +662,7 @@ class _FeatureInteractCardState extends State<_FeatureInteractCard> {
           duration: const Duration(milliseconds: 180),
           curve: Curves.easeOutCubic,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(LimyeRadius.card),
+            borderRadius: BorderRadius.circular(KooyohRadius.card),
             boxShadow: _elevated
                 ? const [
                     BoxShadow(
@@ -681,11 +681,11 @@ class _FeatureInteractCardState extends State<_FeatureInteractCard> {
             shadowColor: Colors.transparent,
             color: context.colors.surface,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(LimyeRadius.card),
+              borderRadius: BorderRadius.circular(KooyohRadius.card),
               side: BorderSide(color: context.colors.outline, width: 1),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(LimyeSpacing.cardPadding),
+              padding: const EdgeInsets.all(KooyohSpacing.cardPadding),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -695,17 +695,17 @@ class _FeatureInteractCardState extends State<_FeatureInteractCard> {
                     size: 24,
                     color: context.colors.onSurface,
                   ),
-                  const SizedBox(height: LimyeSpacing.sm),
+                  const SizedBox(height: KooyohSpacing.sm),
                   Text(
                     widget.title,
-                    style: LimyeTextStyles.bodyBold(
+                    style: KooyohTextStyles.bodyBold(
                       color: context.colors.onSurface,
                     ),
                   ),
-                  const SizedBox(height: LimyeSpacing.xs / 2),
+                  const SizedBox(height: KooyohSpacing.xs / 2),
                   Text(
                     widget.caption,
-                    style: LimyeTextStyles.caption(
+                    style: KooyohTextStyles.caption(
                       color: context.colors.onSurfaceMuted,
                     ),
                   ),
@@ -739,27 +739,27 @@ class _ComparisonSection extends StatelessWidget {
             child: Text(
               BusinessSolutionsContent.compareSectionTitle,
               textAlign: TextAlign.center,
-              style: LimyeTextStyles.sectionHeading(
+              style: KooyohTextStyles.sectionHeading(
                 color: context.colors.onSurface,
               ),
             ),
           ),
-          const SizedBox(height: LimyeSpacing.xl),
+          const SizedBox(height: KooyohSpacing.xl),
           LayoutBuilder(
             builder: (context, c) {
               final wide = c.maxWidth > 720;
               final free = _PricingCard(
                 fillBottom: wide,
-                name: BusinessSolutionsContent.compareLimyeName,
-                tagline: BusinessSolutionsContent.compareLimyeTagline,
-                priceLabel: BusinessSolutionsContent.compareLimyePrice,
+                name: BusinessSolutionsContent.compareKooyohName,
+                tagline: BusinessSolutionsContent.compareKooyohTagline,
+                priceLabel: BusinessSolutionsContent.compareKooyohPrice,
                 bullets: const [
-                  BusinessSolutionsContent.compareLimyeBullet1,
-                  BusinessSolutionsContent.compareLimyeBullet2,
-                  BusinessSolutionsContent.compareLimyeBullet3,
+                  BusinessSolutionsContent.compareKooyohBullet1,
+                  BusinessSolutionsContent.compareKooyohBullet2,
+                  BusinessSolutionsContent.compareKooyohBullet3,
                 ],
                 primary: true,
-                ctaLabel: BusinessSolutionsContent.compareLimyeCta,
+                ctaLabel: BusinessSolutionsContent.compareKooyohCta,
                 onCta: onEnterprise,
               );
               final noir = _PricingCard(
@@ -783,7 +783,7 @@ class _ComparisonSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Expanded(child: free),
-                      SizedBox(width: LimyeSpacing.gutter),
+                      SizedBox(width: KooyohSpacing.gutter),
                       Expanded(child: noir),
                     ],
                   ),
@@ -793,7 +793,7 @@ class _ComparisonSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   free,
-                  SizedBox(height: LimyeSpacing.gutter),
+                  SizedBox(height: KooyohSpacing.gutter),
                   noir,
                 ],
               );
@@ -829,10 +829,10 @@ class _PricingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(LimyeSpacing.lg),
+      padding: const EdgeInsets.all(KooyohSpacing.lg),
       decoration: BoxDecoration(
         color: context.colors.surface,
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
         border: Border.all(color: context.colors.outline, width: 1),
       ),
       child: Column(
@@ -840,22 +840,22 @@ class _PricingCard extends StatelessWidget {
         children: [
           Text(
             name,
-            style: LimyeTextStyles.cardHeading(color: context.colors.onSurface),
+            style: KooyohTextStyles.cardHeading(color: context.colors.onSurface),
           ),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           Text(
             tagline,
-            style: LimyeTextStyles.body(color: context.colors.onSurfaceMuted),
+            style: KooyohTextStyles.body(color: context.colors.onSurfaceMuted),
           ),
-          const SizedBox(height: LimyeSpacing.md),
+          const SizedBox(height: KooyohSpacing.md),
           Text(
             priceLabel,
-            style: LimyeTextStyles.hero(color: context.colors.onSurface),
+            style: KooyohTextStyles.hero(color: context.colors.onSurface),
           ),
-          const SizedBox(height: LimyeSpacing.md),
+          const SizedBox(height: KooyohSpacing.md),
           ...bullets.map(
             (b) => Padding(
-              padding: const EdgeInsets.only(bottom: LimyeSpacing.sm),
+              padding: const EdgeInsets.only(bottom: KooyohSpacing.sm),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -864,11 +864,11 @@ class _PricingCard extends StatelessWidget {
                     size: 22,
                     color: context.colors.primary,
                   ),
-                  const SizedBox(width: LimyeSpacing.sm),
+                  const SizedBox(width: KooyohSpacing.sm),
                   Expanded(
                     child: Text(
                       b,
-                      style: LimyeTextStyles.body(
+                      style: KooyohTextStyles.body(
                         color: context.colors.onSurface,
                       ),
                     ),
@@ -878,10 +878,10 @@ class _PricingCard extends StatelessWidget {
             ),
           ),
           if (fillBottom) const Spacer(),
-          if (!fillBottom) const SizedBox(height: LimyeSpacing.md),
+          if (!fillBottom) const SizedBox(height: KooyohSpacing.md),
           if (primary)
             SizedBox(
-              height: LimyeSpacing.buttonHeight,
+              height: KooyohSpacing.buttonHeight,
               child: FilledButton(
                 onPressed: onCta,
                 style: FilledButton.styleFrom(
@@ -892,13 +892,13 @@ class _PricingCard extends StatelessWidget {
                 child: Text(
                   ctaLabel,
                   style:
-                      LimyeTextStyles.bodyBold(color: context.colors.onPrimary),
+                      KooyohTextStyles.bodyBold(color: context.colors.onPrimary),
                 ),
               ),
             )
           else
             SizedBox(
-              height: LimyeSpacing.buttonHeight,
+              height: KooyohSpacing.buttonHeight,
               child: OutlinedButton(
                 onPressed: onCta,
                 style: OutlinedButton.styleFrom(
@@ -909,7 +909,7 @@ class _PricingCard extends StatelessWidget {
                 child: Text(
                   ctaLabel,
                   style:
-                      LimyeTextStyles.bodyBold(color: context.colors.primary),
+                      KooyohTextStyles.bodyBold(color: context.colors.primary),
                 ),
               ),
             ),
@@ -945,11 +945,11 @@ class _TestimonialsSection extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: LimyeSpacing.lg),
+            padding: const EdgeInsets.only(bottom: KooyohSpacing.lg),
             child: Text(
               BusinessSolutionsContent.testimonialsSectionTitle,
               textAlign: TextAlign.center,
-              style: LimyeTextStyles.sectionHeading(
+              style: KooyohTextStyles.sectionHeading(
                 color: context.colors.onSurface,
               ),
             ),
@@ -957,7 +957,7 @@ class _TestimonialsSection extends StatelessWidget {
           LayoutBuilder(
             builder: (context, c) {
               final wide = c.maxWidth > 720;
-              final gap = LimyeSpacing.gutter;
+              final gap = KooyohSpacing.gutter;
               final items = cards
                   .map(
                     (e) => _TestimonialCard(
@@ -1009,10 +1009,10 @@ class _TestimonialCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(LimyeSpacing.lg),
+      padding: const EdgeInsets.all(KooyohSpacing.lg),
       decoration: BoxDecoration(
         color: context.colors.surface,
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
         border: Border.all(color: context.colors.outline, width: 1),
       ),
       child: Column(
@@ -1028,21 +1028,21 @@ class _TestimonialCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           Text(
             '"$quote"',
-            style: LimyeTextStyles.body(color: context.colors.onSurface),
+            style: KooyohTextStyles.body(color: context.colors.onSurface),
           ),
-          const SizedBox(height: LimyeSpacing.md),
+          const SizedBox(height: KooyohSpacing.md),
           Divider(color: context.colors.outline, height: 1),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           Text(
             name,
-            style: LimyeTextStyles.bodyBold(color: context.colors.onSurface),
+            style: KooyohTextStyles.bodyBold(color: context.colors.onSurface),
           ),
           Text(
             role,
-            style: LimyeTextStyles.caption(
+            style: KooyohTextStyles.caption(
               color: context.colors.onSurfaceMuted,
             ),
           ),
@@ -1063,10 +1063,10 @@ class _FinalCtaSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return _PageSection(
       child: Container(
-        padding: const EdgeInsets.all(LimyeSpacing.xl),
+        padding: const EdgeInsets.all(KooyohSpacing.xl),
         decoration: BoxDecoration(
           color: context.colors.surfaceMuted,
-          borderRadius: BorderRadius.circular(LimyeRadius.card),
+          borderRadius: BorderRadius.circular(KooyohRadius.card),
           border: Border.all(color: context.colors.outline, width: 1),
         ),
         child: Column(
@@ -1075,34 +1075,34 @@ class _FinalCtaSection extends StatelessWidget {
             Text(
               BusinessSolutionsContent.finalCtaTitle,
               textAlign: TextAlign.center,
-              style: LimyeTextStyles.sectionHeading(
+              style: KooyohTextStyles.sectionHeading(
                 color: context.colors.onSurface,
               ),
             ),
-            const SizedBox(height: LimyeSpacing.sm),
+            const SizedBox(height: KooyohSpacing.sm),
             Text(
               BusinessSolutionsContent.finalCtaSubtitle,
               textAlign: TextAlign.center,
-              style: LimyeTextStyles.body(
+              style: KooyohTextStyles.body(
                 color: context.colors.onSurfaceMuted,
               ),
             ),
-            const SizedBox(height: LimyeSpacing.lg),
+            const SizedBox(height: KooyohSpacing.lg),
             SizedBox(
-              height: LimyeSpacing.buttonHeight,
+              height: KooyohSpacing.buttonHeight,
               child: FilledButton(
                 onPressed: onEnterprise,
                 style: FilledButton.styleFrom(
                   backgroundColor: context.colors.primary,
                   foregroundColor: context.colors.onPrimary,
                   padding:
-                      const EdgeInsets.symmetric(horizontal: LimyeSpacing.lg),
+                      const EdgeInsets.symmetric(horizontal: KooyohSpacing.lg),
                   shape: const StadiumBorder(),
                 ),
                 child: Text(
                   BusinessSolutionsContent.finalCtaButton,
                   style:
-                      LimyeTextStyles.bodyBold(color: context.colors.onPrimary),
+                      KooyohTextStyles.bodyBold(color: context.colors.onPrimary),
                 ),
               ),
             ),

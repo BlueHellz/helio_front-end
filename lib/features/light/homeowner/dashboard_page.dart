@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/ui/app_feedback.dart';
-import 'package:limye_app/theme/limye_theme.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/ui/app_feedback.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 
 /// Authenticated homeowner hub: project summary, staged progress, installers,
 /// funding, inspection, documents, and mock messaging.
@@ -192,18 +192,18 @@ class _HomeownerDashboardPageState extends State<HomeownerDashboardPage> {
       builder: (ctx) => AlertDialog(
         title: Text(
           HomeownerProjectDashboardContent.contractDialogTitle,
-          style: LimyeTextStyles.cardHeading(),
+          style: KooyohTextStyles.cardHeading(),
         ),
         content: Text(
           HomeownerProjectDashboardContent.contractMockBody,
-          style: LimyeTextStyles.body(),
+          style: KooyohTextStyles.body(),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
             child: Text(
               ButtonsContent.close,
-              style: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
+              style: KooyohTextStyles.bodyBold(color: KooyohColors.accent),
             ),
           ),
         ],
@@ -217,9 +217,9 @@ class _HomeownerDashboardPageState extends State<HomeownerDashboardPage> {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: LimyeColors.surface,
+      backgroundColor: KooyohColors.surface,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(LimyeRadius.card)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(KooyohRadius.card)),
       ),
       builder: (ctx) {
         return Padding(
@@ -246,7 +246,7 @@ class _HomeownerDashboardPageState extends State<HomeownerDashboardPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(LimyeSpacing.gutter),
+      padding: const EdgeInsets.all(KooyohSpacing.gutter),
       child: Align(
         alignment: Alignment.topCenter,
         child: ConstrainedBox(
@@ -256,29 +256,29 @@ class _HomeownerDashboardPageState extends State<HomeownerDashboardPage> {
             children: [
               Text(
                 HomeownerProjectDashboardContent.pageTitle,
-                style: LimyeTextStyles.sectionHeading(),
+                style: KooyohTextStyles.sectionHeading(),
               ),
-              const SizedBox(height: LimyeSpacing.xs),
+              const SizedBox(height: KooyohSpacing.xs),
               Text(
                 HomeownerProjectDashboardContent.headerSubtitle,
-                style: LimyeTextStyles.body(),
+                style: KooyohTextStyles.body(),
               ),
-              const SizedBox(height: LimyeSpacing.md),
+              const SizedBox(height: KooyohSpacing.md),
               _ProjectOverviewCard(
                 address: HomeownerProjectDashboardContent.mockProjectAddress,
                 systemSize: HomeownerProjectDashboardContent.mockSystemSize,
                 status: _statusLine,
               ),
-              const SizedBox(height: LimyeSpacing.md),
+              const SizedBox(height: KooyohSpacing.md),
               _StageProgressBar(currentIndex: _stageIndex),
-              const SizedBox(height: LimyeSpacing.lg),
+              const SizedBox(height: KooyohSpacing.lg),
               _SectionCard(
                 title: HomeownerProjectDashboardContent.sectionInstallers,
                 child: Column(
                   children: _installers
                       .map(
                         (i) => Padding(
-                          padding: const EdgeInsets.only(bottom: LimyeSpacing.sm),
+                          padding: const EdgeInsets.only(bottom: KooyohSpacing.sm),
                           child: _InstallerCard(
                             option: i,
                             selected: _installerId == i.id,
@@ -298,7 +298,7 @@ class _HomeownerDashboardPageState extends State<HomeownerDashboardPage> {
                   children: _fundingOptions
                       .map(
                         (f) => Padding(
-                          padding: const EdgeInsets.only(bottom: LimyeSpacing.sm),
+                          padding: const EdgeInsets.only(bottom: KooyohSpacing.sm),
                           child: _FundingCard(
                             option: f,
                             selected: _fundingId == f.id,
@@ -342,7 +342,7 @@ class _HomeownerDashboardPageState extends State<HomeownerDashboardPage> {
                       enabled: true,
                       onDownload: () => _mockDownload(context),
                     ),
-                    const Divider(height: LimyeSpacing.md),
+                    const Divider(height: KooyohSpacing.md),
                     _DocumentRow(
                       title: HomeownerProjectDashboardContent.docContractTitle,
                       subtitle: _installerReady
@@ -351,7 +351,7 @@ class _HomeownerDashboardPageState extends State<HomeownerDashboardPage> {
                       enabled: _installerReady,
                       onDownload: () => _mockDownload(context),
                     ),
-                    const Divider(height: LimyeSpacing.md),
+                    const Divider(height: KooyohSpacing.md),
                     _DocumentRow(
                       title: HomeownerProjectDashboardContent.docInspectionTitle,
                       subtitle: _inspectionSlotLabel != null
@@ -367,23 +367,23 @@ class _HomeownerDashboardPageState extends State<HomeownerDashboardPage> {
                 title: HomeownerProjectDashboardContent.sectionCommunication,
                 child: OutlinedButton.icon(
                   onPressed: () => _openMessagingSheet(context),
-                  icon: const Icon(Icons.chat_bubble_outline, color: LimyeColors.accent),
+                  icon: const Icon(Icons.chat_bubble_outline, color: KooyohColors.accent),
                   label: Text(
                     _installerReady
                         ? HomeownerProjectDashboardContent.messageInstallerCta
                         : HomeownerProjectDashboardContent.messageInspectorCta,
-                    style: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
+                    style: KooyohTextStyles.bodyBold(color: KooyohColors.accent),
                   ),
                   style: OutlinedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(LimyeSpacing.buttonHeight),
-                    side: const BorderSide(color: LimyeColors.border),
+                    minimumSize: const Size.fromHeight(KooyohSpacing.buttonHeight),
+                    side: const BorderSide(color: KooyohColors.border),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(LimyeRadius.md),
+                      borderRadius: BorderRadius.circular(KooyohRadius.md),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: LimyeSpacing.md),
+              const SizedBox(height: KooyohSpacing.md),
             ],
           ),
         ),
@@ -406,11 +406,11 @@ class _ProjectOverviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(LimyeSpacing.cardPadding),
+      padding: const EdgeInsets.all(KooyohSpacing.cardPadding),
       decoration: BoxDecoration(
-        color: LimyeColors.surface,
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
-        border: Border.all(color: LimyeColors.border),
+        color: KooyohColors.surface,
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
+        border: Border.all(color: KooyohColors.border),
       ),
       child: LayoutBuilder(
         builder: (context, c) {
@@ -424,7 +424,7 @@ class _ProjectOverviewCard extends StatelessWidget {
                   value: address,
                 ),
               ),
-              SizedBox(width: wide ? LimyeSpacing.md : 0),
+              SizedBox(width: wide ? KooyohSpacing.md : 0),
               Expanded(
                 child: _KVBlock(
                   label: HomeownerProjectDashboardContent.labelSystemSize,
@@ -443,7 +443,7 @@ class _ProjectOverviewCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(flex: 2, child: row),
-                SizedBox(width: LimyeSpacing.md),
+                SizedBox(width: KooyohSpacing.md),
                 Expanded(child: statusBlock),
               ],
             );
@@ -455,12 +455,12 @@ class _ProjectOverviewCard extends StatelessWidget {
                 label: HomeownerProjectDashboardContent.labelAddress,
                 value: address,
               ),
-              const SizedBox(height: LimyeSpacing.sm),
+              const SizedBox(height: KooyohSpacing.sm),
               _KVBlock(
                 label: HomeownerProjectDashboardContent.labelSystemSize,
                 value: systemSize,
               ),
-              const SizedBox(height: LimyeSpacing.sm),
+              const SizedBox(height: KooyohSpacing.sm),
               statusBlock,
             ],
           );
@@ -488,14 +488,14 @@ class _KVBlock extends StatelessWidget {
       children: [
         Text(
           label.toUpperCase(),
-          style: LimyeTextStyles.captionBold().copyWith(fontSize: 10),
+          style: KooyohTextStyles.captionBold().copyWith(fontSize: 10),
         ),
-        const SizedBox(height: LimyeSpacing.xs),
+        const SizedBox(height: KooyohSpacing.xs),
         Text(
           value,
           style: emphasize
-              ? LimyeTextStyles.bodyBold()
-              : LimyeTextStyles.body(),
+              ? KooyohTextStyles.bodyBold()
+              : KooyohTextStyles.body(),
         ),
       ],
     );
@@ -517,13 +517,13 @@ class _StageProgressBar extends StatelessWidget {
     ];
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: LimyeSpacing.md,
-        vertical: LimyeSpacing.sm,
+        horizontal: KooyohSpacing.md,
+        vertical: KooyohSpacing.sm,
       ),
       decoration: BoxDecoration(
-        color: LimyeColors.surfaceMuted,
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
-        border: Border.all(color: LimyeColors.border),
+        color: KooyohColors.surfaceMuted,
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
+        border: Border.all(color: KooyohColors.border),
       ),
       child: Column(
         children: [
@@ -535,7 +535,7 @@ class _StageProgressBar extends StatelessWidget {
                   child: Container(
                     height: 3,
                     margin: const EdgeInsets.only(bottom: 28),
-                    color: leftDone ? LimyeColors.green : LimyeColors.border,
+                    color: leftDone ? KooyohColors.green : KooyohColors.border,
                   ),
                 );
               }
@@ -551,14 +551,14 @@ class _StageProgressBar extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: done
-                            ? LimyeColors.green
+                            ? KooyohColors.green
                             : active
-                                ? LimyeColors.accent
-                                : LimyeColors.surface,
+                                ? KooyohColors.accent
+                                : KooyohColors.surface,
                         border: Border.all(
                           color: active || done
-                              ? (done ? LimyeColors.green : LimyeColors.accent)
-                              : LimyeColors.border,
+                              ? (done ? KooyohColors.green : KooyohColors.accent)
+                              : KooyohColors.border,
                           width: 2,
                         ),
                       ),
@@ -566,14 +566,14 @@ class _StageProgressBar extends StatelessWidget {
                           ? const Icon(Icons.check, size: 12, color: Colors.white)
                           : null,
                     ),
-                    const SizedBox(height: LimyeSpacing.xs),
+                    const SizedBox(height: KooyohSpacing.xs),
                     Text(
                       labels[stage],
                       textAlign: TextAlign.center,
-                      style: LimyeTextStyles.caption(
+                      style: KooyohTextStyles.caption(
                         color: active
-                            ? LimyeColors.textPrimary
-                            : LimyeColors.textCaption,
+                            ? KooyohColors.textPrimary
+                            : KooyohColors.textCaption,
                       ),
                     ),
                   ],
@@ -596,19 +596,19 @@ class _SectionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: LimyeSpacing.md),
+      padding: const EdgeInsets.only(bottom: KooyohSpacing.md),
       child: Container(
-        padding: const EdgeInsets.all(LimyeSpacing.cardPadding),
+        padding: const EdgeInsets.all(KooyohSpacing.cardPadding),
         decoration: BoxDecoration(
-          color: LimyeColors.surface,
-          borderRadius: BorderRadius.circular(LimyeRadius.card),
-          border: Border.all(color: LimyeColors.border),
+          color: KooyohColors.surface,
+          borderRadius: BorderRadius.circular(KooyohRadius.card),
+          border: Border.all(color: KooyohColors.border),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(title, style: LimyeTextStyles.cardHeading()),
-            const SizedBox(height: LimyeSpacing.sm),
+            Text(title, style: KooyohTextStyles.cardHeading()),
+            const SizedBox(height: KooyohSpacing.sm),
             child,
           ],
         ),
@@ -634,12 +634,12 @@ class _InstallerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
-      padding: const EdgeInsets.all(LimyeSpacing.md),
+      padding: const EdgeInsets.all(KooyohSpacing.md),
       decoration: BoxDecoration(
-        color: selected ? LimyeColors.sidebarActiveBg : LimyeColors.surfaceMuted,
-        borderRadius: BorderRadius.circular(LimyeRadius.md),
+        color: selected ? KooyohColors.sidebarActiveBg : KooyohColors.surfaceMuted,
+        borderRadius: BorderRadius.circular(KooyohRadius.md),
         border: Border.all(
-          color: selected ? LimyeColors.accent : LimyeColors.border,
+          color: selected ? KooyohColors.accent : KooyohColors.border,
           width: selected ? 1.5 : 1,
         ),
       ),
@@ -650,66 +650,66 @@ class _InstallerCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Text(option.name, style: LimyeTextStyles.cardHeading()),
+                child: Text(option.name, style: KooyohTextStyles.cardHeading()),
               ),
               if (selected)
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: LimyeColors.green.withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(LimyeRadius.chip),
-                    border: Border.all(color: LimyeColors.green.withValues(alpha: 0.35)),
+                    color: KooyohColors.green.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(KooyohRadius.chip),
+                    border: Border.all(color: KooyohColors.green.withValues(alpha: 0.35)),
                   ),
                   child: Text(
                     HomeownerProjectDashboardContent.selectedBadge,
-                    style: LimyeTextStyles.captionBold(color: LimyeColors.green),
+                    style: KooyohTextStyles.captionBold(color: KooyohColors.green),
                   ),
                 ),
             ],
           ),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           Text(
             '${HomeownerProjectDashboardContent.ratingLabel}: ${option.rating}',
-            style: LimyeTextStyles.body(),
+            style: KooyohTextStyles.body(),
           ),
-          const SizedBox(height: LimyeSpacing.xs),
+          const SizedBox(height: KooyohSpacing.xs),
           Text(
             '${HomeownerProjectDashboardContent.yearsInBusinessLabel}: ${option.years}',
-            style: LimyeTextStyles.body(),
+            style: KooyohTextStyles.body(),
           ),
-          const SizedBox(height: LimyeSpacing.xs),
+          const SizedBox(height: KooyohSpacing.xs),
           Text(
             '${HomeownerProjectDashboardContent.licenseLabel}: ${option.license}',
-            style: LimyeTextStyles.dataInline(),
+            style: KooyohTextStyles.dataInline(),
           ),
-          const SizedBox(height: LimyeSpacing.xs),
+          const SizedBox(height: KooyohSpacing.xs),
           Text(
             '${HomeownerProjectDashboardContent.contactLabel}: ${option.contact}',
-            style: LimyeTextStyles.dataInline(),
+            style: KooyohTextStyles.dataInline(),
           ),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           Wrap(
-            spacing: LimyeSpacing.sm,
-            runSpacing: LimyeSpacing.xs,
+            spacing: KooyohSpacing.sm,
+            runSpacing: KooyohSpacing.xs,
             children: [
               SizedBox(
-                height: LimyeSpacing.tapTarget,
+                height: KooyohSpacing.tapTarget,
                 child: ElevatedButton(
                   onPressed: onSelect,
                   child: Text(
                     HomeownerProjectDashboardContent.selectCta,
-                    style: LimyeTextStyles.bodyBold(color: Colors.white),
+                    style: KooyohTextStyles.bodyBold(color: Colors.white),
                   ),
                 ),
               ),
               if (onViewContract != null)
                 SizedBox(
-                  height: LimyeSpacing.tapTarget,
+                  height: KooyohSpacing.tapTarget,
                   child: OutlinedButton(
                     onPressed: onViewContract,
                     child: Text(
                       HomeownerProjectDashboardContent.viewContractCta,
-                      style: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
+                      style: KooyohTextStyles.bodyBold(color: KooyohColors.accent),
                     ),
                   ),
                 ),
@@ -736,12 +736,12 @@ class _FundingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
-      padding: const EdgeInsets.all(LimyeSpacing.md),
+      padding: const EdgeInsets.all(KooyohSpacing.md),
       decoration: BoxDecoration(
-        color: selected ? LimyeColors.sidebarActiveBg : LimyeColors.surfaceMuted,
-        borderRadius: BorderRadius.circular(LimyeRadius.md),
+        color: selected ? KooyohColors.sidebarActiveBg : KooyohColors.surfaceMuted,
+        borderRadius: BorderRadius.circular(KooyohRadius.md),
         border: Border.all(
-          color: selected ? LimyeColors.accent : LimyeColors.border,
+          color: selected ? KooyohColors.accent : KooyohColors.border,
           width: selected ? 1.5 : 1,
         ),
       ),
@@ -750,30 +750,30 @@ class _FundingCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(child: Text(option.title, style: LimyeTextStyles.cardHeading())),
+              Expanded(child: Text(option.title, style: KooyohTextStyles.cardHeading())),
               if (selected)
                 Text(
                   HomeownerProjectDashboardContent.selectedBadge,
-                  style: LimyeTextStyles.captionBold(color: LimyeColors.accent),
+                  style: KooyohTextStyles.captionBold(color: KooyohColors.accent),
                 ),
             ],
           ),
-          const SizedBox(height: LimyeSpacing.sm),
-          Text(option.body, style: LimyeTextStyles.body()),
-          const SizedBox(height: LimyeSpacing.sm),
-          Text(option.rateLine, style: LimyeTextStyles.dataInline()),
-          const SizedBox(height: LimyeSpacing.xs),
-          Text(option.termLine, style: LimyeTextStyles.dataInline()),
-          const SizedBox(height: LimyeSpacing.xs),
-          Text(option.noteLine, style: LimyeTextStyles.caption()),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
+          Text(option.body, style: KooyohTextStyles.body()),
+          const SizedBox(height: KooyohSpacing.sm),
+          Text(option.rateLine, style: KooyohTextStyles.dataInline()),
+          const SizedBox(height: KooyohSpacing.xs),
+          Text(option.termLine, style: KooyohTextStyles.dataInline()),
+          const SizedBox(height: KooyohSpacing.xs),
+          Text(option.noteLine, style: KooyohTextStyles.caption()),
+          const SizedBox(height: KooyohSpacing.sm),
           SizedBox(
-            height: LimyeSpacing.tapTarget,
+            height: KooyohSpacing.tapTarget,
             child: ElevatedButton(
               onPressed: onSelect,
               child: Text(
                 HomeownerProjectDashboardContent.selectCta,
-                style: LimyeTextStyles.bodyBold(color: Colors.white),
+                style: KooyohTextStyles.bodyBold(color: Colors.white),
               ),
             ),
           ),
@@ -809,33 +809,33 @@ class _InspectionBlock extends StatelessWidget {
       children: [
         Text(
           HomeownerProjectDashboardContent.inspectionIntro,
-          style: LimyeTextStyles.body(),
+          style: KooyohTextStyles.body(),
         ),
-        const SizedBox(height: LimyeSpacing.sm),
+        const SizedBox(height: KooyohSpacing.sm),
         ..._slots.map(
           (s) => Padding(
-            padding: const EdgeInsets.only(bottom: LimyeSpacing.sm),
+            padding: const EdgeInsets.only(bottom: KooyohSpacing.sm),
             child: Material(
-              color: LimyeColors.surfaceMuted,
+              color: KooyohColors.surfaceMuted,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(LimyeRadius.md),
-                side: const BorderSide(color: LimyeColors.border),
+                borderRadius: BorderRadius.circular(KooyohRadius.md),
+                side: const BorderSide(color: KooyohColors.border),
               ),
               child: InkWell(
-                borderRadius: BorderRadius.circular(LimyeRadius.md),
+                borderRadius: BorderRadius.circular(KooyohRadius.md),
                 onTap: () => onPickSlot(s),
                 child: Padding(
-                  padding: const EdgeInsets.all(LimyeSpacing.md),
+                  padding: const EdgeInsets.all(KooyohSpacing.md),
                   child: Row(
                     children: [
                       Icon(
                         slotLabel == s ? Icons.event_available : Icons.event_outlined,
                         color:
-                            slotLabel == s ? LimyeColors.accent : LimyeColors.textCaption,
+                            slotLabel == s ? KooyohColors.accent : KooyohColors.textCaption,
                       ),
-                      const SizedBox(width: LimyeSpacing.sm),
+                      const SizedBox(width: KooyohSpacing.sm),
                       Expanded(
-                        child: Text(s, style: LimyeTextStyles.bodyBold()),
+                        child: Text(s, style: KooyohTextStyles.bodyBold()),
                       ),
                     ],
                   ),
@@ -845,43 +845,43 @@ class _InspectionBlock extends StatelessWidget {
           ),
         ),
         if (slotLabel != null) ...[
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           Text(
             slotLabel!,
-            style: LimyeTextStyles.dataLarge(color: LimyeColors.accent),
+            style: KooyohTextStyles.dataLarge(color: KooyohColors.accent),
           ),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           if (!showConfirmation)
             SizedBox(
-              height: LimyeSpacing.tapTarget,
+              height: KooyohSpacing.tapTarget,
               child: ElevatedButton(
                 onPressed: onConfirmUi,
                 child: Text(
                   ButtonsContent.confirm,
-                  style: LimyeTextStyles.bodyBold(color: Colors.white),
+                  style: KooyohTextStyles.bodyBold(color: Colors.white),
                 ),
               ),
             ),
           if (showConfirmation) ...[
-            const SizedBox(height: LimyeSpacing.sm),
+            const SizedBox(height: KooyohSpacing.sm),
             Container(
-              padding: const EdgeInsets.all(LimyeSpacing.md),
+              padding: const EdgeInsets.all(KooyohSpacing.md),
               decoration: BoxDecoration(
-                color: LimyeColors.sidebarActiveBg,
-                borderRadius: BorderRadius.circular(LimyeRadius.md),
-                border: Border.all(color: LimyeColors.accent.withValues(alpha: 0.25)),
+                color: KooyohColors.sidebarActiveBg,
+                borderRadius: BorderRadius.circular(KooyohRadius.md),
+                border: Border.all(color: KooyohColors.accent.withValues(alpha: 0.25)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     HomeownerProjectDashboardContent.inspectionConfirmedTitle,
-                    style: LimyeTextStyles.bodyBold(),
+                    style: KooyohTextStyles.bodyBold(),
                   ),
-                  const SizedBox(height: LimyeSpacing.xs),
+                  const SizedBox(height: KooyohSpacing.xs),
                   Text(
                     HomeownerProjectDashboardContent.inspectionConfirmedBody,
-                    style: LimyeTextStyles.body(),
+                    style: KooyohTextStyles.body(),
                   ),
                 ],
               ),
@@ -907,31 +907,31 @@ class _TimelineRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: LimyeSpacing.md),
+      padding: const EdgeInsets.only(bottom: KooyohSpacing.md),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
             width: 88,
-            child: Text(date, style: LimyeTextStyles.captionBold()),
+            child: Text(date, style: KooyohTextStyles.captionBold()),
           ),
           Container(
             width: 10,
             height: 10,
-            margin: const EdgeInsets.only(top: 4, right: LimyeSpacing.sm),
+            margin: const EdgeInsets.only(top: 4, right: KooyohSpacing.sm),
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: LimyeColors.accent,
+              color: KooyohColors.accent,
             ),
           ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: LimyeTextStyles.bodyBold()),
+                Text(title, style: KooyohTextStyles.bodyBold()),
                 if (detail.isNotEmpty) ...[
-                  const SizedBox(height: LimyeSpacing.xs),
-                  Text(detail, style: LimyeTextStyles.body()),
+                  const SizedBox(height: KooyohSpacing.xs),
+                  Text(detail, style: KooyohTextStyles.body()),
                 ],
               ],
             ),
@@ -962,16 +962,16 @@ class _DocumentRow extends StatelessWidget {
       children: [
         Icon(
           Icons.description_outlined,
-          color: enabled ? LimyeColors.accent : LimyeColors.textCaption,
+          color: enabled ? KooyohColors.accent : KooyohColors.textCaption,
         ),
-        const SizedBox(width: LimyeSpacing.sm),
+        const SizedBox(width: KooyohSpacing.sm),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: LimyeTextStyles.bodyBold()),
-              const SizedBox(height: LimyeSpacing.xs),
-              Text(subtitle, style: LimyeTextStyles.caption()),
+              Text(title, style: KooyohTextStyles.bodyBold()),
+              const SizedBox(height: KooyohSpacing.xs),
+              Text(subtitle, style: KooyohTextStyles.caption()),
             ],
           ),
         ),
@@ -979,8 +979,8 @@ class _DocumentRow extends StatelessWidget {
           onPressed: enabled ? onDownload : null,
           child: Text(
             HomeownerProjectDashboardContent.downloadCta,
-            style: LimyeTextStyles.bodyBold(
-              color: enabled ? LimyeColors.accent : LimyeColors.textCaption,
+            style: KooyohTextStyles.bodyBold(
+              color: enabled ? KooyohColors.accent : KooyohColors.textCaption,
             ),
           ),
         ),
@@ -1043,44 +1043,44 @@ class _MessagingSheetState extends State<_MessagingSheet> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: LimyeSpacing.sm),
+        const SizedBox(height: KooyohSpacing.sm),
         Container(
           width: 40,
           height: 4,
           decoration: BoxDecoration(
-            color: LimyeColors.border,
+            color: KooyohColors.border,
             borderRadius: BorderRadius.circular(999),
           ),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(
-            LimyeSpacing.md,
-            LimyeSpacing.md,
-            LimyeSpacing.md,
-            LimyeSpacing.sm,
+            KooyohSpacing.md,
+            KooyohSpacing.md,
+            KooyohSpacing.md,
+            KooyohSpacing.sm,
           ),
           child: Row(
             children: [
               IconButton(
                 icon: const Icon(Icons.close),
-                color: LimyeColors.textBody,
+                color: KooyohColors.textBody,
                 onPressed: () => Navigator.pop(context),
               ),
               Expanded(
                 child: Text(
                   widget.title,
                   textAlign: TextAlign.center,
-                  style: LimyeTextStyles.cardHeading(),
+                  style: KooyohTextStyles.cardHeading(),
                 ),
               ),
-              const SizedBox(width: LimyeSpacing.md),
+              const SizedBox(width: KooyohSpacing.md),
             ],
           ),
         ),
         Expanded(
           child: ListView.builder(
             controller: widget.scrollController,
-            padding: const EdgeInsets.symmetric(horizontal: LimyeSpacing.md),
+            padding: const EdgeInsets.symmetric(horizontal: KooyohSpacing.md),
             itemCount: _lines.length,
             itemBuilder: (context, i) {
               final m = _lines[i];
@@ -1091,10 +1091,10 @@ class _MessagingSheetState extends State<_MessagingSheet> {
         const Divider(height: 1),
         Padding(
           padding: EdgeInsets.fromLTRB(
-            LimyeSpacing.sm,
-            LimyeSpacing.sm,
-            LimyeSpacing.sm,
-            LimyeSpacing.sm + MediaQuery.paddingOf(context).bottom,
+            KooyohSpacing.sm,
+            KooyohSpacing.sm,
+            KooyohSpacing.sm,
+            KooyohSpacing.sm + MediaQuery.paddingOf(context).bottom,
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -1107,35 +1107,35 @@ class _MessagingSheetState extends State<_MessagingSheet> {
                   decoration: InputDecoration(
                     hintText: HomeownerProjectDashboardContent.chatComposerHint,
                     filled: true,
-                    fillColor: LimyeColors.surfaceMuted,
+                    fillColor: KooyohColors.surfaceMuted,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(LimyeRadius.input),
-                      borderSide: const BorderSide(color: LimyeColors.border),
+                      borderRadius: BorderRadius.circular(KooyohRadius.input),
+                      borderSide: const BorderSide(color: KooyohColors.border),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(LimyeRadius.input),
-                      borderSide: const BorderSide(color: LimyeColors.border),
+                      borderRadius: BorderRadius.circular(KooyohRadius.input),
+                      borderSide: const BorderSide(color: KooyohColors.border),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(LimyeRadius.input),
-                      borderSide: const BorderSide(color: LimyeColors.accent),
+                      borderRadius: BorderRadius.circular(KooyohRadius.input),
+                      borderSide: const BorderSide(color: KooyohColors.accent),
                     ),
                     contentPadding: const EdgeInsets.symmetric(
-                      horizontal: LimyeSpacing.sm,
-                      vertical: LimyeSpacing.sm,
+                      horizontal: KooyohSpacing.sm,
+                      vertical: KooyohSpacing.sm,
                     ),
                   ),
                   onSubmitted: (_) => _send(),
                 ),
               ),
-              const SizedBox(width: LimyeSpacing.sm),
+              const SizedBox(width: KooyohSpacing.sm),
               SizedBox(
-                height: LimyeSpacing.tapTarget,
+                height: KooyohSpacing.tapTarget,
                 child: ElevatedButton(
                   onPressed: _send,
                   child: Text(
                     HomeownerProjectDashboardContent.sendCta,
-                    style: LimyeTextStyles.bodyBold(color: Colors.white),
+                    style: KooyohTextStyles.bodyBold(color: Colors.white),
                   ),
                 ),
               ),
@@ -1161,25 +1161,25 @@ class _ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = fromSelf ? LimyeColors.accent : LimyeColors.surfaceMuted;
-    final fg = fromSelf ? Colors.white : LimyeColors.textPrimary;
+    final bg = fromSelf ? KooyohColors.accent : KooyohColors.surfaceMuted;
+    final fg = fromSelf ? Colors.white : KooyohColors.textPrimary;
     return Align(
       alignment: fromSelf ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        margin: const EdgeInsets.only(bottom: LimyeSpacing.sm),
+        margin: const EdgeInsets.only(bottom: KooyohSpacing.sm),
         padding: const EdgeInsets.symmetric(
-          horizontal: LimyeSpacing.sm,
-          vertical: LimyeSpacing.sm,
+          horizontal: KooyohSpacing.sm,
+          vertical: KooyohSpacing.sm,
         ),
         constraints: const BoxConstraints(maxWidth: 320),
         decoration: BoxDecoration(
           color: bg,
-          borderRadius: BorderRadius.circular(LimyeRadius.md).copyWith(
+          borderRadius: BorderRadius.circular(KooyohRadius.md).copyWith(
             bottomRight: fromSelf ? const Radius.circular(4) : null,
             bottomLeft: !fromSelf ? const Radius.circular(4) : null,
           ),
         ),
-        child: Text(text, style: LimyeTextStyles.body(color: fg)),
+        child: Text(text, style: KooyohTextStyles.body(color: fg)),
       ),
     );
   }

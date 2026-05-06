@@ -1,4 +1,4 @@
-// Premium org dashboard (LIMYÈ) — chart + activity copy.
+// Premium org dashboard (KOO-YOH) — chart + activity copy.
 
 class PremiumOrgDashboardContent {
   static const revenueChartTitle = 'Revenue (90 days)';

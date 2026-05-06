@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/ui/app_feedback.dart';
-import 'package:limye_app/features/light/drone_ops/web/drone_ops_info_page.dart';
-import 'package:limye_app/features/light/ev/ev_info_page.dart';
-import 'package:limye_app/features/light/landing/landing_inline_program.dart';
-import 'package:limye_app/features/light/pool_funding/web/pool_info_page.dart';
-import 'package:limye_app/theme/limye_theme.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/ui/app_feedback.dart';
+import 'package:kooyoh_app/features/light/drone_ops/web/drone_ops_info_page.dart';
+import 'package:kooyoh_app/features/light/ev/ev_info_page.dart';
+import 'package:kooyoh_app/features/light/landing/landing_inline_program.dart';
+import 'package:kooyoh_app/features/light/pool_funding/web/pool_info_page.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 
 /// Inline program detail on the landing page (navbar + footer stay visible).
 class LandingProgramExpanded extends StatelessWidget {
@@ -26,10 +26,10 @@ class LandingProgramExpanded extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(
-            LimyeSpacing.gutter,
-            LimyeSpacing.md,
-            LimyeSpacing.gutter,
-            LimyeSpacing.sm,
+            KooyohSpacing.gutter,
+            KooyohSpacing.md,
+            KooyohSpacing.gutter,
+            KooyohSpacing.sm,
           ),
           child: Align(
             alignment: Alignment.centerLeft,
@@ -38,11 +38,11 @@ class LandingProgramExpanded extends StatelessWidget {
               icon: Icon(
                 Icons.arrow_back_rounded,
                 size: 20,
-                color: LimyeColors.accent,
+                color: KooyohColors.accent,
               ),
               label: Text(
                 ButtonsContent.back,
-                style: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
+                style: KooyohTextStyles.bodyBold(color: KooyohColors.accent),
               ),
             ),
           ),
@@ -50,10 +50,10 @@ class LandingProgramExpanded extends StatelessWidget {
         Center(
           child: ConstrainedBox(
             constraints:
-                const BoxConstraints(maxWidth: LimyeSpacing.containerMax),
+                const BoxConstraints(maxWidth: KooyohSpacing.containerMax),
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: LimyeSpacing.gutter,
+                horizontal: KooyohSpacing.gutter,
               ),
               child: _ProgramBody(program: program),
             ),

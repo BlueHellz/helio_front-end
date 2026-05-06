@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/platform/web_history.dart';
-import 'package:limye_app/theme/limye_theme.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/platform/web_history.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 
 import 'app_state.dart';
 import 'providers/session_providers.dart';
@@ -12,17 +12,17 @@ import 'providers/theme_provider.dart';
 import 'shell/web/homeowner_web_chrome.dart';
 import 'ui/app_feedback.dart';
 
-import 'package:limye_app/features/light/landing/landing_page.dart';
-import 'package:limye_app/features/light/auth/auth_page.dart';
-import 'package:limye_app/features/light/enterprise/enterprise_auth_page.dart';
-import 'package:limye_app/features/light/enterprise/business_solutions_page.dart';
-import 'package:limye_app/features/light/homeowner/project_tracking_page.dart';
-import 'package:limye_app/features/light/homeowner/intake_page.dart';
-import 'package:limye_app/features/light/homeowner/ai_chat_page.dart';
-import 'package:limye_app/features/light/homeowner/homeowner_design_result_page.dart';
-import 'package:limye_app/features/light/homeowner/homeowner_wallet_page.dart';
-import 'package:limye_app/features/light/homeowner/mobile_homeowner_shell.dart';
-import 'package:limye_app/features/light/auth/mobile_auth.dart';
+import 'package:kooyoh_app/features/light/landing/landing_page.dart';
+import 'package:kooyoh_app/features/light/auth/auth_page.dart';
+import 'package:kooyoh_app/features/light/enterprise/enterprise_auth_page.dart';
+import 'package:kooyoh_app/features/light/enterprise/business_solutions_page.dart';
+import 'package:kooyoh_app/features/light/homeowner/project_tracking_page.dart';
+import 'package:kooyoh_app/features/light/homeowner/intake_page.dart';
+import 'package:kooyoh_app/features/light/homeowner/ai_chat_page.dart';
+import 'package:kooyoh_app/features/light/homeowner/homeowner_design_result_page.dart';
+import 'package:kooyoh_app/features/light/homeowner/homeowner_wallet_page.dart';
+import 'package:kooyoh_app/features/light/homeowner/mobile_homeowner_shell.dart';
+import 'package:kooyoh_app/features/light/auth/mobile_auth.dart';
 
 /// Root router: public marketing, auth-free design chat, enterprise funnel;
 /// homeowner vs org dashboards after login.
@@ -229,11 +229,11 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
     if (role != UserRole.homeowner) {
       return Center(
         child: Padding(
-          padding: const EdgeInsets.all(LimyeSpacing.gutter),
+          padding: const EdgeInsets.all(KooyohSpacing.gutter),
           child: Text(
             AuthContent.homeownerLoginOnly,
             textAlign: TextAlign.center,
-            style: LimyeTextStyles.body(),
+            style: KooyohTextStyles.body(),
           ),
         ),
       );
@@ -294,13 +294,13 @@ class _EnterpriseOrgHome extends StatelessWidget {
             onPressed: onSignOut,
             child: Text(
               EnterpriseContent.orgPortalSignOut,
-              style: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
+              style: KooyohTextStyles.bodyBold(color: KooyohColors.accent),
             ),
           ),
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(LimyeSpacing.gutter),
+        padding: const EdgeInsets.all(KooyohSpacing.gutter),
         child: Align(
           alignment: Alignment.topLeft,
           child: ConstrainedBox(
@@ -311,16 +311,16 @@ class _EnterpriseOrgHome extends StatelessWidget {
                 if (companyName.isNotEmpty)
                   Text(
                     companyName,
-                    style: LimyeTextStyles.sectionHeading(),
+                    style: KooyohTextStyles.sectionHeading(),
                   ),
                 if (userName.isNotEmpty) ...[
-                  const SizedBox(height: LimyeSpacing.sm),
-                  Text(userName, style: LimyeTextStyles.body()),
+                  const SizedBox(height: KooyohSpacing.sm),
+                  Text(userName, style: KooyohTextStyles.body()),
                 ],
-                const SizedBox(height: LimyeSpacing.lg),
+                const SizedBox(height: KooyohSpacing.lg),
                 Text(
                   EnterpriseContent.orgPortalBody,
-                  style: LimyeTextStyles.body(),
+                  style: KooyohTextStyles.body(),
                 ),
               ],
             ),
@@ -335,7 +335,7 @@ class _WebHelpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(LimyeSpacing.gutter),
+      padding: const EdgeInsets.all(KooyohSpacing.gutter),
       child: Align(
         alignment: Alignment.topLeft,
         child: ConstrainedBox(
@@ -347,7 +347,7 @@ class _WebHelpPage extends StatelessWidget {
                 NavigationContent.sidebarHelp,
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
-              const SizedBox(height: LimyeSpacing.md),
+              const SizedBox(height: KooyohSpacing.md),
               Text(
                 RouterStrings.orgWebHelpBody,
                 style: Theme.of(context).textTheme.bodyMedium,
@@ -484,55 +484,55 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
           );
         case _MobilePublic.home:
           return Scaffold(
-            backgroundColor: LimyeColors.background,
+            backgroundColor: KooyohColors.background,
             body: SafeArea(
               child: ListView(
-                padding: const EdgeInsets.all(LimyeSpacing.gutter),
+                padding: const EdgeInsets.all(KooyohSpacing.gutter),
                 children: [
-                  const SizedBox(height: LimyeSpacing.lg),
+                  const SizedBox(height: KooyohSpacing.lg),
                   Text(
                     LandingContent.heroTitle,
-                    style: LimyeTextStyles.hero(),
+                    style: KooyohTextStyles.hero(),
                   ),
-                  const SizedBox(height: LimyeSpacing.md),
+                  const SizedBox(height: KooyohSpacing.md),
                   Text(LandingContent.heroBody,
-                      style: LimyeTextStyles.body()),
-                  const SizedBox(height: LimyeSpacing.xl),
+                      style: KooyohTextStyles.body()),
+                  const SizedBox(height: KooyohSpacing.xl),
                   ElevatedButton(
                     onPressed: () =>
                         setState(() => _pub = _MobilePublic.designChat),
                     child: Text(LandingContent.heroPrimaryCta,
-                        style: LimyeTextStyles.bodyBold(color: Colors.white)),
+                        style: KooyohTextStyles.bodyBold(color: Colors.white)),
                   ),
-                  const SizedBox(height: LimyeSpacing.md),
+                  const SizedBox(height: KooyohSpacing.md),
                   OutlinedButton(
                     onPressed: () =>
                         setState(() => _pub = _MobilePublic.enterprise),
                     child: Text(
                       NavigationContent.navBusinesses,
-                      style: LimyeTextStyles.bodyBold(),
+                      style: KooyohTextStyles.bodyBold(),
                     ),
                   ),
-                  const SizedBox(height: LimyeSpacing.sm),
+                  const SizedBox(height: KooyohSpacing.sm),
                   OutlinedButton(
                     onPressed: () =>
                         setState(() => _pub = _MobilePublic.enterpriseAuth),
                     style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: LimyeColors.accent),
+                      side: const BorderSide(color: KooyohColors.accent),
                     ),
                     child: Text(
                       NavigationContent.preAuthEnterprise,
-                      style: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
+                      style: KooyohTextStyles.bodyBold(color: KooyohColors.accent),
                     ),
                   ),
-                  const SizedBox(height: LimyeSpacing.md),
+                  const SizedBox(height: KooyohSpacing.md),
                   OutlinedButton(
                     onPressed: () => setState(() {
                       _loginReturnTarget = null;
                       _pub = _MobilePublic.login;
                     }),
                     child: Text(HomeownerDashboardContent.myProjectsPageTitle,
-                        style: LimyeTextStyles.bodyBold()),
+                        style: KooyohTextStyles.bodyBold()),
                   ),
                 ],
               ),
@@ -558,11 +558,11 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
     if (role != UserRole.homeowner) {
       return Center(
         child: Padding(
-          padding: const EdgeInsets.all(LimyeSpacing.gutter),
+          padding: const EdgeInsets.all(KooyohSpacing.gutter),
           child: Text(
             AuthContent.homeownerLoginOnly,
             textAlign: TextAlign.center,
-            style: LimyeTextStyles.body(),
+            style: KooyohTextStyles.body(),
           ),
         ),
       );

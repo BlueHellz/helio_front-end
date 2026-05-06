@@ -14,7 +14,7 @@ When a Flutter error occurs:
 4. Run flutter analyze.
 5. Commit with a descriptive message.
 
-## How to execute each step (Helios conventions)
+## How to execute each step (KOO-YOH conventions)
 
 **1.** Read the stack trace or analyzer diagnostic; open the cited path at the cited line and follow `build()` / callbacks if the failure is upstream.
 

@@ -2,14 +2,14 @@
 // Footer links and legal/info dialog copy (pre-auth + authenticated footer).
 
 class FooterContent {
-  static const copyrightLine = '© 2026 LIMYÈ';
+  static const copyrightLine = '© 2026 KOO-YOH';
   static const privacyLink = 'Privacy';
   static const termsLink = 'Terms';
   static const contactLink = 'Contact';
 
   static const privacyDialogTitle = 'Privacy';
   static const privacyDialogMessage =
-      'A full privacy policy will be published on our site. This is a design preview of LIMYÈ.';
+      'A full privacy policy will be published on our site. This is a design preview of KOO-YOH.';
 
   static const termsDialogTitle = 'Terms';
   static const termsDialogMessage =

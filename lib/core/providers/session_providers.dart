@@ -112,8 +112,8 @@ final authApiProvider = Provider<AuthApi>((ref) {
   return api;
 });
 
-final publicLimyeApiProvider = Provider<PublicLimyeApi>((ref) {
-  final api = PublicLimyeApi();
+final publicKooyohApiProvider = Provider<PublicKooyohApi>((ref) {
+  final api = PublicKooyohApi();
   ref.onDispose(api.dispose);
   return api;
 });

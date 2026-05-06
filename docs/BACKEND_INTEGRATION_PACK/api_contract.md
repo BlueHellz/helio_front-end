@@ -1,8 +1,8 @@
-# LIMYÈ — API contract (derived from Flutter client)
+# KOO-YOH — API contract (derived from Flutter client)
 
 **Sources:** `lib/core/app_state.dart`, `lib/core/models/project.dart`, `lib/core/models/chat_message.dart`, `lib/config.dart`, `lib/core/router.dart`
 
-**Intended API base (client):** `BlackLightConfig.apiBaseUrl` resolves to **`https://limye-api.onrender.com`** (see `lib/config.dart`). The Flutter app does not call this URL yet; wire HTTP when implementing the client.
+**Intended API base (client):** `KooyohConfig.apiBaseUrl` resolves to **`https://kooyoh-api.onrender.com`** (see `lib/config.dart`). The Flutter app does not call this URL yet; wire HTTP when implementing the client.
 
 ---
 

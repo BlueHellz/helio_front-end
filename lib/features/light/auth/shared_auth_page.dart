@@ -1,17 +1,17 @@
 import 'dart:developer' as developer;
 
-import 'package:limye_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:limye_app/core/ui/app_feedback.dart';
-import 'package:limye_app/theme/limye_theme.dart';
-import 'package:limye_app/core/brand/blacklight_brand_logo.dart';
-import 'package:limye_app/core/app_state.dart';
-import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
-import 'package:limye_app/core/shell/web/homeowner_web_chrome.dart';
-import 'package:limye_app/core/providers/session_providers.dart';
-import 'package:limye_app/services/auth_api.dart';
+import 'package:kooyoh_app/core/ui/app_feedback.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
+import 'package:kooyoh_app/core/brand/blacklight_brand_logo.dart';
+import 'package:kooyoh_app/core/app_state.dart';
+import 'package:kooyoh_app/core/illustrations/geometric_illustrations.dart';
+import 'package:kooyoh_app/core/shell/web/homeowner_web_chrome.dart';
+import 'package:kooyoh_app/core/providers/session_providers.dart';
+import 'package:kooyoh_app/services/auth_api.dart';
 
 class AuthPage extends ConsumerStatefulWidget {
   const AuthPage({
@@ -134,16 +134,16 @@ class _AuthPageState extends ConsumerState<AuthPage> {
       onEnterprise: widget.onEnterprise ?? () {},
       child: SizedBox(
         height: MediaQuery.of(context).size.height -
-            LimyeSpacing.navbarHeight -
-            LimyeSpacing.footerHeight,
+            KooyohSpacing.navbarHeight -
+            KooyohSpacing.footerHeight,
         child: Row(
           children: [
             Expanded(
               child: Center(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: LimyeSpacing.lg,
-                      vertical: LimyeSpacing.xl),
+                      horizontal: KooyohSpacing.lg,
+                      vertical: KooyohSpacing.xl),
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 440),
                     child: _HomeownerAuthForm(
@@ -167,9 +167,9 @@ class _AuthPageState extends ConsumerState<AuthPage> {
             Expanded(
               child: Container(
                 decoration: const BoxDecoration(
-                  color: LimyeColors.surface,
+                  color: KooyohColors.surface,
                   border: Border(
-                    left: BorderSide(color: LimyeColors.border),
+                    left: BorderSide(color: KooyohColors.border),
                   ),
                 ),
                 child: Center(
@@ -177,18 +177,18 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SunRingsIllustration(size: 380),
-                      const SizedBox(height: LimyeSpacing.lg),
+                      const SizedBox(height: KooyohSpacing.lg),
                       Text(
                         AuthContent.splitHeroTitle,
-                        style: LimyeTextStyles.sectionHeading(),
+                        style: KooyohTextStyles.sectionHeading(),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: LimyeSpacing.xs),
+                      const SizedBox(height: KooyohSpacing.xs),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 40),
                         child: Text(
                           AuthContent.splitHeroBody,
-                          style: LimyeTextStyles.body(),
+                          style: KooyohTextStyles.body(),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -233,21 +233,21 @@ class _HomeownerAuthForm extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const BlackLightLogo(height: 40, maxWidth: 240),
-        const SizedBox(height: LimyeSpacing.xl),
+        const SizedBox(height: KooyohSpacing.xl),
         SegmentedButton<bool>(
           segments: [
             ButtonSegment<bool>(
               value: false,
               label: Text(
                 AuthContent.tabSignIn,
-                style: LimyeTextStyles.caption(),
+                style: KooyohTextStyles.caption(),
               ),
             ),
             ButtonSegment<bool>(
               value: true,
               label: Text(
                 AuthContent.tabCreateAccount,
-                style: LimyeTextStyles.caption(),
+                style: KooyohTextStyles.caption(),
               ),
             ),
           ],
@@ -256,19 +256,19 @@ class _HomeownerAuthForm extends StatelessWidget {
               ? null
               : (s) => onSignupModeChanged!(s.first),
         ),
-        const SizedBox(height: LimyeSpacing.md),
+        const SizedBox(height: KooyohSpacing.md),
         Text(
           signupMode ? AuthContent.createYourAccount : AuthContent.welcomeBack,
-          style: LimyeTextStyles.sectionHeading(),
+          style: KooyohTextStyles.sectionHeading(),
         ),
-        const SizedBox(height: LimyeSpacing.md),
+        const SizedBox(height: KooyohSpacing.md),
         Text(
           HomeownerDashboardContent.myProjectsPageTitle,
-          style: LimyeTextStyles.caption(
-            color: LimyeColors.textCaption,
+          style: KooyohTextStyles.caption(
+            color: KooyohColors.textCaption,
           ),
         ),
-        const SizedBox(height: LimyeSpacing.lg),
+        const SizedBox(height: KooyohSpacing.lg),
         if (signupMode) ...[
           _LabeledInput(
             label: AuthContent.labelFullName,
@@ -276,11 +276,11 @@ class _HomeownerAuthForm extends StatelessWidget {
               controller: nameCtrl,
               enabled: !isSubmitting,
               style:
-                  LimyeTextStyles.body(color: LimyeColors.textPrimary),
+                  KooyohTextStyles.body(color: KooyohColors.textPrimary),
               decoration: _inputDeco(AuthContent.hintYourName),
             ),
           ),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
         ],
         _LabeledInput(
           label: AuthContent.labelEmail,
@@ -289,11 +289,11 @@ class _HomeownerAuthForm extends StatelessWidget {
             keyboardType: TextInputType.emailAddress,
             enabled: !isSubmitting,
             style:
-                LimyeTextStyles.body(color: LimyeColors.textPrimary),
+                KooyohTextStyles.body(color: KooyohColors.textPrimary),
             decoration: _inputDeco(AuthContent.hintEmail),
           ),
         ),
-        const SizedBox(height: LimyeSpacing.sm),
+        const SizedBox(height: KooyohSpacing.sm),
         _LabeledInput(
           label: AuthContent.labelPassword,
           child: TextField(
@@ -301,7 +301,7 @@ class _HomeownerAuthForm extends StatelessWidget {
             obscureText: obscurePassword,
             enabled: !isSubmitting,
             style:
-                LimyeTextStyles.body(color: LimyeColors.textPrimary),
+                KooyohTextStyles.body(color: KooyohColors.textPrimary),
             decoration: _inputDeco(AuthContent.hintPasswordObscured).copyWith(
               suffixIcon: GestureDetector(
                 onTap: isSubmitting ? null : onTogglePassword,
@@ -309,7 +309,7 @@ class _HomeownerAuthForm extends StatelessWidget {
                   obscurePassword
                       ? Icons.visibility_off_outlined
                       : Icons.visibility_outlined,
-                  color: LimyeColors.textCaption,
+                  color: KooyohColors.textCaption,
                   size: 20,
                 ),
               ),
@@ -317,25 +317,25 @@ class _HomeownerAuthForm extends StatelessWidget {
           ),
         ),
         if (!signupMode) ...[
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           Align(
             alignment: Alignment.centerRight,
             child: Text(
               AuthContent.forgotPassword,
               style:
-                  LimyeTextStyles.caption(color: LimyeColors.accent),
+                  KooyohTextStyles.caption(color: KooyohColors.accent),
             ),
           ),
         ],
-        const SizedBox(height: LimyeSpacing.md),
+        const SizedBox(height: KooyohSpacing.md),
         SizedBox(
           width: double.infinity,
-          height: LimyeSpacing.buttonHeight,
+          height: KooyohSpacing.buttonHeight,
           child: ElevatedButton(
             onPressed: isSubmitting ? null : () => onContinue(),
             style: ElevatedButton.styleFrom(
-              backgroundColor: LimyeColors.accent,
-              foregroundColor: LimyeColors.surface,
+              backgroundColor: KooyohColors.accent,
+              foregroundColor: KooyohColors.surface,
               elevation: 0,
               shape: const StadiumBorder(),
             ),
@@ -345,7 +345,7 @@ class _HomeownerAuthForm extends StatelessWidget {
                     width: 22,
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      color: LimyeColors.surface,
+                      color: KooyohColors.surface,
                     ),
                   )
                 : Text(
@@ -353,11 +353,11 @@ class _HomeownerAuthForm extends StatelessWidget {
                         ? AuthContent.tabCreateAccount
                         : AuthContent.tabSignIn,
                     style:
-                        LimyeTextStyles.bodyBold(color: LimyeColors.surface),
+                        KooyohTextStyles.bodyBold(color: KooyohColors.surface),
                   ),
           ),
         ),
-        const SizedBox(height: LimyeSpacing.lg),
+        const SizedBox(height: KooyohSpacing.lg),
         Row(
           children: [
             const Expanded(child: Divider()),
@@ -365,13 +365,13 @@ class _HomeownerAuthForm extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Text(
                 AuthContent.orContinueWith,
-                style: LimyeTextStyles.caption(),
+                style: KooyohTextStyles.caption(),
               ),
             ),
             const Expanded(child: Divider()),
           ],
         ),
-        const SizedBox(height: LimyeSpacing.md),
+        const SizedBox(height: KooyohSpacing.md),
         _SocialButton(
           label: AuthContent.oauthGoogle,
           icon: Icons.g_mobiledata_rounded,
@@ -380,7 +380,7 @@ class _HomeownerAuthForm extends StatelessWidget {
               : () =>
                   AppFeedback.socialSignInStub(context, AuthContent.oauthGoogle),
         ),
-        const SizedBox(height: LimyeSpacing.xs),
+        const SizedBox(height: KooyohSpacing.xs),
         _SocialButton(
           label: AuthContent.oauthApple,
           icon: Icons.apple,
@@ -395,23 +395,23 @@ class _HomeownerAuthForm extends StatelessWidget {
   InputDecoration _inputDeco(String hint) => InputDecoration(
         hintText: hint,
         hintStyle:
-            LimyeTextStyles.body(color: LimyeColors.textCaption),
+            KooyohTextStyles.body(color: KooyohColors.textCaption),
         filled: true,
-        fillColor: LimyeColors.surface,
+        fillColor: KooyohColors.surface,
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(LimyeRadius.input),
-          borderSide: const BorderSide(color: LimyeColors.inputBorder),
+          borderRadius: BorderRadius.circular(KooyohRadius.input),
+          borderSide: const BorderSide(color: KooyohColors.inputBorder),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(LimyeRadius.input),
-          borderSide: const BorderSide(color: LimyeColors.inputBorder),
+          borderRadius: BorderRadius.circular(KooyohRadius.input),
+          borderSide: const BorderSide(color: KooyohColors.inputBorder),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(LimyeRadius.input),
+          borderRadius: BorderRadius.circular(KooyohRadius.input),
           borderSide:
-              const BorderSide(color: LimyeColors.accent, width: 1),
+              const BorderSide(color: KooyohColors.accent, width: 1),
         ),
       );
 }
@@ -429,8 +429,8 @@ class _LabeledInput extends StatelessWidget {
       children: [
         Text(
           label.toUpperCase(),
-          style: LimyeTextStyles.captionBold(
-            color: LimyeColors.textCaption,
+          style: KooyohTextStyles.captionBold(
+            color: KooyohColors.textCaption,
           ),
         ),
         const SizedBox(height: 6),
@@ -455,18 +455,18 @@ class _SocialButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: LimyeSpacing.buttonHeight,
+      height: KooyohSpacing.buttonHeight,
       child: OutlinedButton.icon(
         onPressed: onTap,
-        icon: Icon(icon, size: 20, color: LimyeColors.accent),
+        icon: Icon(icon, size: 20, color: KooyohColors.accent),
         label: Text(
           label,
-          style: LimyeTextStyles.bodyBold(color: LimyeColors.accent)
+          style: KooyohTextStyles.bodyBold(color: KooyohColors.accent)
               .copyWith(fontWeight: FontWeight.w500),
         ),
         style: OutlinedButton.styleFrom(
-          foregroundColor: LimyeColors.accent,
-          side: const BorderSide(color: LimyeColors.accent),
+          foregroundColor: KooyohColors.accent,
+          side: const BorderSide(color: KooyohColors.accent),
           shape: const StadiumBorder(),
         ),
       ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../theme/limye_theme.dart';
+import '../../theme/kooyoh_theme.dart';
 
 class BlackLightInput extends StatelessWidget {
   final String? label;
@@ -30,8 +30,8 @@ class BlackLightInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final height = isMobile
-        ? LimyeSpacing.inputHeightMobile
-        : LimyeSpacing.inputHeight;
+        ? KooyohSpacing.inputHeightMobile
+        : KooyohSpacing.inputHeight;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,8 +40,8 @@ class BlackLightInput extends StatelessWidget {
         if (label != null) ...[
           Text(
             label!.toUpperCase(),
-            style: LimyeTextStyles.captionBold(
-                color: LimyeColors.textCaption),
+            style: KooyohTextStyles.captionBold(
+                color: KooyohColors.textCaption),
           ),
           const SizedBox(height: 6),
         ],
@@ -54,33 +54,33 @@ class BlackLightInput extends StatelessWidget {
             onChanged: onChanged,
             maxLines: maxLines,
             style: isMobile
-                ? LimyeTextStyles.mobileBody(
-                    color: LimyeColors.textPrimary)
-                : LimyeTextStyles.body(
-                    color: LimyeColors.textPrimary),
+                ? KooyohTextStyles.mobileBody(
+                    color: KooyohColors.textPrimary)
+                : KooyohTextStyles.body(
+                    color: KooyohColors.textPrimary),
             decoration: InputDecoration(
               hintText: placeholder,
               hintStyle: isMobile
-                  ? LimyeTextStyles.mobileBody(
-                      color: LimyeColors.textCaption)
-                  : LimyeTextStyles.body(
-                      color: LimyeColors.textCaption),
+                  ? KooyohTextStyles.mobileBody(
+                      color: KooyohColors.textCaption)
+                  : KooyohTextStyles.body(
+                      color: KooyohColors.textCaption),
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
               filled: true,
-              fillColor: LimyeColors.surface,
+              fillColor: KooyohColors.surface,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(LimyeRadius.input),
-                borderSide: const BorderSide(color: LimyeColors.border),
+                borderRadius: BorderRadius.circular(KooyohRadius.input),
+                borderSide: const BorderSide(color: KooyohColors.border),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(LimyeRadius.input),
-                borderSide: const BorderSide(color: LimyeColors.border),
+                borderRadius: BorderRadius.circular(KooyohRadius.input),
+                borderSide: const BorderSide(color: KooyohColors.border),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(LimyeRadius.input),
+                borderRadius: BorderRadius.circular(KooyohRadius.input),
                 borderSide: const BorderSide(
-                    color: LimyeColors.accent, width: 1.5),
+                    color: KooyohColors.accent, width: 1.5),
               ),
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -111,28 +111,28 @@ class BlackLightSearchBar extends StatelessWidget {
       child: TextField(
         controller: controller,
         onChanged: onChanged,
-        style: LimyeTextStyles.mobileBody(
-            color: LimyeColors.textPrimary),
+        style: KooyohTextStyles.mobileBody(
+            color: KooyohColors.textPrimary),
         decoration: InputDecoration(
           hintText: placeholder,
-          hintStyle: LimyeTextStyles.mobileBody(
-              color: LimyeColors.textCaption),
+          hintStyle: KooyohTextStyles.mobileBody(
+              color: KooyohColors.textCaption),
           prefixIcon: const Icon(Icons.search,
-              color: LimyeColors.textCaption, size: 20),
+              color: KooyohColors.textCaption, size: 20),
           filled: true,
-          fillColor: LimyeColors.surface,
+          fillColor: KooyohColors.surface,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(999),
-            borderSide: const BorderSide(color: LimyeColors.border),
+            borderSide: const BorderSide(color: KooyohColors.border),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(999),
-            borderSide: const BorderSide(color: LimyeColors.border),
+            borderSide: const BorderSide(color: KooyohColors.border),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(999),
             borderSide:
-                const BorderSide(color: LimyeColors.accent, width: 1.5),
+                const BorderSide(color: KooyohColors.accent, width: 1.5),
           ),
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 16, vertical: 12),

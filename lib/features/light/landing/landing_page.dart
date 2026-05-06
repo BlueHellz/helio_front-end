@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:limye_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
 
-import 'package:limye_app/core/ui/app_feedback.dart';
-import 'package:limye_app/theme/limye_theme.dart';
-import 'package:limye_app/core/illustrations/geometric_illustrations.dart';
-import 'package:limye_app/core/shell/web/homeowner_web_chrome.dart';
-import 'package:limye_app/features/light/landing/landing_inline_program.dart';
-import 'package:limye_app/features/light/landing/landing_program_expanded.dart';
+import 'package:kooyoh_app/core/ui/app_feedback.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
+import 'package:kooyoh_app/core/illustrations/geometric_illustrations.dart';
+import 'package:kooyoh_app/core/shell/web/homeowner_web_chrome.dart';
+import 'package:kooyoh_app/features/light/landing/landing_inline_program.dart';
+import 'package:kooyoh_app/features/light/landing/landing_program_expanded.dart';
 
 class LandingPage extends StatefulWidget {
   final VoidCallback? onGetStarted;
@@ -94,13 +94,13 @@ class _MainLandingColumn extends StatelessWidget {
         _Constrained(
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: LimyeSpacing.gutter),
+                horizontal: KooyohSpacing.gutter),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                const SizedBox(height: KooyohSpacing.sectionPaddingVertical),
                 _HeroSection(onGetStarted: onGetStarted),
-                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                const SizedBox(height: KooyohSpacing.sectionPaddingVertical),
               ],
             ),
           ),
@@ -113,17 +113,17 @@ class _MainLandingColumn extends StatelessWidget {
         _Constrained(
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: LimyeSpacing.gutter),
+                horizontal: KooyohSpacing.gutter),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                const SizedBox(height: KooyohSpacing.sectionPaddingVertical),
                 _HowItWorks(),
-                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                const SizedBox(height: KooyohSpacing.sectionPaddingVertical),
                 _FeaturesDeepDive(),
-                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                const SizedBox(height: KooyohSpacing.sectionPaddingVertical),
                 const _SocialProofSection(),
-                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                const SizedBox(height: KooyohSpacing.sectionPaddingVertical),
               ],
             ),
           ),
@@ -133,13 +133,13 @@ class _MainLandingColumn extends StatelessWidget {
         _Constrained(
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: LimyeSpacing.gutter),
+                horizontal: KooyohSpacing.gutter),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                const SizedBox(height: KooyohSpacing.sectionPaddingVertical),
                 _PillarsSection(onSelectProgram: onSelectProgram),
-                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                const SizedBox(height: KooyohSpacing.sectionPaddingVertical),
               ],
             ),
           ),
@@ -152,12 +152,12 @@ class _MainLandingColumn extends StatelessWidget {
         _Constrained(
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: LimyeSpacing.gutter),
+                horizontal: KooyohSpacing.gutter),
             child: const Column(
               children: [
-                SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                SizedBox(height: KooyohSpacing.sectionPaddingVertical),
                 _SeeLightInActionSection(),
-                SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                SizedBox(height: KooyohSpacing.sectionPaddingVertical),
               ],
             ),
           ),
@@ -167,14 +167,14 @@ class _MainLandingColumn extends StatelessWidget {
         _Constrained(
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: LimyeSpacing.gutter),
+                horizontal: KooyohSpacing.gutter),
             child: Column(
               children: [
-                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                const SizedBox(height: KooyohSpacing.sectionPaddingVertical),
                 const _WalletSection(),
-                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                const SizedBox(height: KooyohSpacing.sectionPaddingVertical),
                 _FinalCtaSection(onStart: onGetStarted),
-                const SizedBox(height: LimyeSpacing.sectionPaddingVertical),
+                const SizedBox(height: KooyohSpacing.sectionPaddingVertical),
               ],
             ),
           ),
@@ -228,12 +228,12 @@ class _PillarsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(LandingContent.programsHeadline,
-            style: LimyeTextStyles.sectionHeading()),
-        const SizedBox(height: LimyeSpacing.xs),
+            style: KooyohTextStyles.sectionHeading()),
+        const SizedBox(height: KooyohSpacing.xs),
         Text(
             LandingContent.programsSubcopy,
-            style: LimyeTextStyles.body()),
-        const SizedBox(height: LimyeSpacing.lg),
+            style: KooyohTextStyles.body()),
+        const SizedBox(height: KooyohSpacing.lg),
         // Row + Expanded *requires* bounded width. Some browsers (e.g. Brave)
         // can pass an unbounded maxWidth here; that throws during layout and
         // the rest of the page (and footer) never paints.
@@ -249,7 +249,7 @@ class _PillarsSection extends StatelessWidget {
                     .map((p) => Expanded(child: _PillarCard(data: p)))
                     .expand((w) => [
                         w,
-                        const SizedBox(width: LimyeSpacing.cardGap),
+                        const SizedBox(width: KooyohSpacing.cardGap),
                       ])
                     .take(pillars.length * 2 - 1)
                     .toList(),
@@ -260,7 +260,7 @@ class _PillarsSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: pillars
                 .map((p) => _PillarCard(data: p))
-                .expand((w) => [w, const SizedBox(height: LimyeSpacing.md)])
+                .expand((w) => [w, const SizedBox(height: KooyohSpacing.md)])
                 .take(pillars.length * 2 - 1)
                 .toList(),
           );
@@ -310,14 +310,14 @@ class _PillarCardState extends State<_PillarCard> {
         onTap: widget.data.onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 150),
-          padding: const EdgeInsets.all(LimyeSpacing.cardPadding),
+          padding: const EdgeInsets.all(KooyohSpacing.cardPadding),
           decoration: BoxDecoration(
-            color: LimyeColors.surface,
-            borderRadius: BorderRadius.circular(LimyeRadius.card),
+            color: KooyohColors.surface,
+            borderRadius: BorderRadius.circular(KooyohRadius.card),
             border: Border.all(
                 color: _hover
-                    ? LimyeColors.accent
-                    : LimyeColors.border),
+                    ? KooyohColors.accent
+                    : KooyohColors.border),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -326,31 +326,31 @@ class _PillarCardState extends State<_PillarCard> {
                 width: 44,
                 height: 44,
                 decoration: BoxDecoration(
-                  color: LimyeColors.background,
-                  border: Border.all(color: LimyeColors.border),
+                  color: KooyohColors.background,
+                  border: Border.all(color: KooyohColors.border),
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Icon(widget.data.icon,
-                    size: 22, color: LimyeColors.accent),
+                    size: 22, color: KooyohColors.accent),
               ),
-              const SizedBox(height: LimyeSpacing.md),
+              const SizedBox(height: KooyohSpacing.md),
               Text(widget.data.eyebrow,
-                  style: LimyeTextStyles.captionBold(
-                      color: LimyeColors.textBody)),
+                  style: KooyohTextStyles.captionBold(
+                      color: KooyohColors.textBody)),
               const SizedBox(height: 4),
               Text(widget.data.title,
-                  style: LimyeTextStyles.cardHeading()),
+                  style: KooyohTextStyles.cardHeading()),
               const SizedBox(height: 6),
-              Text(widget.data.body, style: LimyeTextStyles.body()),
-              const SizedBox(height: LimyeSpacing.md),
+              Text(widget.data.body, style: KooyohTextStyles.body()),
+              const SizedBox(height: KooyohSpacing.md),
               Row(
                 children: [
                   Text(widget.data.cta,
-                      style: LimyeTextStyles.bodyBold(
-                          color: LimyeColors.accent)),
+                      style: KooyohTextStyles.bodyBold(
+                          color: KooyohColors.accent)),
                   const SizedBox(width: 4),
                   const Icon(Icons.arrow_forward,
-                      size: 16, color: LimyeColors.accent),
+                      size: 16, color: KooyohColors.accent),
                 ],
               ),
             ],
@@ -372,7 +372,7 @@ class _Constrained extends StatelessWidget {
     return Center(
       child: ConstrainedBox(
         constraints:
-            const BoxConstraints(maxWidth: LimyeSpacing.containerMax),
+            const BoxConstraints(maxWidth: KooyohSpacing.containerMax),
         child: child,
       ),
     );
@@ -399,7 +399,7 @@ class _HeroSection extends StatelessWidget {
             flex: 55,
             child: _HeroContent(onGetStarted: onGetStarted),
           ),
-          const SizedBox(width: LimyeSpacing.xl),
+          const SizedBox(width: KooyohSpacing.xl),
           const Expanded(
             flex: 45,
             child: Center(
@@ -414,7 +414,7 @@ class _HeroSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _HeroContent(onGetStarted: onGetStarted),
-        const SizedBox(height: LimyeSpacing.lg),
+        const SizedBox(height: KooyohSpacing.lg),
         const LandingHeroIsometricIllustration(
             width: double.infinity, height: 280),
       ],
@@ -448,23 +448,23 @@ class _HeroContentState extends State<_HeroContent> {
       children: [
         Text(
           LandingContent.heroTitle,
-          style: LimyeTextStyles.hero(),
+          style: KooyohTextStyles.hero(),
         ),
-        const SizedBox(height: LimyeSpacing.md),
+        const SizedBox(height: KooyohSpacing.md),
         Text(
           LandingContent.heroBody,
-          style: LimyeTextStyles.body(),
+          style: KooyohTextStyles.body(),
         ),
-        const SizedBox(height: LimyeSpacing.lg),
+        const SizedBox(height: KooyohSpacing.lg),
         _AddressInputRow(
           controller: _addressCtrl,
           onGetStarted: widget.onGetStarted,
         ),
-        const SizedBox(height: LimyeSpacing.md),
+        const SizedBox(height: KooyohSpacing.md),
         Text(
           LandingContent.heroStatLabel,
-          style: LimyeTextStyles.captionBold(
-            color: LimyeColors.textCaption,
+          style: KooyohTextStyles.captionBold(
+            color: KooyohColors.textCaption,
           ),
         ),
         const SizedBox(height: 4),
@@ -478,22 +478,22 @@ class _HeroContentState extends State<_HeroContent> {
           builder: (context, value, _) {
             return Text(
               '$value',
-              style: LimyeTextStyles.dataLarge(
-                color: LimyeColors.accent,
+              style: KooyohTextStyles.dataLarge(
+                color: KooyohColors.accent,
               ),
             );
           },
         ),
-        const SizedBox(height: LimyeSpacing.md),
+        const SizedBox(height: KooyohSpacing.md),
         Text(
           LandingContent.trustedByLine,
-          style: LimyeTextStyles.caption(
-            color: LimyeColors.textCaption,
+          style: KooyohTextStyles.caption(
+            color: KooyohColors.textCaption,
           ),
         ),
         const SizedBox(height: 8),
         Wrap(
-          spacing: LimyeSpacing.sm,
+          spacing: KooyohSpacing.sm,
           runSpacing: 6,
           children: [
             for (final name in [
@@ -507,30 +507,30 @@ class _HeroContentState extends State<_HeroContent> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  border: Border.all(color: LimyeColors.border),
+                  border: Border.all(color: KooyohColors.border),
                   borderRadius: BorderRadius.circular(999),
-                  color: LimyeColors.surface,
+                  color: KooyohColors.surface,
                 ),
                 child: Text(
                   name,
-                  style: LimyeTextStyles.caption(
-                    color: LimyeColors.textCaption,
+                  style: KooyohTextStyles.caption(
+                    color: KooyohColors.textCaption,
                   ),
                 ),
               ),
           ],
         ),
-        const SizedBox(height: LimyeSpacing.sm),
+        const SizedBox(height: KooyohSpacing.sm),
         Row(
           children: [
             const Icon(Icons.bolt,
-                size: 14, color: LimyeColors.textCaption),
+                size: 14, color: KooyohColors.textCaption),
             const SizedBox(width: 4),
             Flexible(
               child: Text(
                 LandingContent.heroTrustLine,
-                style: LimyeTextStyles.caption(
-                    color: LimyeColors.textCaption),
+                style: KooyohTextStyles.caption(
+                    color: KooyohColors.textCaption),
               ),
             ),
           ],
@@ -560,29 +560,29 @@ class _AddressInputRow extends StatelessWidget {
               children: [
                 Text(
                   LandingContent.heroAddressLabel,
-                  style: LimyeTextStyles.captionBold(
-                      color: LimyeColors.textCaption),
+                  style: KooyohTextStyles.captionBold(
+                      color: KooyohColors.textCaption),
                 ),
                 const SizedBox(height: 6),
                 SizedBox(
-                  height: LimyeSpacing.inputHeight,
+                  height: KooyohSpacing.inputHeight,
                   child: TextField(
                     controller: controller,
-                    style: LimyeTextStyles.body(
-                        color: LimyeColors.textPrimary),
+                    style: KooyohTextStyles.body(
+                        color: KooyohColors.textPrimary),
                     decoration: _inputDeco(LandingContent.heroAddressPlaceholder),
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: LimyeSpacing.sm),
+          const SizedBox(width: KooyohSpacing.sm),
           SizedBox(
-            height: LimyeSpacing.buttonHeight,
+            height: KooyohSpacing.buttonHeight,
             child: ElevatedButton(
               onPressed: onGetStarted,
               style: ElevatedButton.styleFrom(
-                backgroundColor: LimyeColors.accent,
+                backgroundColor: KooyohColors.accent,
                 foregroundColor: Colors.white,
                 elevation: 0,
                 shape: const StadiumBorder(),
@@ -590,7 +590,7 @@ class _AddressInputRow extends StatelessWidget {
               ),
               child: Text(
                 LandingContent.heroPrimaryCta,
-                style: LimyeTextStyles.bodyBold(color: Colors.white),
+                style: KooyohTextStyles.bodyBold(color: Colors.white),
               ),
             ),
           ),
@@ -602,29 +602,29 @@ class _AddressInputRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          height: LimyeSpacing.inputHeight,
+          height: KooyohSpacing.inputHeight,
           child: TextField(
             controller: controller,
             style:
-                LimyeTextStyles.body(color: LimyeColors.textPrimary),
+                KooyohTextStyles.body(color: KooyohColors.textPrimary),
             decoration: _inputDeco(LandingContent.heroAddressPlaceholder),
           ),
         ),
         const SizedBox(height: 12),
         SizedBox(
           width: double.infinity,
-          height: LimyeSpacing.buttonHeight,
+          height: KooyohSpacing.buttonHeight,
           child: ElevatedButton(
             onPressed: onGetStarted,
             style: ElevatedButton.styleFrom(
-              backgroundColor: LimyeColors.accent,
+              backgroundColor: KooyohColors.accent,
               foregroundColor: Colors.white,
               elevation: 0,
               shape: const StadiumBorder(),
             ),
             child: Text(
               LandingContent.heroPrimaryCta,
-              style: LimyeTextStyles.bodyBold(color: Colors.white),
+              style: KooyohTextStyles.bodyBold(color: Colors.white),
             ),
           ),
         ),
@@ -635,21 +635,21 @@ class _AddressInputRow extends StatelessWidget {
   InputDecoration _inputDeco(String hint) => InputDecoration(
         hintText: hint,
         hintStyle:
-            LimyeTextStyles.body(color: LimyeColors.textCaption),
+            KooyohTextStyles.body(color: KooyohColors.textCaption),
         filled: true,
-        fillColor: LimyeColors.surface,
+        fillColor: KooyohColors.surface,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(LimyeRadius.input),
-          borderSide: const BorderSide(color: LimyeColors.border),
+          borderRadius: BorderRadius.circular(KooyohRadius.input),
+          borderSide: const BorderSide(color: KooyohColors.border),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(LimyeRadius.input),
-          borderSide: const BorderSide(color: LimyeColors.border),
+          borderRadius: BorderRadius.circular(KooyohRadius.input),
+          borderSide: const BorderSide(color: KooyohColors.border),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(LimyeRadius.input),
+          borderRadius: BorderRadius.circular(KooyohRadius.input),
           borderSide:
-              const BorderSide(color: LimyeColors.accent, width: 1.5),
+              const BorderSide(color: KooyohColors.accent, width: 1.5),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16),
       );
@@ -672,28 +672,28 @@ class _TrustStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: LimyeSpacing.md),
+      padding: const EdgeInsets.symmetric(vertical: KooyohSpacing.md),
       decoration: const BoxDecoration(
-        color: LimyeColors.surface,
+        color: KooyohColors.surface,
         border: Border.symmetric(
-          horizontal: BorderSide(color: LimyeColors.border),
+          horizontal: BorderSide(color: KooyohColors.border),
         ),
       ),
       child: Wrap(
-        spacing: LimyeSpacing.xl,
-        runSpacing: LimyeSpacing.sm,
+        spacing: KooyohSpacing.xl,
+        runSpacing: KooyohSpacing.sm,
         alignment: WrapAlignment.center,
         children: _items
             .map(
               (item) => Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(item.$1, size: 18, color: LimyeColors.textBody),
+                  Icon(item.$1, size: 18, color: KooyohColors.textBody),
                   const SizedBox(width: 6),
                   Text(
                     item.$2,
-                    style: LimyeTextStyles.caption(
-                        color: LimyeColors.textBody),
+                    style: KooyohTextStyles.caption(
+                        color: KooyohColors.textBody),
                   ),
                 ],
               ),
@@ -721,8 +721,8 @@ class _HowItWorks extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(LandingContent.howItWorksTitle, style: LimyeTextStyles.sectionHeading()),
-        const SizedBox(height: LimyeSpacing.lg),
+        Text(LandingContent.howItWorksTitle, style: KooyohTextStyles.sectionHeading()),
+        const SizedBox(height: KooyohSpacing.lg),
         // Row + Expanded requires bounded width. Unbounded maxWidth in some
         // browsers makes `infinity > 700` true, which would pick the Row and
         // crash layout — content below (pillars, footer) never shows.
@@ -744,7 +744,7 @@ class _HowItWorks extends StatelessWidget {
                         )))
                     .expand((w) => [
                           w,
-                          const SizedBox(width: LimyeSpacing.cardGap),
+                          const SizedBox(width: KooyohSpacing.cardGap),
                         ])
                     .take(_steps.length * 2 - 1)
                     .toList(),
@@ -762,7 +762,7 @@ class _HowItWorks extends StatelessWidget {
                     ))
                 .expand((w) => [
                       w,
-                      const SizedBox(height: LimyeSpacing.cardGap),
+                      const SizedBox(height: KooyohSpacing.cardGap),
                     ])
                 .take(_steps.length * 2 - 1)
                 .toList(),
@@ -791,17 +791,17 @@ class _StepCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final body = Text(
       step.$2,
-      style: LimyeTextStyles.body(),
+      style: KooyohTextStyles.body(),
       maxLines: _bodyMaxLines,
       overflow: TextOverflow.ellipsis,
     );
 
     return Container(
-      padding: const EdgeInsets.all(LimyeSpacing.cardPadding),
+      padding: const EdgeInsets.all(KooyohSpacing.cardPadding),
       decoration: BoxDecoration(
-        color: LimyeColors.surface,
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
-        border: Border.all(color: LimyeColors.border),
+        color: KooyohColors.surface,
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
+        border: Border.all(color: KooyohColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -810,19 +810,19 @@ class _StepCard extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: LimyeColors.surface,
-              border: Border.all(color: LimyeColors.border),
+              color: KooyohColors.surface,
+              border: Border.all(color: KooyohColors.border),
               borderRadius: BorderRadius.circular(999),
             ),
             child: Center(
               child: _HowItWorksStepLeading(stepIndex: stepIndex),
             ),
           ),
-          const SizedBox(height: LimyeSpacing.md),
-          Text(step.$1, style: LimyeTextStyles.cardHeading()),
-          const SizedBox(height: LimyeSpacing.xs / 2),
+          const SizedBox(height: KooyohSpacing.md),
+          Text(step.$1, style: KooyohTextStyles.cardHeading()),
+          const SizedBox(height: KooyohSpacing.xs / 2),
           const Divider(),
-          const SizedBox(height: LimyeSpacing.xs),
+          const SizedBox(height: KooyohSpacing.xs),
           if (expandBody)
             Expanded(
               child: Align(
@@ -850,7 +850,7 @@ class _HowItWorksStepLeading extends StatelessWidget {
         return Icon(
           Icons.add_home_work_rounded,
           size: 22,
-          color: LimyeColors.accent,
+          color: KooyohColors.accent,
         );
       case 1:
         return SizedBox(
@@ -864,7 +864,7 @@ class _HowItWorksStepLeading extends StatelessWidget {
                 child: Icon(
                   Icons.chat_bubble_rounded,
                   size: 22,
-                  color: LimyeColors.accent,
+                  color: KooyohColors.accent,
                 ),
               ),
               Positioned(
@@ -873,7 +873,7 @@ class _HowItWorksStepLeading extends StatelessWidget {
                 child: Icon(
                   Icons.auto_awesome_rounded,
                   size: 12,
-                  color: LimyeColors.textBody,
+                  color: KooyohColors.textBody,
                 ),
               ),
             ],
@@ -889,7 +889,7 @@ class _HowItWorksStepLeading extends StatelessWidget {
               const Icon(
                 Icons.description_rounded,
                 size: 22,
-                color: LimyeColors.accent,
+                color: KooyohColors.accent,
               ),
               Positioned(
                 right: -4,
@@ -897,7 +897,7 @@ class _HowItWorksStepLeading extends StatelessWidget {
                 child: Icon(
                   Icons.check_circle_rounded,
                   size: 14,
-                  color: LimyeColors.accent,
+                  color: KooyohColors.accent,
                 ),
               ),
             ],
@@ -907,7 +907,7 @@ class _HowItWorksStepLeading extends StatelessWidget {
         return Icon(
           Icons.circle_outlined,
           size: 22,
-          color: LimyeColors.accent,
+          color: KooyohColors.accent,
         );
     }
   }
@@ -925,15 +925,15 @@ class _SeeLightInActionSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          LandingContent.seeLimyeInActionTitle,
-          style: LimyeTextStyles.sectionHeading(),
+          LandingContent.seeKooyohInActionTitle,
+          style: KooyohTextStyles.sectionHeading(),
         ),
-        const SizedBox(height: LimyeSpacing.xs),
+        const SizedBox(height: KooyohSpacing.xs),
         Text(
-          LandingContent.seeLimyeInActionSubtitle,
-          style: LimyeTextStyles.body(),
+          LandingContent.seeKooyohInActionSubtitle,
+          style: KooyohTextStyles.body(),
         ),
-        const SizedBox(height: LimyeSpacing.lg),
+        const SizedBox(height: KooyohSpacing.lg),
         LayoutBuilder(builder: (context, c) {
           final wide = c.hasBoundedWidth && c.maxWidth > 860;
           final left = Column(
@@ -943,10 +943,10 @@ class _SeeLightInActionSection extends StatelessWidget {
                 final w = b.maxWidth.clamp(280.0, 520.0).toDouble();
                 return BrowserMockupHomeownerIllustration(width: w, height: 240);
               }),
-              const SizedBox(height: LimyeSpacing.xs),
+              const SizedBox(height: KooyohSpacing.xs),
               Text(
                 LandingContent.mockupHomeownerCaption,
-                style: LimyeTextStyles.caption(),
+                style: KooyohTextStyles.caption(),
               ),
             ],
           );
@@ -957,10 +957,10 @@ class _SeeLightInActionSection extends StatelessWidget {
                 final w = b.maxWidth.clamp(280.0, 520.0).toDouble();
                 return BrowserMockupOrgDashboardIllustration(width: w, height: 240);
               }),
-              const SizedBox(height: LimyeSpacing.xs),
+              const SizedBox(height: KooyohSpacing.xs),
               Text(
                 LandingContent.mockupOrgCaption,
-                style: LimyeTextStyles.caption(),
+                style: KooyohTextStyles.caption(),
               ),
             ],
           );
@@ -969,7 +969,7 @@ class _SeeLightInActionSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(child: left),
-                const SizedBox(width: LimyeSpacing.cardGap),
+                const SizedBox(width: KooyohSpacing.cardGap),
                 Expanded(child: right),
               ],
             );
@@ -978,7 +978,7 @@ class _SeeLightInActionSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               left,
-              const SizedBox(height: LimyeSpacing.lg),
+              const SizedBox(height: KooyohSpacing.lg),
               right,
             ],
           );
@@ -1001,13 +1001,13 @@ class _ForBusinessSection extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
-          horizontal: LimyeSpacing.gutter,
-          vertical: LimyeSpacing.sectionPaddingVertical),
-      color: LimyeColors.background,
+          horizontal: KooyohSpacing.gutter,
+          vertical: KooyohSpacing.sectionPaddingVertical),
+      color: KooyohColors.background,
       child: Center(
         child: ConstrainedBox(
           constraints:
-              const BoxConstraints(maxWidth: LimyeSpacing.containerMax),
+              const BoxConstraints(maxWidth: KooyohSpacing.containerMax),
           child: LayoutBuilder(builder: (ctx, constraints) {
             final isWide =
                 constraints.hasBoundedWidth && constraints.maxWidth > 700;
@@ -1021,29 +1021,29 @@ class _ForBusinessSection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(LandingContent.forBusinessTitle,
-                            style: LimyeTextStyles.sectionHeading()),
-                        const SizedBox(height: LimyeSpacing.xs),
+                            style: KooyohTextStyles.sectionHeading()),
+                        const SizedBox(height: KooyohSpacing.xs),
                         Text(
                           LandingContent.forBusinessBody,
-                          style: LimyeTextStyles.body(),
+                          style: KooyohTextStyles.body(),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(width: LimyeSpacing.xl),
+                  const SizedBox(width: KooyohSpacing.xl),
                   SizedBox(
-                    height: LimyeSpacing.buttonHeight,
+                    height: KooyohSpacing.buttonHeight,
                     child: OutlinedButton(
                       onPressed: onNavigateEnterprise,
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: LimyeColors.textPrimary,
-                        side: const BorderSide(color: LimyeColors.border),
+                        foregroundColor: KooyohColors.textPrimary,
+                        side: const BorderSide(color: KooyohColors.border),
                         shape: const StadiumBorder(),
                         padding: const EdgeInsets.symmetric(horizontal: 28),
                       ),
                       child: Text(LandingContent.forBusinessLearnMore,
-                          style: LimyeTextStyles.bodyBold(
-                              color: LimyeColors.textPrimary)),
+                          style: KooyohTextStyles.bodyBold(
+                              color: KooyohColors.textPrimary)),
                     ),
                   ),
                 ],
@@ -1053,25 +1053,25 @@ class _ForBusinessSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(LandingContent.forBusinessTitle,
-                    style: LimyeTextStyles.sectionHeading()),
-                const SizedBox(height: LimyeSpacing.xs),
+                    style: KooyohTextStyles.sectionHeading()),
+                const SizedBox(height: KooyohSpacing.xs),
                 Text(
                   LandingContent.forBusinessBody,
-                  style: LimyeTextStyles.body(),
+                  style: KooyohTextStyles.body(),
                 ),
-                const SizedBox(height: LimyeSpacing.md),
+                const SizedBox(height: KooyohSpacing.md),
                 SizedBox(
-                  height: LimyeSpacing.buttonHeight,
+                  height: KooyohSpacing.buttonHeight,
                   child: OutlinedButton(
                     onPressed: onNavigateEnterprise,
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: LimyeColors.textPrimary,
-                      side: const BorderSide(color: LimyeColors.border),
+                      foregroundColor: KooyohColors.textPrimary,
+                      side: const BorderSide(color: KooyohColors.border),
                       shape: const StadiumBorder(),
                     ),
                     child: Text(LandingContent.forBusinessLearnMore,
-                        style: LimyeTextStyles.bodyBold(
-                            color: LimyeColors.textPrimary)),
+                        style: KooyohTextStyles.bodyBold(
+                            color: KooyohColors.textPrimary)),
                   ),
                 ),
               ],
@@ -1096,9 +1096,9 @@ class _FeaturesDeepDive extends StatelessWidget {
       children: [
         Text(
           LandingContent.featuresSectionTitle,
-          style: LimyeTextStyles.sectionHeading(),
+          style: KooyohTextStyles.sectionHeading(),
         ),
-        const SizedBox(height: LimyeSpacing.lg),
+        const SizedBox(height: KooyohSpacing.lg),
         LayoutBuilder(
           builder: (context, c) {
             final wide = c.hasBoundedWidth && c.maxWidth > 760;
@@ -1113,15 +1113,15 @@ class _FeaturesDeepDive extends StatelessWidget {
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: graphicOnLeft
-                      ? [a, const SizedBox(width: LimyeSpacing.xl), b]
-                      : [b, const SizedBox(width: LimyeSpacing.xl), a],
+                      ? [a, const SizedBox(width: KooyohSpacing.xl), b]
+                      : [b, const SizedBox(width: KooyohSpacing.xl), a],
                 );
               }
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   graphic,
-                  const SizedBox(height: LimyeSpacing.md),
+                  const SizedBox(height: KooyohSpacing.md),
                   copy,
                 ],
               );
@@ -1131,8 +1131,8 @@ class _FeaturesDeepDive extends StatelessWidget {
               height: 220,
               child: Center(
                 child: _LandingChatIllustration(
-                  color: LimyeColors.border,
-                  accent: LimyeColors.accent,
+                  color: KooyohColors.border,
+                  accent: KooyohColors.accent,
                   wide: c.maxWidth.clamp(280.0, 360.0),
                 ),
               ),
@@ -1141,8 +1141,8 @@ class _FeaturesDeepDive extends StatelessWidget {
               height: 220,
               child: Center(
                 child: _LandingPermitIllustration(
-                  color: LimyeColors.border,
-                  accent: LimyeColors.accent,
+                  color: KooyohColors.border,
+                  accent: KooyohColors.accent,
                   wide: c.maxWidth.clamp(280.0, 360.0),
                 ),
               ),
@@ -1151,8 +1151,8 @@ class _FeaturesDeepDive extends StatelessWidget {
               height: 220,
               child: Center(
                 child: _LandingPoolIllustration(
-                  color: LimyeColors.border,
-                  accent: LimyeColors.accent,
+                  color: KooyohColors.border,
+                  accent: KooyohColors.accent,
                   wide: c.maxWidth.clamp(280.0, 360.0),
                 ),
               ),
@@ -1177,7 +1177,7 @@ class _FeaturesDeepDive extends StatelessWidget {
                     },
                   ),
                 ),
-                const SizedBox(height: LimyeSpacing.lg),
+                const SizedBox(height: KooyohSpacing.lg),
                 alternatingRow(
                   graphicOnLeft: false,
                   graphic: permitIllo,
@@ -1186,7 +1186,7 @@ class _FeaturesDeepDive extends StatelessWidget {
                     body: LandingContent.featurePermitBody,
                   ),
                 ),
-                const SizedBox(height: LimyeSpacing.lg),
+                const SizedBox(height: KooyohSpacing.lg),
                 alternatingRow(
                   graphicOnLeft: true,
                   graphic: poolIllo,
@@ -1222,23 +1222,23 @@ class _FeatureCopyColumn extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: LimyeTextStyles.cardHeading()),
+        Text(title, style: KooyohTextStyles.cardHeading()),
         const SizedBox(height: 8),
-        Text(body, style: LimyeTextStyles.body()),
+        Text(body, style: KooyohTextStyles.body()),
         if (linkLabel != null && onLinkTap != null) ...[
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           TextButton(
             onPressed: onLinkTap,
             style: TextButton.styleFrom(
-              foregroundColor: LimyeColors.accent,
+              foregroundColor: KooyohColors.accent,
               padding: EdgeInsets.zero,
               minimumSize: Size.zero,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
             child: Text(
               linkLabel!,
-              style: LimyeTextStyles.bodyBold(
-                color: LimyeColors.accent,
+              style: KooyohTextStyles.bodyBold(
+                color: KooyohColors.accent,
               ),
             ),
           ),
@@ -1276,9 +1276,9 @@ class _SocialProofSection extends StatelessWidget {
       children: [
         Text(
           LandingContent.socialProofHeadline,
-          style: LimyeTextStyles.sectionHeading(),
+          style: KooyohTextStyles.sectionHeading(),
         ),
-        const SizedBox(height: LimyeSpacing.lg),
+        const SizedBox(height: KooyohSpacing.lg),
         LayoutBuilder(
           builder: (context, c) {
             final wide = c.hasBoundedWidth && c.maxWidth > 900;
@@ -1287,7 +1287,7 @@ class _SocialProofSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   for (var i = 0; i < _cards.length; i++) ...[
-                    if (i > 0) const SizedBox(width: LimyeSpacing.cardGap),
+                    if (i > 0) const SizedBox(width: KooyohSpacing.cardGap),
                     Expanded(child: _TestimonialCard(data: _cards[i])),
                   ],
                 ],
@@ -1298,7 +1298,7 @@ class _SocialProofSection extends StatelessWidget {
               children: [
                 for (final card in _cards) ...[
                   _TestimonialCard(data: card),
-                  const SizedBox(height: LimyeSpacing.sm),
+                  const SizedBox(height: KooyohSpacing.sm),
                 ],
               ],
             );
@@ -1317,24 +1317,24 @@ class _TestimonialCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(LimyeSpacing.cardPadding),
+      padding: const EdgeInsets.all(KooyohSpacing.cardPadding),
       decoration: BoxDecoration(
-        color: LimyeColors.surface,
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
-        border: Border.all(color: LimyeColors.border),
+        color: KooyohColors.surface,
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
+        border: Border.all(color: KooyohColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             '"${data.$1}"',
-            style: LimyeTextStyles.body(),
+            style: KooyohTextStyles.body(),
           ),
           const SizedBox(height: 10),
           Text(
             data.$2,
-            style: LimyeTextStyles.caption(
-              color: LimyeColors.textCaption,
+            style: KooyohTextStyles.caption(
+              color: KooyohColors.textCaption,
             ),
           ),
         ],
@@ -1361,14 +1361,14 @@ class _FinalCtaSection extends StatelessWidget {
         child: Material(
           color: c.surfaceMuted,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(LimyeRadius.lg),
+            borderRadius: BorderRadius.circular(KooyohRadius.lg),
             side: BorderSide(color: c.outline),
           ),
           elevation: 0,
           child: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: LimyeSpacing.lg,
-              vertical: LimyeSpacing.md + 8,
+              horizontal: KooyohSpacing.lg,
+              vertical: KooyohSpacing.md + 8,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -1384,7 +1384,7 @@ class _FinalCtaSection extends StatelessWidget {
                   style: tt.bodyMedium?.copyWith(color: c.onSurfaceMuted),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: LimyeSpacing.md),
+                const SizedBox(height: KooyohSpacing.md),
                 FilledButton(
                   onPressed: onStart,
                   style: FilledButton.styleFrom(
@@ -1589,11 +1589,11 @@ class _WalletSection extends StatelessWidget {
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 800),
         child: Container(
-          padding: const EdgeInsets.all(LimyeSpacing.lg),
+          padding: const EdgeInsets.all(KooyohSpacing.lg),
           decoration: BoxDecoration(
-            color: LimyeColors.surface,
-            borderRadius: BorderRadius.circular(LimyeRadius.card),
-            border: Border.all(color: LimyeColors.border),
+            color: KooyohColors.surface,
+            borderRadius: BorderRadius.circular(KooyohRadius.card),
+            border: Border.all(color: KooyohColors.border),
           ),
           child: LayoutBuilder(builder: (ctx, constraints) {
             final isWide =
@@ -1604,7 +1604,7 @@ class _WalletSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _WalletBalance(),
-                  const SizedBox(width: LimyeSpacing.md),
+                  const SizedBox(width: KooyohSpacing.md),
                   _ConnectWalletBtn(),
                 ],
               );
@@ -1613,7 +1613,7 @@ class _WalletSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _WalletBalance(),
-                const SizedBox(height: LimyeSpacing.md),
+                const SizedBox(height: KooyohSpacing.md),
                 _ConnectWalletBtn(),
               ],
             );
@@ -1634,29 +1634,29 @@ class _WalletBalance extends StatelessWidget {
           width: 48,
           height: 48,
           decoration: BoxDecoration(
-            color: LimyeColors.surface,
+            color: KooyohColors.surface,
             borderRadius: BorderRadius.circular(999),
-            border: Border.all(color: LimyeColors.border),
+            border: Border.all(color: KooyohColors.border),
           ),
           child: const Icon(Icons.account_balance_wallet_outlined,
-              size: 22, color: LimyeColors.textBody),
+              size: 22, color: KooyohColors.textBody),
         ),
-        const SizedBox(width: LimyeSpacing.md),
+        const SizedBox(width: KooyohSpacing.md),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(WalletContent.hlioBalanceLabel,
-                style: LimyeTextStyles.caption(
-                    color: LimyeColors.textCaption)),
+                style: KooyohTextStyles.caption(
+                    color: KooyohColors.textCaption)),
             Row(
               children: [
                 Text(WalletContent.demoBalanceAmount,
-                    style: LimyeTextStyles.dataLarge()),
+                    style: KooyohTextStyles.dataLarge()),
                 const SizedBox(width: 6),
                 Text(WalletContent.hlioTicker,
-                    style: LimyeTextStyles.body(
-                        color: LimyeColors.textBody)),
+                    style: KooyohTextStyles.body(
+                        color: KooyohColors.textBody)),
               ],
             ),
           ],
@@ -1670,7 +1670,7 @@ class _ConnectWalletBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: LimyeSpacing.buttonHeight,
+      height: KooyohSpacing.buttonHeight,
       child: ElevatedButton.icon(
         onPressed: () {
           AppFeedback.snack(
@@ -1680,9 +1680,9 @@ class _ConnectWalletBtn extends StatelessWidget {
         },
         icon: const Icon(Icons.link, size: 18),
         label: Text(WalletContent.connectWallet,
-            style: LimyeTextStyles.bodyBold(color: Colors.white)),
+            style: KooyohTextStyles.bodyBold(color: Colors.white)),
         style: ElevatedButton.styleFrom(
-          backgroundColor: LimyeColors.accent,
+          backgroundColor: KooyohColors.accent,
           foregroundColor: Colors.white,
           elevation: 0,
           shape: const StadiumBorder(),

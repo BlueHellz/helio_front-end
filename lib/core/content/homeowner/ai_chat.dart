@@ -3,11 +3,11 @@
 class AiChatContent {
   AiChatContent._();
 
-  static const pageTitle = 'Design with LIMYÈ AI';
+  static const pageTitle = 'Design with KOO-YOH AI';
   static const messagesTabTitle = 'Messages';
 
   // Chat chrome — desktop panel header / mobile top bar
-  static const headerBrand = 'LIMYÈ AI';
+  static const headerBrand = 'KOO-YOH AI';
   /// Shown under the brand until an address exists on the design provider.
   static const headerSubtitlePending =
       'Use Quick Intake to generate your roof preview.';
@@ -28,7 +28,7 @@ class AiChatContent {
 
   // Seeded conversation — mobile
   static const seedAiWelcomeMobile =
-      'Hello! I am LIMYÈ AI. Share a few details about your home and electricity '
+      'Hello! I am KOO-YOH AI. Share a few details about your home and electricity '
       'use, and I will help you explore solar. You can use Quick Intake to enter '
       'everything in one place.';
   static const seedUserConfirmMobile =
@@ -120,11 +120,11 @@ class AiChatContent {
   static const moreOptionsHint = 'More options';
 
   // Message bubble micro-label (AI)
-  static const aiBubbleLabel = 'LIMYÈ';
+  static const aiBubbleLabel = 'KOO-YOH';
 
   // Messages tab (non-design) placeholder copy
   static const messagesTabSystem =
-      'Welcome to LIMYÈ. When design automation is enabled, your assistant will '
+      'Welcome to KOO-YOH. When design automation is enabled, your assistant will '
       'appear here.';
   static const messagesTabAiPlaceholder =
       'This channel is a placeholder until the assistant is connected.';

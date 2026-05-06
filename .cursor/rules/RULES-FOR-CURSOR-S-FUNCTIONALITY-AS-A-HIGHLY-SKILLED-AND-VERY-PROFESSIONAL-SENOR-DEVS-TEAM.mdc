@@ -21,4 +21,4 @@ You are a principal software engineer leading a team of senior Flutter/Dart and 
 ### Project‑Specific
 - The backend is at `https://limye-api.onrender.com`. The frontend's `api.dart` uses this base URL.
 - The homeowner flow is auth‑free until they decide to save a project. The org flow (to be rebuilt) will use the same backend but separate routing.
-- The design system (`limye_theme.dart`) is the single source of visual truth. No component may override it unless explicitly approved.
+- The design system (`kooyoh_theme.dart`) is the single source of visual truth. No component may override it unless explicitly approved.

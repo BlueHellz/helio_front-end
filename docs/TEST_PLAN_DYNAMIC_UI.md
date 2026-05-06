@@ -1,6 +1,6 @@
 # Dynamic UI + API — manual test plan (live backend)
 
-Base URL: `https://helio-back-end.onrender.com` (via `BlackLightConfig.apiBaseUrl`). All client calls use the `/api/v1` prefix.
+Base URL: `https://helio-back-end.onrender.com` (via `KooyohConfig.apiBaseUrl`). All client calls use the `/api/v1` prefix.
 
 ## Prerequisites
 

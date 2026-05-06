@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../theme/limye_theme.dart';
+import '../../../theme/kooyoh_theme.dart';
 import '../../brand/blacklight_brand_logo.dart';
 import '../../content/content_registry.dart';
 import '../../ui/app_feedback.dart';
@@ -63,20 +63,20 @@ class _PublicNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: LimyeSpacing.navbarHeight,
+      height: KooyohSpacing.navbarHeight,
       decoration: const BoxDecoration(
-        color: LimyeColors.surface,
+        color: KooyohColors.surface,
         border: Border(
-          bottom: BorderSide(color: LimyeColors.border),
+          bottom: BorderSide(color: KooyohColors.border),
         ),
       ),
       child: Center(
         child: ConstrainedBox(
           constraints:
-              const BoxConstraints(maxWidth: LimyeSpacing.containerMax),
+              const BoxConstraints(maxWidth: KooyohSpacing.containerMax),
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: LimyeSpacing.gutter),
+                horizontal: KooyohSpacing.gutter),
             child: Row(
               children: [
                 MouseRegion(
@@ -94,7 +94,7 @@ class _PublicNavbar extends StatelessWidget {
                   primary: false,
                   onTap: onBusinesses,
                 ),
-                const SizedBox(width: LimyeSpacing.sm),
+                const SizedBox(width: KooyohSpacing.sm),
                 _PublicNavPill(
                   label: NavigationContent.preAuthEnterprise,
                   primary: true,
@@ -131,7 +131,7 @@ class _PublicNavPillState extends State<_PublicNavPill> {
   Widget build(BuildContext context) {
     final borderW = _hover ? 2.0 : 1.5;
     final accentBorder =
-        Border.all(color: LimyeColors.accent, width: borderW);
+        Border.all(color: KooyohColors.accent, width: borderW);
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),
       onExit: (_) => setState(() => _hover = false),
@@ -143,24 +143,24 @@ class _PublicNavPillState extends State<_PublicNavPill> {
           duration: const Duration(milliseconds: 160),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 160),
-            height: LimyeSpacing.inputHeightMobile,
-            padding: const EdgeInsets.symmetric(horizontal: LimyeSpacing.md),
+            height: KooyohSpacing.inputHeightMobile,
+            padding: const EdgeInsets.symmetric(horizontal: KooyohSpacing.md),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: widget.primary ? LimyeColors.accent : Colors.transparent,
-              borderRadius: BorderRadius.circular(LimyeSpacing.inputHeightMobile / 2),
+              color: widget.primary ? KooyohColors.accent : Colors.transparent,
+              borderRadius: BorderRadius.circular(KooyohSpacing.inputHeightMobile / 2),
               border: widget.primary
                   ? Border.all(
-                      color: _hover ? LimyeColors.accent : LimyeColors.accent,
+                      color: _hover ? KooyohColors.accent : KooyohColors.accent,
                       width: borderW,
                     )
                   : accentBorder,
             ),
             child: Text(
               widget.label,
-              style: LimyeTextStyles.captionBold(
+              style: KooyohTextStyles.captionBold(
                 color:
-                    widget.primary ? Colors.white : LimyeColors.accent,
+                    widget.primary ? Colors.white : KooyohColors.accent,
               ).copyWith(letterSpacing: 0.6, fontSize: 12),
             ),
           ),
@@ -177,7 +177,7 @@ class BlackLightFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: LimyeSpacing.footerHeight,
+      height: KooyohSpacing.footerHeight,
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
         border: Border(
@@ -293,7 +293,7 @@ class HomeownerAuthenticatedChrome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: LimyeAdaptive.background(context),
+      backgroundColor: KooyohAdaptive.background(context),
       body: Row(
         children: [
           _Sidebar(
@@ -336,12 +336,12 @@ class _Sidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: LimyeSpacing.sidebarWidth,
+      width: KooyohSpacing.sidebarWidth,
       height: double.infinity,
       decoration: BoxDecoration(
-        color: LimyeAdaptive.sidebarBg(context),
+        color: KooyohAdaptive.sidebarBg(context),
         border: Border(
-          right: BorderSide(color: LimyeAdaptive.sidebarBorder(context)),
+          right: BorderSide(color: KooyohAdaptive.sidebarBorder(context)),
         ),
       ),
       child: Column(
@@ -373,14 +373,14 @@ class _Sidebar extends StatelessWidget {
                       width: 32,
                       height: 32,
                       decoration: BoxDecoration(
-                        color: LimyeAdaptive.surface(context),
+                        color: KooyohAdaptive.surface(context),
                         borderRadius: BorderRadius.circular(999),
                         border: Border.all(
-                            color: LimyeAdaptive.border(context)),
+                            color: KooyohAdaptive.border(context)),
                       ),
                       child: Icon(Icons.person_outline,
                           size: 18,
-                          color: LimyeAdaptive.textBody(context)),
+                          color: KooyohAdaptive.textBody(context)),
                     ),
                     const SizedBox(width: 10),
                     Expanded(
@@ -388,8 +388,8 @@ class _Sidebar extends StatelessWidget {
                         userName.isEmpty
                             ? NavigationContent.shellUserFallback
                             : userName,
-                        style: LimyeTextStyles.body(
-                                color: LimyeAdaptive.textPrimary(context))
+                        style: KooyohTextStyles.body(
+                                color: KooyohAdaptive.textPrimary(context))
                             .copyWith(
                                 fontSize: 13, fontWeight: FontWeight.w500),
                         overflow: TextOverflow.ellipsis,
@@ -401,8 +401,8 @@ class _Sidebar extends StatelessWidget {
                   const SizedBox(height: 8),
                   Text(
                     '${WalletContent.hlioTicker} ${hlioBalance.toStringAsFixed(2)}',
-                    style: LimyeTextStyles.caption(
-                        color: LimyeAdaptive.textCaption(context)),
+                    style: KooyohTextStyles.caption(
+                        color: KooyohAdaptive.textCaption(context)),
                   ),
                 ],
                 const SizedBox(height: 12),
@@ -412,12 +412,12 @@ class _Sidebar extends StatelessWidget {
                     children: [
                       Icon(Icons.logout_outlined,
                           size: 16,
-                          color: LimyeAdaptive.textCaption(context)),
+                          color: KooyohAdaptive.textCaption(context)),
                       const SizedBox(width: 8),
                       Text(
                         NavigationContent.shellSignOut,
-                        style: LimyeTextStyles.caption(
-                            color: LimyeAdaptive.textCaption(context)),
+                        style: KooyohTextStyles.caption(
+                            color: KooyohAdaptive.textCaption(context)),
                       ),
                     ],
                   ),
@@ -467,15 +467,15 @@ class _SidebarNavItem extends StatelessWidget {
               size: 20,
               color: isActive
                   ? context.colors.primary
-                  : LimyeAdaptive.textBody(context),
+                  : KooyohAdaptive.textBody(context),
             ),
             const SizedBox(width: 12),
             Text(
               item.label,
-              style: LimyeTextStyles.body(
+              style: KooyohTextStyles.body(
                 color: isActive
                     ? context.colors.primary
-                    : LimyeAdaptive.textBody(context),
+                    : KooyohAdaptive.textBody(context),
               ).copyWith(
                 fontSize: 14,
                 fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,

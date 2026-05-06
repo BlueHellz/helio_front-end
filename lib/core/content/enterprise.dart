@@ -14,7 +14,7 @@ class EnterpriseContent {
   static const salesHeroTitle =
       'The operating system your install team already wished existed.';
   static const salesHeroBody =
-      'LIMYÈ assumes you are scaling—not dabbling. Teams that wait for '
+      'KOO-YOH assumes you are scaling—not dabbling. Teams that wait for '
       '"the right quarter" cede territories to firms that already adopted '
       'structured AI design and pipeline visibility. The question is whether '
       'your org leads that shift in your market or reacts after installers '
@@ -43,15 +43,15 @@ class EnterpriseContent {
       'Permits, install milestones, and funder touchpoints in one surface—'
       'without exporting screenshots to close a loop.';
 
-  static const salesPlansTitle = 'LIMYÈ Free and LIMYÈ NOIR';
+  static const salesPlansTitle = 'KOO-YOH Free and KOO-YOH NOIR';
   static const salesPlansSubtitle =
       'Most teams outgrow spreadsheets long before they outgrow our free tier. '
       'NOIR is for orgs that treat solar as infrastructure, not a side channel.';
-  static const salesPlanFreeName = 'LIMYÈ Free';
+  static const salesPlanFreeName = 'KOO-YOH Free';
   static const salesPlanFreeBullet1 = 'Core CRM and project records';
   static const salesPlanFreeBullet2 = 'AI-assisted residential design flows';
   static const salesPlanFreeBullet3 = 'Standard reporting and homeowner handoff';
-  static const salesPlanNoirName = 'LIMYÈ NOIR (upcoming)';
+  static const salesPlanNoirName = 'KOO-YOH NOIR (upcoming)';
   static const salesPlanNoirBullet1 = 'Advanced automation and branded proposals';
   static const salesPlanNoirBullet2 = 'Priority routing for funding partners';
   static const salesPlanNoirBullet3 = 'Deeper API access and org-wide policies';

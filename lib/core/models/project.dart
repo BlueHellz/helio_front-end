@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../content/content_registry.dart';
-import '../../theme/limye_theme.dart';
+import '../../theme/kooyoh_theme.dart';
 
 enum ProjectStatus {
   designing,

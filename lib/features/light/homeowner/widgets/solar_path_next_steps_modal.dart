@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/theme/limye_theme.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 
 /// Outline CTA (“next steps”) used in the AI design rail / mobile composer.
 class SolarPathNextStepsCtaCard extends StatelessWidget {
@@ -13,31 +13,31 @@ class SolarPathNextStepsCtaCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: LimyeColors.surface,
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
-        border: Border.all(color: LimyeColors.border),
+        color: KooyohColors.surface,
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
+        border: Border.all(color: KooyohColors.border),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(LimyeSpacing.md),
+        padding: const EdgeInsets.all(KooyohSpacing.md),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(
-              height: LimyeSpacing.buttonHeight,
+              height: KooyohSpacing.buttonHeight,
               child: FilledButton(
                 onPressed: onTap,
                 style: FilledButton.styleFrom(
                   elevation: 0,
-                  backgroundColor: LimyeColors.accent,
-                  foregroundColor: LimyeColors.surface,
+                  backgroundColor: KooyohColors.accent,
+                  foregroundColor: KooyohColors.surface,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(LimyeRadius.sm),
+                    borderRadius: BorderRadius.circular(KooyohRadius.sm),
                   ),
                 ),
                 child: Text(
                   SolarPathNextStepsContent.railCta,
                   textAlign: TextAlign.center,
-                  style: LimyeTextStyles.bodyBold(color: LimyeColors.surface),
+                  style: KooyohTextStyles.bodyBold(color: KooyohColors.surface),
                 ),
               ),
             ),
@@ -55,23 +55,23 @@ Future<void> showSolarPathNextStepsModal(
 }) {
   return showDialog<void>(
     context: context,
-    barrierColor: LimyeColors.textPrimary.withValues(alpha: 0.08),
+    barrierColor: KooyohColors.textPrimary.withValues(alpha: 0.08),
     builder: (ctx) {
       final narrow = MediaQuery.sizeOf(ctx).width <
-          LimyeSpacing.guidedFormModalMaxWidth + LimyeSpacing.sm * 2;
+          KooyohSpacing.guidedFormModalMaxWidth + KooyohSpacing.sm * 2;
       return Dialog(
         insetPadding: narrow
             ? EdgeInsets.zero
             : const EdgeInsets.symmetric(
-                horizontal: LimyeSpacing.lg,
-                vertical: LimyeSpacing.lg,
+                horizontal: KooyohSpacing.lg,
+                vertical: KooyohSpacing.lg,
               ),
         backgroundColor:
-            narrow ? LimyeColors.background : Colors.transparent,
+            narrow ? KooyohColors.background : Colors.transparent,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
-            narrow ? 0 : LimyeRadius.card,
+            narrow ? 0 : KooyohRadius.card,
           ),
         ),
         child: narrow
@@ -89,13 +89,13 @@ Future<void> showSolarPathNextStepsModal(
               )
             : ConstrainedBox(
                 constraints: const BoxConstraints(
-                  maxWidth: LimyeSpacing.guidedFormModalMaxWidth,
+                  maxWidth: KooyohSpacing.guidedFormModalMaxWidth,
                 ),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: LimyeColors.background,
-                    border: Border.all(color: LimyeColors.border),
-                    borderRadius: BorderRadius.circular(LimyeRadius.card),
+                    color: KooyohColors.background,
+                    border: Border.all(color: KooyohColors.border),
+                    borderRadius: BorderRadius.circular(KooyohRadius.card),
                   ),
                   child: _SolarPathNextStepsPanel(
                     onCreateAccount: () {
@@ -126,7 +126,7 @@ class _SolarPathNextStepsPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(LimyeSpacing.md),
+      padding: const EdgeInsets.all(KooyohSpacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -137,63 +137,63 @@ class _SolarPathNextStepsPanel extends StatelessWidget {
               onPressed: () => Navigator.of(context).pop(),
               icon: Icon(
                 Icons.close_rounded,
-                color: LimyeColors.textCaption,
+                color: KooyohColors.textCaption,
               ),
             ),
           ),
           Text(
             SolarPathNextStepsContent.modalTitle,
-            style: LimyeTextStyles.sectionHeading(),
+            style: KooyohTextStyles.sectionHeading(),
           ),
-          const SizedBox(height: LimyeSpacing.md),
+          const SizedBox(height: KooyohSpacing.md),
           _StepLine(
             icon: Icons.storefront_outlined,
             title: SolarPathNextStepsContent.step1Title,
             body: SolarPathNextStepsContent.step1Body,
           ),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           _StepLine(
             icon: Icons.fact_check_outlined,
             title: SolarPathNextStepsContent.step2Title,
             body: SolarPathNextStepsContent.step2Body,
           ),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           _StepLine(
             icon: Icons.bolt_outlined,
             title: SolarPathNextStepsContent.step3Title,
             body: SolarPathNextStepsContent.step3Body,
           ),
-          const SizedBox(height: LimyeSpacing.md),
+          const SizedBox(height: KooyohSpacing.md),
           Text(
             SolarPathNextStepsContent.accountExplanation,
-            style: LimyeTextStyles.body(),
+            style: KooyohTextStyles.body(),
           ),
-          const SizedBox(height: LimyeSpacing.md),
+          const SizedBox(height: KooyohSpacing.md),
           SizedBox(
-            height: LimyeSpacing.buttonHeight,
+            height: KooyohSpacing.buttonHeight,
             child: FilledButton(
               onPressed: onCreateAccount,
               style: FilledButton.styleFrom(
                 elevation: 0,
-                backgroundColor: LimyeColors.accent,
-                foregroundColor: LimyeColors.surface,
+                backgroundColor: KooyohColors.accent,
+                foregroundColor: KooyohColors.surface,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(LimyeRadius.sm),
+                  borderRadius: BorderRadius.circular(KooyohRadius.sm),
                 ),
               ),
               child: Text(
                 SolarPathNextStepsContent.createFreeAccount,
-                style: LimyeTextStyles.bodyBold(color: LimyeColors.surface),
+                style: KooyohTextStyles.bodyBold(color: KooyohColors.surface),
               ),
             ),
           ),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           Center(
             child: TextButton(
               onPressed: onSignIn,
               child: Text(
                 SolarPathNextStepsContent.alreadyHaveAccount,
-                style: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
+                style: KooyohTextStyles.bodyBold(color: KooyohColors.accent),
               ),
             ),
           ),
@@ -221,32 +221,32 @@ class _StepLine extends StatelessWidget {
       children: [
         DecoratedBox(
           decoration: BoxDecoration(
-            color: LimyeColors.surface,
-            borderRadius: BorderRadius.circular(LimyeRadius.sm),
-            border: Border.all(color: LimyeColors.border),
+            color: KooyohColors.surface,
+            borderRadius: BorderRadius.circular(KooyohRadius.sm),
+            border: Border.all(color: KooyohColors.border),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(LimyeSpacing.xs),
+            padding: const EdgeInsets.all(KooyohSpacing.xs),
             child: Icon(
               icon,
-              size: LimyeSpacing.tapTarget / 2,
-              color: LimyeColors.accent,
+              size: KooyohSpacing.tapTarget / 2,
+              color: KooyohColors.accent,
             ),
           ),
         ),
-        const SizedBox(width: LimyeSpacing.sm),
+        const SizedBox(width: KooyohSpacing.sm),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title,
-                style: LimyeTextStyles.bodyBold(),
+                style: KooyohTextStyles.bodyBold(),
               ),
-              const SizedBox(height: LimyeSpacing.xs),
+              const SizedBox(height: KooyohSpacing.xs),
               Text(
                 body,
-                style: LimyeTextStyles.body(),
+                style: KooyohTextStyles.body(),
               ),
             ],
           ),

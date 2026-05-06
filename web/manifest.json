@@ -1,11 +1,11 @@
 {
-    "name": "LIMYÈ",
-    "short_name": "LIMYÈ",
+    "name": "KOO-YOH",
+    "short_name": "KOO-YOH",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "LIMYÈ — AI solar design for homes and installers.",
+    "description": "KOO-YOH — AI solar design for homes and installers.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

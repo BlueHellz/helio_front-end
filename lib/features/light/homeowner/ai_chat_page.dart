@@ -3,23 +3,23 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/models/solar_design_data.dart';
-import 'package:limye_app/core/providers/ai_chat_design_email_save_provider.dart';
-import 'package:limye_app/core/providers/ai_design_estimate_provider.dart';
-import 'package:limye_app/core/providers/session_providers.dart';
-import 'package:limye_app/core/providers/solar_design_provider.dart';
-import 'package:limye_app/core/solar/solar_design_from_public_json.dart';
-import 'package:limye_app/core/ui/app_feedback.dart';
-import 'package:limye_app/features/light/homeowner/widgets/ai_chat_design_email_save_flow.dart';
-import 'package:limye_app/features/light/homeowner/widgets/ai_chat_design_rail.dart';
-import 'package:limye_app/features/light/homeowner/widgets/guided_form_modal.dart';
-import 'package:limye_app/features/light/homeowner/widgets/interactive_design_canvas.dart';
-import 'package:limye_app/features/light/homeowner/widgets/solar_estimate_summary_view.dart';
-import 'package:limye_app/features/light/homeowner/widgets/solar_path_next_steps_modal.dart';
-import 'package:limye_app/services/api.dart';
-import 'package:limye_app/services/public_api.dart';
-import 'package:limye_app/theme/limye_theme.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/models/solar_design_data.dart';
+import 'package:kooyoh_app/core/providers/ai_chat_design_email_save_provider.dart';
+import 'package:kooyoh_app/core/providers/ai_design_estimate_provider.dart';
+import 'package:kooyoh_app/core/providers/session_providers.dart';
+import 'package:kooyoh_app/core/providers/solar_design_provider.dart';
+import 'package:kooyoh_app/core/solar/solar_design_from_public_json.dart';
+import 'package:kooyoh_app/core/ui/app_feedback.dart';
+import 'package:kooyoh_app/features/light/homeowner/widgets/ai_chat_design_email_save_flow.dart';
+import 'package:kooyoh_app/features/light/homeowner/widgets/ai_chat_design_rail.dart';
+import 'package:kooyoh_app/features/light/homeowner/widgets/guided_form_modal.dart';
+import 'package:kooyoh_app/features/light/homeowner/widgets/interactive_design_canvas.dart';
+import 'package:kooyoh_app/features/light/homeowner/widgets/solar_estimate_summary_view.dart';
+import 'package:kooyoh_app/features/light/homeowner/widgets/solar_path_next_steps_modal.dart';
+import 'package:kooyoh_app/services/api.dart';
+import 'package:kooyoh_app/services/public_api.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 
 const double _splitBreakpointWidth = 960;
 
@@ -234,7 +234,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
     );
     try {
       ref.read(designProvider.notifier).setBackendError(value: false);
-      final json = await ref.read(publicLimyeApiProvider).postDesign(body);
+      final json = await ref.read(publicKooyohApiProvider).postDesign(body);
       if (!mounted) return;
       if (json.isEmpty) {
         ref.read(designProvider.notifier).setBackendError();
@@ -434,7 +434,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
               decoration: BoxDecoration(
                 color: Theme.of(scrollContext).colorScheme.surface,
                 borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(LimyeRadius.card),
+                  top: Radius.circular(KooyohRadius.card),
                 ),
                 border: Border.all(
                   color: scrollContext.colors.outline,
@@ -444,10 +444,10 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
               child: SingleChildScrollView(
                 controller: scrollCtrl,
                 padding: EdgeInsets.fromLTRB(
-                  LimyeSpacing.md,
-                  LimyeSpacing.md,
-                  LimyeSpacing.md,
-                  MediaQuery.paddingOf(scrollContext).bottom + LimyeSpacing.md,
+                  KooyohSpacing.md,
+                  KooyohSpacing.md,
+                  KooyohSpacing.md,
+                  MediaQuery.paddingOf(scrollContext).bottom + KooyohSpacing.md,
                 ),
                 child: SolarEstimateSummaryView(presentation: pres),
               ),
@@ -472,13 +472,13 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surface,
             borderRadius: const BorderRadius.vertical(
-              top: Radius.circular(LimyeRadius.card),
+              top: Radius.circular(KooyohRadius.card),
             ),
             border: Border.all(color: context.colors.outline, width: 1),
           ),
           child: Column(
             children: [
-              const SizedBox(height: LimyeSpacing.sm),
+              const SizedBox(height: KooyohSpacing.sm),
               Container(
                 width: 40,
                 height: 4,
@@ -603,10 +603,10 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
               )
             else
               Padding(
-                padding: const EdgeInsets.all(LimyeSpacing.gutter),
+                padding: const EdgeInsets.all(KooyohSpacing.gutter),
                 child: Text(
                   AiChatContent.composerDisabledHint,
-                  style: LimyeTextStyles.caption(
+                  style: KooyohTextStyles.caption(
                     color: context.colors.onSurfaceMuted,
                   ),
                 ),
@@ -615,8 +615,8 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
         ),
         if (widget.designFlowMode)
           Positioned(
-            right: LimyeSpacing.gutter,
-            bottom: LimyeSpacing.footerHeight + LimyeSpacing.md,
+            right: KooyohSpacing.gutter,
+            bottom: KooyohSpacing.footerHeight + KooyohSpacing.md,
             child: Semantics(
               button: true,
               label: AiChatContent.openVisualizationHint,
@@ -664,10 +664,10 @@ class _MobileChatHeader extends ConsumerWidget {
 
     return Container(
       padding: const EdgeInsets.fromLTRB(
-        LimyeSpacing.sm,
-        LimyeSpacing.sm,
-        LimyeSpacing.sm,
-        LimyeSpacing.sm,
+        KooyohSpacing.sm,
+        KooyohSpacing.sm,
+        KooyohSpacing.sm,
+        KooyohSpacing.sm,
       ),
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -684,14 +684,14 @@ class _MobileChatHeader extends ConsumerWidget {
             children: [
               Text(
                 AiChatContent.headerBrand,
-                style: LimyeTextStyles.cardHeading(
+                style: KooyohTextStyles.cardHeading(
                   color: context.colors.onSurface,
                 ),
               ),
-              const SizedBox(width: LimyeSpacing.xs),
+              const SizedBox(width: KooyohSpacing.xs),
               Container(
-                width: LimyeSpacing.xs,
-                height: LimyeSpacing.xs,
+                width: KooyohSpacing.xs,
+                height: KooyohSpacing.xs,
                 decoration: BoxDecoration(
                   color: context.colors.secondary,
                   shape: BoxShape.circle,
@@ -706,12 +706,12 @@ class _MobileChatHeader extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: LimyeSpacing.xs / 2),
+          const SizedBox(height: KooyohSpacing.xs / 2),
           Text(
             subtitle,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: LimyeTextStyles.body(
+            style: KooyohTextStyles.body(
               color: context.colors.onSurfaceMuted,
             ).copyWith(fontSize: 13),
           ),
@@ -726,16 +726,16 @@ class _MessagesTabHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(
-        LimyeSpacing.gutter,
-        LimyeSpacing.sm,
-        LimyeSpacing.gutter,
-        LimyeSpacing.sm,
+        KooyohSpacing.gutter,
+        KooyohSpacing.sm,
+        KooyohSpacing.gutter,
+        KooyohSpacing.sm,
       ),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(
           AiChatContent.messagesTabTitle,
-          style: LimyeTextStyles.sectionHeading(
+          style: KooyohTextStyles.sectionHeading(
             color: context.colors.onSurface,
           ),
         ),
@@ -790,10 +790,10 @@ class _ChatPanel extends StatelessWidget {
               messages: messages,
               showTyping: showTyping && designFlowMode,
               padding: const EdgeInsets.fromLTRB(
-                LimyeSpacing.md,
-                LimyeSpacing.sm,
-                LimyeSpacing.md,
-                LimyeSpacing.md,
+                KooyohSpacing.md,
+                KooyohSpacing.sm,
+                KooyohSpacing.md,
+                KooyohSpacing.md,
               ),
             ),
           ),
@@ -836,10 +836,10 @@ class _DesktopChatHeader extends ConsumerWidget {
         : AiChatContent.headerSubtitlePending;
 
     return Container(
-      height: LimyeSpacing.footerHeight,
+      height: KooyohSpacing.footerHeight,
       padding: const EdgeInsets.only(
-        left: LimyeSpacing.md,
-        right: LimyeSpacing.sm,
+        left: KooyohSpacing.md,
+        right: KooyohSpacing.sm,
       ),
       decoration: BoxDecoration(
         color: context.colors.surface,
@@ -859,14 +859,14 @@ class _DesktopChatHeader extends ConsumerWidget {
                   children: [
                     Text(
                       AiChatContent.headerBrand,
-                      style: LimyeTextStyles.bodyBold(
+                      style: KooyohTextStyles.bodyBold(
                         color: context.colors.onSurface,
                       ).copyWith(fontSize: 18),
                     ),
-                    const SizedBox(width: LimyeSpacing.xs / 2),
+                    const SizedBox(width: KooyohSpacing.xs / 2),
                     Container(
-                      width: LimyeSpacing.xs,
-                      height: LimyeSpacing.xs,
+                      width: KooyohSpacing.xs,
+                      height: KooyohSpacing.xs,
                       decoration: BoxDecoration(
                         color: context.colors.secondary,
                         shape: BoxShape.circle,
@@ -874,19 +874,19 @@ class _DesktopChatHeader extends ConsumerWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: LimyeSpacing.xs / 2),
+                const SizedBox(height: KooyohSpacing.xs / 2),
                 Text(
                   subtitle,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: LimyeTextStyles.body(
+                  style: KooyohTextStyles.body(
                     color: context.colors.onSurfaceMuted,
                   ).copyWith(fontSize: 14),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: LimyeSpacing.sm),
+          const SizedBox(width: KooyohSpacing.sm),
           _QuickIntakePillButton(onTap: onQuickIntake),
         ],
       ),
@@ -900,7 +900,7 @@ class _ChatMessageList extends StatelessWidget {
     required this.messages,
     required this.showTyping,
     this.padding = const EdgeInsets.symmetric(
-      horizontal: LimyeSpacing.gutter,
+      horizontal: KooyohSpacing.gutter,
     ),
   });
 
@@ -918,13 +918,13 @@ class _ChatMessageList extends StatelessWidget {
       itemBuilder: (context, i) {
         if (showTyping && i == messages.length) {
           return const Padding(
-            padding: EdgeInsets.only(bottom: LimyeSpacing.md),
+            padding: EdgeInsets.only(bottom: KooyohSpacing.md),
             child: _TypingIndicator(),
           );
         }
         final m = messages[i];
         return Padding(
-          padding: const EdgeInsets.only(bottom: LimyeSpacing.md),
+          padding: const EdgeInsets.only(bottom: KooyohSpacing.md),
           child: _MessageBubble(entry: m),
         );
       },
@@ -947,17 +947,17 @@ class _MessageBubble extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 520),
           child: Container(
             padding: const EdgeInsets.symmetric(
-              vertical: LimyeSpacing.sm,
-              horizontal: LimyeSpacing.cardGap,
+              vertical: KooyohSpacing.sm,
+              horizontal: KooyohSpacing.cardGap,
             ),
             decoration: BoxDecoration(
               color: context.colors.surface,
-              borderRadius: BorderRadius.circular(LimyeRadius.md),
+              borderRadius: BorderRadius.circular(KooyohRadius.md),
               border: Border.all(color: context.colors.outline, width: 1),
             ),
             child: Text(
               entry.text,
-              style: LimyeTextStyles.caption(
+              style: KooyohTextStyles.caption(
                 color: context.colors.onSurfaceMuted,
               ),
             ),
@@ -980,13 +980,13 @@ class _MessageBubble extends StatelessWidget {
                 ),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
-                    vertical: LimyeSpacing.sm,
-                    horizontal: LimyeSpacing.cardGap,
+                    vertical: KooyohSpacing.sm,
+                    horizontal: KooyohSpacing.cardGap,
                   ),
                   decoration: BoxDecoration(
                     color: context.colors.primary,
                     borderRadius:
-                        BorderRadius.circular(LimyeRadius.md).copyWith(
+                        BorderRadius.circular(KooyohRadius.md).copyWith(
                       topRight: const Radius.circular(4),
                     ),
                     border: Border.all(
@@ -996,14 +996,14 @@ class _MessageBubble extends StatelessWidget {
                   ),
                   child: Text(
                     entry.text,
-                    style: LimyeTextStyles.body(
+                    style: KooyohTextStyles.body(
                       color: context.colors.onPrimary,
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(width: LimyeSpacing.sm),
+            const SizedBox(width: KooyohSpacing.sm),
             _UserAvatar(),
           ],
         ),
@@ -1016,7 +1016,7 @@ class _MessageBubble extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _AiAvatar(),
-          const SizedBox(width: LimyeSpacing.sm),
+          const SizedBox(width: KooyohSpacing.sm),
           Flexible(
             child: ConstrainedBox(
               constraints: BoxConstraints(
@@ -1038,7 +1038,7 @@ class _AiBubbleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final radius = BorderRadius.circular(LimyeRadius.md).copyWith(
+    final radius = BorderRadius.circular(KooyohRadius.md).copyWith(
       topLeft: const Radius.circular(4),
     );
     return ClipRRect(
@@ -1054,8 +1054,8 @@ class _AiBubbleCard extends StatelessWidget {
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(
-                vertical: LimyeSpacing.sm,
-                horizontal: LimyeSpacing.cardGap,
+                vertical: KooyohSpacing.sm,
+                horizontal: KooyohSpacing.cardGap,
               ),
               decoration: BoxDecoration(
                 color: context.colors.surface,
@@ -1066,22 +1066,22 @@ class _AiBubbleCard extends StatelessWidget {
                 children: [
                   Text(
                     AiChatContent.aiBubbleLabel,
-                    style: LimyeTextStyles.captionBold(
+                    style: KooyohTextStyles.captionBold(
                       color: context.colors.onSurfaceMuted,
                     ),
                   ),
-                  const SizedBox(height: LimyeSpacing.xs / 2),
+                  const SizedBox(height: KooyohSpacing.xs / 2),
                   Text(
                     entry.text,
-                    style: LimyeTextStyles.body(
+                    style: KooyohTextStyles.body(
                       color: context.colors.onSurface,
                     ),
                   ),
                   if (entry.layouts != null) ...[
-                    const SizedBox(height: LimyeSpacing.sm),
+                    const SizedBox(height: KooyohSpacing.sm),
                     ...entry.layouts!.map(
                       (o) => Padding(
-                        padding: const EdgeInsets.only(top: LimyeSpacing.xs),
+                        padding: const EdgeInsets.only(top: KooyohSpacing.xs),
                         child: _LayoutOptionTile(option: o),
                       ),
                     ),
@@ -1107,11 +1107,11 @@ class _LayoutOptionTile extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () => AppFeedback.snack(context, AiChatContent.aiReplyContinue),
-        borderRadius: BorderRadius.circular(LimyeRadius.sm),
+        borderRadius: BorderRadius.circular(KooyohRadius.sm),
         child: Container(
-          padding: const EdgeInsets.all(LimyeSpacing.sm),
+          padding: const EdgeInsets.all(KooyohSpacing.sm),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(LimyeRadius.sm),
+            borderRadius: BorderRadius.circular(KooyohRadius.sm),
             border: Border.all(color: context.colors.outline, width: 1),
           ),
           child: Row(
@@ -1120,25 +1120,25 @@ class _LayoutOptionTile extends StatelessWidget {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: LimyeColors.background,
-                  borderRadius: BorderRadius.circular(LimyeRadius.sm),
+                  color: KooyohColors.background,
+                  borderRadius: BorderRadius.circular(KooyohRadius.sm),
                 ),
                 child: Icon(option.icon, color: context.colors.onSurface),
               ),
-              const SizedBox(width: LimyeSpacing.sm),
+              const SizedBox(width: KooyohSpacing.sm),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       option.title,
-                      style: LimyeTextStyles.bodyBold(
+                      style: KooyohTextStyles.bodyBold(
                         color: context.colors.onSurface,
                       ),
                     ),
                     Text(
                       option.subtitle,
-                      style: LimyeTextStyles.data(
+                      style: KooyohTextStyles.data(
                         color: context.colors.onSurfaceMuted,
                       ),
                     ),
@@ -1184,7 +1184,7 @@ class _UserAvatar extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: narrow
-            ? LimyeColors.background
+            ? KooyohColors.background
             : context.colors.outline.withValues(alpha: 0.35),
         shape: BoxShape.circle,
         border: Border.all(color: context.colors.outline, width: 1),
@@ -1194,7 +1194,7 @@ class _UserAvatar extends StatelessWidget {
               size: 18, color: context.colors.onSurfaceMuted)
           : Text(
               'S',
-              style: LimyeTextStyles.captionBold(
+              style: KooyohTextStyles.captionBold(
                 color: context.colors.onSurfaceMuted,
               ).copyWith(fontSize: 12),
             ),
@@ -1233,15 +1233,15 @@ class _TypingIndicatorState extends State<_TypingIndicator>
     return Row(
       children: [
         _AiAvatar(),
-        const SizedBox(width: LimyeSpacing.sm),
+        const SizedBox(width: KooyohSpacing.sm),
         Container(
           padding: const EdgeInsets.symmetric(
-            horizontal: LimyeSpacing.cardGap,
-            vertical: LimyeSpacing.sm,
+            horizontal: KooyohSpacing.cardGap,
+            vertical: KooyohSpacing.sm,
           ),
           decoration: BoxDecoration(
             color: context.colors.surface,
-            borderRadius: BorderRadius.circular(LimyeRadius.md),
+            borderRadius: BorderRadius.circular(KooyohRadius.md),
             border: Border.all(color: context.colors.outline, width: 1),
           ),
           child: AnimatedBuilder(
@@ -1292,7 +1292,7 @@ class _QuickIntakePillButton extends StatelessWidget {
         elevation: 0,
         shadowColor: Colors.transparent,
         shape: StadiumBorder(
-          side: BorderSide(color: LimyeColors.accent, width: 1),
+          side: BorderSide(color: KooyohColors.accent, width: 1),
         ),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
@@ -1303,14 +1303,14 @@ class _QuickIntakePillButton extends StatelessWidget {
               maxHeight: _height,
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: LimyeSpacing.cardGap),
+              padding: const EdgeInsets.symmetric(horizontal: KooyohSpacing.cardGap),
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
                   AiChatContent.quickIntakeFormButtonLabel,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
+                  style: KooyohTextStyles.bodyBold(color: KooyohColors.accent),
                 ),
               ),
             ),
@@ -1337,7 +1337,7 @@ class _ComposerSendPill extends StatelessWidget {
       label: AiChatContent.sendButtonLabel,
       child: Material(
         color:
-            enabled ? LimyeColors.accent : LimyeColors.accent.withValues(alpha: 0.45),
+            enabled ? KooyohColors.accent : KooyohColors.accent.withValues(alpha: 0.45),
         elevation: 0,
         shadowColor: Colors.transparent,
         shape: const StadiumBorder(),
@@ -1350,20 +1350,20 @@ class _ComposerSendPill extends StatelessWidget {
               maxHeight: _height,
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: LimyeSpacing.md),
+              padding: const EdgeInsets.symmetric(horizontal: KooyohSpacing.md),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     AiChatContent.sendButtonLabel,
-                    style: LimyeTextStyles.bodyBold(color: LimyeColors.surface),
+                    style: KooyohTextStyles.bodyBold(color: KooyohColors.surface),
                   ),
-                  const SizedBox(width: LimyeSpacing.xs / 2),
+                  const SizedBox(width: KooyohSpacing.xs / 2),
                   Icon(
                     Icons.send_rounded,
                     size: 18,
-                    color: LimyeColors.surface,
+                    color: KooyohColors.surface,
                   ),
                 ],
               ),
@@ -1392,10 +1392,10 @@ class _DesktopComposer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(
-        LimyeSpacing.md,
-        LimyeSpacing.md,
-        LimyeSpacing.md,
-        LimyeSpacing.md,
+        KooyohSpacing.md,
+        KooyohSpacing.md,
+        KooyohSpacing.md,
+        KooyohSpacing.md,
       ),
       color: context.colors.surface,
       child: Row(
@@ -1409,29 +1409,29 @@ class _DesktopComposer extends StatelessWidget {
               textInputAction: TextInputAction.newline,
               minLines: 3,
               maxLines: 6,
-              style: LimyeTextStyles.body(color: context.colors.onSurface),
-              scrollPadding: const EdgeInsets.all(LimyeSpacing.xl),
+              style: KooyohTextStyles.body(color: context.colors.onSurface),
+              scrollPadding: const EdgeInsets.all(KooyohSpacing.xl),
               decoration: InputDecoration(
                 hintText: AiChatContent.inputPlaceholderDesktop,
-                hintStyle: LimyeTextStyles.body(
+                hintStyle: KooyohTextStyles.body(
                   color: context.colors.onSurfaceMuted,
                 ),
                 filled: true,
                 fillColor: Theme.of(context).brightness == Brightness.dark
-                    ? LimyeDarkColors.background
-                    : LimyeColors.background,
+                    ? KooyohDarkColors.background
+                    : KooyohColors.background,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(LimyeRadius.lg),
+                  borderRadius: BorderRadius.circular(KooyohRadius.lg),
                   borderSide: BorderSide.none,
                 ),
                 contentPadding: const EdgeInsets.symmetric(
-                  horizontal: LimyeSpacing.md,
-                  vertical: LimyeSpacing.sm,
+                  horizontal: KooyohSpacing.md,
+                  vertical: KooyohSpacing.sm,
                 ),
               ),
             ),
           ),
-          const SizedBox(width: LimyeSpacing.sm),
+          const SizedBox(width: KooyohSpacing.sm),
           _ComposerSendPill(
             enabled: !sending,
             onTap: onSend,
@@ -1473,9 +1473,9 @@ class _MobileComposerBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attachH = LimyeSpacing.tapTarget;
+    final attachH = KooyohSpacing.tapTarget;
     return Container(
-      padding: const EdgeInsets.all(LimyeSpacing.sm),
+      padding: const EdgeInsets.all(KooyohSpacing.sm),
       color: context.colors.surface,
       child: SafeArea(
         top: false,
@@ -1505,7 +1505,7 @@ class _MobileComposerBar extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: LimyeSpacing.sm),
+                const SizedBox(width: KooyohSpacing.sm),
                 Expanded(
                   child: TextField(
                     controller: controller,
@@ -1514,44 +1514,44 @@ class _MobileComposerBar extends StatelessWidget {
                     textInputAction: TextInputAction.newline,
                     minLines: 3,
                     maxLines: 6,
-                    style: LimyeTextStyles.body(
+                    style: KooyohTextStyles.body(
                       color: context.colors.onSurface,
                     ),
-                    scrollPadding: const EdgeInsets.all(LimyeSpacing.xl),
+                    scrollPadding: const EdgeInsets.all(KooyohSpacing.xl),
                     decoration: InputDecoration(
                       hintText: AiChatContent.inputPlaceholderMobile,
-                      hintStyle: LimyeTextStyles.body(
+                      hintStyle: KooyohTextStyles.body(
                         color: context.colors.onSurfaceMuted,
                       ),
                       filled: true,
                       fillColor:
                           Theme.of(context).brightness == Brightness.dark
-                              ? LimyeDarkColors.background
-                              : LimyeColors.background,
+                              ? KooyohDarkColors.background
+                              : KooyohColors.background,
                       border: OutlineInputBorder(
                         borderRadius:
-                            BorderRadius.circular(LimyeRadius.lg),
+                            BorderRadius.circular(KooyohRadius.lg),
                         borderSide: BorderSide.none,
                       ),
                       contentPadding: const EdgeInsets.symmetric(
-                        horizontal: LimyeSpacing.md,
-                        vertical: LimyeSpacing.sm,
+                        horizontal: KooyohSpacing.md,
+                        vertical: KooyohSpacing.sm,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: LimyeSpacing.sm),
+                const SizedBox(width: KooyohSpacing.sm),
                 _ComposerSendPill(
                   enabled: !sending,
                   onTap: onSend,
                 ),
               ],
             ),
-            const SizedBox(height: LimyeSpacing.sm),
+            const SizedBox(height: KooyohSpacing.sm),
             Builder(builder: (context) {
               Widget btn = SizedBox(
                 width: double.infinity,
-                height: LimyeSpacing.buttonHeight,
+                height: KooyohSpacing.buttonHeight,
                 child: FilledButton(
                   onPressed: estimateLoading ||
                           saveDesignSending ||
@@ -1560,27 +1560,27 @@ class _MobileComposerBar extends StatelessWidget {
                       : onRequestEstimate,
                   style: FilledButton.styleFrom(
                     elevation: 0,
-                    backgroundColor: LimyeColors.accent,
-                    foregroundColor: LimyeColors.surface,
+                    backgroundColor: KooyohColors.accent,
+                    foregroundColor: KooyohColors.surface,
                     disabledBackgroundColor:
-                        LimyeColors.surfaceMuted.withValues(alpha: 0.9),
+                        KooyohColors.surfaceMuted.withValues(alpha: 0.9),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(LimyeRadius.sm),
+                      borderRadius: BorderRadius.circular(KooyohRadius.sm),
                     ),
                   ),
                   child: estimateLoading
                       ? SizedBox(
-                          width: LimyeSpacing.md,
-                          height: LimyeSpacing.md,
+                          width: KooyohSpacing.md,
+                          height: KooyohSpacing.md,
                           child: const CircularProgressIndicator(
                             strokeWidth: 2,
-                            color: LimyeColors.surface,
+                            color: KooyohColors.surface,
                           ),
                         )
                       : Text(
                           DesignEstimateChatContent.requestEstimateCta,
-                          style: LimyeTextStyles.bodyBold(
-                            color: LimyeColors.surface,
+                          style: KooyohTextStyles.bodyBold(
+                            color: KooyohColors.surface,
                           ),
                         ),
                 ),
@@ -1593,11 +1593,11 @@ class _MobileComposerBar extends StatelessWidget {
               }
               return btn;
             }),
-            const SizedBox(height: LimyeSpacing.sm),
+            const SizedBox(height: KooyohSpacing.sm),
             Builder(builder: (context) {
               Widget btn = SizedBox(
                 width: double.infinity,
-                height: LimyeSpacing.buttonHeight,
+                height: KooyohSpacing.buttonHeight,
                 child: OutlinedButton(
                   onPressed: estimateLoading ||
                           saveDesignSending ||
@@ -1605,25 +1605,25 @@ class _MobileComposerBar extends StatelessWidget {
                       ? null
                       : onSaveDesignEmail,
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: LimyeColors.accent,
-                    side: const BorderSide(color: LimyeColors.border, width: 1),
+                    foregroundColor: KooyohColors.accent,
+                    side: const BorderSide(color: KooyohColors.border, width: 1),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(LimyeRadius.sm),
+                      borderRadius: BorderRadius.circular(KooyohRadius.sm),
                     ),
                   ),
                   child: saveDesignSending
                       ? SizedBox(
-                          width: LimyeSpacing.md,
-                          height: LimyeSpacing.md,
+                          width: KooyohSpacing.md,
+                          height: KooyohSpacing.md,
                           child: const CircularProgressIndicator(
                             strokeWidth: 2,
-                            color: LimyeColors.accent,
+                            color: KooyohColors.accent,
                           ),
                         )
                       : Text(
                           DesignSaveEmailContent.saveEmailDesignCta,
                           style:
-                              LimyeTextStyles.bodyBold(color: LimyeColors.accent),
+                              KooyohTextStyles.bodyBold(color: KooyohColors.accent),
                         ),
                 ),
               );
@@ -1636,7 +1636,7 @@ class _MobileComposerBar extends StatelessWidget {
               return btn;
             }),
             if (showSolarPathNextSteps && onSolarPathNextSteps != null) ...[
-              const SizedBox(height: LimyeSpacing.sm),
+              const SizedBox(height: KooyohSpacing.sm),
               SolarPathNextStepsCtaCard(onTap: onSolarPathNextSteps!),
             ],
           ],

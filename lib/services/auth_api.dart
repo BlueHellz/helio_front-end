@@ -176,7 +176,7 @@ AuthResult parseAuthJson(Map<String, dynamic> json) {
 class AuthApi {
   AuthApi({http.Client? client, String? baseUrl})
       : _client = client ?? http.Client(),
-        _base = baseUrl ?? BlackLightConfig.apiBaseUrl;
+        _base = baseUrl ?? KooyohConfig.apiBaseUrl;
 
   final http.Client _client;
   final String _base;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/providers/ai_chat_design_email_save_provider.dart';
-import 'package:limye_app/core/providers/solar_design_provider.dart';
-import 'package:limye_app/core/ui/app_feedback.dart';
-import 'package:limye_app/features/light/homeowner/widgets/save_design_email_dialog.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/providers/ai_chat_design_email_save_provider.dart';
+import 'package:kooyoh_app/core/providers/solar_design_provider.dart';
+import 'package:kooyoh_app/core/ui/app_feedback.dart';
+import 'package:kooyoh_app/features/light/homeowner/widgets/save_design_email_dialog.dart';
 
 /// Save & email the current AI-chat design (intake address + optional estimate).
 Future<void> runAiChatSaveDesignEmailFlow({

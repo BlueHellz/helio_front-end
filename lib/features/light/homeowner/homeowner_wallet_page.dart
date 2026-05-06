@@ -1,6 +1,6 @@
-import 'package:limye_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
-import 'package:limye_app/theme/limye_theme.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 
 /// Account + HLIO wallet (homeowner), replacing org settings hub.
 class HomeownerWalletPage extends StatelessWidget {
@@ -28,18 +28,18 @@ class HomeownerWalletPage extends StatelessWidget {
     final c = context.colors;
     final variant = Theme.of(context).colorScheme.onSurfaceVariant;
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(LimyeSpacing.gutter),
+      padding: const EdgeInsets.all(KooyohSpacing.gutter),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 760),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(HomeownerSettingsContent.pageTitle,
-                style: LimyeTextStyles.sectionHeading(color: c.onSurface)),
+                style: KooyohTextStyles.sectionHeading(color: c.onSurface)),
             const SizedBox(height: 4),
             Text(HomeownerSettingsContent.pageSubtitle,
-                style: LimyeTextStyles.body(color: variant)),
-            const SizedBox(height: LimyeSpacing.lg),
+                style: KooyohTextStyles.body(color: variant)),
+            const SizedBox(height: KooyohSpacing.lg),
             _Card(
               title: HomeownerSettingsContent.sectionProfile,
               child: Column(
@@ -49,7 +49,7 @@ class HomeownerWalletPage extends StatelessWidget {
                     value: userName.isEmpty ? CommonContent.notSet : userName,
                     onEdit: onEditUserName,
                   ),
-                  const Divider(height: LimyeSpacing.md),
+                  const Divider(height: KooyohSpacing.md),
                   _Row(
                     label: HomeownerSettingsContent.labelEmail,
                     value: CommonContent.notSet,
@@ -58,7 +58,7 @@ class HomeownerWalletPage extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: LimyeSpacing.md),
+            const SizedBox(height: KooyohSpacing.md),
             _Card(
               title: HomeownerSettingsContent.sectionWallet,
               child: Column(
@@ -67,18 +67,18 @@ class HomeownerWalletPage extends StatelessWidget {
                   Row(
                     children: [
                       Text(WalletContent.hlioBalanceLabel,
-                          style: LimyeTextStyles.caption(color: variant)),
+                          style: KooyohTextStyles.caption(color: variant)),
                       const SizedBox(width: 8),
                       Text(
                         hlioBalance.toStringAsFixed(2),
-                        style: LimyeTextStyles.dataLarge(color: c.onSurface),
+                        style: KooyohTextStyles.dataLarge(color: c.onSurface),
                       ),
                       const SizedBox(width: 6),
                       Text(WalletContent.hlioTicker,
-                          style: LimyeTextStyles.body(color: variant)),
+                          style: KooyohTextStyles.body(color: variant)),
                     ],
                   ),
-                  const SizedBox(height: LimyeSpacing.md),
+                  const SizedBox(height: KooyohSpacing.md),
                   if (walletAddress == null)
                     SizedBox(
                       height: 44,
@@ -86,7 +86,7 @@ class HomeownerWalletPage extends StatelessWidget {
                         onPressed: onConnectWallet,
                         icon: const Icon(Icons.link, size: 16),
                         label: Text(WalletContent.connectWallet,
-                            style: LimyeTextStyles.caption().copyWith(
+                            style: KooyohTextStyles.caption().copyWith(
                                   color: c.onPrimary,
                                   fontWeight: FontWeight.w600,
                                 )),
@@ -95,12 +95,12 @@ class HomeownerWalletPage extends StatelessWidget {
                   else
                     Text(
                       walletAddress!,
-                      style: LimyeTextStyles.data(color: c.secondary),
+                      style: KooyohTextStyles.data(color: c.secondary),
                     ),
                 ],
               ),
             ),
-            const SizedBox(height: LimyeSpacing.md),
+            const SizedBox(height: KooyohSpacing.md),
             _Card(
               title: HomeownerSettingsContent.sectionSession,
               child: Row(
@@ -108,7 +108,7 @@ class HomeownerWalletPage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(HomeownerSettingsContent.signOutHelp,
-                        style: LimyeTextStyles.body(color: variant)),
+                        style: KooyohTextStyles.body(color: variant)),
                   ),
                   OutlinedButton(
                     onPressed: onSignOut,
@@ -117,7 +117,7 @@ class HomeownerWalletPage extends StatelessWidget {
                       side: BorderSide(color: c.error),
                     ),
                     child: Text(HomeownerSettingsContent.signOutButton,
-                        style: LimyeTextStyles.body(color: c.error)
+                        style: KooyohTextStyles.body(color: c.error)
                             .copyWith(fontWeight: FontWeight.w500)),
                   ),
                 ],
@@ -141,20 +141,20 @@ class _Card extends StatelessWidget {
     final c = context.colors;
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(LimyeSpacing.md),
+      padding: const EdgeInsets.all(KooyohSpacing.md),
       decoration: BoxDecoration(
         color: c.surface,
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
         border: Border.all(color: c.outline),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title,
-              style: LimyeTextStyles.cardHeading(color: c.onSurface)),
-          const SizedBox(height: LimyeSpacing.sm),
+              style: KooyohTextStyles.cardHeading(color: c.onSurface)),
+          const SizedBox(height: KooyohSpacing.sm),
           const Divider(),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           child,
         ],
       ),
@@ -184,11 +184,11 @@ class _Row extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(label.toUpperCase(),
-                  style: LimyeTextStyles.captionBold(color: variant)
+                  style: KooyohTextStyles.captionBold(color: variant)
                       .copyWith(fontSize: 10)),
               const SizedBox(height: 2),
               Text(value,
-                  style: LimyeTextStyles.body(color: c.onSurface)
+                  style: KooyohTextStyles.body(color: c.onSurface)
                       .copyWith(fontSize: 14)),
             ],
           ),
@@ -197,7 +197,7 @@ class _Row extends StatelessWidget {
           TextButton(
             onPressed: onEdit,
             child: Text(ButtonsContent.edit,
-                style: LimyeTextStyles.caption(color: c.primary)
+                style: KooyohTextStyles.caption(color: c.primary)
                     .copyWith(fontWeight: FontWeight.w500)),
           ),
       ],

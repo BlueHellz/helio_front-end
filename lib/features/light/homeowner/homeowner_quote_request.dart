@@ -1,8 +1,8 @@
-import 'package:limye_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
-import 'package:limye_app/theme/limye_theme.dart';
-import 'package:limye_app/core/models/project.dart';
-import 'package:limye_app/core/widgets/status_badge.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
+import 'package:kooyoh_app/core/models/project.dart';
+import 'package:kooyoh_app/core/widgets/status_badge.dart';
 
 class HomeownerQuoteRequest extends StatefulWidget {
   final Project? project;
@@ -36,7 +36,7 @@ class _HomeownerQuoteRequestState extends State<HomeownerQuoteRequest> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(LimyeSpacing.gutter),
+      padding: const EdgeInsets.all(KooyohSpacing.gutter),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 820),
         child: _hasSubmitted
@@ -54,31 +54,31 @@ class _HomeownerQuoteRequestState extends State<HomeownerQuoteRequest> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               const Icon(Icons.arrow_back_ios_new_rounded,
-                                  size: 14, color: LimyeColors.textBody),
+                                  size: 14, color: KooyohColors.textBody),
                               const SizedBox(width: 4),
                               Text(HomeownerQuoteRequestContent.back,
-                                  style: LimyeTextStyles.body(
-                                          color: LimyeColors.textBody)
+                                  style: KooyohTextStyles.body(
+                                          color: KooyohColors.textBody)
                                       .copyWith(fontSize: 14)),
                             ],
                           ),
                         ),
                     ],
                   ),
-                  const SizedBox(height: LimyeSpacing.md),
+                  const SizedBox(height: KooyohSpacing.md),
                   Text(HomeownerQuoteRequestContent.pageTitle,
-                      style: LimyeTextStyles.sectionHeading()),
+                      style: KooyohTextStyles.sectionHeading()),
                   const SizedBox(height: 4),
                   Text(
                     HomeownerQuoteRequestContent.pageSubtitle,
-                    style: LimyeTextStyles.body(),
+                    style: KooyohTextStyles.body(),
                   ),
-                  const SizedBox(height: LimyeSpacing.lg),
+                  const SizedBox(height: KooyohSpacing.lg),
 
                   // Design summary card
                   if (widget.project != null)
                     _DesignSummaryCard(project: widget.project!),
-                  const SizedBox(height: LimyeSpacing.md),
+                  const SizedBox(height: KooyohSpacing.md),
 
                   // Form
                   _FormCard(
@@ -88,40 +88,40 @@ class _HomeownerQuoteRequestState extends State<HomeownerQuoteRequest> {
                     onInstallerCountChanged: (v) =>
                         setState(() => _installerCount = v),
                   ),
-                  const SizedBox(height: LimyeSpacing.md),
+                  const SizedBox(height: KooyohSpacing.md),
 
                   // Installer count selector
                   _InstallerSelector(
                     selected: _installerCount,
                     onChanged: (v) => setState(() => _installerCount = v),
                   ),
-                  const SizedBox(height: LimyeSpacing.lg),
+                  const SizedBox(height: KooyohSpacing.lg),
 
                   // Submit
                   SizedBox(
                     width: double.infinity,
-                    height: LimyeSpacing.buttonHeight,
+                    height: KooyohSpacing.buttonHeight,
                     child: ElevatedButton(
                       onPressed: () {
                         setState(() => _hasSubmitted = true);
                         widget.onSubmit?.call();
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: LimyeColors.accent,
+                        backgroundColor: KooyohColors.accent,
                         foregroundColor: Colors.white,
                         elevation: 0,
                         shape: const StadiumBorder(),
                       ),
                       child: Text(HomeownerQuoteRequestContent.submitCta,
-                          style: LimyeTextStyles.bodyBold(
+                          style: KooyohTextStyles.bodyBold(
                               color: Colors.white)),
                     ),
                   ),
-                  const SizedBox(height: LimyeSpacing.xs),
+                  const SizedBox(height: KooyohSpacing.xs),
                   Center(
                     child: Text(
                       HomeownerQuoteRequestContent.submitFinePrint,
-                      style: LimyeTextStyles.caption(),
+                      style: KooyohTextStyles.caption(),
                     ),
                   ),
                 ],
@@ -139,11 +139,11 @@ class _DesignSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(LimyeSpacing.md),
+      padding: const EdgeInsets.all(KooyohSpacing.md),
       decoration: BoxDecoration(
-        color: LimyeColors.surface,
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
-        border: Border.all(color: LimyeColors.border),
+        color: KooyohColors.surface,
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
+        border: Border.all(color: KooyohColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,20 +155,20 @@ class _DesignSummaryCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(HomeownerQuoteRequestContent.yourDesign,
-                        style: LimyeTextStyles.captionBold()
+                        style: KooyohTextStyles.captionBold()
                             .copyWith(fontSize: 10)),
                     const SizedBox(height: 2),
                     Text(project.address,
-                        style: LimyeTextStyles.cardHeading()),
+                        style: KooyohTextStyles.cardHeading()),
                   ],
                 ),
               ),
               StatusBadge(status: project.status),
             ],
           ),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           const Divider(),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           Row(
             children: [
               if (project.systemSizeKw != null)
@@ -177,17 +177,17 @@ class _DesignSummaryCard extends StatelessWidget {
                   value: '${project.systemSizeKw!.toStringAsFixed(1)} kW',
                 ),
               if (project.panelCount != null) ...[
-                const SizedBox(width: LimyeSpacing.lg),
+                const SizedBox(width: KooyohSpacing.lg),
                 _MiniStat(
                     label: HomeownerQuoteRequestContent.miniPanels,
                     value: '${project.panelCount}'),
               ],
               if (project.yearOneSavings != null) ...[
-                const SizedBox(width: LimyeSpacing.lg),
+                const SizedBox(width: KooyohSpacing.lg),
                 _MiniStat(
                   label: HomeownerQuoteRequestContent.miniYearOneSavings,
                   value: '\$${project.yearOneSavings!.toStringAsFixed(0)}',
-                  valueColor: LimyeColors.green,
+                  valueColor: KooyohColors.green,
                 ),
               ],
             ],
@@ -211,10 +211,10 @@ class _MiniStat extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label.toUpperCase(),
-            style: LimyeTextStyles.captionBold().copyWith(fontSize: 10)),
+            style: KooyohTextStyles.captionBold().copyWith(fontSize: 10)),
         Text(value,
-            style: LimyeTextStyles.data(
-                color: valueColor ?? LimyeColors.textPrimary)),
+            style: KooyohTextStyles.data(
+                color: valueColor ?? KooyohColors.textPrimary)),
       ],
     );
   }
@@ -236,38 +236,38 @@ class _FormCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(LimyeSpacing.md),
+      padding: const EdgeInsets.all(KooyohSpacing.md),
       decoration: BoxDecoration(
-        color: LimyeColors.surface,
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
-        border: Border.all(color: LimyeColors.border),
+        color: KooyohColors.surface,
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
+        border: Border.all(color: KooyohColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(HomeownerQuoteRequestContent.contactPreferences,
-              style: LimyeTextStyles.cardHeading()),
-          const SizedBox(height: LimyeSpacing.sm),
+              style: KooyohTextStyles.cardHeading()),
+          const SizedBox(height: KooyohSpacing.sm),
           const Divider(),
-          const SizedBox(height: LimyeSpacing.md),
+          const SizedBox(height: KooyohSpacing.md),
           _LabeledField(
             label: HomeownerQuoteRequestContent.phoneOptional,
             child: TextField(
               controller: phoneCtrl,
               keyboardType: TextInputType.phone,
-              style: LimyeTextStyles.body(
-                  color: LimyeColors.textPrimary),
+              style: KooyohTextStyles.body(
+                  color: KooyohColors.textPrimary),
               decoration: _inputDeco(HomeownerQuoteRequestContent.phoneHint),
             ),
           ),
-          const SizedBox(height: LimyeSpacing.sm),
+          const SizedBox(height: KooyohSpacing.sm),
           _LabeledField(
             label: HomeownerQuoteRequestContent.notesOptional,
             child: TextField(
               controller: notesCtrl,
               maxLines: 3,
-              style: LimyeTextStyles.body(
-                  color: LimyeColors.textPrimary),
+              style: KooyohTextStyles.body(
+                  color: KooyohColors.textPrimary),
               decoration: _inputDeco(HomeownerQuoteRequestContent.notesHint),
             ),
           ),
@@ -279,21 +279,21 @@ class _FormCard extends StatelessWidget {
   InputDecoration _inputDeco(String hint) => InputDecoration(
         hintText: hint,
         hintStyle:
-            LimyeTextStyles.body(color: LimyeColors.textCaption),
+            KooyohTextStyles.body(color: KooyohColors.textCaption),
         filled: true,
-        fillColor: LimyeColors.background,
+        fillColor: KooyohColors.background,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(LimyeRadius.input),
-          borderSide: const BorderSide(color: LimyeColors.border),
+          borderRadius: BorderRadius.circular(KooyohRadius.input),
+          borderSide: const BorderSide(color: KooyohColors.border),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(LimyeRadius.input),
-          borderSide: const BorderSide(color: LimyeColors.border),
+          borderRadius: BorderRadius.circular(KooyohRadius.input),
+          borderSide: const BorderSide(color: KooyohColors.border),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(LimyeRadius.input),
+          borderRadius: BorderRadius.circular(KooyohRadius.input),
           borderSide:
-              const BorderSide(color: LimyeColors.accent, width: 1.5),
+              const BorderSide(color: KooyohColors.accent, width: 1.5),
         ),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -312,7 +312,7 @@ class _LabeledField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label.toUpperCase(),
-            style: LimyeTextStyles.captionBold().copyWith(fontSize: 10)),
+            style: KooyohTextStyles.captionBold().copyWith(fontSize: 10)),
         const SizedBox(height: 6),
         child,
       ],
@@ -329,21 +329,21 @@ class _InstallerSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(LimyeSpacing.md),
+      padding: const EdgeInsets.all(KooyohSpacing.md),
       decoration: BoxDecoration(
-        color: LimyeColors.surface,
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
-        border: Border.all(color: LimyeColors.border),
+        color: KooyohColors.surface,
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
+        border: Border.all(color: KooyohColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(HomeownerQuoteRequestContent.numberOfQuotesTitle,
-              style: LimyeTextStyles.cardHeading()),
+              style: KooyohTextStyles.cardHeading()),
           const SizedBox(height: 4),
           Text(HomeownerQuoteRequestContent.numberOfQuotesBody,
-              style: LimyeTextStyles.body()),
-          const SizedBox(height: LimyeSpacing.md),
+              style: KooyohTextStyles.body()),
+          const SizedBox(height: KooyohSpacing.md),
           Row(
             children: [3, 5, 10].map((n) {
               final isSelected = selected == n;
@@ -354,13 +354,13 @@ class _InstallerSelector extends StatelessWidget {
                     margin: const EdgeInsets.only(right: 12),
                     height: 52,
                     decoration: BoxDecoration(
-                      color: LimyeColors.surface,
+                      color: KooyohColors.surface,
                       borderRadius:
-                          BorderRadius.circular(LimyeRadius.input),
+                          BorderRadius.circular(KooyohRadius.input),
                       border: Border.all(
                         color: isSelected
-                            ? LimyeColors.accent
-                            : LimyeColors.border,
+                            ? KooyohColors.accent
+                            : KooyohColors.border,
                         width: isSelected ? 1.5 : 1,
                       ),
                     ),
@@ -369,17 +369,17 @@ class _InstallerSelector extends StatelessWidget {
                       children: [
                         Text(
                           '$n',
-                          style: LimyeTextStyles.dataLarge(
+                          style: KooyohTextStyles.dataLarge(
                             color: isSelected
-                                ? LimyeColors.accent
-                                : LimyeColors.textPrimary,
+                                ? KooyohColors.accent
+                                : KooyohColors.textPrimary,
                           ).copyWith(fontSize: 20),
                         ),
                         Text(HomeownerQuoteRequestContent.quotesWord,
-                            style: LimyeTextStyles.caption(
+                            style: KooyohTextStyles.caption(
                                 color: isSelected
-                                    ? LimyeColors.accent
-                                    : LimyeColors.textCaption)),
+                                    ? KooyohColors.accent
+                                    : KooyohColors.textCaption)),
                       ],
                     ),
                   ),
@@ -402,42 +402,42 @@ class _SuccessState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: LimyeSpacing.xl),
+        padding: const EdgeInsets.symmetric(vertical: KooyohSpacing.xl),
         child: Column(
           children: [
             Container(
               width: 64,
               height: 64,
               decoration: BoxDecoration(
-                color: LimyeColors.surface,
+                color: KooyohColors.surface,
                 shape: BoxShape.circle,
-                border: Border.all(color: LimyeColors.green),
+                border: Border.all(color: KooyohColors.green),
               ),
               child: const Icon(Icons.check_rounded,
-                  size: 32, color: LimyeColors.green),
+                  size: 32, color: KooyohColors.green),
             ),
-            const SizedBox(height: LimyeSpacing.md),
+            const SizedBox(height: KooyohSpacing.md),
             Text(HomeownerQuoteRequestContent.successTitle,
-                style: LimyeTextStyles.sectionHeading()),
+                style: KooyohTextStyles.sectionHeading()),
             const SizedBox(height: 4),
             Text(
               HomeownerQuoteRequestContent.successBody,
-              style: LimyeTextStyles.body(),
+              style: KooyohTextStyles.body(),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: LimyeSpacing.lg),
+            const SizedBox(height: KooyohSpacing.lg),
             SizedBox(
-              height: LimyeSpacing.buttonHeight,
+              height: KooyohSpacing.buttonHeight,
               child: OutlinedButton(
                 onPressed: onBack,
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: LimyeColors.border),
+                  side: const BorderSide(color: KooyohColors.border),
                   shape: const StadiumBorder(),
                   padding: const EdgeInsets.symmetric(horizontal: 32),
                 ),
                 child: Text(HomeownerQuoteRequestContent.backToDashboard,
-                    style: LimyeTextStyles.body(
-                            color: LimyeColors.textPrimary)
+                    style: KooyohTextStyles.body(
+                            color: KooyohColors.textPrimary)
                         .copyWith(fontWeight: FontWeight.w600)),
               ),
             ),

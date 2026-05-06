@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/ui/app_feedback.dart';
-import 'package:limye_app/theme/limye_theme.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/ui/app_feedback.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 
 bool isPlausibleHomeownerEmail(String raw) {
   final s = raw.trim();
@@ -51,27 +51,27 @@ class _SaveDesignEmailDialogState extends State<_SaveDesignEmailDialog> {
     return AlertDialog(
       backgroundColor: context.colors.surface,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(LimyeRadius.card),
+        borderRadius: BorderRadius.circular(KooyohRadius.card),
         side: BorderSide(color: context.colors.outline),
       ),
       title: Text(
         DesignSaveEmailContent.modalTitle,
-        style: LimyeTextStyles.cardHeading(color: context.colors.onSurface),
+        style: KooyohTextStyles.cardHeading(color: context.colors.onSurface),
       ),
       content: TextField(
         controller: _ctrl,
         keyboardType: TextInputType.emailAddress,
         autofillHints: const [AutofillHints.email],
-        style: LimyeTextStyles.body(color: context.colors.onSurface),
+        style: KooyohTextStyles.body(color: context.colors.onSurface),
         decoration: InputDecoration(
           labelText: AuthContent.labelEmail,
           hintText: AuthContent.hintEmail,
           filled: true,
           fillColor: Theme.of(context).brightness == Brightness.dark
-              ? LimyeDarkColors.background
-              : LimyeColors.background,
+              ? KooyohDarkColors.background
+              : KooyohColors.background,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(LimyeRadius.input),
+            borderRadius: BorderRadius.circular(KooyohRadius.input),
             borderSide: BorderSide.none,
           ),
         ),
@@ -82,22 +82,22 @@ class _SaveDesignEmailDialogState extends State<_SaveDesignEmailDialog> {
           onPressed: () => Navigator.of(context).pop(),
           child: Text(
             ButtonsContent.cancel,
-            style: LimyeTextStyles.bodyBold(color: context.colors.primary),
+            style: KooyohTextStyles.bodyBold(color: context.colors.primary),
           ),
         ),
         FilledButton(
           onPressed: _onSend,
           style: FilledButton.styleFrom(
             elevation: 0,
-            backgroundColor: LimyeColors.accent,
-            foregroundColor: LimyeColors.surface,
+            backgroundColor: KooyohColors.accent,
+            foregroundColor: KooyohColors.surface,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(LimyeRadius.sm),
+              borderRadius: BorderRadius.circular(KooyohRadius.sm),
             ),
           ),
           child: Text(
             DesignSaveEmailContent.sendAction,
-            style: LimyeTextStyles.bodyBold(color: LimyeColors.surface),
+            style: KooyohTextStyles.bodyBold(color: KooyohColors.surface),
           ),
         ),
       ],

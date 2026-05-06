@@ -54,7 +54,7 @@ class HomeownerProjectDashboardContent {
   static const installer3License = 'HT-22019';
   static const installer3Contact = '(509) 555-0161 · jobs@helioclear.demo';
 
-  static const fundingPoolTitle = 'LIMYÈ Pool Funding';
+  static const fundingPoolTitle = 'KOO-YOH Pool Funding';
   static const fundingPoolBody =
       'Community-backed pool participating in your project. Competitive collective rate with flexible draw schedule aligned to construction milestones.';
   static const fundingPoolRate = 'Estimated blended rate: 5.2% APR';

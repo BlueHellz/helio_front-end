@@ -1,4 +1,4 @@
-import 'package:limye_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
 
 /// Bottom navigation shell for authenticated homeowner (mobile).

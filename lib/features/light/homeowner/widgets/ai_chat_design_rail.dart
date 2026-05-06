@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:limye_app/core/content/content_registry.dart';
-import 'package:limye_app/core/providers/ai_chat_design_email_save_provider.dart';
-import 'package:limye_app/core/providers/ai_design_estimate_provider.dart';
-import 'package:limye_app/core/providers/solar_design_provider.dart';
-import 'package:limye_app/features/light/homeowner/widgets/ai_chat_design_email_save_flow.dart';
-import 'package:limye_app/features/light/homeowner/widgets/design_display.dart';
-import 'package:limye_app/features/light/homeowner/widgets/solar_estimate_summary_view.dart';
-import 'package:limye_app/features/light/homeowner/widgets/solar_path_next_steps_modal.dart';
-import 'package:limye_app/theme/limye_theme.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
+import 'package:kooyoh_app/core/providers/ai_chat_design_email_save_provider.dart';
+import 'package:kooyoh_app/core/providers/ai_design_estimate_provider.dart';
+import 'package:kooyoh_app/core/providers/solar_design_provider.dart';
+import 'package:kooyoh_app/features/light/homeowner/widgets/ai_chat_design_email_save_flow.dart';
+import 'package:kooyoh_app/features/light/homeowner/widgets/design_display.dart';
+import 'package:kooyoh_app/features/light/homeowner/widgets/solar_estimate_summary_view.dart';
+import 'package:kooyoh_app/features/light/homeowner/widgets/solar_path_next_steps_modal.dart';
+import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 
 /// Desktop AI chat: design canvas, estimate CTA, and optional estimate panel.
 class AiChatDesignRail extends ConsumerWidget {
@@ -44,40 +44,40 @@ class AiChatDesignRail extends ConsumerWidget {
     Widget requestButton() {
       final inner = Padding(
         padding: const EdgeInsets.fromLTRB(
-          LimyeSpacing.md,
-          LimyeSpacing.sm,
-          LimyeSpacing.md,
-          LimyeSpacing.sm,
+          KooyohSpacing.md,
+          KooyohSpacing.sm,
+          KooyohSpacing.md,
+          KooyohSpacing.sm,
         ),
         child: SizedBox(
           width: double.infinity,
-          height: LimyeSpacing.buttonHeight,
+          height: KooyohSpacing.buttonHeight,
           child: FilledButton(
             onPressed:
                 estimate.loading || saveSending || !estimateEnabled ? null : () => onRequest(),
             style: FilledButton.styleFrom(
               elevation: 0,
-              backgroundColor: LimyeColors.accent,
-              foregroundColor: LimyeColors.surface,
+              backgroundColor: KooyohColors.accent,
+              foregroundColor: KooyohColors.surface,
               disabledBackgroundColor:
-                  LimyeColors.surfaceMuted.withValues(alpha: 0.9),
+                  KooyohColors.surfaceMuted.withValues(alpha: 0.9),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(LimyeRadius.sm),
+                borderRadius: BorderRadius.circular(KooyohRadius.sm),
               ),
             ),
             child: estimate.loading
                 ? SizedBox(
-                    width: LimyeSpacing.md,
-                    height: LimyeSpacing.md,
+                    width: KooyohSpacing.md,
+                    height: KooyohSpacing.md,
                     child: const CircularProgressIndicator(
                       strokeWidth: 2,
-                      color: LimyeColors.surface,
+                      color: KooyohColors.surface,
                     ),
                   )
                 : Text(
                     DesignEstimateChatContent.requestEstimateCta,
                     style:
-                        LimyeTextStyles.bodyBold(color: LimyeColors.surface),
+                        KooyohTextStyles.bodyBold(color: KooyohColors.surface),
                   ),
           ),
         ),
@@ -88,37 +88,37 @@ class AiChatDesignRail extends ConsumerWidget {
     Widget saveButton() {
       final inner = Padding(
         padding: const EdgeInsets.fromLTRB(
-          LimyeSpacing.md,
+          KooyohSpacing.md,
           0,
-          LimyeSpacing.md,
-          LimyeSpacing.sm,
+          KooyohSpacing.md,
+          KooyohSpacing.sm,
         ),
         child: SizedBox(
           width: double.infinity,
-          height: LimyeSpacing.buttonHeight,
+          height: KooyohSpacing.buttonHeight,
           child: OutlinedButton(
             onPressed: saveSending || !estimateEnabled
                 ? null
                 : () => runAiChatSaveDesignEmailFlow(context: context, ref: ref),
             style: OutlinedButton.styleFrom(
-              foregroundColor: LimyeColors.accent,
-              side: const BorderSide(color: LimyeColors.border, width: 1),
+              foregroundColor: KooyohColors.accent,
+              side: const BorderSide(color: KooyohColors.border, width: 1),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(LimyeRadius.sm),
+                borderRadius: BorderRadius.circular(KooyohRadius.sm),
               ),
             ),
             child: saveSending
                 ? SizedBox(
-                    width: LimyeSpacing.md,
-                    height: LimyeSpacing.md,
+                    width: KooyohSpacing.md,
+                    height: KooyohSpacing.md,
                     child: const CircularProgressIndicator(
                       strokeWidth: 2,
-                      color: LimyeColors.accent,
+                      color: KooyohColors.accent,
                     ),
                   )
                 : Text(
                     DesignSaveEmailContent.saveEmailDesignCta,
-                    style: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
+                    style: KooyohTextStyles.bodyBold(color: KooyohColors.accent),
                   ),
           ),
         ),
@@ -137,16 +137,16 @@ class AiChatDesignRail extends ConsumerWidget {
           LinearProgressIndicator(
             minHeight: 2,
             backgroundColor: context.colors.surfaceMuted,
-            color: LimyeColors.accent,
+            color: KooyohColors.accent,
           ),
         requestButton(),
         saveButton(),
         if (estimate.showError)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: LimyeSpacing.md),
+            padding: const EdgeInsets.symmetric(horizontal: KooyohSpacing.md),
             child: Text(
               DesignEstimateChatContent.loadFailedFriendly,
-              style: LimyeTextStyles.caption(color: LimyeColors.error),
+              style: KooyohTextStyles.caption(color: KooyohColors.error),
             ),
           ),
         if (estimate.presentation != null) ...[
@@ -156,7 +156,7 @@ class AiChatDesignRail extends ConsumerWidget {
             child: ColoredBox(
               color: context.colors.surface,
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(LimyeSpacing.md),
+                padding: const EdgeInsets.all(KooyohSpacing.md),
                 child: SolarEstimateSummaryView(
                   presentation: estimate.presentation!,
                 ),
@@ -168,10 +168,10 @@ class AiChatDesignRail extends ConsumerWidget {
             onSolarPathNextSteps != null) ...[
           Padding(
             padding: const EdgeInsets.fromLTRB(
-              LimyeSpacing.md,
-              LimyeSpacing.sm,
-              LimyeSpacing.md,
-              LimyeSpacing.sm,
+              KooyohSpacing.md,
+              KooyohSpacing.sm,
+              KooyohSpacing.md,
+              KooyohSpacing.sm,
             ),
             child: SolarPathNextStepsCtaCard(onTap: onSolarPathNextSteps!),
           ),
