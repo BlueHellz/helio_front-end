@@ -26,6 +26,7 @@ class InteractiveCanvasContent {
   static const contextRotate = 'Rotate orientation';
 
   static const metricPanels = 'Panels';
+  static const metricPanelCount = 'Panel count';
   static const metricSystemKw = 'System size (kW)';
   static const metricAnnualProduction = 'Annual production (kWh)';
   static const metricSavings25 = '25-year savings (est.)';
@@ -55,4 +56,10 @@ class InteractiveCanvasContent {
   static const legendTierGood = 'Good';
   static const legendTierFair = 'Fair';
   static const legendTierLow = 'Lower yield';
+
+  /// Read-only design display: roof segment color legend (score thresholds).
+  static const designDisplayLegendGreen = 'Score ≥ 0.9 — best yield';
+  static const designDisplayLegendBlue = 'Score ≥ 0.7 — good yield';
+  static const designDisplayLegendAmber = 'Score ≥ 0.5 — moderate yield';
+  static const designDisplayLegendGray = 'Score < 0.5 — limited yield';
 }

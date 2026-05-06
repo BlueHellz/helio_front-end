@@ -131,12 +131,17 @@ class SolarDesignData {
     required this.panelConfigs,
     this.activeConfigIndex = 0,
     required this.initialFinancials,
+    /// When set (e.g. API DC yearly yield), display metrics may prefer this value.
+    this.yearlyEnergyDcKwh,
   });
 
   final List<RoofSegmentData> roofSegments;
   final List<PanelConfigurationData> panelConfigs;
   final int activeConfigIndex;
   final SolarFinancialsSnapshot initialFinancials;
+
+  /// Optional annual DC energy (kWh) from backend; overrides recalculated production in UI when set.
+  final double? yearlyEnergyDcKwh;
 
   PanelConfigurationData? get activeConfig {
     if (panelConfigs.isEmpty) return null;
@@ -284,6 +289,7 @@ class SolarDesignData {
       ],
       activeConfigIndex: 0,
       initialFinancials: initial,
+      yearlyEnergyDcKwh: null,
     );
   }
 

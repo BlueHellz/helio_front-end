@@ -5,6 +5,7 @@ import 'package:limye_app/core/content/content_registry.dart';
 import 'package:limye_app/core/models/solar_design_data.dart';
 import 'package:limye_app/core/providers/solar_design_provider.dart';
 import 'package:limye_app/core/ui/app_feedback.dart';
+import 'package:limye_app/features/light/homeowner/widgets/design_display.dart';
 import 'package:limye_app/features/light/homeowner/widgets/guided_form_modal.dart';
 import 'package:limye_app/features/light/homeowner/widgets/interactive_design_canvas.dart';
 import 'package:limye_app/theme/limye_theme.dart';
@@ -351,9 +352,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
           ),
           Expanded(
             flex: 3,
-            child: InteractiveDesignCanvas(
-              onDesignChanged: _onInteractiveDesignChanged,
-            ),
+            child: DesignDisplayWidget(),
           ),
         ],
       );
