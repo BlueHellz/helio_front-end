@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 /// Monospace for metrics / numbers only (JetBrains Mono from pubspec).
 const String _fontMono = 'JetBrainsMono';
+const String _fontSans = 'Montserrat';
 
 // ─────────────────────────────────────────────
 // KOO-YOH — tokens (strict design language)
@@ -11,25 +12,29 @@ const String _fontMono = 'JetBrainsMono';
 class KooyohColors {
   KooyohColors._();
 
-  static const Color background = Color(0xFFF8F9FA);
+  static const Color kooyohTerracotta = Color(0xFFC05010);
+  static const Color kooyohSunsetOrange = Color(0xFFE09010);
+  static const Color kooyohGoldenYellow = Color(0xFFF0C060);
+
+  static const Color background = Color(0xFFFAF6F2);
   static const Color surface = Color(0xFFFFFFFF);
 
   /// Nested cards / final CTA band (light).
-  static const Color surfaceMuted = Color(0xFFF1F3F5);
+  static const Color surfaceMuted = Color(0xFFFAF6F2);
 
-  static const Color border = Color(0xFFE8EAED);
+  static const Color border = Color(0xFFE5D5C7);
 
   /// Card / stroke neutrals aligned with Material [ColorScheme.outline].
   static const Color outline = border;
 
-  static const Color inputBorder = Color(0xFFDDE1E6);
+  static const Color inputBorder = Color(0xFFD5C4B7);
 
-  static const Color textPrimary = Color(0xFF0B1E33);
-  static const Color textBody = Color(0xFF5F6B7A);
+  static const Color textPrimary = Color(0xFF2B1B0E);
+  static const Color textBody = Color(0xFF6B5B4E);
   static const Color textCaption = Color(0xFF9AA5B4);
 
-  static const Color accent = Color(0xFF0066FF);
-  static const Color green = Color(0xFF00A86B);
+  static const Color accent = kooyohSunsetOrange;
+  static const Color green = Color(0xFF4F6B2A);
   static const Color amber = Color(0xFFFFB347);
 
   static const Color error = Color(0xFFBA1A1A);
@@ -39,7 +44,7 @@ class KooyohColors {
   static const Color sidebarBg = surface;
   static const Color sidebarBorder = border;
   static const Color sidebarActiveText = accent;
-  static const Color sidebarActiveBg = Color(0x140066FF);
+  static const Color sidebarActiveBg = Color(0x14E09010);
   static const Color sidebarInactiveText = textBody;
   static const Color sidebarHoverBg = background;
 }
@@ -87,61 +92,63 @@ class KooyohRadius {
 class KooyohTextStyles {
   KooyohTextStyles._();
 
+  static TextStyle _sans(TextStyle style) => style.copyWith(fontFamily: _fontSans);
+
   /// -0.02em ≈ -0.02 × fontSize in logical pixels.
-  static TextStyle hero({Color color = KooyohColors.textPrimary}) => TextStyle(
+  static TextStyle hero({Color color = KooyohColors.textPrimary}) => _sans(TextStyle(
         fontSize: 40,
         fontWeight: FontWeight.w700,
         letterSpacing: -0.8,
         height: 1.2,
         color: color,
-      );
+      ));
 
   static TextStyle sectionHeading({Color color = KooyohColors.textPrimary}) =>
-      TextStyle(
+      _sans(TextStyle(
         fontSize: 32,
         fontWeight: FontWeight.w600,
         height: 1.3,
         color: color,
-      );
+      ));
 
   static TextStyle cardHeading({Color color = KooyohColors.textPrimary}) =>
-      TextStyle(
+      _sans(TextStyle(
         fontSize: 24,
         fontWeight: FontWeight.w600,
         height: 1.4,
         color: color,
-      );
+      ));
 
-  static TextStyle body({Color color = KooyohColors.textBody}) => TextStyle(
+  static TextStyle body({Color color = KooyohColors.textBody}) => _sans(TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w400,
         height: 1.6,
         color: color,
-      );
+      ));
 
   static TextStyle bodyBold({Color color = KooyohColors.textPrimary}) =>
-      TextStyle(
+      _sans(TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w600,
         height: 1.6,
         color: color,
-      );
+      ));
 
   static TextStyle caption({Color color = KooyohColors.textCaption}) =>
-      TextStyle(
+      _sans(TextStyle(
         fontSize: 13,
         fontWeight: FontWeight.w500,
         height: 1.4,
         color: color,
-      );
+      ));
 
   static TextStyle captionBold({Color color = KooyohColors.textCaption}) =>
-      TextStyle(
+      _sans(TextStyle(
         fontSize: 13,
         fontWeight: FontWeight.w600,
         height: 1.4,
         color: color,
-      );
+      ));
 
   /// Numbers / metrics — 14px mono, weight 500.
   static TextStyle data({Color color = KooyohColors.textPrimary}) => TextStyle(
@@ -193,14 +200,14 @@ class KooyohTextStyles {
 class KooyohDarkColors {
   KooyohDarkColors._();
 
-  static const Color background = Color(0xFF0B1E33);
-  static const Color surface = Color(0xFF111F2F);
-  static const Color border = Color(0xFF1A2D44);
+  static const Color background = Color(0xFF2B1B0E);
+  static const Color surface = Color(0xFF3A2718);
+  static const Color border = Color(0xFF5A4433);
 
   /// Nested cards / final CTA band (dark).
-  static const Color surfaceMuted = Color(0xFF1A2D44);
-  static const Color textPrimary = Color(0xFFE8EDF2);
-  static const Color textBody = Color(0xFF8A9BB5);
+  static const Color surfaceMuted = Color(0xFF4A3525);
+  static const Color textPrimary = Color(0xFFFDF7F1);
+  static const Color textBody = Color(0xFFD8C6B8);
 }
 
 /// Theme-aware tokens for shells and surfaces that must track light/dark org mode.
@@ -291,17 +298,19 @@ class KooyohTheme {
       canvasColor: bg,
       cardColor: surface,
       colorScheme: const ColorScheme.dark(
-        primary: KooyohColors.accent,
+        primary: KooyohColors.kooyohTerracotta,
         onPrimary: Colors.white,
-        secondary: KooyohColors.green,
-        onSecondary: Colors.white,
+        secondary: KooyohColors.kooyohGoldenYellow,
+        onSecondary: KooyohColors.textPrimary,
+        tertiary: KooyohColors.kooyohSunsetOrange,
+        onTertiary: Colors.white,
         error: KooyohColors.error,
         surface: surface,
         onSurface: onSurf,
         outline: borderC,
         onSurfaceVariant: bodyC,
       ),
-      fontFamily: null,
+      fontFamily: _fontSans,
       iconTheme: IconThemeData(
         size: 24,
         color: bodyC,
@@ -328,13 +337,13 @@ class KooyohTheme {
         bodyMedium: KooyohTextStyles.bodyBold(color: Colors.white),
       ),
       appBarTheme: AppBarTheme(
-        backgroundColor: surface,
-        foregroundColor: onSurf,
+        backgroundColor: KooyohColors.kooyohTerracotta,
+        foregroundColor: Colors.white,
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
         titleTextStyle: KooyohTextStyles.cardHeading(color: onSurf),
-        iconTheme: IconThemeData(color: bodyC),
+        iconTheme: const IconThemeData(color: Colors.white),
         surfaceTintColor: Colors.transparent,
         shape: const Border(
           bottom: BorderSide(color: borderC, width: 1),
@@ -353,7 +362,8 @@ class KooyohTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(KooyohRadius.input),
-          borderSide: const BorderSide(color: KooyohColors.accent, width: 1),
+          borderSide:
+              const BorderSide(color: KooyohColors.kooyohSunsetOrange, width: 1),
         ),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -361,7 +371,7 @@ class KooyohTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: KooyohColors.accent,
+          backgroundColor: KooyohColors.kooyohTerracotta,
           foregroundColor: Colors.white,
           elevation: 0,
           shadowColor: Colors.transparent,
@@ -373,14 +383,15 @@ class KooyohTheme {
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: KooyohColors.accent,
+          foregroundColor: KooyohColors.kooyohTerracotta,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          side: const BorderSide(color: KooyohColors.accent, width: 1),
+          side: const BorderSide(color: KooyohColors.kooyohTerracotta, width: 1),
           minimumSize: const Size(64, KooyohSpacing.buttonHeight),
           padding: const EdgeInsets.symmetric(horizontal: 24),
           shape: const StadiumBorder(),
-          textStyle: KooyohTextStyles.bodyBold(color: KooyohColors.accent),
+          textStyle:
+              KooyohTextStyles.bodyBold(color: KooyohColors.kooyohTerracotta),
         ),
       ),
       cardTheme: CardThemeData(
@@ -400,7 +411,7 @@ class KooyohTheme {
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: surface,
-        selectedItemColor: KooyohColors.accent,
+        selectedItemColor: KooyohColors.kooyohSunsetOrange,
         unselectedItemColor: bodyC,
         elevation: 0,
         type: BottomNavigationBarType.fixed,
@@ -418,7 +429,7 @@ class KooyohTheme {
       snackBarTheme: SnackBarThemeData(
         backgroundColor: surface,
         contentTextStyle: baseSans,
-        actionTextColor: KooyohColors.accent,
+        actionTextColor: KooyohColors.kooyohSunsetOrange,
         behavior: SnackBarBehavior.floating,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -427,7 +438,7 @@ class KooyohTheme {
         ),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: KooyohColors.accent,
+        backgroundColor: KooyohColors.kooyohSunsetOrange,
         foregroundColor: Colors.white,
         elevation: 0,
       ),
@@ -449,17 +460,19 @@ ThemeData buildKooyohTheme() {
     brightness: Brightness.light,
     scaffoldBackgroundColor: KooyohColors.background,
     colorScheme: const ColorScheme.light(
-      primary: KooyohColors.accent,
+      primary: KooyohColors.kooyohTerracotta,
       onPrimary: Colors.white,
-      secondary: KooyohColors.green,
-      onSecondary: Colors.white,
+      secondary: KooyohColors.kooyohGoldenYellow,
+      onSecondary: KooyohColors.textPrimary,
+      tertiary: KooyohColors.kooyohSunsetOrange,
+      onTertiary: Colors.white,
       error: KooyohColors.error,
-      surface: KooyohColors.surface,
+      surface: KooyohColors.background,
       onSurface: KooyohColors.textPrimary,
       outline: KooyohColors.border,
-      onSurfaceVariant: KooyohColors.textCaption,
+      onSurfaceVariant: KooyohColors.textBody,
     ),
-    fontFamily: null,
+    fontFamily: _fontSans,
     iconTheme: const IconThemeData(
       size: 24,
       color: KooyohColors.textBody,
@@ -476,12 +489,13 @@ ThemeData buildKooyohTheme() {
       labelSmall: KooyohTextStyles.caption(),
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: KooyohColors.surface,
+      backgroundColor: KooyohColors.kooyohTerracotta,
+      foregroundColor: Colors.white,
       elevation: 0,
       scrolledUnderElevation: 0,
       centerTitle: true,
       titleTextStyle: KooyohTextStyles.cardHeading(),
-      iconTheme: const IconThemeData(color: KooyohColors.textBody),
+      iconTheme: const IconThemeData(color: Colors.white),
       surfaceTintColor: Colors.transparent,
       shape: const Border(
         bottom: BorderSide(color: KooyohColors.border, width: 1),
@@ -500,14 +514,15 @@ ThemeData buildKooyohTheme() {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(KooyohRadius.input),
-        borderSide: const BorderSide(color: KooyohColors.accent, width: 1),
+        borderSide:
+            const BorderSide(color: KooyohColors.kooyohSunsetOrange, width: 1),
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       hintStyle: KooyohTextStyles.caption(),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: KooyohColors.accent,
+        backgroundColor: KooyohColors.kooyohTerracotta,
         foregroundColor: Colors.white,
         elevation: 0,
         shadowColor: Colors.transparent,
@@ -519,14 +534,14 @@ ThemeData buildKooyohTheme() {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: KooyohColors.accent,
+        foregroundColor: KooyohColors.kooyohTerracotta,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        side: const BorderSide(color: KooyohColors.accent, width: 1),
+        side: const BorderSide(color: KooyohColors.kooyohTerracotta, width: 1),
         minimumSize: const Size(64, KooyohSpacing.buttonHeight),
         padding: const EdgeInsets.symmetric(horizontal: 24),
         shape: const StadiumBorder(),
-        textStyle: KooyohTextStyles.bodyBold(color: KooyohColors.accent),
+        textStyle: KooyohTextStyles.bodyBold(color: KooyohColors.kooyohTerracotta),
       ),
     ),
     cardTheme: CardThemeData(
@@ -546,7 +561,7 @@ ThemeData buildKooyohTheme() {
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: KooyohColors.surface,
-      selectedItemColor: KooyohColors.accent,
+      selectedItemColor: KooyohColors.kooyohSunsetOrange,
       unselectedItemColor: KooyohColors.textBody,
       elevation: 0,
       type: BottomNavigationBarType.fixed,

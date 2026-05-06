@@ -1,5 +1,5 @@
 name: kooyoh_app
-description: KOO-YOH — free AI solar system designer
+description: KOOYOH — free AI solar system designer
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -26,6 +26,8 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/kooyoh_logo.png
+    - assets/images/kooyoh_icon.png
     - assets/images/business_hero.jpg
     - assets/images/enterprise_auth.jpg
     # Local developer file (gitignored): copy from assets/env.json.example
@@ -36,3 +38,13 @@ flutter:
     - family: JetBrainsMono
       fonts:
         - asset: assets/fonts/JetBrainsMono-Variable.ttf
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat/Montserrat-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Montserrat/Montserrat-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Montserrat/Montserrat-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Montserrat/Montserrat-Bold.ttf
+          weight: 700

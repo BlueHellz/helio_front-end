@@ -39,7 +39,7 @@ class _IsometricHousePainter extends CustomPainter {
       ..strokeWidth = 1.0;
 
     final wallPaint = Paint()
-      ..color = const Color(0xFFFFFFFF)
+      ..color = KooyohColors.surface
       ..style = PaintingStyle.fill;
 
     final wallShadePaint = Paint()

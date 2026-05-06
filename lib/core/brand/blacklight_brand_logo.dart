@@ -5,10 +5,10 @@ import '../../theme/kooyoh_theme.dart';
 
 // ─────────────────────────────────────────────
 // KOO-YOH — official lockup (raster, theme-tinted)
-// Source: assets/images/black_light_logo.png
+// Source: assets/images/kooyoh_logo.png
 // ─────────────────────────────────────────────
 
-const String kBlackLightLogoAsset = 'assets/images/black_light_logo.png';
+const String kBlackLightLogoAsset = 'assets/images/kooyoh_logo.png';
 
 /// Tints a single-color+alpha brand asset to [KooyohColors.textPrimary].
 class _BlackLightAssetPaint extends StatelessWidget {
