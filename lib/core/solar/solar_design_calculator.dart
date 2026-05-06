@@ -75,6 +75,29 @@ double annualProductionKwhForDesign({
   return data.yearlyEnergyDcKwh ?? financials.annualProductionKwh;
 }
 
+/// JSON fragment for anonymous AI-chat design payloads (`/estimate`, save-email, etc.).
+Map<String, dynamic> solarDesignAiChatCustomData({
+  required SolarDesignData data,
+  required List<CanvasSolarPanel> panels,
+  required RecalculatedFinancials financials,
+}) {
+  return {
+    'source': 'homeowner_ai_chat',
+    'system_size_kw': financials.systemSizeKw,
+    'panel_count': financials.panelCount,
+    'annual_production_kwh': annualProductionKwhForDesign(
+      data: data,
+      financials: financials,
+    ),
+    'active_config_index': data.activeConfigIndex,
+    'active_configuration_id': data.activeConfig?.id,
+    'roof_segment_count': data.roofSegments.length,
+    if (data.yearlyEnergyDcKwh != null)
+      'yearly_energy_dc_kwh': data.yearlyEnergyDcKwh,
+    'panel_ids': panels.map((e) => e.id).toList(),
+  };
+}
+
 Project projectStubForEstimateMerge({
   required String address,
   required String? ownerName,

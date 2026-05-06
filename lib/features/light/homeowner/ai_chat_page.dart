@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:limye_app/core/content/content_registry.dart';
 import 'package:limye_app/core/models/solar_design_data.dart';
+import 'package:limye_app/core/providers/ai_chat_design_email_save_provider.dart';
 import 'package:limye_app/core/providers/ai_design_estimate_provider.dart';
 import 'package:limye_app/core/providers/solar_design_provider.dart';
 import 'package:limye_app/core/ui/app_feedback.dart';
+import 'package:limye_app/features/light/homeowner/widgets/ai_chat_design_email_save_flow.dart';
 import 'package:limye_app/features/light/homeowner/widgets/ai_chat_design_rail.dart';
 import 'package:limye_app/features/light/homeowner/widgets/guided_form_modal.dart';
 import 'package:limye_app/features/light/homeowner/widgets/interactive_design_canvas.dart';
@@ -284,6 +286,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
     ref.read(designProvider.notifier).setIntakeContext(
           address: payload.address,
           ownerName: payload.ownerName,
+          email: payload.email,
         );
     _maybeSeedInteractiveDesignCanvas();
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -407,6 +410,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
     final designVs = ref.watch(designProvider);
     final estimateLoading =
         ref.watch(aiDesignEstimateProvider.select((s) => s.loading));
+    final saveSending = ref.watch(aiChatDesignEmailSaveProvider);
     final mobileEstimateReady = widget.designFlowMode &&
         (designVs.intakeAddress ?? '').trim().isNotEmpty &&
         designVs.data != null &&
@@ -468,6 +472,11 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
                 onRequestEstimate: _onMobileRequestEstimate,
                 estimateLoading: estimateLoading,
                 estimateEnabled: mobileEstimateReady,
+                onSaveDesignEmail: () => runAiChatSaveDesignEmailFlow(
+                  context: context,
+                  ref: ref,
+                ),
+                saveDesignSending: saveSending,
               )
             else
               Padding(
@@ -1198,6 +1207,8 @@ class _MobileComposerBar extends StatelessWidget {
     required this.onRequestEstimate,
     required this.estimateLoading,
     required this.estimateEnabled,
+    required this.onSaveDesignEmail,
+    required this.saveDesignSending,
   });
 
   final TextEditingController controller;
@@ -1209,6 +1220,8 @@ class _MobileComposerBar extends StatelessWidget {
   final VoidCallback onRequestEstimate;
   final bool estimateLoading;
   final bool estimateEnabled;
+  final VoidCallback onSaveDesignEmail;
+  final bool saveDesignSending;
 
   @override
   Widget build(BuildContext context) {
@@ -1304,7 +1317,9 @@ class _MobileComposerBar extends StatelessWidget {
                 width: double.infinity,
                 height: LimyeSpacing.buttonHeight,
                 child: FilledButton(
-                  onPressed: estimateLoading || !estimateEnabled
+                  onPressed: estimateLoading ||
+                          saveDesignSending ||
+                          !estimateEnabled
                       ? null
                       : onRequestEstimate,
                   style: FilledButton.styleFrom(
@@ -1331,6 +1346,48 @@ class _MobileComposerBar extends StatelessWidget {
                           style: LimyeTextStyles.bodyBold(
                             color: LimyeColors.surface,
                           ),
+                        ),
+                ),
+              );
+              if (!estimateEnabled) {
+                btn = Tooltip(
+                  message: DesignEstimateChatContent.needAddressFirst,
+                  child: btn,
+                );
+              }
+              return btn;
+            }),
+            const SizedBox(height: LimyeSpacing.sm),
+            Builder(builder: (context) {
+              Widget btn = SizedBox(
+                width: double.infinity,
+                height: LimyeSpacing.buttonHeight,
+                child: OutlinedButton(
+                  onPressed: estimateLoading ||
+                          saveDesignSending ||
+                          !estimateEnabled
+                      ? null
+                      : onSaveDesignEmail,
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: LimyeColors.accent,
+                    side: const BorderSide(color: LimyeColors.border, width: 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(LimyeRadius.sm),
+                    ),
+                  ),
+                  child: saveDesignSending
+                      ? SizedBox(
+                          width: LimyeSpacing.md,
+                          height: LimyeSpacing.md,
+                          child: const CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: LimyeColors.accent,
+                          ),
+                        )
+                      : Text(
+                          DesignSaveEmailContent.saveEmailDesignCta,
+                          style:
+                              LimyeTextStyles.bodyBold(color: LimyeColors.accent),
                         ),
                 ),
               );

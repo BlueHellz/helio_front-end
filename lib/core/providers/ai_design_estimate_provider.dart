@@ -189,7 +189,11 @@ class AiDesignEstimateNotifier extends StateNotifier<AiDesignEstimateState> {
         annualProductionKwh: annualKwhRounded.toDouble(),
       );
 
-      final custom = _designCustomBlob(data: data, panels: panels, financials: financials);
+      final custom = solarDesignAiChatCustomData(
+        data: data,
+        panels: panels,
+        financials: financials,
+      );
       final owner = (designVs.intakeOwnerName ?? '').trim();
       final body = projectCreateBody(
         address: address,
@@ -228,28 +232,6 @@ class AiDesignEstimateNotifier extends StateNotifier<AiDesignEstimateState> {
       return false;
     }
   }
-}
-
-Map<String, dynamic> _designCustomBlob({
-  required SolarDesignData data,
-  required List<CanvasSolarPanel> panels,
-  required RecalculatedFinancials financials,
-}) {
-  return {
-    'source': 'homeowner_ai_chat',
-    'system_size_kw': financials.systemSizeKw,
-    'panel_count': financials.panelCount,
-    'annual_production_kwh': annualProductionKwhForDesign(
-      data: data,
-      financials: financials,
-    ),
-    'active_config_index': data.activeConfigIndex,
-    'active_configuration_id': data.activeConfig?.id,
-    'roof_segment_count': data.roofSegments.length,
-    if (data.yearlyEnergyDcKwh != null)
-      'yearly_energy_dc_kwh': data.yearlyEnergyDcKwh,
-    'panel_ids': panels.map((e) => e.id).toList(),
-  };
 }
 
 final aiDesignEstimateProvider =

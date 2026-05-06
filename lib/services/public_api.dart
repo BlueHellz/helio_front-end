@@ -50,6 +50,19 @@ class PublicLimyeApi {
     return _decodeObject(r);
   }
 
+  Future<Map<String, dynamic>> postSaveDesignEmail(
+      Map<String, dynamic> body) async {
+    final r = await _client.post(
+      _u('/design/save-email'),
+      headers: const {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: jsonEncode(body),
+    );
+    return _decodeObject(r);
+  }
+
   Map<String, dynamic> _decodeObject(http.Response r) {
     if (r.statusCode >= 200 && r.statusCode < 300) {
       if (r.body.isEmpty) return <String, dynamic>{};

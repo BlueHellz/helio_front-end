@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:limye_app/core/content/content_registry.dart';
+import 'package:limye_app/core/providers/ai_chat_design_email_save_provider.dart';
 import 'package:limye_app/core/providers/ai_design_estimate_provider.dart';
 import 'package:limye_app/core/providers/solar_design_provider.dart';
+import 'package:limye_app/features/light/homeowner/widgets/ai_chat_design_email_save_flow.dart';
 import 'package:limye_app/features/light/homeowner/widgets/design_display.dart';
 import 'package:limye_app/features/light/homeowner/widgets/solar_estimate_summary_view.dart';
 import 'package:limye_app/theme/limye_theme.dart';
@@ -16,6 +18,7 @@ class AiChatDesignRail extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final designVs = ref.watch(designProvider);
     final estimate = ref.watch(aiDesignEstimateProvider);
+    final saveSending = ref.watch(aiChatDesignEmailSaveProvider);
 
     final hasAddress =
         (designVs.intakeAddress ?? '').trim().isNotEmpty;
@@ -48,7 +51,7 @@ class AiChatDesignRail extends ConsumerWidget {
           height: LimyeSpacing.buttonHeight,
           child: FilledButton(
             onPressed:
-                estimate.loading || !estimateEnabled ? null : () => onRequest(),
+                estimate.loading || saveSending || !estimateEnabled ? null : () => onRequest(),
             style: FilledButton.styleFrom(
               elevation: 0,
               backgroundColor: LimyeColors.accent,
@@ -79,6 +82,47 @@ class AiChatDesignRail extends ConsumerWidget {
       return wrapDisabledHint(inner);
     }
 
+    Widget saveButton() {
+      final inner = Padding(
+        padding: const EdgeInsets.fromLTRB(
+          LimyeSpacing.md,
+          0,
+          LimyeSpacing.md,
+          LimyeSpacing.sm,
+        ),
+        child: SizedBox(
+          width: double.infinity,
+          height: LimyeSpacing.buttonHeight,
+          child: OutlinedButton(
+            onPressed: saveSending || !estimateEnabled
+                ? null
+                : () => runAiChatSaveDesignEmailFlow(context: context, ref: ref),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: LimyeColors.accent,
+              side: const BorderSide(color: LimyeColors.border, width: 1),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(LimyeRadius.sm),
+              ),
+            ),
+            child: saveSending
+                ? SizedBox(
+                    width: LimyeSpacing.md,
+                    height: LimyeSpacing.md,
+                    child: const CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: LimyeColors.accent,
+                    ),
+                  )
+                : Text(
+                    DesignSaveEmailContent.saveEmailDesignCta,
+                    style: LimyeTextStyles.bodyBold(color: LimyeColors.accent),
+                  ),
+          ),
+        ),
+      );
+      return wrapDisabledHint(inner);
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -93,6 +137,7 @@ class AiChatDesignRail extends ConsumerWidget {
             color: LimyeColors.accent,
           ),
         requestButton(),
+        saveButton(),
         if (estimate.showError)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: LimyeSpacing.md),

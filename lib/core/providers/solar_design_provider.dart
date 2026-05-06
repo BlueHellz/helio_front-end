@@ -12,6 +12,7 @@ class SolarDesignNotifier extends StateNotifier<SolarDesignViewState> {
       hasBackendError: hasBackendError,
       intakeAddress: state.intakeAddress,
       intakeOwnerName: state.intakeOwnerName,
+      intakeEmail: state.intakeEmail,
     );
   }
 
@@ -21,17 +22,24 @@ class SolarDesignNotifier extends StateNotifier<SolarDesignViewState> {
       hasBackendError: value,
       intakeAddress: state.intakeAddress,
       intakeOwnerName: state.intakeOwnerName,
+      intakeEmail: state.intakeEmail,
     );
   }
 
   void clear() => state = const SolarDesignViewState();
 
-  void setIntakeContext({required String address, required String ownerName}) {
+  void setIntakeContext({
+    required String address,
+    required String ownerName,
+    String? email,
+  }) {
+    final e = email?.trim();
     state = SolarDesignViewState(
       data: state.data,
       hasBackendError: state.hasBackendError,
       intakeAddress: address.trim().isEmpty ? null : address.trim(),
       intakeOwnerName: ownerName.trim().isEmpty ? null : ownerName.trim(),
+      intakeEmail: e == null || e.isEmpty ? null : e,
     );
   }
 
@@ -42,6 +50,7 @@ class SolarDesignNotifier extends StateNotifier<SolarDesignViewState> {
       hasBackendError: false,
       intakeAddress: state.intakeAddress,
       intakeOwnerName: state.intakeOwnerName,
+      intakeEmail: state.intakeEmail,
     );
   }
 }

@@ -303,6 +303,7 @@ class SolarDesignViewState {
     this.hasBackendError = false,
     this.intakeAddress,
     this.intakeOwnerName,
+    this.intakeEmail,
   });
 
   final SolarDesignData? data;
@@ -311,6 +312,7 @@ class SolarDesignViewState {
   /// Guided intake fields for anonymous `/estimate` requests.
   final String? intakeAddress;
   final String? intakeOwnerName;
+  final String? intakeEmail;
 }
 
 /// Latest interactive edit snapshot (financials + panel list).

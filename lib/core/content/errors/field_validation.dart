@@ -12,4 +12,6 @@ class FieldValidationContent {
   static const enterCompanyName = 'Enter your company name.';
   static const nameAndAddressRequired =
       'Name and address are required for a new lead.';
+  static const emailRequired = 'Email is required.';
+  static const emailInvalidFormat = 'Enter a valid email address.';
 }
