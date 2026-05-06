@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:limye_app/core/content/content_registry.dart';
+import 'package:limye_app/core/models/solar_design_data.dart';
+import 'package:limye_app/core/providers/solar_design_provider.dart';
 import 'package:limye_app/core/ui/app_feedback.dart';
-import 'package:limye_app/features/light/homeowner/widgets/design_visualization.dart';
 import 'package:limye_app/features/light/homeowner/widgets/guided_form_modal.dart';
+import 'package:limye_app/features/light/homeowner/widgets/interactive_design_canvas.dart';
 import 'package:limye_app/theme/limye_theme.dart';
 
 const double _splitBreakpointWidth = 960;
@@ -137,10 +139,14 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
         ),
       ]);
     }
+    _maybeSeedInteractiveDesignCanvas();
   }
 
   @override
   void dispose() {
+    if (widget.designFlowMode) {
+      ref.read(designProvider.notifier).clear();
+    }
     _scrollCtrl.dispose();
     _composerCtrl.dispose();
     _composerFocus.dispose();
@@ -150,6 +156,57 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
   bool get _split =>
       widget.designFlowMode &&
       MediaQuery.sizeOf(context).width >= _splitBreakpointWidth;
+
+  void _maybeSeedInteractiveDesignCanvas() {
+    if (!widget.designFlowMode || !_vizReady) return;
+    ref.read(designProvider.notifier).seedDemoDesign();
+  }
+
+  String _commaThousands(int n) {
+    final raw = n.abs().toString();
+    final buf = StringBuffer();
+    if (n < 0) buf.write('-');
+    final len = raw.length;
+    for (var i = 0; i < len; i++) {
+      if (i > 0 && (len - i) % 3 == 0) buf.write(',');
+      buf.write(raw[i]);
+    }
+    return buf.toString();
+  }
+
+  void _onInteractiveDesignChanged(
+    RecalculatedFinancials financials,
+    List<CanvasSolarPanel> updatedPanels,
+    String configurationId,
+  ) {
+    ref.read(interactiveDesignLiveProvider.notifier).state =
+        InteractiveDesignLiveState(
+      financials: financials,
+      panels: [...updatedPanels.map((p) => p.copyWith())],
+      activeConfigIndex:
+          ref.read(designProvider).data?.activeConfigIndex ?? 0,
+      configId: configurationId,
+    );
+    setState(() {
+      _messages.add(
+        _ChatEntry(
+          id: 'design_${DateTime.now().millisecondsSinceEpoch}',
+          role: _BubbleRole.system,
+          text: InteractiveCanvasContent.designChangeSummary(
+            panelCount: financials.panelCount,
+            systemKw: financials.systemSizeKw.toStringAsFixed(1),
+            savings25Usd: _commaThousands(financials.savings25YearUsd.round()),
+            annualKwh: _commaThousands(financials.annualProductionKwh.round()),
+          ),
+        ),
+      );
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollCtrl.hasClients) {
+        _scrollCtrl.jumpTo(_scrollCtrl.position.maxScrollExtent);
+      }
+    });
+  }
 
   Future<void> _send() async {
     if (!widget.designFlowMode) return;
@@ -180,6 +237,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
       _sending = false;
       if (_userTurnCount >= 2) _vizReady = true;
     });
+    _maybeSeedInteractiveDesignCanvas();
     await Future<void>.delayed(const Duration(milliseconds: 40));
     if (_scrollCtrl.hasClients) {
       _scrollCtrl.jumpTo(_scrollCtrl.position.maxScrollExtent);
@@ -219,6 +277,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
         ),
       );
     });
+    _maybeSeedInteractiveDesignCanvas();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollCtrl.hasClients) {
         _scrollCtrl.jumpTo(_scrollCtrl.position.maxScrollExtent);
@@ -256,9 +315,9 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
                 ),
               ),
               Expanded(
-                child: DesignVisualization(
-                  hasDesign: _vizReady,
+                child: InteractiveDesignCanvas(
                   compact: true,
+                  onDesignChanged: _onInteractiveDesignChanged,
                 ),
               ),
             ],
@@ -292,7 +351,9 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
           ),
           Expanded(
             flex: 3,
-            child: DesignVisualization(hasDesign: _vizReady),
+            child: InteractiveDesignCanvas(
+              onDesignChanged: _onInteractiveDesignChanged,
+            ),
           ),
         ],
       );
