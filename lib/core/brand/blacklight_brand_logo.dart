@@ -4,33 +4,26 @@ import 'package:kooyoh_app/core/content/content_registry.dart';
 import '../../theme/kooyoh_theme.dart';
 
 // ─────────────────────────────────────────────
-// KOO-YOH — official lockup (raster, theme-tinted)
+// KOOYOH — official full-color lockup (raster)
 // Source: assets/images/kooyoh_logo.png
 // ─────────────────────────────────────────────
 
 const String kBlackLightLogoAsset = 'assets/images/kooyoh_logo.png';
 
-/// Tints a single-color+alpha brand asset to [KooyohColors.textPrimary].
 class _BlackLightAssetPaint extends StatelessWidget {
   const _BlackLightAssetPaint();
 
   @override
   Widget build(BuildContext context) {
-    return ColorFiltered(
-      colorFilter: const ColorFilter.mode(
-        KooyohColors.textPrimary,
-        BlendMode.srcIn,
-      ),
-      child: Image.asset(
-        kBlackLightLogoAsset,
-        fit: BoxFit.contain,
-        width: double.infinity,
-        height: double.infinity,
-        filterQuality: FilterQuality.high,
-        isAntiAlias: true,
-        gaplessPlayback: true,
-        excludeFromSemantics: true,
-      ),
+    return Image.asset(
+      kBlackLightLogoAsset,
+      fit: BoxFit.contain,
+      width: double.infinity,
+      height: double.infinity,
+      filterQuality: FilterQuality.high,
+      isAntiAlias: true,
+      gaplessPlayback: true,
+      excludeFromSemantics: true,
     );
   }
 }
@@ -67,7 +60,7 @@ class BlackLightLogo extends StatelessWidget {
     super.key,
     this.height = 28,
     this.maxWidth,
-    this.showWordmark = true,
+    this.showWordmark = false,
   }) : _markToRowHeight = 0.92;
 
   @override
