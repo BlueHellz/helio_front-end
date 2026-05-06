@@ -18,6 +18,10 @@ class LimyeColors {
   static const Color surfaceMuted = Color(0xFFF1F3F5);
 
   static const Color border = Color(0xFFE8EAED);
+
+  /// Card / stroke neutrals aligned with Material [ColorScheme.outline].
+  static const Color outline = border;
+
   static const Color inputBorder = Color(0xFFDDE1E6);
 
   static const Color textPrimary = Color(0xFF0B1E33);
@@ -78,8 +82,7 @@ class LimyeTextStyles {
   LimyeTextStyles._();
 
   /// -0.02em ≈ -0.02 × fontSize in logical pixels.
-  static TextStyle hero({Color color = LimyeColors.textPrimary}) =>
-      TextStyle(
+  static TextStyle hero({Color color = LimyeColors.textPrimary}) => TextStyle(
         fontSize: 40,
         fontWeight: FontWeight.w700,
         letterSpacing: -0.8,
@@ -87,8 +90,7 @@ class LimyeTextStyles {
         color: color,
       );
 
-  static TextStyle sectionHeading(
-          {Color color = LimyeColors.textPrimary}) =>
+  static TextStyle sectionHeading({Color color = LimyeColors.textPrimary}) =>
       TextStyle(
         fontSize: 32,
         fontWeight: FontWeight.w600,
@@ -136,8 +138,7 @@ class LimyeTextStyles {
       );
 
   /// Numbers / metrics — 14px mono, weight 500.
-  static TextStyle data({Color color = LimyeColors.textPrimary}) =>
-      TextStyle(
+  static TextStyle data({Color color = LimyeColors.textPrimary}) => TextStyle(
         fontFamily: _fontMono,
         fontSize: 14,
         fontWeight: FontWeight.w500,
@@ -203,29 +204,23 @@ class LimyeAdaptive {
   static bool _dark(BuildContext context) =>
       Theme.of(context).brightness == Brightness.dark;
 
-  static Color background(BuildContext context) => _dark(context)
-      ? LimyeDarkColors.background
-      : LimyeColors.background;
+  static Color background(BuildContext context) =>
+      _dark(context) ? LimyeDarkColors.background : LimyeColors.background;
 
-  static Color surface(BuildContext context) => _dark(context)
-      ? LimyeDarkColors.surface
-      : LimyeColors.surface;
+  static Color surface(BuildContext context) =>
+      _dark(context) ? LimyeDarkColors.surface : LimyeColors.surface;
 
-  static Color border(BuildContext context) => _dark(context)
-      ? LimyeDarkColors.border
-      : LimyeColors.border;
+  static Color border(BuildContext context) =>
+      _dark(context) ? LimyeDarkColors.border : LimyeColors.border;
 
-  static Color textPrimary(BuildContext context) => _dark(context)
-      ? LimyeDarkColors.textPrimary
-      : LimyeColors.textPrimary;
+  static Color textPrimary(BuildContext context) =>
+      _dark(context) ? LimyeDarkColors.textPrimary : LimyeColors.textPrimary;
 
-  static Color textBody(BuildContext context) => _dark(context)
-      ? LimyeDarkColors.textBody
-      : LimyeColors.textBody;
+  static Color textBody(BuildContext context) =>
+      _dark(context) ? LimyeDarkColors.textBody : LimyeColors.textBody;
 
-  static Color textCaption(BuildContext context) => _dark(context)
-      ? LimyeDarkColors.textBody
-      : LimyeColors.textCaption;
+  static Color textCaption(BuildContext context) =>
+      _dark(context) ? LimyeDarkColors.textBody : LimyeColors.textCaption;
 
   static Color sidebarBg(BuildContext context) => surface(context);
 
@@ -233,9 +228,8 @@ class LimyeAdaptive {
 
   static Color sidebarInactiveText(BuildContext context) => textBody(context);
 
-  static Color sidebarHoverBg(BuildContext context) => _dark(context)
-      ? LimyeDarkColors.background
-      : LimyeColors.sidebarHoverBg;
+  static Color sidebarHoverBg(BuildContext context) =>
+      _dark(context) ? LimyeDarkColors.background : LimyeColors.sidebarHoverBg;
 }
 
 /// Theme tokens via `context.colors` — prefer over hardcoded hex in widgets.
@@ -502,8 +496,7 @@ ThemeData buildLimyeTheme() {
         borderRadius: BorderRadius.circular(LimyeRadius.input),
         borderSide: const BorderSide(color: LimyeColors.accent, width: 1),
       ),
-      contentPadding:
-          const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       hintStyle: LimyeTextStyles.caption(),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(

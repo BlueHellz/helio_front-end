@@ -104,23 +104,59 @@ class _HeroArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final image = ClipRRect(
-      borderRadius: BorderRadius.circular(LimyeRadius.card),
-      child: AspectRatio(
-        aspectRatio: 16 / 9,
-        child: Image.asset(
-          BusinessSolutionsContent.heroIllustrationAsset,
-          fit: BoxFit.cover,
-          semanticLabel: BusinessSolutionsContent.heroImageAccessibilityLabel,
-          errorBuilder: (_, __, ___) => ColoredBox(
-            color: context.colors.surfaceMuted,
-            child: Icon(
-              Icons.solar_power_rounded,
-              size: 64,
-              color: context.colors.onSurfaceMuted,
-            ),
-          ),
-        ),
+    final image = AspectRatio(
+      aspectRatio: 16 / 9,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final desiredWidth = constraints.maxWidth;
+          final desiredHeight = constraints.maxHeight;
+          return Stack(
+            alignment: Alignment.center,
+            clipBehavior: Clip.none,
+            children: [
+              Transform.translate(
+                offset: const Offset(12, 12),
+                child: Container(
+                  width: desiredWidth,
+                  height: desiredHeight,
+                  decoration: BoxDecoration(
+                    color: LimyeColors.accent.withOpacity(0.08),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: LimyeColors.accent.withOpacity(0.15),
+                      width: 1,
+                    ),
+                  ),
+                ),
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Container(
+                  width: desiredWidth,
+                  height: desiredHeight,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: LimyeColors.outline, width: 1),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Image.asset(
+                    'assets/images/business_hero.png',
+                    fit: BoxFit.cover,
+                    semanticLabel:
+                        BusinessSolutionsContent.heroImageAccessibilityLabel,
+                    errorBuilder: (_, __, ___) => ColoredBox(
+                      color: context.colors.surfaceMuted,
+                      child: Icon(
+                        Icons.solar_power_rounded,
+                        size: 64,
+                        color: context.colors.onSurfaceMuted,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
 
@@ -147,14 +183,16 @@ class _HeroArea extends StatelessWidget {
                 backgroundColor: context.colors.primary,
                 foregroundColor: context.colors.onPrimary,
                 minimumSize: const Size(LimyeSpacing.tapTarget, 48),
-                padding: const EdgeInsets.symmetric(horizontal: LimyeSpacing.md),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: LimyeSpacing.md),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(LimyeRadius.md),
                 ),
               ),
               child: Text(
                 BusinessSolutionsContent.heroPrimaryCta,
-                style: LimyeTextStyles.bodyBold(color: context.colors.onPrimary),
+                style:
+                    LimyeTextStyles.bodyBold(color: context.colors.onPrimary),
               ),
             ),
             FilledButton(
@@ -164,14 +202,16 @@ class _HeroArea extends StatelessWidget {
                 foregroundColor: context.colors.onSurface,
                 elevation: 0,
                 minimumSize: const Size(LimyeSpacing.tapTarget, 48),
-                padding: const EdgeInsets.symmetric(horizontal: LimyeSpacing.md),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: LimyeSpacing.md),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(LimyeRadius.md),
                 ),
               ),
               child: Text(
                 BusinessSolutionsContent.heroSecondaryCta,
-                style: LimyeTextStyles.bodyBold(color: context.colors.onSurface),
+                style:
+                    LimyeTextStyles.bodyBold(color: context.colors.onSurface),
               ),
             ),
           ],
@@ -421,9 +461,8 @@ class _AutoFitCardGrid extends StatelessWidget {
         return Wrap(
           spacing: gap,
           runSpacing: gap,
-          children: children
-              .map((ch) => SizedBox(width: tileW, child: ch))
-              .toList(),
+          children:
+              children.map((ch) => SizedBox(width: tileW, child: ch)).toList(),
         );
       },
     );
@@ -661,7 +700,8 @@ class _PricingCard extends StatelessWidget {
                 ),
                 child: Text(
                   ctaLabel,
-                  style: LimyeTextStyles.bodyBold(color: context.colors.primary),
+                  style:
+                      LimyeTextStyles.bodyBold(color: context.colors.primary),
                 ),
               ),
             ),
@@ -847,7 +887,8 @@ class _FinalCtaSection extends StatelessWidget {
                 style: FilledButton.styleFrom(
                   backgroundColor: context.colors.primary,
                   foregroundColor: context.colors.onPrimary,
-                  padding: const EdgeInsets.symmetric(horizontal: LimyeSpacing.lg),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: LimyeSpacing.lg),
                   shape: const StadiumBorder(),
                 ),
                 child: Text(

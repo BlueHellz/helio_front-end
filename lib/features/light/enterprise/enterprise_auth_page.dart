@@ -26,8 +26,7 @@ class EnterpriseAuthPage extends ConsumerStatefulWidget {
   final VoidCallback? onEnterprise;
 
   @override
-  ConsumerState<EnterpriseAuthPage> createState() =>
-      _EnterpriseAuthPageState();
+  ConsumerState<EnterpriseAuthPage> createState() => _EnterpriseAuthPageState();
 }
 
 class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
@@ -105,9 +104,7 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
           : (_signupMode ? company : '');
       final displayName = (result.fullName?.trim().isNotEmpty ?? false)
           ? result.fullName!.trim()
-          : (_signupMode
-              ? name
-              : (result.email?.split('@').first ?? ''));
+          : (_signupMode ? name : (result.email?.split('@').first ?? ''));
       ref.read(blackLightAppStateProvider).signIn(
             role: UserRole.organization,
             name: displayName,
@@ -283,7 +280,8 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
                                     context,
                                     AuthContent.oauthGoogle,
                                   ),
-                          icon: const Icon(Icons.g_mobiledata_rounded, size: 20),
+                          icon:
+                              const Icon(Icons.g_mobiledata_rounded, size: 20),
                           label: Text(
                             AuthContent.oauthGoogle,
                             style: LimyeTextStyles.bodyBold(),
@@ -314,21 +312,62 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
                         padding: const EdgeInsets.symmetric(
                           horizontal: LimyeSpacing.gutter,
                         ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(LimyeRadius.card),
-                          child: ConstrainedBox(
-                            constraints: const BoxConstraints(maxHeight: 360),
-                            child: Image.asset(
-                              EnterpriseContent.authHeroIllustrationAsset,
-                              fit: BoxFit.contain,
-                              semanticLabel: EnterpriseContent
-                                  .authHeroIllustrationAccessibilityLabel,
-                              errorBuilder: (_, __, ___) => Icon(
-                                Icons.solar_power_rounded,
-                                size: 96,
-                                color: LimyeColors.accent.withValues(alpha: 0.4),
+                        child: AspectRatio(
+                          aspectRatio: 16 / 9,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            clipBehavior: Clip.none,
+                            children: [
+                              Positioned(
+                                top: -20,
+                                right: -20,
+                                child: Container(
+                                  width: 120,
+                                  height: 120,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: LimyeColors.accent.withOpacity(0.06),
+                                    border: Border.all(
+                                      color: LimyeColors.accent.withOpacity(
+                                        0.12,
+                                      ),
+                                      width: 1,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
+                              Positioned.fill(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: LimyeColors.outline,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    child: Image.asset(
+                                      'assets/images/enterprise_auth.png',
+                                      fit: BoxFit.contain,
+                                      semanticLabel: EnterpriseContent
+                                          .authHeroIllustrationAccessibilityLabel,
+                                      errorBuilder: (_, __, ___) => ColoredBox(
+                                        color: context.colors.surfaceMuted,
+                                        child: Center(
+                                          child: Icon(
+                                            Icons.solar_power_rounded,
+                                            size: 96,
+                                            color: LimyeColors.accent
+                                                .withOpacity(0.4),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
