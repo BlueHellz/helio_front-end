@@ -255,6 +255,9 @@ class _HeroArea extends StatelessWidget {
 
 // ─── Problem cards ───────────────────────────────────────────────────────────
 
+/// Max width for problem / how-it-works row cards (room for copy without cramping).
+const double _kSectionCardMaxWidth = 380;
+
 class _ProblemSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -275,10 +278,11 @@ class _ProblemSection extends StatelessWidget {
 
     return _PageSection(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             BusinessSolutionsContent.problemsSectionTitle,
+            textAlign: TextAlign.center,
             style: LimyeTextStyles.sectionHeading(
               color: context.colors.onSurface,
             ),
@@ -286,20 +290,62 @@ class _ProblemSection extends StatelessWidget {
           const SizedBox(height: LimyeSpacing.sm),
           Text(
             BusinessSolutionsContent.problemsSectionSubtitle,
+            textAlign: TextAlign.center,
             style: LimyeTextStyles.body(color: context.colors.onSurface),
           ),
           const SizedBox(height: LimyeSpacing.xl),
-          _AutoFitCardGrid(
-            minCellWidth: 158,
-            children: items
-                .map(
-                  (e) => _SmallInfoCard(
-                    icon: e.$1,
-                    title: e.$2,
-                    caption: BusinessSolutionsContent.problemCardFixLine,
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final gap = LimyeSpacing.cardGap;
+              final w = constraints.maxWidth;
+              final rowOfThree = w >= _kSectionCardMaxWidth * 3 + gap * 2;
+              List<Widget> tiles(bool stretch) => [
+                    for (final e in items)
+                      _SmallInfoCard(
+                        icon: e.$1,
+                        title: e.$2,
+                        caption: BusinessSolutionsContent.problemCardFixLine,
+                        stretchInColumn: stretch,
+                      ),
+                  ];
+              if (rowOfThree) {
+                final list = tiles(true);
+                return IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (var i = 0; i < list.length; i++) ...[
+                        if (i > 0) SizedBox(width: gap),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(
+                                maxWidth: _kSectionCardMaxWidth,
+                              ),
+                              child: list[i],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
-                )
-                .toList(),
+                );
+              }
+              final list = tiles(false);
+              return Wrap(
+                alignment: WrapAlignment.center,
+                spacing: gap,
+                runSpacing: gap,
+                children: [
+                  for (var i = 0; i < list.length; i++)
+                    SizedBox(
+                      width: math.min(_kSectionCardMaxWidth, w),
+                      child: list[i],
+                    ),
+                ],
+              );
+            },
           ),
         ],
       ),
@@ -329,10 +375,11 @@ class _HowItWorksSection extends StatelessWidget {
     ];
     return _PageSection(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             BusinessSolutionsContent.howSectionTitle,
+            textAlign: TextAlign.center,
             style: LimyeTextStyles.sectionHeading(
               color: context.colors.onSurface,
             ),
@@ -340,20 +387,62 @@ class _HowItWorksSection extends StatelessWidget {
           const SizedBox(height: LimyeSpacing.sm),
           Text(
             BusinessSolutionsContent.howSectionSubtitle,
+            textAlign: TextAlign.center,
             style: LimyeTextStyles.body(color: context.colors.onSurface),
           ),
           const SizedBox(height: LimyeSpacing.xl),
-          _AutoFitCardGrid(
-            minCellWidth: 158,
-            children: items
-                .map(
-                  (e) => _SmallInfoCard(
-                    icon: e.$1,
-                    title: e.$2,
-                    caption: e.$3,
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final gap = LimyeSpacing.cardGap;
+              final w = constraints.maxWidth;
+              final rowOfThree = w >= _kSectionCardMaxWidth * 3 + gap * 2;
+              List<Widget> tiles(bool stretch) => [
+                    for (final e in items)
+                      _SmallInfoCard(
+                        icon: e.$1,
+                        title: e.$2,
+                        caption: e.$3,
+                        stretchInColumn: stretch,
+                      ),
+                  ];
+              if (rowOfThree) {
+                final list = tiles(true);
+                return IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (var i = 0; i < list.length; i++) ...[
+                        if (i > 0) SizedBox(width: gap),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(
+                                maxWidth: _kSectionCardMaxWidth,
+                              ),
+                              child: list[i],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
-                )
-                .toList(),
+                );
+              }
+              final list = tiles(false);
+              return Wrap(
+                alignment: WrapAlignment.center,
+                spacing: gap,
+                runSpacing: gap,
+                children: [
+                  for (var i = 0; i < list.length; i++)
+                    SizedBox(
+                      width: math.min(_kSectionCardMaxWidth, w),
+                      child: list[i],
+                    ),
+                ],
+              );
+            },
           ),
         ],
       ),
@@ -362,56 +451,66 @@ class _HowItWorksSection extends StatelessWidget {
 }
 
 class _FeaturesSection extends StatelessWidget {
+  static const List<
+      (
+        IconData icon,
+        String title,
+        String caption,
+      )> _items = [
+    (
+      Icons.computer_rounded,
+      BusinessSolutionsContent.featureAiDesignerTitle,
+      BusinessSolutionsContent.featureAiDesignerBody,
+    ),
+    (
+      Icons.groups_rounded,
+      BusinessSolutionsContent.featureCrmTitle,
+      BusinessSolutionsContent.featureCrmBody,
+    ),
+    (
+      Icons.map_rounded,
+      BusinessSolutionsContent.featureTrackingTitle,
+      BusinessSolutionsContent.featureTrackingBody,
+    ),
+    (
+      Icons.percent_rounded,
+      BusinessSolutionsContent.featureSavingsTitle,
+      BusinessSolutionsContent.featureSavingsBody,
+    ),
+    (
+      Icons.description_rounded,
+      BusinessSolutionsContent.featureContractTitle,
+      BusinessSolutionsContent.featureContractBody,
+    ),
+    (
+      Icons.photo_camera_rounded,
+      BusinessSolutionsContent.featureDroneTitle,
+      BusinessSolutionsContent.featureDroneBody,
+    ),
+    (
+      Icons.account_balance_wallet_rounded,
+      BusinessSolutionsContent.featureFundingTitle,
+      BusinessSolutionsContent.featureFundingBody,
+    ),
+    (
+      Icons.chat_rounded,
+      BusinessSolutionsContent.featureCoachTitle,
+      BusinessSolutionsContent.featureCoachBody,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    final items = [
-      (
-        Icons.computer_rounded,
-        BusinessSolutionsContent.featureAiDesignerTitle,
-        BusinessSolutionsContent.featureAiDesignerBody,
-      ),
-      (
-        Icons.groups_rounded,
-        BusinessSolutionsContent.featureCrmTitle,
-        BusinessSolutionsContent.featureCrmBody,
-      ),
-      (
-        Icons.map_rounded,
-        BusinessSolutionsContent.featureTrackingTitle,
-        BusinessSolutionsContent.featureTrackingBody,
-      ),
-      (
-        Icons.percent_rounded,
-        BusinessSolutionsContent.featureSavingsTitle,
-        BusinessSolutionsContent.featureSavingsBody,
-      ),
-      (
-        Icons.description_rounded,
-        BusinessSolutionsContent.featureContractTitle,
-        BusinessSolutionsContent.featureContractBody,
-      ),
-      (
-        Icons.photo_camera_rounded,
-        BusinessSolutionsContent.featureDroneTitle,
-        BusinessSolutionsContent.featureDroneBody,
-      ),
-      (
-        Icons.account_balance_wallet_rounded,
-        BusinessSolutionsContent.featureFundingTitle,
-        BusinessSolutionsContent.featureFundingBody,
-      ),
-      (
-        Icons.chat_rounded,
-        BusinessSolutionsContent.featureCoachTitle,
-        BusinessSolutionsContent.featureCoachBody,
-      ),
-    ];
+    final gap = LimyeSpacing.cardGap;
+    final items = _items;
+
     return _PageSection(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             BusinessSolutionsContent.featuresSectionTitle,
+            textAlign: TextAlign.center,
             style: LimyeTextStyles.sectionHeading(
               color: context.colors.onSurface,
             ),
@@ -419,52 +518,59 @@ class _FeaturesSection extends StatelessWidget {
           const SizedBox(height: LimyeSpacing.sm),
           Text(
             BusinessSolutionsContent.featuresSectionSubtitle,
+            textAlign: TextAlign.center,
             style: LimyeTextStyles.body(color: context.colors.onSurface),
           ),
           const SizedBox(height: LimyeSpacing.xl),
-          _AutoFitCardGrid(
-            minCellWidth: 158,
-            children: items
-                .map(
-                  (e) => _SmallInfoCard(
-                    icon: e.$1,
-                    title: e.$2,
-                    caption: e.$3,
-                  ),
-                )
-                .toList(),
+          LayoutBuilder(
+            builder: (context, c) {
+              final twoCol = c.maxWidth > 720;
+
+              if (!twoCol) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (var i = 0; i < items.length; i++) ...[
+                      if (i > 0) SizedBox(height: gap),
+                      _FeatureInteractCard(
+                        icon: items[i].$1,
+                        title: items[i].$2,
+                        caption: items[i].$3,
+                      ),
+                    ],
+                  ],
+                );
+              }
+
+              final left = items.sublist(0, 4);
+              final right = items.sublist(4, 8);
+
+              Widget column(List<(IconData, String, String)> slice) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (var i = 0; i < slice.length; i++) ...[
+                        if (i > 0) SizedBox(height: gap),
+                        _FeatureInteractCard(
+                          icon: slice[i].$1,
+                          title: slice[i].$2,
+                          caption: slice[i].$3,
+                        ),
+                      ],
+                    ],
+                  );
+
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: column(left)),
+                  SizedBox(width: gap),
+                  Expanded(child: column(right)),
+                ],
+              );
+            },
           ),
         ],
       ),
-    );
-  }
-}
-
-/// Responsive grid: `repeat(auto-fit, minmax(min, 1fr))` with [gap] = [LimyeSpacing.cardGap].
-class _AutoFitCardGrid extends StatelessWidget {
-  const _AutoFitCardGrid({
-    required this.minCellWidth,
-    required this.children,
-  });
-
-  final double minCellWidth;
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, c) {
-        final w = c.maxWidth;
-        final gap = LimyeSpacing.cardGap;
-        final count = math.max(1, ((w + gap) / (minCellWidth + gap)).floor());
-        final tileW = (w - gap * (count - 1)) / count;
-        return Wrap(
-          spacing: gap,
-          runSpacing: gap,
-          children:
-              children.map((ch) => SizedBox(width: tileW, child: ch)).toList(),
-        );
-      },
     );
   }
 }
@@ -474,16 +580,23 @@ class _SmallInfoCard extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.caption,
+    this.stretchInColumn = false,
   });
 
   final IconData icon;
   final String title;
   final String caption;
 
+  /// When true, fill row height allocated by [IntrinsicHeight] (How / Problem).
+  final bool stretchInColumn;
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(LimyeSpacing.sm),
+      padding: const EdgeInsets.symmetric(
+        horizontal: LimyeSpacing.cardPadding,
+        vertical: LimyeSpacing.cardPadding,
+      ),
       decoration: BoxDecoration(
         color: context.colors.surface,
         borderRadius: BorderRadius.circular(LimyeRadius.card),
@@ -491,6 +604,7 @@ class _SmallInfoCard extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: stretchInColumn ? MainAxisSize.max : MainAxisSize.min,
         children: [
           Icon(icon, size: 24, color: context.colors.onSurface),
           const SizedBox(height: LimyeSpacing.sm),
@@ -505,7 +619,101 @@ class _SmallInfoCard extends StatelessWidget {
               color: context.colors.onSurfaceMuted,
             ),
           ),
+          if (stretchInColumn) const Spacer(),
         ],
+      ),
+    );
+  }
+}
+
+/// Feature marketing card: bordered [Card], hover / long‑press elevation shadow only.
+class _FeatureInteractCard extends StatefulWidget {
+  const _FeatureInteractCard({
+    required this.icon,
+    required this.title,
+    required this.caption,
+  });
+
+  final IconData icon;
+  final String title;
+  final String caption;
+
+  @override
+  State<_FeatureInteractCard> createState() => _FeatureInteractCardState();
+}
+
+class _FeatureInteractCardState extends State<_FeatureInteractCard> {
+  bool _hover = false;
+  bool _longPressHeld = false;
+
+  bool get _elevated => _hover || _longPressHeld;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hover = true),
+      onExit: (_) => setState(() => _hover = false),
+      child: GestureDetector(
+        onLongPressStart: (_) => setState(() => _longPressHeld = true),
+        onLongPressEnd: (_) => setState(() => _longPressHeld = false),
+        onLongPressCancel: () => setState(() => _longPressHeld = false),
+        behavior: HitTestBehavior.opaque,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          curve: Curves.easeOutCubic,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(LimyeRadius.card),
+            boxShadow: _elevated
+                ? const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 8,
+                      offset: Offset(0, 2),
+                    ),
+                  ]
+                : null,
+          ),
+          child: Card(
+            margin: EdgeInsets.zero,
+            clipBehavior: Clip.antiAlias,
+            elevation: 0,
+            surfaceTintColor: Colors.transparent,
+            shadowColor: Colors.transparent,
+            color: context.colors.surface,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(LimyeRadius.card),
+              side: BorderSide(color: context.colors.outline, width: 1),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(LimyeSpacing.cardPadding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    widget.icon,
+                    size: 24,
+                    color: context.colors.onSurface,
+                  ),
+                  const SizedBox(height: LimyeSpacing.sm),
+                  Text(
+                    widget.title,
+                    style: LimyeTextStyles.bodyBold(
+                      color: context.colors.onSurface,
+                    ),
+                  ),
+                  const SizedBox(height: LimyeSpacing.xs / 2),
+                  Text(
+                    widget.caption,
+                    style: LimyeTextStyles.caption(
+                      color: context.colors.onSurfaceMuted,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
