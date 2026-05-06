@@ -8,11 +8,14 @@ import 'package:limye_app/core/providers/solar_design_provider.dart';
 import 'package:limye_app/features/light/homeowner/widgets/ai_chat_design_email_save_flow.dart';
 import 'package:limye_app/features/light/homeowner/widgets/design_display.dart';
 import 'package:limye_app/features/light/homeowner/widgets/solar_estimate_summary_view.dart';
+import 'package:limye_app/features/light/homeowner/widgets/solar_path_next_steps_modal.dart';
 import 'package:limye_app/theme/limye_theme.dart';
 
 /// Desktop AI chat: design canvas, estimate CTA, and optional estimate panel.
 class AiChatDesignRail extends ConsumerWidget {
-  const AiChatDesignRail({super.key});
+  const AiChatDesignRail({super.key, this.onSolarPathNextSteps});
+
+  final VoidCallback? onSolarPathNextSteps;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -159,6 +162,18 @@ class AiChatDesignRail extends ConsumerWidget {
                 ),
               ),
             ),
+          ),
+        ],
+        if (estimate.presentation != null &&
+            onSolarPathNextSteps != null) ...[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              LimyeSpacing.md,
+              LimyeSpacing.sm,
+              LimyeSpacing.md,
+              LimyeSpacing.sm,
+            ),
+            child: SolarPathNextStepsCtaCard(onTap: onSolarPathNextSteps!),
           ),
         ],
       ],

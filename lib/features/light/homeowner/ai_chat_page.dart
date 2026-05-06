@@ -12,6 +12,7 @@ import 'package:limye_app/features/light/homeowner/widgets/ai_chat_design_rail.d
 import 'package:limye_app/features/light/homeowner/widgets/guided_form_modal.dart';
 import 'package:limye_app/features/light/homeowner/widgets/interactive_design_canvas.dart';
 import 'package:limye_app/features/light/homeowner/widgets/solar_estimate_summary_view.dart';
+import 'package:limye_app/features/light/homeowner/widgets/solar_path_next_steps_modal.dart';
 import 'package:limye_app/theme/limye_theme.dart';
 
 const double _splitBreakpointWidth = 960;
@@ -51,10 +52,14 @@ class AiChatPage extends ConsumerStatefulWidget {
     super.key,
     this.designFlowMode = false,
     this.onFallbackToForm,
+    this.onOpenHomeownerLogin,
+    this.onOpenHomeownerSignup,
   });
 
   final bool designFlowMode;
   final VoidCallback? onFallbackToForm;
+  final VoidCallback? onOpenHomeownerLogin;
+  final VoidCallback? onOpenHomeownerSignup;
 
   @override
   ConsumerState<AiChatPage> createState() => _AiChatPageState();
@@ -162,6 +167,17 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
   bool get _split =>
       widget.designFlowMode &&
       MediaQuery.sizeOf(context).width >= _splitBreakpointWidth;
+
+  void _openSolarPathExplainer() {
+    final login = widget.onOpenHomeownerLogin;
+    final signup = widget.onOpenHomeownerSignup;
+    if (login == null || signup == null) return;
+    showSolarPathNextStepsModal(
+      context,
+      onCreateAccount: signup,
+      onSignIn: login,
+    );
+  }
 
   void _maybeSeedInteractiveDesignCanvas() {
     if (!widget.designFlowMode || !_vizReady) return;
@@ -411,6 +427,10 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
     final estimateLoading =
         ref.watch(aiDesignEstimateProvider.select((s) => s.loading));
     final saveSending = ref.watch(aiChatDesignEmailSaveProvider);
+    final mobileSolarPathEligible = widget.designFlowMode &&
+        ref.watch(aiDesignEstimateProvider.select((s) => s.presentation != null)) &&
+        widget.onOpenHomeownerLogin != null &&
+        widget.onOpenHomeownerSignup != null;
     final mobileEstimateReady = widget.designFlowMode &&
         (designVs.intakeAddress ?? '').trim().isNotEmpty &&
         designVs.data != null &&
@@ -438,7 +458,13 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
           ),
           Expanded(
             flex: 3,
-            child: const AiChatDesignRail(),
+            child: AiChatDesignRail(
+              onSolarPathNextSteps:
+                  widget.onOpenHomeownerLogin != null &&
+                          widget.onOpenHomeownerSignup != null
+                      ? () => _openSolarPathExplainer()
+                      : null,
+            ),
           ),
         ],
       );
@@ -477,6 +503,9 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
                   ref: ref,
                 ),
                 saveDesignSending: saveSending,
+                showSolarPathNextSteps: mobileSolarPathEligible,
+                onSolarPathNextSteps:
+                    mobileSolarPathEligible ? _openSolarPathExplainer : null,
               )
             else
               Padding(
@@ -1209,6 +1238,8 @@ class _MobileComposerBar extends StatelessWidget {
     required this.estimateEnabled,
     required this.onSaveDesignEmail,
     required this.saveDesignSending,
+    this.showSolarPathNextSteps = false,
+    this.onSolarPathNextSteps,
   });
 
   final TextEditingController controller;
@@ -1222,6 +1253,8 @@ class _MobileComposerBar extends StatelessWidget {
   final bool estimateEnabled;
   final VoidCallback onSaveDesignEmail;
   final bool saveDesignSending;
+  final bool showSolarPathNextSteps;
+  final VoidCallback? onSolarPathNextSteps;
 
   @override
   Widget build(BuildContext context) {
@@ -1399,6 +1432,10 @@ class _MobileComposerBar extends StatelessWidget {
               }
               return btn;
             }),
+            if (showSolarPathNextSteps && onSolarPathNextSteps != null) ...[
+              const SizedBox(height: LimyeSpacing.sm),
+              SolarPathNextStepsCtaCard(onTap: onSolarPathNextSteps!),
+            ],
             TextButton(
               onPressed: onGuidedForm,
               child: Text(

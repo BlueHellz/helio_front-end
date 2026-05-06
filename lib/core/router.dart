@@ -49,6 +49,7 @@ enum _WebPublicPage {
   enterpriseAuth,
   publicDesignChat,
   login,
+  signup,
   intake,
   designSummary,
 }
@@ -85,6 +86,7 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
     if (path == '/enterprise') return _WebPublicPage.enterprise;
     if (path == '/design-chat') return _WebPublicPage.publicDesignChat;
     if (path == '/my-projects') return _WebPublicPage.login;
+    if (path == '/create-account') return _WebPublicPage.signup;
     if (path == '/intake') return _WebPublicPage.intake;
     if (path == '/design-summary') return _WebPublicPage.designSummary;
     return _WebPublicPage.landing;
@@ -102,6 +104,8 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
         return '/design-chat';
       case _WebPublicPage.login:
         return '/my-projects';
+      case _WebPublicPage.signup:
+        return '/create-account';
       case _WebPublicPage.intake:
         return '/intake';
       case _WebPublicPage.designSummary:
@@ -153,6 +157,13 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
             onBusinesses: () => _go(_WebPublicPage.enterprise),
             onEnterprise: () => _go(_WebPublicPage.enterpriseAuth),
           );
+        case _WebPublicPage.signup:
+          return AuthPage(
+            initialSignupMode: true,
+            onHomeTap: () => _go(_WebPublicPage.landing),
+            onBusinesses: () => _go(_WebPublicPage.enterprise),
+            onEnterprise: () => _go(_WebPublicPage.enterpriseAuth),
+          );
         case _WebPublicPage.enterpriseAuth:
           return EnterpriseAuthPage(
             onHomeTap: () => _go(_WebPublicPage.landing),
@@ -185,6 +196,8 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
             body: AiChatPage(
               designFlowMode: true,
               onFallbackToForm: () => _go(_WebPublicPage.intake),
+              onOpenHomeownerLogin: () => _go(_WebPublicPage.login),
+              onOpenHomeownerSignup: () => _go(_WebPublicPage.signup),
             ),
           );
         case _WebPublicPage.intake:
@@ -373,6 +386,7 @@ enum _MobilePublic {
   intake,
   designSummary,
   login,
+  signup,
 }
 
 class _MobileSwitch extends ConsumerStatefulWidget {
@@ -390,6 +404,7 @@ class _MobileSwitch extends ConsumerStatefulWidget {
 
 class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
   _MobilePublic _pub = _MobilePublic.home;
+  _MobilePublic? _loginReturnTarget;
 
   void _signOut() {
     ref.read(sessionProvider.notifier).clear();
@@ -416,7 +431,23 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
       switch (_pub) {
         case _MobilePublic.login:
           return MobileAuth(
-            onBack: () => setState(() => _pub = _MobilePublic.home),
+            initialSignupMode: false,
+            onBack: () {
+              setState(() {
+                _pub = _loginReturnTarget ?? _MobilePublic.home;
+                _loginReturnTarget = null;
+              });
+            },
+          );
+        case _MobilePublic.signup:
+          return MobileAuth(
+            initialSignupMode: true,
+            onBack: () {
+              setState(() {
+                _pub = _loginReturnTarget ?? _MobilePublic.home;
+                _loginReturnTarget = null;
+              });
+            },
           );
         case _MobilePublic.enterpriseAuth:
           return EnterpriseAuthPage(
@@ -458,6 +489,14 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
               designFlowMode: true,
               onFallbackToForm: () =>
                   setState(() => _pub = _MobilePublic.intake),
+              onOpenHomeownerLogin: () => setState(() {
+                _loginReturnTarget = _MobilePublic.designChat;
+                _pub = _MobilePublic.login;
+              }),
+              onOpenHomeownerSignup: () => setState(() {
+                _loginReturnTarget = _MobilePublic.designChat;
+                _pub = _MobilePublic.signup;
+              }),
             ),
           );
         case _MobilePublic.intake:
@@ -522,8 +561,10 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
                   ),
                   const SizedBox(height: LimyeSpacing.md),
                   OutlinedButton(
-                    onPressed: () =>
-                        setState(() => _pub = _MobilePublic.login),
+                    onPressed: () => setState(() {
+                      _loginReturnTarget = null;
+                      _pub = _MobilePublic.login;
+                    }),
                     child: Text(HomeownerDashboardContent.myProjectsPageTitle,
                         style: LimyeTextStyles.bodyBold()),
                   ),

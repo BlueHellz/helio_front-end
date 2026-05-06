@@ -19,11 +19,13 @@ class AuthPage extends ConsumerStatefulWidget {
     this.onHomeTap,
     this.onBusinesses,
     this.onEnterprise,
+    this.initialSignupMode = false,
   });
 
   final VoidCallback? onHomeTap;
   final VoidCallback? onBusinesses;
   final VoidCallback? onEnterprise;
+  final bool initialSignupMode;
 
   @override
   ConsumerState<AuthPage> createState() => _AuthPageState();
@@ -32,28 +34,58 @@ class AuthPage extends ConsumerStatefulWidget {
 class _AuthPageState extends ConsumerState<AuthPage> {
   final _emailCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
+  final _nameCtrl = TextEditingController();
   bool _obscurePassword = true;
   bool _submitting = false;
+  late bool _signupMode;
+
+  @override
+  void initState() {
+    super.initState();
+    _signupMode = widget.initialSignupMode;
+  }
 
   @override
   void dispose() {
     _emailCtrl.dispose();
     _passwordCtrl.dispose();
+    _nameCtrl.dispose();
     super.dispose();
   }
 
   Future<void> _handleSubmit() async {
     final email = _emailCtrl.text.trim();
     final password = _passwordCtrl.text.trim();
-    if (email.isEmpty || password.isEmpty) {
-      AppFeedback.snack(context, FieldValidationContent.enterEmailAndPassword);
-      return;
+    final name = _nameCtrl.text.trim();
+    if (_signupMode) {
+      if (name.isEmpty || email.isEmpty || password.isEmpty) {
+        AppFeedback.snack(
+          context,
+          FieldValidationContent.enterNameEmailAndPassword,
+        );
+        return;
+      }
+    } else {
+      if (email.isEmpty || password.isEmpty) {
+        AppFeedback.snack(context, FieldValidationContent.enterEmailAndPassword);
+        return;
+      }
     }
 
     setState(() => _submitting = true);
     try {
       final authApi = ref.read(authApiProvider);
-      var result = await authApi.login(email: email, password: password);
+      AuthResult result;
+      if (_signupMode) {
+        result = await authApi.signup(
+          email: email,
+          password: password,
+          fullName: name,
+          role: apiRoleString(UserRole.homeowner),
+        );
+      } else {
+        result = await authApi.login(email: email, password: password);
+      }
       result = await authApi.enrichWithMe(result);
       if (!mounted) return;
       if (!apiRoleIsHomeowner(result.role)) {
@@ -66,7 +98,9 @@ class _AuthPageState extends ConsumerState<AuthPage> {
       if (!mounted) return;
       final displayName = (result.fullName?.trim().isNotEmpty ?? false)
           ? result.fullName!.trim()
-          : (result.email ?? '');
+          : (_signupMode
+              ? name
+              : (result.email ?? ''));
       ref.read(blackLightAppStateProvider).signIn(
             role: UserRole.homeowner,
             name: displayName,
@@ -112,7 +146,12 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                       vertical: LimyeSpacing.xl),
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 440),
-                    child: _LoginForm(
+                    child: _HomeownerAuthForm(
+                      signupMode: _signupMode,
+                      onSignupModeChanged: _submitting
+                          ? null
+                          : (v) => setState(() => _signupMode = v),
+                      nameCtrl: _nameCtrl,
                       emailCtrl: _emailCtrl,
                       passwordCtrl: _passwordCtrl,
                       obscurePassword: _obscurePassword,
@@ -165,8 +204,11 @@ class _AuthPageState extends ConsumerState<AuthPage> {
   }
 }
 
-class _LoginForm extends StatelessWidget {
-  const _LoginForm({
+class _HomeownerAuthForm extends StatelessWidget {
+  const _HomeownerAuthForm({
+    required this.signupMode,
+    required this.onSignupModeChanged,
+    required this.nameCtrl,
     required this.emailCtrl,
     required this.passwordCtrl,
     required this.obscurePassword,
@@ -175,6 +217,9 @@ class _LoginForm extends StatelessWidget {
     required this.onContinue,
   });
 
+  final bool signupMode;
+  final ValueChanged<bool>? onSignupModeChanged;
+  final TextEditingController nameCtrl;
   final TextEditingController emailCtrl;
   final TextEditingController passwordCtrl;
   final bool obscurePassword;
@@ -189,8 +234,31 @@ class _LoginForm extends StatelessWidget {
       children: [
         const BlackLightLogo(height: 40, maxWidth: 240),
         const SizedBox(height: LimyeSpacing.xl),
+        SegmentedButton<bool>(
+          segments: [
+            ButtonSegment<bool>(
+              value: false,
+              label: Text(
+                AuthContent.tabSignIn,
+                style: LimyeTextStyles.caption(),
+              ),
+            ),
+            ButtonSegment<bool>(
+              value: true,
+              label: Text(
+                AuthContent.tabCreateAccount,
+                style: LimyeTextStyles.caption(),
+              ),
+            ),
+          ],
+          selected: {signupMode},
+          onSelectionChanged: onSignupModeChanged == null
+              ? null
+              : (s) => onSignupModeChanged!(s.first),
+        ),
+        const SizedBox(height: LimyeSpacing.md),
         Text(
-          AuthContent.welcomeBack,
+          signupMode ? AuthContent.createYourAccount : AuthContent.welcomeBack,
           style: LimyeTextStyles.sectionHeading(),
         ),
         const SizedBox(height: LimyeSpacing.md),
@@ -201,6 +269,19 @@ class _LoginForm extends StatelessWidget {
           ),
         ),
         const SizedBox(height: LimyeSpacing.lg),
+        if (signupMode) ...[
+          _LabeledInput(
+            label: AuthContent.labelFullName,
+            child: TextField(
+              controller: nameCtrl,
+              enabled: !isSubmitting,
+              style:
+                  LimyeTextStyles.body(color: LimyeColors.textPrimary),
+              decoration: _inputDeco(AuthContent.hintYourName),
+            ),
+          ),
+          const SizedBox(height: LimyeSpacing.sm),
+        ],
         _LabeledInput(
           label: AuthContent.labelEmail,
           child: TextField(
@@ -235,15 +316,17 @@ class _LoginForm extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: LimyeSpacing.sm),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Text(
-            AuthContent.forgotPassword,
-            style:
-                LimyeTextStyles.caption(color: LimyeColors.accent),
+        if (!signupMode) ...[
+          const SizedBox(height: LimyeSpacing.sm),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              AuthContent.forgotPassword,
+              style:
+                  LimyeTextStyles.caption(color: LimyeColors.accent),
+            ),
           ),
-        ),
+        ],
         const SizedBox(height: LimyeSpacing.md),
         SizedBox(
           width: double.infinity,
@@ -252,7 +335,7 @@ class _LoginForm extends StatelessWidget {
             onPressed: isSubmitting ? null : () => onContinue(),
             style: ElevatedButton.styleFrom(
               backgroundColor: LimyeColors.accent,
-              foregroundColor: Colors.white,
+              foregroundColor: LimyeColors.surface,
               elevation: 0,
               shape: const StadiumBorder(),
             ),
@@ -262,12 +345,15 @@ class _LoginForm extends StatelessWidget {
                     width: 22,
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      color: Colors.white,
+                      color: LimyeColors.surface,
                     ),
                   )
                 : Text(
-                    AuthContent.tabSignIn,
-                    style: LimyeTextStyles.bodyBold(color: Colors.white),
+                    signupMode
+                        ? AuthContent.tabCreateAccount
+                        : AuthContent.tabSignIn,
+                    style:
+                        LimyeTextStyles.bodyBold(color: LimyeColors.surface),
                   ),
           ),
         ),
