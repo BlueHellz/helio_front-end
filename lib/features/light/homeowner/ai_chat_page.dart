@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -5,7 +7,9 @@ import 'package:limye_app/core/content/content_registry.dart';
 import 'package:limye_app/core/models/solar_design_data.dart';
 import 'package:limye_app/core/providers/ai_chat_design_email_save_provider.dart';
 import 'package:limye_app/core/providers/ai_design_estimate_provider.dart';
+import 'package:limye_app/core/providers/session_providers.dart';
 import 'package:limye_app/core/providers/solar_design_provider.dart';
+import 'package:limye_app/core/solar/solar_design_from_public_json.dart';
 import 'package:limye_app/core/ui/app_feedback.dart';
 import 'package:limye_app/features/light/homeowner/widgets/ai_chat_design_email_save_flow.dart';
 import 'package:limye_app/features/light/homeowner/widgets/ai_chat_design_rail.dart';
@@ -13,6 +17,8 @@ import 'package:limye_app/features/light/homeowner/widgets/guided_form_modal.dar
 import 'package:limye_app/features/light/homeowner/widgets/interactive_design_canvas.dart';
 import 'package:limye_app/features/light/homeowner/widgets/solar_estimate_summary_view.dart';
 import 'package:limye_app/features/light/homeowner/widgets/solar_path_next_steps_modal.dart';
+import 'package:limye_app/services/api.dart';
+import 'package:limye_app/services/public_api.dart';
 import 'package:limye_app/theme/limye_theme.dart';
 
 const double _splitBreakpointWidth = 960;
@@ -71,7 +77,6 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
   int _userTurnCount = 0;
   bool _sending = false;
   bool _showTyping = false;
-  bool _vizReady = false;
   bool _seeded = false;
 
   @override
@@ -100,7 +105,6 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
             text: AiChatContent.seedUserQuestionDesktop,
           ),
         ]);
-        _vizReady = true;
       } else {
         _messages.addAll([
           _ChatEntry(
@@ -131,7 +135,6 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
             ],
           ),
         ]);
-        _vizReady = true;
       }
     } else {
       _messages.addAll([
@@ -147,7 +150,6 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
         ),
       ]);
     }
-    _maybeSeedInteractiveDesignCanvas();
   }
 
   @override
@@ -177,9 +179,54 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
     );
   }
 
-  void _maybeSeedInteractiveDesignCanvas() {
-    if (!widget.designFlowMode || !_vizReady) return;
-    ref.read(designProvider.notifier).seedDemoDesign();
+  Future<void> _loadDesignAfterGuidedIntake(GuidedIntakePayload payload) async {
+    final custom = <String, dynamic>{
+      'monthly_electricity_bill': payload.monthlyBillDollars.toStringAsFixed(0),
+      'homeowner_name': payload.ownerName.trim(),
+      if (payload.email != null && payload.email!.trim().isNotEmpty)
+        'email': payload.email!.trim(),
+      if (payload.phone != null && payload.phone!.trim().isNotEmpty)
+        'phone': payload.phone!.trim(),
+      'roof_age': payload.roofAgeLabel,
+      'main_panel_amperage': payload.panelAmperageLabel,
+      'homeowner_goal': payload.maximizeSavings ? 'max_savings' : 'max_offset',
+      'hoa_restrictions': payload.hasHoaRestrictions,
+      'monthly_usage_kwh': payload.monthlyUsageKwh.toStringAsFixed(0),
+    };
+    final body = projectCreateBody(
+      address: payload.address.trim(),
+      projectType: 'residential',
+      customData: custom,
+      clientName: payload.ownerName.trim().isEmpty
+          ? null
+          : payload.ownerName.trim(),
+    );
+    try {
+      ref.read(designProvider.notifier).setBackendError(value: false);
+      final json = await ref.read(publicLimyeApiProvider).postDesign(body);
+      if (!mounted) return;
+      if (json.isEmpty) {
+        ref.read(designProvider.notifier).setBackendError();
+        AppFeedback.snack(context, ApiErrorsContent.couldNotGenerateDesign);
+        return;
+      }
+      final design = solarDesignDataFromPublicDesignJson(json);
+      if (design == null) {
+        ref.read(designProvider.notifier).setDesign(null);
+        AppFeedback.snack(context, InteractiveCanvasContent.designPayloadIncomplete);
+        return;
+      }
+      ref.read(interactiveDesignLiveProvider.notifier).state = null;
+      ref.read(designProvider.notifier).setDesign(design);
+    } on PublicApiException {
+      if (!mounted) return;
+      ref.read(designProvider.notifier).setBackendError();
+      AppFeedback.snack(context, ApiErrorsContent.couldNotGenerateDesign);
+    } catch (_) {
+      if (!mounted) return;
+      ref.read(designProvider.notifier).setBackendError();
+      AppFeedback.snack(context, ApiErrorsContent.couldNotGenerateDesign);
+    }
   }
 
   String _commaThousands(int n) {
@@ -255,9 +302,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
         designAccentLeft: _userTurnCount == 1,
       ));
       _sending = false;
-      if (_userTurnCount >= 2) _vizReady = true;
     });
-    _maybeSeedInteractiveDesignCanvas();
     await Future<void>.delayed(const Duration(milliseconds: 40));
     if (_scrollCtrl.hasClients) {
       _scrollCtrl.jumpTo(_scrollCtrl.position.maxScrollExtent);
@@ -280,7 +325,6 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
 
   void _applyGuidedIntake(GuidedIntakePayload payload) {
     setState(() {
-      _vizReady = true;
       final ts = DateTime.now().millisecondsSinceEpoch;
       _messages.add(
         _ChatEntry(
@@ -302,7 +346,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
           ownerName: payload.ownerName,
           email: payload.email,
         );
-    _maybeSeedInteractiveDesignCanvas();
+    unawaited(_loadDesignAfterGuidedIntake(payload));
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollCtrl.hasClients) {
         _scrollCtrl.jumpTo(_scrollCtrl.position.maxScrollExtent);
@@ -439,7 +483,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
-            flex: 2,
+            flex: 9,
             child: _ChatPanel(
               designFlowMode: widget.designFlowMode,
               split: true,
@@ -450,12 +494,11 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
               showTyping: _showTyping,
               sending: _sending,
               onSend: _send,
-              onGuidedForm: _openGuidedForm,
-              onMore: _onMore,
+              onQuickIntake: _openGuidedForm,
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 11,
             child: AiChatDesignRail(
               onSolarPathNextSteps:
                   widget.onOpenHomeownerLogin != null &&
@@ -475,7 +518,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (widget.designFlowMode)
-              _MobileChatHeader(onMore: _onMore)
+              _MobileChatHeader(onQuickIntake: _openGuidedForm)
             else
               _MessagesTabHeader(),
             Expanded(
@@ -492,7 +535,6 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
                 onSend: _send,
                 sending: _sending,
                 onAttach: () => AppFeedback.comingSoon(context),
-                onGuidedForm: _openGuidedForm,
                 onRequestEstimate: _onMobileRequestEstimate,
                 estimateLoading: estimateLoading,
                 estimateEnabled: mobileEstimateReady,
@@ -548,21 +590,17 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
       ],
     );
   }
-
-  void _onMore() {
-    AppFeedback.comingSoon(context);
-  }
 }
 
 // ─── Mobile chrome ───────────────────────────────────────────────────────────
 
-class _MobileChatHeader extends StatelessWidget {
-  const _MobileChatHeader({required this.onMore});
+class _MobileChatHeader extends ConsumerWidget {
+  const _MobileChatHeader({required this.onQuickIntake});
 
-  final VoidCallback onMore;
+  final VoidCallback onQuickIntake;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       height: LimyeSpacing.footerHeight,
       padding: const EdgeInsets.symmetric(horizontal: LimyeSpacing.sm),
@@ -590,11 +628,11 @@ class _MobileChatHeader extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          IconButton(
-            onPressed: onMore,
-            tooltip: AiChatContent.moreOptionsHint,
-            icon: Icon(Icons.more_vert_rounded,
-                color: context.colors.onSurfaceMuted),
+          Flexible(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: _QuickIntakePillButton(onTap: onQuickIntake),
+            ),
           ),
         ],
       ),
@@ -638,8 +676,7 @@ class _ChatPanel extends StatelessWidget {
     required this.showTyping,
     required this.sending,
     required this.onSend,
-    required this.onGuidedForm,
-    required this.onMore,
+    required this.onQuickIntake,
   });
 
   final bool designFlowMode;
@@ -651,8 +688,7 @@ class _ChatPanel extends StatelessWidget {
   final bool showTyping;
   final bool sending;
   final VoidCallback onSend;
-  final VoidCallback onGuidedForm;
-  final VoidCallback onMore;
+  final VoidCallback onQuickIntake;
 
   @override
   Widget build(BuildContext context) {
@@ -666,13 +702,18 @@ class _ChatPanel extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _DesktopChatHeader(onMore: onMore),
+          _DesktopChatHeader(onQuickIntake: onQuickIntake),
           Expanded(
             child: _ChatMessageList(
               scrollCtrl: scrollCtrl,
               messages: messages,
               showTyping: showTyping && designFlowMode,
-              padding: const EdgeInsets.all(LimyeSpacing.md),
+              padding: const EdgeInsets.fromLTRB(
+                LimyeSpacing.md,
+                LimyeSpacing.sm,
+                LimyeSpacing.md,
+                LimyeSpacing.md,
+              ),
             ),
           ),
           if (designFlowMode)
@@ -681,7 +722,6 @@ class _ChatPanel extends StatelessWidget {
               focusNode: composerFocus,
               onSend: onSend,
               sending: sending,
-              onGuidedForm: onGuidedForm,
             ),
         ],
       ),
@@ -689,16 +729,25 @@ class _ChatPanel extends StatelessWidget {
   }
 }
 
-class _DesktopChatHeader extends StatelessWidget {
-  const _DesktopChatHeader({required this.onMore});
+class _DesktopChatHeader extends ConsumerWidget {
+  const _DesktopChatHeader({required this.onQuickIntake});
 
-  final VoidCallback onMore;
+  final VoidCallback onQuickIntake;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final addr = ref.watch(designProvider.select((s) => s.intakeAddress));
+    final trimmed = (addr ?? '').trim();
+    final subtitle = trimmed.isNotEmpty
+        ? trimmed
+        : AiChatContent.headerSubtitlePending;
+
     return Container(
       height: LimyeSpacing.footerHeight,
-      padding: const EdgeInsets.symmetric(horizontal: LimyeSpacing.md),
+      padding: const EdgeInsets.only(
+        left: LimyeSpacing.md,
+        right: LimyeSpacing.sm,
+      ),
       decoration: BoxDecoration(
         color: context.colors.surface,
         border: Border(
@@ -706,6 +755,7 @@ class _DesktopChatHeader extends StatelessWidget {
         ),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
             child: Column(
@@ -731,8 +781,11 @@ class _DesktopChatHeader extends StatelessWidget {
                     ),
                   ],
                 ),
+                const SizedBox(height: LimyeSpacing.xs / 2),
                 Text(
-                  AiChatContent.headerAddressDemo,
+                  subtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: LimyeTextStyles.body(
                     color: context.colors.onSurfaceMuted,
                   ).copyWith(fontSize: 14),
@@ -740,12 +793,8 @@ class _DesktopChatHeader extends StatelessWidget {
               ],
             ),
           ),
-          IconButton(
-            onPressed: onMore,
-            tooltip: AiChatContent.moreOptionsHint,
-            icon: Icon(Icons.more_vert_rounded,
-                color: context.colors.onSurfaceMuted, size: 22),
-          ),
+          const SizedBox(width: LimyeSpacing.sm),
+          _QuickIntakePillButton(onTap: onQuickIntake),
         ],
       ),
     );
@@ -804,7 +853,10 @@ class _MessageBubble extends StatelessWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 520),
           child: Container(
-            padding: const EdgeInsets.all(LimyeSpacing.sm),
+            padding: const EdgeInsets.symmetric(
+              vertical: LimyeSpacing.sm,
+              horizontal: LimyeSpacing.cardGap,
+            ),
             decoration: BoxDecoration(
               color: context.colors.surface,
               borderRadius: BorderRadius.circular(LimyeRadius.md),
@@ -834,7 +886,10 @@ class _MessageBubble extends StatelessWidget {
                   maxWidth: MediaQuery.sizeOf(context).width * 0.9,
                 ),
                 child: Container(
-                  padding: const EdgeInsets.all(LimyeSpacing.sm),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: LimyeSpacing.sm,
+                    horizontal: LimyeSpacing.cardGap,
+                  ),
                   decoration: BoxDecoration(
                     color: context.colors.primary,
                     borderRadius:
@@ -905,7 +960,10 @@ class _AiBubbleCard extends StatelessWidget {
             ),
           Expanded(
             child: Container(
-              padding: const EdgeInsets.all(LimyeSpacing.sm),
+              padding: const EdgeInsets.symmetric(
+                vertical: LimyeSpacing.sm,
+                horizontal: LimyeSpacing.cardGap,
+              ),
               decoration: BoxDecoration(
                 color: context.colors.surface,
                 border: Border.all(color: context.colors.outline, width: 1),
@@ -1085,7 +1143,7 @@ class _TypingIndicatorState extends State<_TypingIndicator>
         const SizedBox(width: LimyeSpacing.sm),
         Container(
           padding: const EdgeInsets.symmetric(
-            horizontal: LimyeSpacing.md,
+            horizontal: LimyeSpacing.cardGap,
             vertical: LimyeSpacing.sm,
           ),
           decoration: BoxDecoration(
@@ -1152,7 +1210,7 @@ class _QuickIntakePillButton extends StatelessWidget {
               maxHeight: _height,
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: LimyeSpacing.sm),
+              padding: const EdgeInsets.symmetric(horizontal: LimyeSpacing.cardGap),
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
@@ -1176,20 +1234,23 @@ class _DesktopComposer extends StatelessWidget {
     required this.focusNode,
     required this.onSend,
     required this.sending,
-    required this.onGuidedForm,
   });
 
   final TextEditingController controller;
   final FocusNode focusNode;
   final VoidCallback onSend;
   final bool sending;
-  final VoidCallback onGuidedForm;
 
   @override
   Widget build(BuildContext context) {
-    const rowHeight = 48.0;
+    final rowHeight = LimyeSpacing.aiChatComposerInputHeight;
     return Container(
-      padding: const EdgeInsets.all(LimyeSpacing.md),
+      padding: const EdgeInsets.fromLTRB(
+        LimyeSpacing.md,
+        LimyeSpacing.md,
+        LimyeSpacing.md,
+        LimyeSpacing.md,
+      ),
       decoration: BoxDecoration(
         color: context.colors.surface,
         border: Border(
@@ -1210,27 +1271,24 @@ class _DesktopComposer extends StatelessWidget {
                 style: LimyeTextStyles.body(color: context.colors.onSurface),
                 decoration: InputDecoration(
                   hintText: AiChatContent.inputPlaceholderDesktop,
+                  hintStyle: LimyeTextStyles.body(
+                    color: context.colors.onSurfaceMuted,
+                  ),
                   filled: true,
                   fillColor: Theme.of(context).brightness == Brightness.dark
                       ? LimyeDarkColors.background
                       : LimyeColors.background,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(LimyeRadius.input),
+                    borderRadius: BorderRadius.circular(LimyeRadius.lg),
                     borderSide: BorderSide.none,
                   ),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: LimyeSpacing.md,
-                    vertical: LimyeSpacing.xs,
+                    vertical: LimyeSpacing.sm,
                   ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(width: LimyeSpacing.sm),
-          Flexible(
-            flex: 0,
-            fit: FlexFit.loose,
-            child: _QuickIntakePillButton(onTap: onGuidedForm),
           ),
           const SizedBox(width: LimyeSpacing.sm),
           Material(
@@ -1247,7 +1305,7 @@ class _DesktopComposer extends StatelessWidget {
                 child: Icon(
                   Icons.arrow_upward_rounded,
                   color: context.colors.onPrimary,
-                  size: 20,
+                  size: 22,
                 ),
               ),
             ),
@@ -1265,7 +1323,6 @@ class _MobileComposerBar extends StatelessWidget {
     required this.onSend,
     required this.sending,
     required this.onAttach,
-    required this.onGuidedForm,
     required this.onRequestEstimate,
     required this.estimateLoading,
     required this.estimateEnabled,
@@ -1280,7 +1337,6 @@ class _MobileComposerBar extends StatelessWidget {
   final VoidCallback onSend;
   final bool sending;
   final VoidCallback onAttach;
-  final VoidCallback onGuidedForm;
   final VoidCallback onRequestEstimate;
   final bool estimateLoading;
   final bool estimateEnabled;
@@ -1291,6 +1347,7 @@ class _MobileComposerBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final composerH = LimyeSpacing.aiChatComposerInputHeight;
     return Container(
       padding: const EdgeInsets.all(LimyeSpacing.sm),
       decoration: BoxDecoration(
@@ -1318,8 +1375,8 @@ class _MobileComposerBar extends StatelessWidget {
                   child: InkWell(
                     onTap: onAttach,
                     child: SizedBox(
-                      width: LimyeSpacing.tapTarget,
-                      height: LimyeSpacing.tapTarget,
+                      width: composerH,
+                      height: composerH,
                       child: Icon(
                         Icons.add_rounded,
                         color: context.colors.onSurfaceMuted,
@@ -1330,7 +1387,7 @@ class _MobileComposerBar extends StatelessWidget {
                 const SizedBox(width: LimyeSpacing.sm),
                 Expanded(
                   child: SizedBox(
-                    height: LimyeSpacing.tapTarget,
+                    height: composerH,
                     child: TextField(
                       controller: controller,
                       focusNode: focusNode,
@@ -1341,6 +1398,9 @@ class _MobileComposerBar extends StatelessWidget {
                       ),
                       decoration: InputDecoration(
                         hintText: AiChatContent.inputPlaceholderMobile,
+                        hintStyle: LimyeTextStyles.body(
+                          color: context.colors.onSurfaceMuted,
+                        ),
                         filled: true,
                         fillColor:
                             Theme.of(context).brightness == Brightness.dark
@@ -1348,20 +1408,16 @@ class _MobileComposerBar extends StatelessWidget {
                                 : LimyeColors.background,
                         border: OutlineInputBorder(
                           borderRadius:
-                              BorderRadius.circular(LimyeRadius.input),
+                              BorderRadius.circular(LimyeRadius.lg),
                           borderSide: BorderSide.none,
                         ),
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 16),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: LimyeSpacing.md,
+                          vertical: LimyeSpacing.sm,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(width: LimyeSpacing.sm),
-                Flexible(
-                  flex: 0,
-                  fit: FlexFit.loose,
-                  child: _QuickIntakePillButton(onTap: onGuidedForm),
                 ),
                 const SizedBox(width: LimyeSpacing.sm),
                 Material(
@@ -1373,8 +1429,8 @@ class _MobileComposerBar extends StatelessWidget {
                   child: InkWell(
                     onTap: sending ? null : onSend,
                     child: SizedBox(
-                      width: LimyeSpacing.tapTarget,
-                      height: LimyeSpacing.tapTarget,
+                      width: composerH,
+                      height: composerH,
                       child: Icon(
                         Icons.send_rounded,
                         color: context.colors.onPrimary,

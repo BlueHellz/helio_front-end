@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:limye_app/core/models/solar_design_data.dart';
-
 /// Source data for [InteractiveDesignCanvas]; null [SolarDesignViewState.data] means waiting / not loaded yet.
 class SolarDesignNotifier extends StateNotifier<SolarDesignViewState> {
   SolarDesignNotifier() : super(const SolarDesignViewState());
@@ -40,17 +39,6 @@ class SolarDesignNotifier extends StateNotifier<SolarDesignViewState> {
       intakeAddress: address.trim().isEmpty ? null : address.trim(),
       intakeOwnerName: ownerName.trim().isEmpty ? null : ownerName.trim(),
       intakeEmail: e == null || e.isEmpty ? null : e,
-    );
-  }
-
-  /// Demo payload until the homeowner design API persists into this notifier.
-  void seedDemoDesign() {
-    state = SolarDesignViewState(
-      data: SolarDesignData.demo(),
-      hasBackendError: false,
-      intakeAddress: state.intakeAddress,
-      intakeOwnerName: state.intakeOwnerName,
-      intakeEmail: state.intakeEmail,
     );
   }
 }

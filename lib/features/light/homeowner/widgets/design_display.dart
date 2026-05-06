@@ -10,7 +10,7 @@ import 'package:limye_app/core/providers/solar_design_provider.dart';
 import 'package:limye_app/core/solar/solar_design_calculator.dart';
 import 'package:limye_app/theme/limye_theme.dart';
 
-const double _kCanvasPx = 4000;
+const double _kCanvasPx = 4400;
 
 Matrix4 _isometricMatrix() {
   return Matrix4.identity()
@@ -109,7 +109,7 @@ Rect _roofBounds(List<RoofSegmentData> segments) {
 }
 
 void _fitToScreen(Rect roofBounds, Size viewport, TransformationController tc) {
-  final margin = LimyeSpacing.lg.toDouble();
+  final margin = LimyeSpacing.xl.toDouble();
   final contentW = roofBounds.width + margin;
   final contentH = roofBounds.height + margin;
   final sx = viewport.width / contentW;
@@ -219,7 +219,7 @@ class _DesignDisplayWidgetState extends ConsumerState<DesignDisplayWidget> {
           });
         }
 
-        final pad = LimyeSpacing.md;
+        final pad = LimyeSpacing.cardGap;
         final roofLayers =
             _roofLayers(data.roofSegments, context);
 
@@ -303,9 +303,10 @@ class _DesignMetricsCard extends StatelessWidget {
 
   Widget _row(String label, String value, {required bool divider}) {
     return Padding(
-      padding: EdgeInsets.only(bottom: divider ? LimyeSpacing.sm : 0),
+      padding: EdgeInsets.only(bottom: divider ? LimyeSpacing.cardGap : 0),
       child: Container(
-        padding: EdgeInsets.only(bottom: divider ? LimyeSpacing.sm : 0),
+        padding:
+            EdgeInsets.only(bottom: divider ? LimyeSpacing.cardGap : 0),
         decoration: divider
             ? BoxDecoration(
                 border: Border(
@@ -338,11 +339,10 @@ class _DesignMetricsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pad = LimyeSpacing.sm;
     return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 260),
+      constraints: const BoxConstraints(maxWidth: 220),
       child: Container(
-        padding: EdgeInsets.all(pad + LimyeSpacing.xs),
+        padding: const EdgeInsets.all(LimyeSpacing.cardPadding),
         decoration: BoxDecoration(
           color: LimyeColors.surface,
           borderRadius: BorderRadius.circular(LimyeRadius.md),
@@ -377,9 +377,11 @@ class _DesignMetricsCard extends StatelessWidget {
 class _OrientationLegendDisplay extends StatelessWidget {
   const _OrientationLegendDisplay();
 
-  Widget _chip(Color fill, String label) {
+  Widget _chip(Color fill, String label, {required bool addGapBelow}) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: LimyeSpacing.xs),
+      padding: EdgeInsets.only(
+        bottom: addGapBelow ? LimyeSpacing.cardGap : 0,
+      ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -406,27 +408,32 @@ class _OrientationLegendDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pad = LimyeSpacing.sm;
-    return Container(
-      width: 280,
-      padding: EdgeInsets.all(pad + LimyeSpacing.xs),
-      decoration: BoxDecoration(
-        color: LimyeColors.surface,
-        borderRadius: BorderRadius.circular(LimyeRadius.md),
-        border: Border.all(color: LimyeColors.border, width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _chip(LimyeColors.green, InteractiveCanvasContent.designDisplayLegendGreen),
-          _chip(LimyeColors.accent, InteractiveCanvasContent.designDisplayLegendBlue),
-          _chip(LimyeColors.amber, InteractiveCanvasContent.designDisplayLegendAmber),
-          _chip(
-            context.colors.outline,
-            InteractiveCanvasContent.designDisplayLegendGray,
-          ),
-        ],
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 260),
+      child: Container(
+        padding: const EdgeInsets.all(LimyeSpacing.cardPadding),
+        decoration: BoxDecoration(
+          color: LimyeColors.surface,
+          borderRadius: BorderRadius.circular(LimyeRadius.md),
+          border: Border.all(color: LimyeColors.border, width: 1),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _chip(LimyeColors.green, InteractiveCanvasContent.designDisplayLegendGreen,
+                addGapBelow: true),
+            _chip(LimyeColors.accent, InteractiveCanvasContent.designDisplayLegendBlue,
+                addGapBelow: true),
+            _chip(LimyeColors.amber, InteractiveCanvasContent.designDisplayLegendAmber,
+                addGapBelow: true),
+            _chip(
+              context.colors.outline,
+              InteractiveCanvasContent.designDisplayLegendGray,
+              addGapBelow: false,
+            ),
+          ],
+        ),
       ),
     );
   }

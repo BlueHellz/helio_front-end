@@ -8,7 +8,9 @@ class AiChatContent {
 
   // Chat chrome — desktop panel header / mobile top bar
   static const headerBrand = 'LIMYÈ AI';
-  static const headerAddressDemo = '1248 Oakwood Ave, Austin, TX';
+  /// Shown under the brand until an address exists on the design provider.
+  static const headerSubtitlePending =
+      'Use Quick Intake to generate your roof preview.';
 
   /// Composer
   static const inputPlaceholderDesktop = 'Ask about savings or panels...';
@@ -17,28 +19,30 @@ class AiChatContent {
   /// Composer pill — opens guided intake modal (single entry point).
   static const quickIntakeFormButtonLabel = 'Quick Intake Form';
 
-  // Seeded conversation — desktop (split view)
+  // Seeded conversation — desktop (split view): generic copy without sample production metrics.
   static const seedAiWelcomeDesktop =
-      'Welcome back, Sarah. I\'ve analyzed your roof\'s solar potential. Based on '
-      'your 1,200 sq ft south-facing plane, we can maximize efficiency with 18 panels.';
+      'Welcome. I can walk you through savings and system sizing once we have '
+      'your roof preview. Open Quick Intake whenever you are ready to add your address.';
   static const seedUserQuestionDesktop =
-      'That sounds great. What would my estimated savings be over 20 years?';
+      'What information do you need from me to get started?';
 
   // Seeded conversation — mobile
   static const seedAiWelcomeMobile =
-      'Hello! I\'m LIMYÈ AI. I\'ve analyzed the satellite imagery for 123 Main St. '
-      'I found a suitable roof area of 850 sq ft facing South-West. Would you like '
-      'to proceed with a preliminary design?';
+      'Hello! I am LIMYÈ AI. Share a few details about your home and electricity '
+      'use, and I will help you explore solar. You can use Quick Intake to enter '
+      'everything in one place.';
   static const seedUserConfirmMobile =
-      'Yes, please show me the layout options.';
+      'Sounds good—I will complete the intake form.';
   static const seedAiLayoutsLeadMobile =
-      'Great. I\'ve generated two preliminary layouts based on optimal sun '
-      'exposure and local setback regulations.';
+      'Great. After your roof preview loads, we can compare layout priorities '
+      'such as production versus curb appeal.';
 
   static const layoutOptionMaxProductionTitle = 'Max Production';
-  static const layoutOptionMaxProductionSubtitle = '12.4 kW system';
+  static const layoutOptionMaxProductionSubtitle =
+      'Prioritizes annual energy yield.';
   static const layoutOptionAestheticTitle = 'Aesthetic Focus';
-  static const layoutOptionAestheticSubtitle = '9.8 kW system';
+  static const layoutOptionAestheticSubtitle =
+      'Keeps panels less visible from the street.';
 
   // Live assistant replies (after user sends)
   static const aiReplyAfterAddress =
@@ -52,18 +56,8 @@ class AiChatContent {
       'Noted. Keep going: roof age, main panel size, or anything else about your '
       'home helps tighten the design.';
 
-  // Visualization
+  // Visualization (legacy keys; AI chat rail uses [DesignDisplayWidget] + API data).
   static const vizEmptyTitle = 'Your solar design will appear here.';
-  static const vizMetricSystemSize = 'System Size';
-  static const vizMetricPanels = 'Panels';
-  static const vizMetricSavings = 'Savings';
-  static const vizDemoSystemSize = '7.2 kW';
-  static const vizDemoPanels = '18';
-  static const vizDemoSavings = '\$34,200';
-  static const vizLegendIdeal = 'Ideal';
-  static const vizLegendGood = 'Good';
-  static const vizLegendUnused = 'Unused';
-
   // Guided form modal
   static const modalTitle = quickIntakeFormButtonLabel;
   static const modalOwnerNameLabel = "Home Owner's Name";

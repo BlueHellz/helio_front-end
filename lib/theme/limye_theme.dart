@@ -65,6 +65,9 @@ class LimyeSpacing {
   static const double inputHeightMobile = 48;
   static const double tapTarget = 48;
 
+  /// Homeowner AI chat composer (desktop + mobile).
+  static const double aiChatComposerInputHeight = 56;
+
   /// Homeowner AI guided intake modal max width (desktop).
   static const double guidedFormModalMaxWidth = 550;
 }

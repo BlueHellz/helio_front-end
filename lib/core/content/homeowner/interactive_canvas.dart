@@ -11,6 +11,17 @@ class InteractiveCanvasContent {
   static const backendErrorBody =
       'We couldn\'t generate a design. Please try again.';
 
+  /// Fallback label for a single configuration parsed from API layout JSON.
+  static const apiDefaultPanelConfigLabel = 'Recommended';
+
+  /// When the API omits a human-readable configuration name.
+  static String panelConfigFallbackLabel(int index) =>
+      'Layout option ${index + 1}';
+
+  /// Shown when `/design` succeeds but no roof geometry was found in the payload.
+  static const designPayloadIncomplete =
+      'We received a response, but it did not include roof layout data. Please try again.';
+
   static const toolbarReset = 'Reset';
   static const toolbarZoomIn = 'Zoom in';
   static const toolbarZoomOut = 'Zoom out';

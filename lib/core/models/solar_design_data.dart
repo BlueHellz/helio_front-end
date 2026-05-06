@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
 /// A single roof plane with canvas polygon and sun potential metadata.
@@ -123,7 +121,7 @@ class RecalculatedFinancials {
   final List<SolarIncentiveLine> incentives;
 }
 
-/// Full payload for the interactive canvas (from API or demo seed).
+/// Full payload for the interactive canvas (built from the public design API response).
 @immutable
 class SolarDesignData {
   const SolarDesignData({
@@ -147,150 +145,6 @@ class SolarDesignData {
     if (panelConfigs.isEmpty) return null;
     final i = activeConfigIndex.clamp(0, panelConfigs.length - 1);
     return panelConfigs[i];
-  }
-
-  /// Demo layout for design-flow preview (replace with API data in production).
-  static SolarDesignData demo() {
-    const left = 900.0;
-    const top = 1100.0;
-    final segSouth = RoofSegmentData(
-      id: 'seg_south',
-      polygon: [
-        const Offset(left, top),
-        Offset(left + 920, top - 40),
-        Offset(left + 980, top + 420),
-        Offset(left + 40, top + 480),
-      ],
-      orientationScore: 0.93,
-      annualSunshineKwhPerKw: 1520,
-    );
-    final segWest = RoofSegmentData(
-      id: 'seg_west',
-      polygon: [
-        Offset(left - 320, top + 80),
-        Offset(left - 40, top + 40),
-        Offset(left + 20, top + 440),
-        Offset(left - 280, top + 500),
-      ],
-      orientationScore: 0.72,
-      annualSunshineKwhPerKw: 1280,
-    );
-    final segNorth = RoofSegmentData(
-      id: 'seg_north',
-      polygon: [
-        Offset(left + 200, top - 280),
-        Offset(left + 760, top - 320),
-        Offset(left + 820, top - 40),
-        Offset(left + 240, top),
-      ],
-      orientationScore: 0.55,
-      annualSunshineKwhPerKw: 980,
-    );
-    final segPoor = RoofSegmentData(
-      id: 'seg_shade',
-      polygon: [
-        Offset(left + 1020, top + 200),
-        Offset(left + 1280, top + 180),
-        Offset(left + 1300, top + 380),
-        Offset(left + 1040, top + 420),
-      ],
-      orientationScore: 0.38,
-      annualSunshineKwhPerKw: 720,
-    );
-
-    const panelKw = 0.4;
-    double annualForPanels(List<CanvasSolarPanel> list) {
-      var kwh = 0.0;
-      for (final p in list) {
-        final seg = [segSouth, segWest, segNorth, segPoor]
-            .firstWhere((s) => s.id == p.roofSegmentId);
-        kwh += panelKw * seg.annualSunshineKwhPerKw;
-      }
-      return kwh;
-    }
-
-    final panels = <CanvasSolarPanel>[
-      CanvasSolarPanel(
-        id: 'gp_1',
-        roofSegmentId: segSouth.id,
-        center: Offset(left + 220, top + 120),
-        portrait: true,
-      ),
-      CanvasSolarPanel(
-        id: 'gp_2',
-        roofSegmentId: segSouth.id,
-        center: Offset(left + 420, top + 100),
-        portrait: true,
-      ),
-      CanvasSolarPanel(
-        id: 'gp_3',
-        roofSegmentId: segSouth.id,
-        center: Offset(left + 620, top + 200),
-        portrait: true,
-      ),
-      CanvasSolarPanel(
-        id: 'gp_4',
-        roofSegmentId: segWest.id,
-        center: Offset(left - 200, top + 220),
-        portrait: false,
-      ),
-      CanvasSolarPanel(
-        id: 'gp_5',
-        roofSegmentId: segWest.id,
-        center: Offset(left - 120, top + 340),
-        portrait: false,
-      ),
-      CanvasSolarPanel(
-        id: 'gp_6',
-        roofSegmentId: segNorth.id,
-        center: Offset(left + 480, top - 200),
-        portrait: true,
-      ),
-    ];
-
-    final n = panels.length;
-    final systemKw = n * panelKw;
-    const costPerKw = 2500.0;
-    const rate = 0.17;
-    const deg = 0.005;
-    const itcRate = 0.30;
-    final totalCost = systemKw * costPerKw;
-    final annualKwh = annualForPanels(panels);
-    var savings25 = 0.0;
-    for (var y = 0; y < 25; y++) {
-      final prod = annualKwh * math.pow(1 - deg, y.toDouble());
-      savings25 += prod * rate;
-    }
-    final itc = totalCost * itcRate;
-    final netCost = totalCost - itc;
-    final y1dol = annualKwh * rate;
-    final payback = y1dol > 1e-6 ? netCost / y1dol : double.nan;
-
-    final initial = SolarFinancialsSnapshot(
-      panelCount: n,
-      systemSizeKw: systemKw,
-      annualProductionKwh: annualKwh,
-      savings25YearUsd: savings25,
-      paybackYears: payback,
-      totalSystemCostUsd: totalCost,
-      incentives: [
-        SolarIncentiveLine(amountUsd: itc),
-      ],
-    );
-
-    return SolarDesignData(
-      roofSegments: [segSouth, segWest, segNorth, segPoor],
-      panelConfigs: [
-        PanelConfigurationData(
-          id: 'google_default',
-          label: 'Recommended',
-          panels: panels,
-        ),
-      ],
-      activeConfigIndex: 0,
-      initialFinancials: initial,
-      yearlyEnergyDcKwh: null,
-    );
   }
 
 }
