@@ -30,19 +30,11 @@ class _AiChatLogoHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: KooyohSpacing.sm),
+      padding: const EdgeInsets.symmetric(vertical: 20),
       child: Center(
-        child: Semantics(
-          label: CommonContent.brandWordmark,
-          child: SizedBox(
-            height: 44,
-            child: Image.asset(
-              AssetsContent.logoPng,
-              fit: BoxFit.contain,
-              filterQuality: FilterQuality.high,
-              gaplessPlayback: true,
-            ),
-          ),
+        child: Image.asset(
+          'assets/images/kooyoh_logo.png',
+          height: 44,
         ),
       ),
     );

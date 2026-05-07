@@ -19,9 +19,12 @@ class HomeownerPublicChrome extends StatelessWidget {
   final VoidCallback? onHomeTap;
   final VoidCallback onBusinesses;
   final VoidCallback onEnterprise;
+  static const double _bodyTopSpacing = 80;
+  static const double _fadeOverlayHeight = 80;
 
   @override
   Widget build(BuildContext context) {
+    final overlayColor = const Color(0xFFFAF6F2);
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
@@ -33,9 +36,33 @@ class HomeownerPublicChrome extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  const SizedBox(height: _bodyTopSpacing),
                   child,
                   const BlackLightFooter(),
                 ],
+              ),
+            ),
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: IgnorePointer(
+              child: SizedBox(
+                height: _fadeOverlayHeight,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        overlayColor,
+                        overlayColor.withValues(alpha: 0),
+                      ],
+                      stops: const [0, 1],
+                    ),
+                  ),
+                ),
               ),
             ),
           ),

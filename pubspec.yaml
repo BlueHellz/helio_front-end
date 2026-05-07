@@ -26,6 +26,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/hero_illustration.png
     - assets/images/kooyoh_logo.png
     - assets/images/kooyoh_icon.png
     - assets/images/business_hero.jpg

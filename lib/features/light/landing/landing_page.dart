@@ -400,10 +400,17 @@ class _HeroSection extends StatelessWidget {
             child: _HeroContent(onGetStarted: onGetStarted),
           ),
           const SizedBox(width: KooyohSpacing.xl),
-          const Expanded(
+          Expanded(
             flex: 45,
             child: Center(
-              child: LandingHeroIsometricIllustration(width: 480, height: 400),
+              child: SizedBox(
+                width: 480,
+                height: 400,
+                child: Image.asset(
+                  'assets/images/hero_illustration.png',
+                  fit: BoxFit.contain,
+                ),
+              ),
             ),
           ),
         ],
@@ -415,8 +422,14 @@ class _HeroSection extends StatelessWidget {
       children: [
         _HeroContent(onGetStarted: onGetStarted),
         const SizedBox(height: KooyohSpacing.lg),
-        const LandingHeroIsometricIllustration(
-            width: double.infinity, height: 280),
+        SizedBox(
+          width: double.infinity,
+          height: 280,
+          child: Image.asset(
+            'assets/images/hero_illustration.png',
+            fit: BoxFit.contain,
+          ),
+        ),
       ],
     );
   }
