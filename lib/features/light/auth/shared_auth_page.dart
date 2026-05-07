@@ -232,7 +232,7 @@ class _HomeownerAuthForm extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const BlackLightLogo(height: 50, maxWidth: 260),
+        const BlackLightLogo(height: 44, maxWidth: 260),
         const SizedBox(height: KooyohSpacing.xl),
         SegmentedButton<bool>(
           segments: [

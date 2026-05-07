@@ -32,7 +32,7 @@ class _BlackLightAssetPaint extends StatelessWidget {
 class BlackLightMark extends StatelessWidget {
   final double size;
 
-  const BlackLightMark({super.key, this.size = 40});
+  const BlackLightMark({super.key, this.size = 44});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class BlackLightLogo extends StatelessWidget {
 
   const BlackLightLogo({
     super.key,
-    this.height = 36,
+    this.height = 44,
     this.maxWidth,
     this.showWordmark = false,
   }) : _markToRowHeight = 0.92;

@@ -17,12 +17,37 @@ import 'package:kooyoh_app/features/light/homeowner/widgets/guided_form_modal.da
 import 'package:kooyoh_app/features/light/homeowner/widgets/interactive_design_canvas.dart';
 import 'package:kooyoh_app/features/light/homeowner/widgets/solar_estimate_summary_view.dart';
 import 'package:kooyoh_app/features/light/homeowner/widgets/solar_path_next_steps_modal.dart';
-import 'package:kooyoh_app/core/brand/blacklight_brand_logo.dart';
 import 'package:kooyoh_app/services/api.dart';
 import 'package:kooyoh_app/services/public_api.dart';
 import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 
 const double _splitBreakpointWidth = 960;
+
+/// Centered lockup for AI chat chrome (transparent — no bar).
+class _AiChatLogoHeader extends StatelessWidget {
+  const _AiChatLogoHeader();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: KooyohSpacing.sm),
+      child: Center(
+        child: Semantics(
+          label: CommonContent.brandWordmark,
+          child: SizedBox(
+            height: 44,
+            child: Image.asset(
+              AssetsContent.logoPng,
+              fit: BoxFit.contain,
+              filterQuality: FilterQuality.high,
+              gaplessPlayback: true,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 enum _BubbleRole { user, ai, system }
 
@@ -554,9 +579,9 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (widget.designFlowMode)
-              _MobileChatHeader(onQuickIntake: _openGuidedForm)
+        children: [
+          if (widget.designFlowMode)
+              const _AiChatLogoHeader()
             else
               _MessagesTabHeader(),
             Expanded(
@@ -586,6 +611,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
                       onSend: _send,
                       sending: _sending,
                       onAttach: () => AppFeedback.comingSoon(context),
+                      onQuickIntake: _openGuidedForm,
                       onRequestEstimate: _onMobileRequestEstimate,
                       estimateLoading: estimateLoading,
                       estimateEnabled: mobileEstimateReady,
@@ -649,76 +675,6 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
 
 // ─── Mobile chrome ───────────────────────────────────────────────────────────
 
-class _MobileChatHeader extends ConsumerWidget {
-  const _MobileChatHeader({required this.onQuickIntake});
-
-  final VoidCallback onQuickIntake;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final display = ref.watch(
-      designProvider.select((s) => s.intakeFormattedDisplay),
-    );
-    final subtitle = (display != null && display.trim().isNotEmpty)
-        ? display.trim()
-        : AiChatContent.headerSubtitlePending;
-
-    final scaffoldBg = Theme.of(context).scaffoldBackgroundColor;
-    final warmEnd = Color.lerp(
-      scaffoldBg,
-      KooyohColors.kooyohTerracotta,
-      Theme.of(context).brightness == Brightness.dark ? 0.045 : 0.065,
-    )!;
-
-    return Container(
-      padding: const EdgeInsets.fromLTRB(
-        KooyohSpacing.sm,
-        KooyohSpacing.md,
-        KooyohSpacing.sm,
-        KooyohSpacing.sm,
-      ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [scaffoldBg, warmEnd],
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: BlackLightLogo(
-                    height: 46,
-                    maxWidth: MediaQuery.sizeOf(context).width * 0.5,
-                  ),
-                ),
-              ),
-              _QuickIntakePillButton(onTap: onQuickIntake),
-            ],
-          ),
-          const SizedBox(height: KooyohSpacing.xs / 2),
-          Text(
-            subtitle,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            style: KooyohTextStyles.body(
-              color: context.colors.onSurfaceMuted,
-            ).copyWith(fontSize: 13),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _MessagesTabHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -781,7 +737,7 @@ class _ChatPanel extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _DesktopChatHeader(onQuickIntake: onQuickIntake),
+          const _AiChatLogoHeader(),
           Expanded(
             child: _ChatMessageList(
               scrollCtrl: scrollCtrl,
@@ -810,79 +766,10 @@ class _ChatPanel extends StatelessWidget {
                 focusNode: composerFocus,
                 onSend: onSend,
                 sending: sending,
+                onQuickIntake: onQuickIntake,
               ),
             ),
           ],
-        ],
-      ),
-    );
-  }
-}
-
-class _DesktopChatHeader extends ConsumerWidget {
-  const _DesktopChatHeader({required this.onQuickIntake});
-
-  final VoidCallback onQuickIntake;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final display = ref.watch(
-      designProvider.select((s) => s.intakeFormattedDisplay),
-    );
-    final subtitle = (display != null && display.trim().isNotEmpty)
-        ? display.trim()
-        : AiChatContent.headerSubtitlePending;
-
-    final panelSurface = Theme.of(context).colorScheme.surface;
-    final warmEnd = Color.lerp(
-      panelSurface,
-      KooyohColors.kooyohTerracotta,
-      Theme.of(context).brightness == Brightness.dark ? 0.045 : 0.065,
-    )!;
-
-    return Container(
-      padding: const EdgeInsets.fromLTRB(
-        KooyohSpacing.md,
-        KooyohSpacing.sm,
-        KooyohSpacing.sm,
-        KooyohSpacing.sm,
-      ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [panelSurface, warmEnd],
-        ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: const BlackLightLogo(
-                    height: 46,
-                    maxWidth: 280,
-                  ),
-                ),
-              ),
-              _QuickIntakePillButton(onTap: onQuickIntake),
-            ],
-          ),
-          const SizedBox(height: KooyohSpacing.xs / 2),
-          Text(
-            subtitle,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            style: KooyohTextStyles.body(
-              color: context.colors.onSurfaceMuted,
-            ).copyWith(fontSize: 14),
-          ),
         ],
       ),
     );
@@ -1269,53 +1156,6 @@ class _TypingIndicatorState extends State<_TypingIndicator>
   }
 }
 
-/// Secondary outline pill — opens guided intake from the AI chat composer.
-class _QuickIntakePillButton extends StatelessWidget {
-  const _QuickIntakePillButton({required this.onTap});
-
-  final VoidCallback onTap;
-
-  static const double _height = 48;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: AiChatContent.quickIntakeFormButtonLabel,
-      child: Material(
-        color: Colors.transparent,
-        elevation: 0,
-        shadowColor: Colors.transparent,
-        shape: StadiumBorder(
-          side: BorderSide(color: KooyohColors.accent, width: 1),
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: onTap,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              minHeight: _height,
-              maxHeight: _height,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: KooyohSpacing.cardGap),
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  AiChatContent.quickIntakeFormButtonLabel,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: KooyohTextStyles.bodyBold(color: KooyohColors.accent),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 /// Accent pill send control (48px height) for AI chat composers.
 class _ComposerSendPill extends StatelessWidget {
   const _ComposerSendPill({required this.onTap, required this.enabled});
@@ -1376,12 +1216,14 @@ class _DesktopComposer extends StatelessWidget {
     required this.focusNode,
     required this.onSend,
     required this.sending,
+    required this.onQuickIntake,
   });
 
   final TextEditingController controller;
   final FocusNode focusNode;
   final VoidCallback onSend;
   final bool sending;
+  final VoidCallback onQuickIntake;
 
   @override
   Widget build(BuildContext context) {
@@ -1396,6 +1238,18 @@ class _DesktopComposer extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Tooltip(
+            message: AiChatContent.quickIntakeFormButtonLabel,
+            child: IconButton(
+              onPressed: onQuickIntake,
+              visualDensity: VisualDensity.compact,
+              icon: Icon(
+                Icons.article_outlined,
+                color: context.colors.onSurfaceMuted,
+              ),
+            ),
+          ),
+          const SizedBox(width: KooyohSpacing.xs),
           Expanded(
             child: TextField(
               controller: controller,
@@ -1444,6 +1298,7 @@ class _MobileComposerBar extends StatelessWidget {
     required this.onSend,
     required this.sending,
     required this.onAttach,
+    required this.onQuickIntake,
     required this.onRequestEstimate,
     required this.estimateLoading,
     required this.estimateEnabled,
@@ -1458,6 +1313,7 @@ class _MobileComposerBar extends StatelessWidget {
   final VoidCallback onSend;
   final bool sending;
   final VoidCallback onAttach;
+  final VoidCallback onQuickIntake;
   final VoidCallback onRequestEstimate;
   final bool estimateLoading;
   final bool estimateEnabled;
@@ -1479,6 +1335,17 @@ class _MobileComposerBar extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Tooltip(
+                  message: AiChatContent.quickIntakeFormButtonLabel,
+                  child: IconButton(
+                    onPressed: onQuickIntake,
+                    visualDensity: VisualDensity.compact,
+                    icon: Icon(
+                      Icons.article_outlined,
+                      color: context.colors.onSurfaceMuted,
+                    ),
+                  ),
+                ),
                 Material(
                   color: context.colors.surface,
                   elevation: 0,

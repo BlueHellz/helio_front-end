@@ -24,15 +24,11 @@ class HomeownerPublicChrome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: Stack(
+        clipBehavior: Clip.none,
+        fit: StackFit.expand,
         children: [
-          _PublicNavbar(
-            onHomeTap: onHomeTap,
-            onBusinesses: onBusinesses,
-            onEnterprise: onEnterprise,
-          ),
-          Expanded(
+          Positioned.fill(
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -40,6 +36,19 @@ class HomeownerPublicChrome extends StatelessWidget {
                   child,
                   const BlackLightFooter(),
                 ],
+              ),
+            ),
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: SafeArea(
+              bottom: false,
+              child: _PublicNavbar(
+                onHomeTap: onHomeTap,
+                onBusinesses: onBusinesses,
+                onEnterprise: onEnterprise,
               ),
             ),
           ),
@@ -62,42 +71,47 @@ class _PublicNavbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: KooyohSpacing.navbarHeight,
-      decoration: const BoxDecoration(
-        color: KooyohColors.surface,
-      ),
-      child: Center(
-        child: ConstrainedBox(
-          constraints:
-              const BoxConstraints(maxWidth: KooyohSpacing.containerMax),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: KooyohSpacing.gutter),
-            child: Row(
-              children: [
-                MouseRegion(
-                  cursor: onHomeTap == null
-                      ? SystemMouseCursors.basic
-                      : SystemMouseCursors.click,
-                  child: GestureDetector(
-                    onTap: onHomeTap,
-                    child: const BlackLightLogo(height: 46, maxWidth: 260),
+    return Material(
+      color: Colors.transparent,
+      elevation: 0,
+      shadowColor: Colors.transparent,
+      child: Container(
+        height: KooyohSpacing.navbarHeight,
+        decoration: const BoxDecoration(
+          color: Colors.transparent,
+        ),
+        child: Center(
+          child: ConstrainedBox(
+            constraints:
+                const BoxConstraints(maxWidth: KooyohSpacing.containerMax),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: KooyohSpacing.gutter),
+              child: Row(
+                children: [
+                  MouseRegion(
+                    cursor: onHomeTap == null
+                        ? SystemMouseCursors.basic
+                        : SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: onHomeTap,
+                      child: const BlackLightLogo(height: 44, maxWidth: 260),
+                    ),
                   ),
-                ),
-                const Spacer(),
-                _PublicNavPill(
-                  label: NavigationContent.navBusinesses,
-                  primary: false,
-                  onTap: onBusinesses,
-                ),
-                const SizedBox(width: KooyohSpacing.sm),
-                _PublicNavPill(
-                  label: NavigationContent.preAuthEnterprise,
-                  primary: true,
-                  onTap: onEnterprise,
-                ),
-              ],
+                  const Spacer(),
+                  _PublicNavPill(
+                    label: NavigationContent.navBusinesses,
+                    primary: false,
+                    onTap: onBusinesses,
+                  ),
+                  const SizedBox(width: KooyohSpacing.sm),
+                  _PublicNavPill(
+                    label: NavigationContent.preAuthEnterprise,
+                    primary: true,
+                    onTap: onEnterprise,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -156,8 +170,9 @@ class _PublicNavPillState extends State<_PublicNavPill> {
             child: Text(
               widget.label,
               style: KooyohTextStyles.captionBold(
-                color:
-                    widget.primary ? Colors.white : KooyohColors.accent,
+                color: widget.primary
+                    ? KooyohColors.surface
+                    : KooyohColors.accent,
               ).copyWith(letterSpacing: 0.6, fontSize: 12),
             ),
           ),
@@ -345,7 +360,7 @@ class _Sidebar extends StatelessWidget {
         children: [
           const Padding(
             padding: EdgeInsets.fromLTRB(24, 24, 24, 32),
-            child: BlackLightLogo(height: 42, maxWidth: 220),
+            child: BlackLightLogo(height: 44, maxWidth: 220),
           ),
           Expanded(
             child: Column(
