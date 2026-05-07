@@ -164,22 +164,26 @@ class _DesignDisplayWidgetState extends ConsumerState<DesignDisplayWidget> {
 
     if (vs.data == null) {
       _lastFitDesignRef = null;
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(KooyohSpacing.xl),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SunRingsIllustration(size: 300),
-              const SizedBox(height: KooyohSpacing.md),
-              Text(
-                InteractiveCanvasContent.waitingBody,
-                textAlign: TextAlign.center,
-                style: KooyohTextStyles.body(
-                  color: context.colors.onSurfaceMuted,
+      return Semantics(
+        container: true,
+        label: InteractiveCanvasContent.waitingBody,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(KooyohSpacing.xl),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SunRingsIllustration(size: 300),
+                const SizedBox(height: KooyohSpacing.md),
+                Text(
+                  InteractiveCanvasContent.waitingBody,
+                  textAlign: TextAlign.center,
+                  style: KooyohTextStyles.body(
+                    color: context.colors.onSurfaceMuted,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );
