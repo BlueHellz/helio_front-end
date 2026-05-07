@@ -76,7 +76,7 @@ class LandingContent {
       'The installer and enterprise portal includes CRM, project tracking, and AI design tools. Sign in to explore — full onboarding connects when the backend is live.';
 
   // In-product mockups
-  static const seeKooyohInActionTitle = 'See XEÍTI in Action';
+  static const seeKooyohInActionTitle = 'See KOOYOH in Action';
   static const seeKooyohInActionSubtitle =
       'Geometric previews of real workflows — chat-first design for homeowners '
       'and operations control for your team.';
@@ -104,8 +104,7 @@ class LandingContent {
 
   // Social proof
   static const socialProofHeadline = 'Join 500+ solar businesses';
-  static const testimonial1Quote =
-      'XEÍTI saved us 20 hours a week on designs.';
+  static const testimonial1Quote = 'XEÍTI saved us 20 hours a week on designs.';
   static const testimonial1Attribution = '— Alex, SolarPro Installers';
   static const testimonial2Quote =
       'Permit pack quality cut our resubmits in half.';
