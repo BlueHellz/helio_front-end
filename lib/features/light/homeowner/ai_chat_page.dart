@@ -17,6 +17,7 @@ import 'package:kooyoh_app/features/light/homeowner/widgets/guided_form_modal.da
 import 'package:kooyoh_app/features/light/homeowner/widgets/interactive_design_canvas.dart';
 import 'package:kooyoh_app/features/light/homeowner/widgets/solar_estimate_summary_view.dart';
 import 'package:kooyoh_app/features/light/homeowner/widgets/solar_path_next_steps_modal.dart';
+import 'package:kooyoh_app/core/brand/blacklight_brand_logo.dart';
 import 'package:kooyoh_app/services/api.dart';
 import 'package:kooyoh_app/services/public_api.dart';
 import 'package:kooyoh_app/theme/kooyoh_theme.dart';
@@ -662,17 +663,25 @@ class _MobileChatHeader extends ConsumerWidget {
         ? display.trim()
         : AiChatContent.headerSubtitlePending;
 
+    final scaffoldBg = Theme.of(context).scaffoldBackgroundColor;
+    final warmEnd = Color.lerp(
+      scaffoldBg,
+      KooyohColors.kooyohTerracotta,
+      Theme.of(context).brightness == Brightness.dark ? 0.045 : 0.065,
+    )!;
+
     return Container(
       padding: const EdgeInsets.fromLTRB(
         KooyohSpacing.sm,
-        KooyohSpacing.sm,
+        KooyohSpacing.md,
         KooyohSpacing.sm,
         KooyohSpacing.sm,
       ),
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        border: Border(
-          bottom: BorderSide(color: context.colors.outline, width: 1),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [scaffoldBg, warmEnd],
         ),
       ),
       child: Column(
@@ -682,28 +691,16 @@ class _MobileChatHeader extends ConsumerWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                AiChatContent.headerBrand,
-                style: KooyohTextStyles.cardHeading(
-                  color: context.colors.onSurface,
-                ),
-              ),
-              const SizedBox(width: KooyohSpacing.xs),
-              Container(
-                width: KooyohSpacing.xs,
-                height: KooyohSpacing.xs,
-                decoration: BoxDecoration(
-                  color: context.colors.secondary,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const Spacer(),
-              Flexible(
+              Expanded(
                 child: Align(
-                  alignment: Alignment.centerRight,
-                  child: _QuickIntakePillButton(onTap: onQuickIntake),
+                  alignment: Alignment.center,
+                  child: BlackLightLogo(
+                    height: 46,
+                    maxWidth: MediaQuery.sizeOf(context).width * 0.5,
+                  ),
                 ),
               ),
+              _QuickIntakePillButton(onTap: onQuickIntake),
             ],
           ),
           const SizedBox(height: KooyohSpacing.xs / 2),
@@ -711,6 +708,7 @@ class _MobileChatHeader extends ConsumerWidget {
             subtitle,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
             style: KooyohTextStyles.body(
               color: context.colors.onSurfaceMuted,
             ).copyWith(fontSize: 13),
@@ -835,59 +833,56 @@ class _DesktopChatHeader extends ConsumerWidget {
         ? display.trim()
         : AiChatContent.headerSubtitlePending;
 
+    final panelSurface = Theme.of(context).colorScheme.surface;
+    final warmEnd = Color.lerp(
+      panelSurface,
+      KooyohColors.kooyohTerracotta,
+      Theme.of(context).brightness == Brightness.dark ? 0.045 : 0.065,
+    )!;
+
     return Container(
-      height: KooyohSpacing.footerHeight,
-      padding: const EdgeInsets.only(
-        left: KooyohSpacing.md,
-        right: KooyohSpacing.sm,
+      padding: const EdgeInsets.fromLTRB(
+        KooyohSpacing.md,
+        KooyohSpacing.sm,
+        KooyohSpacing.sm,
+        KooyohSpacing.sm,
       ),
       decoration: BoxDecoration(
-        color: context.colors.surface,
-        border: Border(
-          bottom: BorderSide(color: context.colors.outline, width: 1),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [panelSurface, warmEnd],
         ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      AiChatContent.headerBrand,
-                      style: KooyohTextStyles.bodyBold(
-                        color: context.colors.onSurface,
-                      ).copyWith(fontSize: 18),
-                    ),
-                    const SizedBox(width: KooyohSpacing.xs / 2),
-                    Container(
-                      width: KooyohSpacing.xs,
-                      height: KooyohSpacing.xs,
-                      decoration: BoxDecoration(
-                        color: context.colors.secondary,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ],
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: const BlackLightLogo(
+                    height: 46,
+                    maxWidth: 280,
+                  ),
                 ),
-                const SizedBox(height: KooyohSpacing.xs / 2),
-                Text(
-                  subtitle,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: KooyohTextStyles.body(
-                    color: context.colors.onSurfaceMuted,
-                  ).copyWith(fontSize: 14),
-                ),
-              ],
-            ),
+              ),
+              _QuickIntakePillButton(onTap: onQuickIntake),
+            ],
           ),
-          const SizedBox(width: KooyohSpacing.sm),
-          _QuickIntakePillButton(onTap: onQuickIntake),
+          const SizedBox(height: KooyohSpacing.xs / 2),
+          Text(
+            subtitle,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: KooyohTextStyles.body(
+              color: context.colors.onSurfaceMuted,
+            ).copyWith(fontSize: 14),
+          ),
         ],
       ),
     );
@@ -1399,7 +1394,7 @@ class _DesktopComposer extends StatelessWidget {
       ),
       color: context.colors.surface,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
             child: TextField(
@@ -1482,7 +1477,7 @@ class _MobileComposerBar extends StatelessWidget {
         child: Column(
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Material(
                   color: context.colors.surface,

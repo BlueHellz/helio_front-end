@@ -66,9 +66,6 @@ class _PublicNavbar extends StatelessWidget {
       height: KooyohSpacing.navbarHeight,
       decoration: const BoxDecoration(
         color: KooyohColors.surface,
-        border: Border(
-          bottom: BorderSide(color: KooyohColors.border),
-        ),
       ),
       child: Center(
         child: ConstrainedBox(
@@ -85,7 +82,7 @@ class _PublicNavbar extends StatelessWidget {
                       : SystemMouseCursors.click,
                   child: GestureDetector(
                     onTap: onHomeTap,
-                    child: const BlackLightLogo(height: 36, maxWidth: 220),
+                    child: const BlackLightLogo(height: 46, maxWidth: 260),
                   ),
                 ),
                 const Spacer(),
@@ -348,7 +345,7 @@ class _Sidebar extends StatelessWidget {
         children: [
           const Padding(
             padding: EdgeInsets.fromLTRB(24, 24, 24, 32),
-            child: BlackLightLogo(height: 32, maxWidth: 192),
+            child: BlackLightLogo(height: 42, maxWidth: 220),
           ),
           Expanded(
             child: Column(

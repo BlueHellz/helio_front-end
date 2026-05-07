@@ -151,7 +151,7 @@ class _EnterpriseAuthPageState extends ConsumerState<EnterpriseAuthPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const BlackLightLogo(height: 40, maxWidth: 240),
+                        const BlackLightLogo(height: 50, maxWidth: 260),
                         const SizedBox(height: KooyohSpacing.lg),
                         Text(
                           EnterpriseContent.accessTitle,

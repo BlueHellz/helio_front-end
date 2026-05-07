@@ -141,7 +141,7 @@ class _MobileAuthState extends ConsumerState<MobileAuth> {
           child: Column(
             children: [
               const SizedBox(height: KooyohSpacing.md),
-              const BlackLightLogo(height: 48, maxWidth: 300),
+              const BlackLightLogo(height: 60, maxWidth: 320),
               const SizedBox(height: KooyohSpacing.lg),
               const SunRingsIllustration(size: 160),
               const SizedBox(height: 6),
