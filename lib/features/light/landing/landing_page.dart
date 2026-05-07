@@ -403,12 +403,15 @@ class _HeroSection extends StatelessWidget {
           Expanded(
             flex: 45,
             child: Center(
-              child: SizedBox(
-                width: 480,
-                height: 400,
-                child: Image.asset(
-                  'assets/images/hero_illustration.png',
-                  fit: BoxFit.contain,
+              child: Transform.translate(
+                offset: const Offset(0, -20),
+                child: SizedBox(
+                  width: 500,
+                  height: 420,
+                  child: Image.asset(
+                    'assets/images/hero_illustration.png',
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             ),
@@ -565,7 +568,7 @@ class _AddressInputRow extends StatelessWidget {
 
     if (isWide) {
       return Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: Column(
@@ -590,20 +593,23 @@ class _AddressInputRow extends StatelessWidget {
             ),
           ),
           const SizedBox(width: KooyohSpacing.sm),
-          SizedBox(
-            height: KooyohSpacing.buttonHeight,
-            child: ElevatedButton(
-              onPressed: onGetStarted,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: KooyohColors.accent,
-                foregroundColor: Colors.white,
-                elevation: 0,
-                shape: const StadiumBorder(),
-                padding: const EdgeInsets.symmetric(horizontal: 28),
-              ),
-              child: Text(
-                LandingContent.heroPrimaryCta,
-                style: KooyohTextStyles.bodyBold(color: Colors.white),
+          Padding(
+            padding: const EdgeInsets.only(top: 24),
+            child: SizedBox(
+              height: KooyohSpacing.inputHeight,
+              child: ElevatedButton(
+                onPressed: onGetStarted,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: KooyohColors.accent,
+                  foregroundColor: Colors.white,
+                  elevation: 0,
+                  shape: const StadiumBorder(),
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                ),
+                child: Text(
+                  LandingContent.heroPrimaryCta,
+                  style: KooyohTextStyles.bodyBold(color: Colors.white),
+                ),
               ),
             ),
           ),

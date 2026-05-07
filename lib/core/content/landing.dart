@@ -36,7 +36,7 @@ class LandingContent {
       'plan. No sales call. No pressure. No catch.';
   static const heroAddressLabel = 'ADDRESS';
   static const heroAddressPlaceholder = 'Enter your home address';
-  static const heroPrimaryCta = 'See My Design';
+  static const heroPrimaryCta = 'DESIGN';
   static const heroTrustLine = 'Free forever · No credit card';
   static const heroStatLabel = 'Systems designed this month';
   static const heroStatValue = '2,847';
