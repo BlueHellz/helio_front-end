@@ -403,16 +403,8 @@ class _HeroSection extends StatelessWidget {
           Expanded(
             flex: 45,
             child: Center(
-              child: Transform.translate(
-                offset: const Offset(0, -24),
-                child: SizedBox(
-                  width: 540,
-                  height: 450,
-                  child: Image.asset(
-                    'assets/images/hero_illustration.png',
-                    fit: BoxFit.contain,
-                  ),
-                ),
+              child: _HeroIllustrationSlot.wide(
+                assetPath: LandingContent.heroIllustrationAsset,
               ),
             ),
           ),
@@ -425,15 +417,97 @@ class _HeroSection extends StatelessWidget {
       children: [
         _HeroContent(onGetStarted: onGetStarted),
         const SizedBox(height: KooyohSpacing.lg),
-        SizedBox(
-          width: double.infinity,
-          height: 300,
-          child: Image.asset(
-            'assets/images/hero_illustration.png',
-            fit: BoxFit.contain,
-          ),
+        _HeroIllustrationSlot.narrow(
+          assetPath: LandingContent.heroIllustrationAsset,
         ),
       ],
+    );
+  }
+}
+
+/// Clips, scales, and nudges hero art so swapped raster assets all get the same
+/// presentation without changing call-site layout contracts.
+class _HeroIllustrationSlot extends StatelessWidget {
+  const _HeroIllustrationSlot.wide({required this.assetPath}) : _narrow = false;
+
+  const _HeroIllustrationSlot.narrow({required this.assetPath})
+      : _narrow = true;
+
+  final String assetPath;
+  final bool _narrow;
+
+  static const double _wideSlotW = 600;
+  static const double _wideSlotH = 488;
+  static const double _wideScale = 1.08;
+  static const Offset _wideNudge = Offset(0, -28);
+
+  static const double _narrowSlotH = 320;
+  static const double _narrowScale = 1.06;
+  static const Offset _narrowNudge = Offset(0, -10);
+
+  @override
+  Widget build(BuildContext context) {
+    if (_narrow) {
+      return LayoutBuilder(
+        builder: (context, c) {
+          final w = c.maxWidth;
+          return Transform.translate(
+            offset: _narrowNudge,
+            child: SizedBox(
+              width: w,
+              height: _narrowSlotH,
+              child: ClipRect(
+                child: Center(
+                  child: Transform.scale(
+                    scale: _narrowScale,
+                    filterQuality: FilterQuality.medium,
+                    alignment: Alignment.center,
+                    child: Image.asset(
+                      assetPath,
+                      fit: BoxFit.contain,
+                      width: w / _narrowScale,
+                      height: _narrowSlotH / _narrowScale,
+                      alignment: Alignment.center,
+                      gaplessPlayback: true,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    }
+
+    return LayoutBuilder(
+      builder: (context, c) {
+        final slotW =
+            c.maxWidth < _wideSlotW ? c.maxWidth : _wideSlotW;
+        final slotH = slotW * _wideSlotH / _wideSlotW;
+        return Transform.translate(
+          offset: _wideNudge,
+          child: SizedBox(
+            width: slotW,
+            height: slotH,
+            child: ClipRect(
+              child: Center(
+                child: Transform.scale(
+                  scale: _wideScale,
+                  filterQuality: FilterQuality.medium,
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    assetPath,
+                    fit: BoxFit.contain,
+                    width: slotW / _wideScale,
+                    height: slotH / _wideScale,
+                    gaplessPlayback: true,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -592,26 +666,10 @@ class _AddressInputRow extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: KooyohSpacing.sm),
-              SizedBox(
-                height: KooyohSpacing.inputHeight,
-                child: ElevatedButton(
-                  onPressed: onGetStarted,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: KooyohColors.accent,
-                    foregroundColor: Colors.white,
-                    elevation: 0,
-                    shadowColor: Colors.transparent,
-                    shape: const StadiumBorder(),
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    minimumSize: Size.zero,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    visualDensity: VisualDensity.compact,
-                  ),
-                  child: Text(
-                    LandingContent.heroPrimaryCta,
-                    style: KooyohTextStyles.bodyBold(color: Colors.white),
-                  ),
-                ),
+              _HeroPrimaryCtaPill(
+                onPressed: onGetStarted,
+                height: KooyohSpacing.inputHeightMobile,
+                expandWidth: false,
               ),
             ],
           ),
@@ -632,27 +690,10 @@ class _AddressInputRow extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 12),
-        SizedBox(
-          width: double.infinity,
-          height: KooyohSpacing.inputHeight,
-          child: ElevatedButton(
-            onPressed: onGetStarted,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: KooyohColors.accent,
-              foregroundColor: Colors.white,
-              elevation: 0,
-              shadowColor: Colors.transparent,
-              shape: const StadiumBorder(),
-              padding: const EdgeInsets.symmetric(horizontal: KooyohSpacing.md),
-              minimumSize: Size.zero,
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              visualDensity: VisualDensity.compact,
-            ),
-            child: Text(
-              LandingContent.heroPrimaryCta,
-              style: KooyohTextStyles.bodyBold(color: Colors.white),
-            ),
-          ),
+        _HeroPrimaryCtaPill(
+          onPressed: onGetStarted,
+          height: KooyohSpacing.inputHeightMobile,
+          expandWidth: true,
         ),
       ],
     );
@@ -679,6 +720,52 @@ class _AddressInputRow extends StatelessWidget {
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16),
       );
+}
+
+/// Hero address CTA: avoids global [ElevatedButtonTheme] minimum height so the pill
+/// can sit shorter than [KooyohSpacing.inputHeight] and align beside the field.
+class _HeroPrimaryCtaPill extends StatelessWidget {
+  const _HeroPrimaryCtaPill({
+    required this.onPressed,
+    required this.height,
+    required this.expandWidth,
+  });
+
+  final VoidCallback? onPressed;
+  final double height;
+  final bool expandWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    final pill = Material(
+      color: KooyohColors.accent,
+      elevation: 0,
+      shadowColor: Colors.transparent,
+      shape: const StadiumBorder(),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onPressed,
+        borderRadius: BorderRadius.circular(999),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: KooyohSpacing.sm),
+          child: Center(
+            child: Text(
+              LandingContent.heroPrimaryCta,
+              style: KooyohTextStyles.bodyBold(color: Colors.white).copyWith(
+                height: 1.0,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    return SizedBox(
+      width: expandWidth ? double.infinity : null,
+      height: height,
+      child: pill,
+    );
+  }
 }
 
 // ─────────────────────────────────────────────

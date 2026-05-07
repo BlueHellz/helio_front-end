@@ -36,6 +36,8 @@ class LandingContent {
       'plan. No sales call. No pressure. No catch.';
   static const heroAddressLabel = 'ADDRESS';
   static const heroAddressPlaceholder = 'Enter your home address';
+  /// Raster shown in the landing hero (layout/scaling is asset-agnostic).
+  static const heroIllustrationAsset = 'assets/images/hero_illustration.png';
   static const heroPrimaryCta = 'DESIGN';
   static const heroTrustLine = 'Free forever · No credit card';
   static const heroStatLabel = 'Systems designed this month';
