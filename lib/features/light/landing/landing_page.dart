@@ -1646,7 +1646,7 @@ class _WalletBalance extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(WalletContent.gueyBalanceLabel,
+            Text(WalletContent.kyhBalanceLabel,
                 style: KooyohTextStyles.caption(
                     color: KooyohColors.textCaption)),
             Row(
@@ -1654,7 +1654,7 @@ class _WalletBalance extends StatelessWidget {
                 Text(WalletContent.demoBalanceAmount,
                     style: KooyohTextStyles.dataLarge()),
                 const SizedBox(width: 6),
-                Text(WalletContent.gueyTicker,
+                Text(WalletContent.kyhTicker,
                     style: KooyohTextStyles.body(
                         color: KooyohColors.textBody)),
               ],

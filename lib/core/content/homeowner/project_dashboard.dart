@@ -48,11 +48,11 @@ class HomeownerProjectDashboardContent {
   static const installer2License = 'HT-44102';
   static const installer2Contact = '(509) 555-0198 · crew@sunpeak.demo';
 
-  static const installer3Name = 'Guey Clearwater Installers';
+  static const installer3Name = 'Kooyoh Clearwater Installers';
   static const installer3Rating = '4.8';
   static const installer3Years = '15';
   static const installer3License = 'HT-22019';
-  static const installer3Contact = '(509) 555-0161 · jobs@gueyclear.demo';
+  static const installer3Contact = '(509) 555-0161 · jobs@kooyohclear.demo';
 
   static const fundingPoolTitle = 'KOOYOH Pool Funding';
   static const fundingPoolBody =

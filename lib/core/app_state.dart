@@ -25,7 +25,7 @@ class BlackLightAppState extends ChangeNotifier {
   String _companyName = '';
 
   // Wallet (filled by wallet provider on connect)
-  double _gueyBalance = 0.0;
+  double _kyhBalance = 0.0;
   String? _walletAddress;
 
   // Navigation indices (UI-only)
@@ -41,7 +41,7 @@ class BlackLightAppState extends ChangeNotifier {
   bool get isAuthenticated => _isAuthenticated;
   String get userName => _userName;
   String get companyName => _companyName;
-  double get gueyBalance => _gueyBalance;
+  double get kyhBalance => _kyhBalance;
   String? get walletAddress => _walletAddress;
   int get webSidebarIndex => _webSidebarIndex;
   int get mobileNavIndex => _mobileNavIndex;
@@ -69,7 +69,7 @@ class BlackLightAppState extends ChangeNotifier {
     _isAuthenticated = false;
     _userName = '';
     _companyName = '';
-    _gueyBalance = 0.0;
+    _kyhBalance = 0.0;
     _walletAddress = null;
     _projects.clear();
     _chatMessages.clear();

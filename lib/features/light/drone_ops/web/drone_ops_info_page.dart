@@ -252,7 +252,7 @@ class _TelemetryPanel extends StatelessWidget {
             bottom: 12,
             right: 12,
             child: _MetaChip(
-              text: DroneOpsContent.gueyRewardChip,
+              text: DroneOpsContent.kyhRewardChip,
               color: KooyohColors.accent,
               borderColor: KooyohColors.accent,
             ),

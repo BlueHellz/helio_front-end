@@ -86,7 +86,7 @@ class EnterpriseContent {
   static const orgPortalSignOut = 'Sign out';
 
   static const labelCompanyOrOrg = 'Company or organization';
-  static const hintCompanyOrOrg = 'e.g. Guey Solar Co.';
+  static const hintCompanyOrOrg = 'e.g. Kooyoh Solar Co.';
 
   /// Enterprise auth split-panel art.
   static const authHeroIllustrationAsset = 'assets/images/enterprise_auth.jpg';

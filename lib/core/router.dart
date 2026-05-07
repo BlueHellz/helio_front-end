@@ -245,7 +245,7 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
       2 => const AiChatPage(),
       3 => HomeownerWalletPage(
           userName: app.userName,
-          gueyBalance: app.gueyBalance,
+          kyhBalance: app.kyhBalance,
           walletAddress: app.walletAddress,
           onConnectWallet: _openWalletConnect,
           onSignOut: _signOut,
@@ -264,7 +264,7 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
       HomeownerAuthenticatedChrome(
         activeIndex: idx,
         userName: app.userName,
-        gueyBalance: app.gueyBalance,
+        kyhBalance: app.kyhBalance,
         onNavTap: app.setWebSidebarIndex,
         onSignOut: _signOut,
         child: body,
@@ -574,7 +574,7 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
       2 => const AiChatPage(),
       3 => HomeownerWalletPage(
           userName: app.userName,
-          gueyBalance: app.gueyBalance,
+          kyhBalance: app.kyhBalance,
           walletAddress: app.walletAddress,
           onConnectWallet: () => _openWallet(app),
           onSignOut: _signOut,

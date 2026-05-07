@@ -238,7 +238,7 @@ class _PoolVisual extends StatelessWidget {
                     style: KooyohTextStyles.hero()
                         .copyWith(fontSize: 48, height: 1.0)),
                 const SizedBox(height: 2),
-                Text(PoolFundingContent.gueyTicker,
+                Text(PoolFundingContent.kyhTicker,
                     style: KooyohTextStyles.body(
                         color: KooyohColors.textBody)),
               ],

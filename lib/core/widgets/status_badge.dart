@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kooyoh_app/core/content/content_registry.dart';
 import '../../theme/kooyoh_theme.dart';
 import '../models/project.dart';
 
@@ -49,7 +50,7 @@ class WalletChip extends StatelessWidget {
               size: 14, color: variant),
           const SizedBox(width: 6),
           Text(
-            '${balance.toStringAsFixed(2)} GUEY',
+            '${balance.toStringAsFixed(2)} ${WalletContent.kyhTicker}',
             style: KooyohTextStyles.dataInline(color: c.onSurface),
           ),
         ],

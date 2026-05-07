@@ -8,18 +8,18 @@ class PoolFundingContent {
   static const heroBody =
       'KOO-YOH pools let everyday investors fund verified solar '
       'installations and earn a share of the energy revenue. '
-      'Tokenized. Transparent. Powered by Guey Coin (GUEY).';
+      'Tokenized. Transparent. Powered by KOO-YOH Coin (KYH).';
   static const readWhitepaper = 'Read whitepaper';
   static const joinWaitlist = 'Join waitlist';
 
   static const livePreviewEyebrow = 'POOL · LIVE PREVIEW';
   static const totalPooledLabel = 'TOTAL POOLED';
-  static const gueyTicker = 'GUEY';
+  static const kyhTicker = 'KYH';
 
   static const statBackedByLabel = 'Backed by';
   static const statBackedByValue = 'Verified solar arrays';
   static const statReturnedLabel = 'Returned in';
-  static const statReturnedValue = 'GUEY + USD payouts';
+  static const statReturnedValue = 'KYH + USD payouts';
   static const statVisibilityLabel = 'Visibility';
   static const statVisibilityValue = 'Real-time energy data';
 
@@ -28,7 +28,7 @@ class PoolFundingContent {
 
   static const step1Title = '01  Pool';
   static const step1Body =
-      'Investors stake GUEY into a verified solar project on the platform.';
+      'Investors stake KYH (KOO-YOH Coin) into a verified solar project on the platform.';
   static const step2Title = '02  Power';
   static const step2Body =
       'The system gets installed, monitored, and produces clean energy.';
