@@ -391,7 +391,7 @@ components:
 
     Me:
       type: object
-      required: [isAuthenticated, role, userName, companyName, gueyBalance]
+      required: [isAuthenticated, role, userName, companyName, kyhBalance]
       properties:
         isAuthenticated:
           type: boolean
@@ -401,9 +401,10 @@ components:
           type: string
         companyName:
           type: string
-        gueyBalance:
+        kyhBalance:
           type: number
           format: double
+          description: KOO-YOH Coin (KYH) balance on Solana.
         walletAddress:
           type: string
           nullable: true

@@ -48,5 +48,6 @@ export 'shared/feedback_strings.dart';
 export 'shared/footer.dart';
 export 'shared/navigation.dart';
 export 'shared/router_strings.dart';
+// Wallet + tickers: KOO-YOH Coin (KYH) on Solana; GUEY Coin (native L1) placeholder.
 export 'shared/wallet.dart';
 export 'whitepaper.dart';
