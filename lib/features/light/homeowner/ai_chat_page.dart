@@ -34,7 +34,7 @@ class _AiChatLogoHeader extends StatelessWidget {
       child: Center(
         child: Image.asset(
           'assets/images/kooyoh_logo.png',
-          height: 44,
+          height: 52,
         ),
       ),
     );
@@ -1418,6 +1418,7 @@ class _MobileComposerBar extends StatelessWidget {
                     foregroundColor: KooyohColors.surface,
                     disabledBackgroundColor:
                         KooyohColors.surfaceMuted.withValues(alpha: 0.9),
+              disabledForegroundColor: KooyohColors.textBody,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(KooyohRadius.sm),
                     ),

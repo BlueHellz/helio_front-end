@@ -179,18 +179,10 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
             onEnterprise: () => _go(_WebPublicPage.enterpriseAuth),
           );
         case _WebPublicPage.publicDesignChat:
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(AiChatContent.pageTitle),
-              leading: BackButton(
-                onPressed: () => _go(_WebPublicPage.landing),
-              ),
-            ),
-            body: AiChatPage(
-              designFlowMode: true,
-              onOpenHomeownerLogin: () => _go(_WebPublicPage.login),
-              onOpenHomeownerSignup: () => _go(_WebPublicPage.signup),
-            ),
+          return AiChatPage(
+            designFlowMode: true,
+            onOpenHomeownerLogin: () => _go(_WebPublicPage.login),
+            onOpenHomeownerSignup: () => _go(_WebPublicPage.signup),
           );
         case _WebPublicPage.designSummary:
           return Scaffold(
@@ -449,26 +441,16 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
                 setState(() => _pub = _MobilePublic.enterpriseAuth),
           );
         case _MobilePublic.designChat:
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(AiChatContent.pageTitle),
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () =>
-                    setState(() => _pub = _MobilePublic.home),
-              ),
-            ),
-            body: AiChatPage(
-              designFlowMode: true,
-              onOpenHomeownerLogin: () => setState(() {
-                _loginReturnTarget = _MobilePublic.designChat;
-                _pub = _MobilePublic.login;
-              }),
-              onOpenHomeownerSignup: () => setState(() {
-                _loginReturnTarget = _MobilePublic.designChat;
-                _pub = _MobilePublic.signup;
-              }),
-            ),
+          return AiChatPage(
+            designFlowMode: true,
+            onOpenHomeownerLogin: () => setState(() {
+              _loginReturnTarget = _MobilePublic.designChat;
+              _pub = _MobilePublic.login;
+            }),
+            onOpenHomeownerSignup: () => setState(() {
+              _loginReturnTarget = _MobilePublic.designChat;
+              _pub = _MobilePublic.signup;
+            }),
           );
         case _MobilePublic.designSummary:
           return Scaffold(

@@ -179,7 +179,7 @@ class _DesignDisplayWidgetState extends ConsumerState<DesignDisplayWidget> {
                   InteractiveCanvasContent.waitingBody,
                   textAlign: TextAlign.center,
                   style: KooyohTextStyles.body(
-                    color: context.colors.onSurfaceMuted,
+                    color: KooyohColors.textPrimary,
                   ),
                 ),
               ],

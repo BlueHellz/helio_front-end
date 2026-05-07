@@ -61,6 +61,7 @@ class AiChatDesignRail extends ConsumerWidget {
               foregroundColor: KooyohColors.surface,
               disabledBackgroundColor:
                   KooyohColors.surfaceMuted.withValues(alpha: 0.9),
+              disabledForegroundColor: KooyohColors.textBody,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(KooyohRadius.sm),
               ),
