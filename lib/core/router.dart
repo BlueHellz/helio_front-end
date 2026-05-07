@@ -181,6 +181,7 @@ class _WebSwitchState extends ConsumerState<_WebSwitch> {
         case _WebPublicPage.publicDesignChat:
           return AiChatPage(
             designFlowMode: true,
+            onBackTap: () => _go(_WebPublicPage.landing),
             onOpenHomeownerLogin: () => _go(_WebPublicPage.login),
             onOpenHomeownerSignup: () => _go(_WebPublicPage.signup),
           );
@@ -443,6 +444,7 @@ class _MobileSwitchState extends ConsumerState<_MobileSwitch> {
         case _MobilePublic.designChat:
           return AiChatPage(
             designFlowMode: true,
+            onBackTap: () => setState(() => _pub = _MobilePublic.home),
             onOpenHomeownerLogin: () => setState(() {
               _loginReturnTarget = _MobilePublic.designChat;
               _pub = _MobilePublic.login;

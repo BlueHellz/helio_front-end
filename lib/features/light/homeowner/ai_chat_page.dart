@@ -25,16 +25,41 @@ const double _splitBreakpointWidth = 960;
 
 /// Centered lockup for AI chat chrome (transparent — no bar).
 class _AiChatLogoHeader extends StatelessWidget {
-  const _AiChatLogoHeader();
+  const _AiChatLogoHeader({this.onBackTap});
+
+  final VoidCallback? onBackTap;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Center(
-        child: Image.asset(
-          'assets/images/kooyoh_logo.png',
-          height: 52,
+      padding: const EdgeInsets.fromLTRB(
+        KooyohSpacing.gutter,
+        28,
+        KooyohSpacing.gutter,
+        16,
+      ),
+      child: SizedBox(
+        height: KooyohSpacing.tapTarget,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            if (onBackTap != null)
+              Align(
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  onPressed: onBackTap,
+                  icon: Icon(
+                    Icons.arrow_back_rounded,
+                    color: context.colors.onSurface,
+                  ),
+                  tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+                ),
+              ),
+            Image.asset(
+              'assets/images/kooyoh_logo.png',
+              height: 58,
+            ),
+          ],
         ),
       ),
     );
@@ -77,11 +102,13 @@ class AiChatPage extends ConsumerStatefulWidget {
     this.designFlowMode = false,
     this.onOpenHomeownerLogin,
     this.onOpenHomeownerSignup,
+    this.onBackTap,
   });
 
   final bool designFlowMode;
   final VoidCallback? onOpenHomeownerLogin;
   final VoidCallback? onOpenHomeownerSignup;
+  final VoidCallback? onBackTap;
 
   @override
   ConsumerState<AiChatPage> createState() => _AiChatPageState();
@@ -550,6 +577,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
               sending: _sending,
               onSend: _send,
               onQuickIntake: _openGuidedForm,
+              onBackTap: widget.onBackTap,
             ),
           ),
           Expanded(
@@ -573,7 +601,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (widget.designFlowMode)
-              const _AiChatLogoHeader()
+              _AiChatLogoHeader(onBackTap: widget.onBackTap)
             else
               _MessagesTabHeader(),
             Expanded(
@@ -704,6 +732,7 @@ class _ChatPanel extends StatelessWidget {
     required this.sending,
     required this.onSend,
     required this.onQuickIntake,
+    this.onBackTap,
   });
 
   final bool designFlowMode;
@@ -716,6 +745,7 @@ class _ChatPanel extends StatelessWidget {
   final bool sending;
   final VoidCallback onSend;
   final VoidCallback onQuickIntake;
+  final VoidCallback? onBackTap;
 
   @override
   Widget build(BuildContext context) {
@@ -729,7 +759,7 @@ class _ChatPanel extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const _AiChatLogoHeader(),
+          _AiChatLogoHeader(onBackTap: onBackTap),
           Expanded(
             child: _ChatMessageList(
               scrollCtrl: scrollCtrl,
