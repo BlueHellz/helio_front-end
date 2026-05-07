@@ -404,10 +404,10 @@ class _HeroSection extends StatelessWidget {
             flex: 45,
             child: Center(
               child: Transform.translate(
-                offset: const Offset(0, -20),
+                offset: const Offset(0, -24),
                 child: SizedBox(
-                  width: 500,
-                  height: 420,
+                  width: 540,
+                  height: 450,
                   child: Image.asset(
                     'assets/images/hero_illustration.png',
                     fit: BoxFit.contain,
@@ -427,7 +427,7 @@ class _HeroSection extends StatelessWidget {
         const SizedBox(height: KooyohSpacing.lg),
         SizedBox(
           width: double.infinity,
-          height: 280,
+          height: 300,
           child: Image.asset(
             'assets/images/hero_illustration.png',
             fit: BoxFit.contain,
@@ -567,51 +567,53 @@ class _AddressInputRow extends StatelessWidget {
     final isWide = MediaQuery.of(context).size.width > 600;
 
     if (isWide) {
-      return Row(
+      return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  LandingContent.heroAddressLabel,
-                  style: KooyohTextStyles.captionBold(
-                      color: KooyohColors.textCaption),
-                ),
-                const SizedBox(height: 6),
-                SizedBox(
+          Text(
+            LandingContent.heroAddressLabel,
+            style: KooyohTextStyles.captionBold(
+                color: KooyohColors.textCaption),
+          ),
+          const SizedBox(height: 6),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: SizedBox(
                   height: KooyohSpacing.inputHeight,
                   child: TextField(
                     controller: controller,
                     style: KooyohTextStyles.body(
                         color: KooyohColors.textPrimary),
-                    decoration: _inputDeco(LandingContent.heroAddressPlaceholder),
+                    decoration:
+                        _inputDeco(LandingContent.heroAddressPlaceholder),
                   ),
                 ),
-              ],
-            ),
-          ),
-          const SizedBox(width: KooyohSpacing.sm),
-          Padding(
-            padding: const EdgeInsets.only(top: 24),
-            child: SizedBox(
-              height: KooyohSpacing.inputHeight,
-              child: ElevatedButton(
-                onPressed: onGetStarted,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: KooyohColors.accent,
-                  foregroundColor: Colors.white,
-                  elevation: 0,
-                  shape: const StadiumBorder(),
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                ),
-                child: Text(
-                  LandingContent.heroPrimaryCta,
-                  style: KooyohTextStyles.bodyBold(color: Colors.white),
+              ),
+              const SizedBox(width: KooyohSpacing.sm),
+              SizedBox(
+                height: KooyohSpacing.inputHeight,
+                child: ElevatedButton(
+                  onPressed: onGetStarted,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: KooyohColors.accent,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shadowColor: Colors.transparent,
+                    shape: const StadiumBorder(),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    visualDensity: VisualDensity.compact,
+                  ),
+                  child: Text(
+                    LandingContent.heroPrimaryCta,
+                    style: KooyohTextStyles.bodyBold(color: Colors.white),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
         ],
       );
@@ -632,14 +634,19 @@ class _AddressInputRow extends StatelessWidget {
         const SizedBox(height: 12),
         SizedBox(
           width: double.infinity,
-          height: KooyohSpacing.buttonHeight,
+          height: KooyohSpacing.inputHeight,
           child: ElevatedButton(
             onPressed: onGetStarted,
             style: ElevatedButton.styleFrom(
               backgroundColor: KooyohColors.accent,
               foregroundColor: Colors.white,
               elevation: 0,
+              shadowColor: Colors.transparent,
               shape: const StadiumBorder(),
+              padding: const EdgeInsets.symmetric(horizontal: KooyohSpacing.md),
+              minimumSize: Size.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              visualDensity: VisualDensity.compact,
             ),
             child: Text(
               LandingContent.heroPrimaryCta,
