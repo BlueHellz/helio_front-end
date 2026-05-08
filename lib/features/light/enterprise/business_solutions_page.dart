@@ -139,7 +139,7 @@ class _HeroArea extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Image.asset(
-                    'assets/images/business_hero.png',
+                    BusinessSolutionsContent.heroIllustrationAsset,
                     fit: BoxFit.cover,
                     semanticLabel:
                         BusinessSolutionsContent.heroImageAccessibilityLabel,

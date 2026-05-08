@@ -29,7 +29,7 @@ flutter:
     - assets/images/hero_illustration.png
     - assets/images/kooyoh_logo.png
     - assets/images/kooyoh_icon.png
-    - assets/images/business_hero.jpg
+    - assets/images/business_hero.png
     - assets/images/enterprise_auth.jpg
     # Local developer file (gitignored): copy from assets/env.json.example
     - assets/env.json

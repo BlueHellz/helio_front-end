@@ -4,7 +4,7 @@ class BusinessSolutionsContent {
   BusinessSolutionsContent._();
 
   /// Bundled hero art; paths are stable asset keys, not user-facing copy.
-  static const heroIllustrationAsset = 'assets/images/business_hero.jpg';
+  static const heroIllustrationAsset = 'assets/images/business_hero.png';
 
   static const heroImageAccessibilityLabel =
       'Isometric illustration of a professional crew installing solar panels on a suburban home.';
