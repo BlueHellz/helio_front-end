@@ -2,7 +2,6 @@ import 'package:kooyoh_app/core/content/content_registry.dart';
 import 'package:flutter/material.dart';
 import 'package:kooyoh_app/theme/kooyoh_theme.dart';
 import 'package:kooyoh_app/core/shell/web/homeowner_web_chrome.dart';
-import 'package:kooyoh_app/core/illustrations/geometric_illustrations.dart';
 
 // ─────────────────────────────────────────────
 // KOO-YOH — EV Charging info page (web)
@@ -58,10 +57,17 @@ class EvProgramBody extends StatelessWidget {
         const SizedBox(height: KooyohSpacing.xl),
         Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 560),
-            child: const IsometricEvCarChargerIllustration(
-              width: 400,
-              height: 200,
+            constraints: const BoxConstraints(maxWidth: 980),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(KooyohRadius.card),
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Image.asset(
+                  'assets/images/ev_charging_header.png',
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                ),
+              ),
             ),
           ),
         ),
